@@ -13,7 +13,6 @@ public class Input {
 		// TODO Cleanup method
 		@Override
 		public void keyPressed(KeyEvent e) {
-			System.out.println("pressed");
 			if (!(e.getKeyCode() == 0)) {
 				if ((keycode == 0) || (keycode2 == 0)) {
 					if (keycode == 0) {
@@ -48,7 +47,6 @@ public class Input {
 
 	public static void update() {
 		if (keycode == 27 || keycode2 == 27) {
-			System.out.println("in");
 			System.exit(0);
 		}
 	}

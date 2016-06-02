@@ -43,7 +43,8 @@ public class GameTile extends GameObject {
 				}
 				g.drawImage(image, (int) this.getX(), (int) this.getY(), Window.TILEWIDTH, Window.TILEHEIGHT, null);
 				g.setColor(Color.RED);
-				g.drawRect((int) this.getX(), (int) this.getY(), Window.TILEWIDTH, Window.TILEHEIGHT);
+				//g.drawRect((int) this.getX(), (int) this.getY(), Window.TILEWIDTH, Window.TILEHEIGHT);
+				image.flush();
 			}
 			// is dark grass texture ?
 			else if (type == 2) {
@@ -55,7 +56,8 @@ public class GameTile extends GameObject {
 				}
 				g.drawImage(image, (int) this.getX(), (int) this.getY(), Window.TILEWIDTH, Window.TILEHEIGHT, null);
 				g.setColor(Color.RED);
-				g.drawRect((int) this.getX(), (int) this.getY(), Window.TILEWIDTH, Window.TILEHEIGHT);
+				//g.drawRect((int) this.getX(), (int) this.getY(), Window.TILEWIDTH, Window.TILEHEIGHT);
+				image.flush();
 			}
 			// is stone texture ?
 			else if (type == 3) {
@@ -67,19 +69,21 @@ public class GameTile extends GameObject {
 				}
 				g.drawImage(image, (int) this.getX(), (int) this.getY(), Window.TILEWIDTH, Window.TILEHEIGHT, null);
 				g.setColor(Color.RED);
-				g.drawRect((int) this.getX(), (int) this.getY(), Window.TILEWIDTH, Window.TILEHEIGHT);
+				//g.drawRect((int) this.getX(), (int) this.getY(), Window.TILEWIDTH, Window.TILEHEIGHT);
+				image.flush();
 			}	
 			else if (type == 4) {
-				/*
+				
 				try {
-					image = ImageIO.read(new File("res/images/metal1.png"));
+					image = ImageIO.read(new File("res/images/metal1test.jpg"));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}*/
+				}
 				g.drawImage(image, (int) this.getX(), (int) this.getY(), Window.TILEWIDTH, Window.TILEHEIGHT, null);
 				g.setColor(Color.RED);
-				g.drawRect((int) this.getX(), (int) this.getY(), Window.TILEWIDTH, Window.TILEHEIGHT);
+				//g.drawRect((int) this.getX(), (int) this.getY(), Window.TILEWIDTH, Window.TILEHEIGHT);
+				image.flush();
 			}
 			else if (type == 5) {
 				
@@ -91,7 +95,8 @@ public class GameTile extends GameObject {
 				}
 				g.drawImage(image, (int) this.getX(), (int) this.getY(), Window.TILEWIDTH, Window.TILEHEIGHT, null);
 				g.setColor(Color.RED);
-				g.drawRect((int) this.getX(), (int) this.getY(), Window.TILEWIDTH, Window.TILEHEIGHT);
+				//g.drawRect((int) this.getX(), (int) this.getY(), Window.TILEWIDTH, Window.TILEHEIGHT);
+				image.flush();
 			}
 			else if (type == 6) {
 				
@@ -103,7 +108,8 @@ public class GameTile extends GameObject {
 				}
 				g.drawImage(image, (int) this.getX(), (int) this.getY(), Window.TILEWIDTH, Window.TILEHEIGHT, null);
 				g.setColor(Color.RED);
-				g.drawRect((int) this.getX(), (int) this.getY(), Window.TILEWIDTH, Window.TILEHEIGHT);
+				//g.drawRect((int) this.getX(), (int) this.getY(), Window.TILEWIDTH, Window.TILEHEIGHT);
+				image.flush();
 			}
 			else if (type == 7) {
 				
@@ -115,7 +121,8 @@ public class GameTile extends GameObject {
 				}
 				g.drawImage(image, (int) this.getX(), (int) this.getY(), Window.TILEWIDTH, Window.TILEHEIGHT, null);
 				g.setColor(Color.RED);
-				g.drawRect((int) this.getX(), (int) this.getY(), Window.TILEWIDTH, Window.TILEHEIGHT);
+				//g.drawRect((int) this.getX(), (int) this.getY(), Window.TILEWIDTH, Window.TILEHEIGHT);
+				image.flush();
 			}
 			else if (type == 8) {
 				
@@ -127,7 +134,8 @@ public class GameTile extends GameObject {
 				}
 				g.drawImage(image, (int) this.getX(), (int) this.getY(), Window.TILEWIDTH, Window.TILEHEIGHT, null);
 				g.setColor(Color.RED);
-				g.drawRect((int) this.getX(), (int) this.getY(), Window.TILEWIDTH, Window.TILEHEIGHT);
+				//g.drawRect((int) this.getX(), (int) this.getY(), Window.TILEWIDTH, Window.TILEHEIGHT);
+				image.flush();
 			}
 			else if (type == 9) {
 				
@@ -139,7 +147,8 @@ public class GameTile extends GameObject {
 				}
 				g.drawImage(image, (int) this.getX(), (int) this.getY(), Window.TILEWIDTH, Window.TILEHEIGHT, null);
 				g.setColor(Color.RED);
-				g.drawRect((int) this.getX(), (int) this.getY(), Window.TILEWIDTH, Window.TILEHEIGHT);
+				//g.drawRect((int) this.getX(), (int) this.getY(), Window.TILEWIDTH, Window.TILEHEIGHT);
+				image.flush();
 			}
 			else if (type == 10) {
 				
@@ -151,7 +160,8 @@ public class GameTile extends GameObject {
 				}
 				g.drawImage(image, (int) this.getX(), (int) this.getY(), Window.TILEWIDTH, Window.TILEHEIGHT, null);
 				g.setColor(Color.RED);
-				g.drawRect((int) this.getX(), (int) this.getY(), Window.TILEWIDTH, Window.TILEHEIGHT);
+				//g.drawRect((int) this.getX(), (int) this.getY(), Window.TILEWIDTH, Window.TILEHEIGHT);
+				image.flush();
 			}
 			else if (type == 11) {
 				
@@ -163,7 +173,8 @@ public class GameTile extends GameObject {
 				}
 				g.drawImage(image, (int) this.getX(), (int) this.getY(), Window.TILEWIDTH, Window.TILEHEIGHT, null);
 				g.setColor(Color.RED);
-				g.drawRect((int) this.getX(), (int) this.getY(), Window.TILEWIDTH, Window.TILEHEIGHT);
+				//g.drawRect((int) this.getX(), (int) this.getY(), Window.TILEWIDTH, Window.TILEHEIGHT);
+				image.flush();
 			}
 			else if (type == 12) {
 				
@@ -175,7 +186,8 @@ public class GameTile extends GameObject {
 				}
 				g.drawImage(image, (int) this.getX(), (int) this.getY(), Window.TILEWIDTH, Window.TILEHEIGHT, null);
 				g.setColor(Color.RED);
-				g.drawRect((int) this.getX(), (int) this.getY(), Window.TILEWIDTH, Window.TILEHEIGHT);
+				//g.drawRect((int) this.getX(), (int) this.getY(), Window.TILEWIDTH, Window.TILEHEIGHT);
+				image.flush();
 			}
 		}
 		return;

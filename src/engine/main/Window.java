@@ -1,9 +1,11 @@
 package engine.main;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.border.Border;
 
 import engine.input.Input;
@@ -33,16 +35,28 @@ public class Window extends JFrame {
 
 	// Default konstruktor creates the mainwindow
 	public Window(String title, Game game) {
-
-		System.out.println(SCREENWIDTH);
+	
+		JLabel loadinglabel = new JLabel();
+		loadinglabel.setText("Game is Loading");
+		loadinglabel.setBounds(Window.GAMEWIDTH /2, Window.GAMEHEIGHT / 2, 100, 50);
+		loadinglabel.setForeground(Color.RED);
+		
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.setUndecorated(true);
+		this.setLayout(null);
 		this.addKeyListener(Input.KeyInputListener);
+		
+	
 		this.add(game);
+		this.add(loadinglabel);
+		
 		this.setVisible(true);
 		game.startGame();
+		
+		loadinglabel.setForeground(Color.BLUE);
 	}
 
 	public int getWindowstate() {
