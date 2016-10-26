@@ -3,19 +3,19 @@ package objects.gameobjects;
 import java.awt.Graphics;
 import java.util.LinkedList;
 
-public abstract class GameObject {
+public abstract class Sprite {
 
 	protected float x, y;
 	protected float xvel, yvel;
 	protected ObjectID ID;
 
-	public GameObject(float x, float y,  ObjectID ID) {
+	public Sprite(float x, float y,  ObjectID ID) {
 		this.x = x;
 		this.y = y;
 		this.ID = ID;
 	}
 
-	public abstract void update(LinkedList<GameObject> object);
+	public abstract void update(LinkedList<Sprite> object);
 
 	public abstract void render(Graphics g);
 

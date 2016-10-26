@@ -1,7 +1,15 @@
 package engine.input;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
+/**
+ * Contains all the listeners and changes values if a listener is triggered
+ * 
+ * @author Soliture
+ */
 
 public class Input {
 
@@ -46,6 +54,7 @@ public class Input {
 	};
 
 	public static void update() {
+		//DEBUGGING 		System.out.println(keycode);
 		if (keycode == 27 || keycode2 == 27) {
 			System.exit(0);
 		}
