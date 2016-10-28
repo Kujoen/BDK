@@ -6,6 +6,14 @@ public class Level {
 	
 	private int levelstate = 0;
 
+	public int getLevelstate() {
+		return levelstate;
+	}
+
+	public void setLevelstate(int levelstate) {
+		this.levelstate = levelstate;
+	}
+
 	public void render(Graphics g) {
 		switch (levelstate) {
 		case 0:

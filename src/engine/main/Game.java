@@ -1,10 +1,9 @@
 package engine.main;
 
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.List;
 import java.awt.image.BufferStrategy;
-import java.util.ArrayList;
 
 import engine.input.Input;
 
@@ -18,10 +17,13 @@ import engine.input.Input;
 public class Game extends Canvas implements Runnable {
 
 	private static final long serialVersionUID = 1L;
+	private static int ups;
+	private static int fps;
 	public static final double TICKRATE = 60.0;
 
 	private boolean isRunning = false;
 	private boolean isMenu = true;
+	private boolean isDebug = true;
 
 	private Thread thread;
 
@@ -38,6 +40,11 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	public synchronized void startGame() {
+		//Setup things game needs here
+		
+		
+		
+		//Start the thread
 		if (isRunning)
 			return;
 		isRunning = true;
@@ -51,8 +58,8 @@ public class Game extends Canvas implements Runnable {
 		double nanosecond = 1000000000 / TICKRATE;
 		double delta = 0;
 		long timer = System.currentTimeMillis();
-		int updates = 0;
 		int frames = 0;
+		int updates = 0;
 		while (isRunning) {
 			long currenttime = System.nanoTime();
 			delta += (currenttime - previoustime) / nanosecond;
@@ -69,9 +76,12 @@ public class Game extends Canvas implements Runnable {
 
 			if (System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
-				System.out.println(frames + " " + updates);
+				// System.out.println(frames + " " + updates);
+				fps = frames;
+				ups = updates;
 				frames = 0;
 				updates = 0;
+
 			}
 		}
 	}
@@ -79,11 +89,15 @@ public class Game extends Canvas implements Runnable {
 	public void update() {
 		// Update here
 		Input.update();
-		
+
 		if (isMenu) {
+			this.addMouseListener(Input.MouseInputListener);
 			menu.update();
-		}
-		else{
+		} else {
+			//RESET MOUSE COODINATES TO PREVENT INSTANT MENU ACTIVATION
+			Input.setMousex(0);
+			Input.setMousey(0);
+			this.removeMouseListener(Input.MouseInputListener);
 			level.update();
 		}
 	}
@@ -91,17 +105,28 @@ public class Game extends Canvas implements Runnable {
 	public void render() {
 		BufferStrategy bs = this.getBufferStrategy();
 		if (bs == null) {
-			this.createBufferStrategy(2);
+			this.createBufferStrategy(3);
 			return;
 		}
 		Graphics g = bs.getDrawGraphics();
+		g.setColor(Color.BLACK);
+		g.fillRect(0, 0, Window.GAMEWIDTH, Window.GAMEHEIGHT);
 
 		// Render here
 		if (isMenu) {
 			menu.render(g);
-		}
-		else{
+		} else {
 			level.render(g);
+		}
+		
+
+		// DEBUG RENDERING
+		if (isDebug) {
+			g.setColor(Color.RED);
+			g.drawString("FPS : " + fps + " UPS : " + ups, 390, 10);
+			g.drawString("Menustate : " + menu.getMenustate(), 420, 20);
+			g.drawString("Levelstate : " + level.getLevelstate(), 420, 30);
+			g.drawString(Input.getMousex() + " " + Input.getMousey() , 430, 40);
 		}
 
 		g.dispose();
