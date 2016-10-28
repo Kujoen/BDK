@@ -8,6 +8,7 @@ import java.awt.Rectangle;
 import java.io.File;
 
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 
 import engine.input.Input;
 
@@ -23,11 +24,16 @@ public class Menu {
 	private int menustate = 0;
 	private boolean isLoaded = false;
 	private Image image;
+	private Game game;
 
 	// Initialise three Button Spaces
 	private Rectangle button1 = new Rectangle(159, 172, 172, 47);
 	private Rectangle button2 = new Rectangle(159, 255, 172, 47);
 	private Rectangle button3 = new Rectangle(159, 335, 172, 47);
+
+	public Menu(Game game) {
+		this.game = game;
+	}
 
 	public void render(Graphics g) {
 		switch (menustate) {
@@ -77,18 +83,28 @@ public class Menu {
 	}
 
 	private void clickCreditsButton() {
-		// TODO Auto-generated method stub
-		//DEBUGGING
+
+		menuInfoBox("Made by Soliture", "Credits");
+		Input.setMousex(0);
+		Input.setMousey(0);
+
+		// DEBUGGING
 		System.out.println("credits pressed");
 	}
 
 	private void clickOptionsButton() {
-		// TODO Auto-generated method stub
+		// Load Options Menu
+		this.setMenustate(1);
 		// DEBUGING
 		System.out.println("options pressed");
 	}
 
 	private void clickPlayButton() {
+		// Remove menu and start first level
+		game.setMenu(false);
+		// Set Menustate to 2, because next time menu will be called it will be
+		// during the level, wich means it has to load the options menu
+		this.setMenustate(2);
 		// DEBUGGING
 		System.out.println("play pressed");
 	}
@@ -118,7 +134,7 @@ public class Menu {
 		}
 		g.drawImage(image, 0, 0, null);
 
-		//DEBUGGING
+		// DEBUGGING
 		g.setColor(Color.RED);
 		g.drawRect(button1.x, button1.y, button1.width, button1.height);
 		g.drawRect(button2.x, button2.y, button2.width, button2.height);
@@ -134,6 +150,10 @@ public class Menu {
 	private void renderPauseMenu(Graphics g) {
 		// TODO Auto-generated method stub
 
+	}
+
+	public static void menuInfoBox(String infoMessage, String titleBar) {
+		JOptionPane.showMessageDialog(null, infoMessage, titleBar, JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	public int getMenustate() {

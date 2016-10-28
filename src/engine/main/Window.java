@@ -24,8 +24,8 @@ public class Window extends JFrame {
 
 	public static final double SCREENHEIGHT = screenSize.getHeight();
 	public static final double SCREENWIDTH = screenSize.getWidth();
-	public static final int GAMEHEIGHT = (int) 500;
-	public static final int GAMEWIDTH = (int) 500;
+	public static final int GAMEHEIGHT = (int) 501;
+	public static final int GAMEWIDTH = (int) 501;
 
 	private static final long serialVersionUID = 1L;
 

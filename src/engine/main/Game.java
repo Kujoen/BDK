@@ -24,11 +24,12 @@ public class Game extends Canvas implements Runnable {
 	private boolean isRunning = false;
 	private boolean isMenu = true;
 	private boolean isDebug = true;
+	private boolean isMouseListening = false;
 
 	private Thread thread;
 
-	public Menu menu = new Menu();
-	public Level level = new Level();
+	public Menu menu;
+	public Level level;
 
 	public static void main(String[] args) {
 		Window window = new Window("LTW", new Game());
@@ -40,11 +41,10 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	public synchronized void startGame() {
-		//Setup things game needs here
-		
-		
-		
-		//Start the thread
+		// Setup things game needs here
+		menu = new Menu(this);
+		level = new Level(this);
+		// Start the thread
 		if (isRunning)
 			return;
 		isRunning = true;
@@ -91,13 +91,19 @@ public class Game extends Canvas implements Runnable {
 		Input.update();
 
 		if (isMenu) {
-			this.addMouseListener(Input.MouseInputListener);
+			if (!isMouseListening) {
+				isMouseListening = true;
+				this.addMouseListener(Input.MouseInputListener);
+			}
 			menu.update();
 		} else {
-			//RESET MOUSE COODINATES TO PREVENT INSTANT MENU ACTIVATION
-			Input.setMousex(0);
-			Input.setMousey(0);
-			this.removeMouseListener(Input.MouseInputListener);
+			if (isMouseListening) {
+				// RESET MOUSE COODINATES TO PREVENT INSTANT MENU ACTIVATION
+				Input.setMousex(0);
+				Input.setMousey(0);
+				this.removeMouseListener(Input.MouseInputListener);
+				isMouseListening = false;
+			}
 			level.update();
 		}
 	}
@@ -109,8 +115,6 @@ public class Game extends Canvas implements Runnable {
 			return;
 		}
 		Graphics g = bs.getDrawGraphics();
-		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, Window.GAMEWIDTH, Window.GAMEHEIGHT);
 
 		// Render here
 		if (isMenu) {
@@ -118,7 +122,6 @@ public class Game extends Canvas implements Runnable {
 		} else {
 			level.render(g);
 		}
-		
 
 		// DEBUG RENDERING
 		if (isDebug) {
@@ -126,7 +129,7 @@ public class Game extends Canvas implements Runnable {
 			g.drawString("FPS : " + fps + " UPS : " + ups, 390, 10);
 			g.drawString("Menustate : " + menu.getMenustate(), 420, 20);
 			g.drawString("Levelstate : " + level.getLevelstate(), 420, 30);
-			g.drawString(Input.getMousex() + " " + Input.getMousey() , 430, 40);
+			g.drawString(Input.getMousex() + " " + Input.getMousey(), 450, 40);
 		}
 
 		g.dispose();
