@@ -98,7 +98,7 @@ public class Game extends Canvas implements Runnable {
 			menu.update();
 		} else {
 			if (isMouseListening) {
-				// RESET MOUSE COODINATES TO PREVENT INSTANT MENU ACTIVATION
+				// RESET MOUSE COORDINATES TO PREVENT INSTANT MENU ACTIVATION
 				Input.setMousex(0);
 				Input.setMousey(0);
 				this.removeMouseListener(Input.MouseInputListener);
@@ -142,6 +142,12 @@ public class Game extends Canvas implements Runnable {
 
 	public void setMenu(boolean isMenu) {
 		this.isMenu = isMenu;
+		if(isMenu){
+			level.stopLevelTimer();
+		}
+		else if(!isMenu){
+			level.startLevelTimer();
+		}
 	}
 
 }
