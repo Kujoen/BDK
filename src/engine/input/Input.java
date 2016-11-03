@@ -6,8 +6,11 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Vector;
 
 import javax.swing.event.MouseInputListener;
+
+import engine.math.Vector2D;
 
 /**
  * Contains all the listeners and changes values if a listener is triggered
@@ -16,6 +19,22 @@ import javax.swing.event.MouseInputListener;
  */
 
 public class Input {
+
+	public static int getKeycode() {
+		return keycode;
+	}
+
+	public static void setKeycode(int keycode) {
+		Input.keycode = keycode;
+	}
+
+	public static int getKeycode2() {
+		return keycode2;
+	}
+
+	public static void setKeycode2(int keycode2) {
+		Input.keycode2 = keycode2;
+	}
 
 	private static int keycode = 0;
 	private static int keycode2 = 0;
@@ -73,6 +92,15 @@ public class Input {
 						}
 					}
 				}
+			}
+			
+			switch (e.getKeyCode()) {
+			case 87:
+		
+				break;
+
+			default:
+				break;
 			}
 		}
 
