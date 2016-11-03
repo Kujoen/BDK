@@ -15,7 +15,7 @@ public abstract class Sprite {
 		this.ID = ID;
 	}
 
-	public abstract void update(LinkedList<Sprite> object);
+	public abstract void update();
 
 	public abstract void render(Graphics g);
 

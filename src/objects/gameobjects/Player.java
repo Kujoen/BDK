@@ -1,24 +1,23 @@
 package objects.gameobjects;
 
 import java.awt.Graphics;
-import java.awt.Rectangle;
 
-public class Player {
+public class Player extends Sprite {
 
-	private int playerx;
-	private int playery;
-	private int playerhealth;
-	private static final int PLAYERSPEED = 5;
-	private static final Rectangle HITBOX = new Rectangle(0,0,20,20);
-
-	public Player(){
+	public Player(float x, float y, ObjectID ID) {
+		super(x, y, ID);
+		// TODO Auto-generated constructor stub
 	}
-	
+
+	@Override
 	public void update() {
 		// TODO Auto-generated method stub
-
+		
 	}
 
+	@Override
 	public void render(Graphics g) {
+	
 	}
+
 }

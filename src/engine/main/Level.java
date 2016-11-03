@@ -5,11 +5,13 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.imageio.ImageIO;
 import javax.swing.Timer;
 
-import objects.gameobjects.Player;
+import objects.gameobjects.Sprite;
 
 public class Level {
 	// Pixels per tick
@@ -20,55 +22,30 @@ public class Level {
 	private int background1y;
 	private int background2x = 0;
 	private int background2y;
-	private static final int TIMERTICKRATE = 1000;
+	private int leveltime = 0;
+	private static final int TIMERTICKRATE = 250;
 	private boolean isLoaded = false;
 	private Image background1;
 	private Image background2;
 	private Game game;
-	private Player player;
+	private Set<Sprite> spriteset = new HashSet<>();
 
 	public Level(Game game) {
 		// Setup level...
 		this.game = game;
-		player = new Player();
 		// levelTimer.setInitialDelay(2000);
 	}
 
 	public void render(Graphics g) {
-		switch (levelstate) {
-		case 0:
-			renderLevelOne(g);
-			break;
-		default:
-			break;
-		}
+		//Render Background
+		renderBackground(levelstate, g);
+		//Render Sprites
+		renderSprites(g);
 	}
-
-	public void update() {
-		switch (levelstate) {
-		case 0:
-			updateLevelOne();
-			break;
-		default:
-			break;
-		}
-	}
-
-	private void updateLevelOne() {
-		updateBackground();
-		player.update();
-		// DEBUG
-		// System.out.println(background1y);
-	}
-
-	private void updateBackground() {
-		background1y += SCROLLSPEED;
-		background2y += SCROLLSPEED;
-	}
-
-	private void renderLevelOne(Graphics g) {
+	
+	private void renderBackground(int levelstate, Graphics g) {
+		//Load background if needed
 		if (!isLoaded) {
-			// Load background and all sprites here
 			try {
 				background1 = ImageIO.read(new File("res/images/level1background.bmp"));
 				background1y = 0;
@@ -83,22 +60,45 @@ public class Level {
 			}
 			isLoaded = true;
 		}
-		// Render the Level here, first background then sprites
-		drawScrollingBackground(g, 0);
-		player.render(g);
-	}
-
-	private void drawScrollingBackground(Graphics g, int levelstate) {
+		//Draw Background
 		g.drawImage(background1, background1x, background1y, null);
 		g.drawImage(background2, background2x, background2y, null);
-
+		//Check if background has to reset position
 		if (background1y == 500) {
 			background1y = -500;
 		} else if (background2y == 500) {
 			background2y = -500;
 		}
+		
 	}
 
+	private void renderSprites(Graphics g) {
+		//spriteset.forEach(Sprite -> render(g));
+		for(Sprite s : spriteset){
+			s.render(g);
+		}
+	}
+
+	
+	public void update() {
+		//Check if leveltimer adds new stuff 
+		LevelTimer.checkLevelTimer(levelstate , leveltime, this);
+		//Update Background first
+		updateBackground();
+		//then update Sprites !!!
+		updateSprites();
+	}
+	
+	private void updateBackground() {
+		background1y += SCROLLSPEED;
+		background2y += SCROLLSPEED;
+	}
+
+
+	private void updateSprites() {
+		// TODO Auto-generated method stub	
+	}
+	
 	public void startLevelTimer() {
 		levelTimer.start();
 	}
@@ -113,10 +113,7 @@ public class Level {
 		 * Handle the action event
 		 */
 		public void actionPerformed(ActionEvent e) {
-			
-			System.out.println("Second");
-			// DEBUGGING
-			// System.out.println("Timer Tick");
+			leveltime++;
 		}
 	});
 
@@ -126,6 +123,12 @@ public class Level {
 
 	public void setLevelstate(int levelstate) {
 		this.levelstate = levelstate;
+		levelTimer.restart();
 	}
+	
+	public Set<Sprite> getSpriteset() {
+		return spriteset;
+	}
+
 
 }
