@@ -1,58 +1,25 @@
 package objects.gameobjects;
 
 import java.awt.Graphics;
-import java.util.LinkedList;
+
+import engine.math.Vector2D;
 
 public abstract class Sprite {
 
-	protected float x, y;
-	protected float xvel, yvel;
+	protected Vector2D position;
+	protected Vector2D movementVector = new Vector2D(0,0);
+	protected double xvel;
+	protected double yvel;
 	protected ObjectID ID;
 
-	public Sprite(float x, float y,  ObjectID ID) {
-		this.x = x;
-		this.y = y;
+	public Sprite(Vector2D position, double xvel, double yvel, ObjectID ID) {
+		this.position = position;
+		this.xvel = xvel;
+		this.yvel = yvel;
 		this.ID = ID;
 	}
 
 	public abstract void update();
 
 	public abstract void render(Graphics g);
-
-	public ObjectID getID() {
-		return ID;
-	}
-
-	public float getX() {
-		return x;
-	}
-
-	public void setX(float x) {
-		this.x = x;
-	}
-
-	public float getY() {
-		return y;
-	}
-
-	public void setY(float y) {
-		this.y = y;
-	}
-
-	public float getXvel() {
-		return xvel;
-	}
-
-	public void setXvel(float xvel) {
-		this.xvel = xvel;
-	}
-
-	public float getYvel() {
-		return yvel;
-	}
-
-	public void setYvel(float yvel) {
-		this.yvel = yvel;
-	}
-
 }

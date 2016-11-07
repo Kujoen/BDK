@@ -37,14 +37,14 @@ public class Level {
 	}
 
 	public void render(Graphics g) {
-		//Render Background
+		// Render Background
 		renderBackground(levelstate, g);
-		//Render Sprites
+		// Render Sprites
 		renderSprites(g);
 	}
-	
+
 	private void renderBackground(int levelstate, Graphics g) {
-		//Load background if needed
+		// Load background if needed
 		if (!isLoaded) {
 			try {
 				background1 = ImageIO.read(new File("res/images/level1background.bmp"));
@@ -60,45 +60,45 @@ public class Level {
 			}
 			isLoaded = true;
 		}
-		//Draw Background
+		// Draw Background
 		g.drawImage(background1, background1x, background1y, null);
 		g.drawImage(background2, background2x, background2y, null);
-		//Check if background has to reset position
+		// Check if background has to reset position
 		if (background1y == 500) {
 			background1y = -500;
 		} else if (background2y == 500) {
 			background2y = -500;
 		}
-		
+
 	}
 
 	private void renderSprites(Graphics g) {
-		//spriteset.forEach(Sprite -> render(g));
-		for(Sprite s : spriteset){
+		// spriteset.forEach(Sprite -> render(g));
+		for (Sprite s : spriteset) {
 			s.render(g);
 		}
 	}
 
-	
 	public void update() {
-		//Check if leveltimer adds new stuff 
-		LevelTimer.checkLevelTimer(levelstate , leveltime, this);
-		//Update Background first
+		// Check if leveltimer adds new stuff
+		LevelTimer.checkLevelTimer(levelstate, leveltime, this);
+		// Update Background first
 		updateBackground();
-		//then update Sprites !!!
+		// then update Sprites !!!
 		updateSprites();
 	}
-	
+
 	private void updateBackground() {
 		background1y += SCROLLSPEED;
 		background2y += SCROLLSPEED;
 	}
 
-
 	private void updateSprites() {
-		// TODO Auto-generated method stub	
+		for (Sprite s : spriteset) {
+			s.update();
+		}
 	}
-	
+
 	public void startLevelTimer() {
 		levelTimer.start();
 	}
@@ -125,10 +125,9 @@ public class Level {
 		this.levelstate = levelstate;
 		levelTimer.restart();
 	}
-	
+
 	public Set<Sprite> getSpriteset() {
 		return spriteset;
 	}
-
 
 }

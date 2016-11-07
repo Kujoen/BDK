@@ -1,8 +1,8 @@
 package engine.main;
 
+import engine.math.Vector2D;
 import objects.gameobjects.ObjectID;
 import objects.gameobjects.Player;
-import objects.gameobjects.Sprite;
 
 /**
  * 
@@ -27,7 +27,8 @@ public class LevelTimer {
 	private static void updateLevelOne(int leveltime, Level level) {
 		switch (leveltime) {
 		case 1:
-			level.getSpriteset().add(new Player(0,0, ObjectID.PLAYER));
+			level.getSpriteset().add(new Player(new Vector2D(0, 0),5, 5, ObjectID.PLAYER));
+
 			break;
 		default:
 			break;

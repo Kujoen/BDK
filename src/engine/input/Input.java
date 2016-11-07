@@ -20,24 +20,11 @@ import engine.math.Vector2D;
 
 public class Input {
 
-	public static int getKeycode() {
-		return keycode;
-	}
-
-	public static void setKeycode(int keycode) {
-		Input.keycode = keycode;
-	}
-
-	public static int getKeycode2() {
-		return keycode2;
-	}
-
-	public static void setKeycode2(int keycode2) {
-		Input.keycode2 = keycode2;
-	}
-
-	private static int keycode = 0;
-	private static int keycode2 = 0;
+	private static boolean isForward = false;
+	private static boolean isBackward = false;
+	private static boolean isLeft = false;
+	private static boolean isRight = false;
+	private static boolean isShift = false;
 	private static int mousex;
 	private static int mousey;
 
@@ -47,7 +34,7 @@ public class Input {
 		public void mouseClicked(MouseEvent e) {
 			mousex = e.getX();
 			mousey = e.getY();
-			
+
 		}
 
 		@Override
@@ -81,24 +68,25 @@ public class Input {
 		// TODO Cleanup method
 		@Override
 		public void keyPressed(KeyEvent e) {
-			if (!(e.getKeyCode() == 0)) {
-				if ((keycode == 0) || (keycode2 == 0)) {
-					if (keycode == 0) {
-						keycode = e.getKeyCode();
-					}
-					if (!(keycode == 0)) {
-						if (!(keycode == e.getKeyCode())) {
-							keycode2 = e.getKeyCode();
-						}
-					}
-				}
-			}
-			
 			switch (e.getKeyCode()) {
 			case 87:
-		
+				isForward = true;
 				break;
-
+			case 83:
+				isBackward = true;
+				break;
+			case 65:
+				isLeft = true;
+				break;
+			case 68:
+				isRight = true;
+				break;
+			case 16:
+				isShift = true;
+				break;
+			case 27:
+				System.exit(0);
+				break;
 			default:
 				break;
 			}
@@ -106,13 +94,24 @@ public class Input {
 
 		@Override
 		public void keyReleased(KeyEvent e) {
-			if (!(e.getKeyCode() == 0)) {
-				if (e.getKeyCode() == keycode) {
-					keycode = 0;
-				}
-				if (e.getKeyCode() == keycode2) {
-					keycode2 = 0;
-				}
+			switch (e.getKeyCode()) {
+			case 87:
+				isForward = false;
+				break;
+			case 83:
+				isBackward = false;
+				break;
+			case 65:
+				isLeft = false;
+				break;
+			case 68:
+				isRight = false;
+				break;
+			case 16:
+				isShift = false;
+				break;
+			default:
+				break;
 			}
 		}
 
@@ -121,6 +120,10 @@ public class Input {
 			// LEAVE EMPTY , keytyped not used
 		}
 	};
+
+	public static void update() {
+	
+	}
 
 	public static int getMousex() {
 		return mousex;
@@ -138,12 +141,43 @@ public class Input {
 		Input.mousey = mousey;
 	}
 
-	public static void update() {
-		// DEBUGGING System.out.println(keycode);
-		if (keycode == 27 || keycode2 == 27) {
-			System.exit(0);
-		}
-
+	public static boolean isForward() {
+		return isForward;
 	}
 
+	public static void setForward(boolean isForward) {
+		Input.isForward = isForward;
+	}
+
+	public static boolean isBackward() {
+		return isBackward;
+	}
+
+	public static void setBackward(boolean isBackward) {
+		Input.isBackward = isBackward;
+	}
+
+	public static boolean isLeft() {
+		return isLeft;
+	}
+
+	public static void setLeft(boolean isLeft) {
+		Input.isLeft = isLeft;
+	}
+
+	public static boolean isRight() {
+		return isRight;
+	}
+
+	public static void setRight(boolean isRight) {
+		Input.isRight = isRight;
+	}
+
+	public static boolean isShift() {
+		return isShift;
+	}
+
+	public static void setShift(boolean isShift) {
+		Input.isShift = isShift;
+	}
 }

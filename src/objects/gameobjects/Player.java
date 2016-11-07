@@ -1,49 +1,60 @@
 package objects.gameobjects;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 import engine.input.Input;
+import engine.math.Vector2D;
 
 public class Player extends Sprite {
 
-	public Player(float x, float y, ObjectID ID) {
-		super(x, y, ID);
-		// starting position
-		this.setX(244);
-		this.setY(474);
-
-		this.setXvel(1);
-		this.setYvel(1);
+	public Player(Vector2D position, double xvel, double yvel, ObjectID ID) {
+		super(position, xvel, yvel, ID);
 	}
 
 	@Override
 	public void update() {
-		// Check for movement
-		// shift
-		if (Input.getKeycode() == 16 || Input.getKeycode2() == 16) {
-
-		}
-		// w
-		if (Input.getKeycode() == 87 || Input.getKeycode2() == 87) {
-
-		}
-		// a
-		if (Input.getKeycode() == 65 || Input.getKeycode2() == 65) {
-
-		}
-		// s
-		if (Input.getKeycode() == 83 || Input.getKeycode2() == 83) {
-
-		}
-		// d
-		if (Input.getKeycode() == 68 || Input.getKeycode2() == 68) {
-
-		}
+		movePlayer();
 	}
 
 	@Override
 	public void render(Graphics g) {
+		g.setColor(Color.BLUE);
+		g.fillRect((int) position.getX(), (int) position.getY(), 25, 25);
+	}
 
+	private void movePlayer() {
+		// Update movementvector based on input
+		if (Input.isForward()) {
+			// Check if already added
+			if (movementVector.getY() != -yvel) {
+				movementVector.setY(-yvel);
+				System.out.println(movementVector.getY());
+			}
+		}
+		if (Input.isBackward()) {
+			// Check if already added
+			if (movementVector.getY() != yvel) {
+				movementVector.setY(yvel);
+				System.out.println(movementVector.getY());
+			}
+		}
+		if (Input.isLeft()) {
+			// Check if already added
+			if (movementVector.getX() != -1) {
+				movementVector.addX(-1);
+			}
+		}
+		if (Input.isRight()) {
+			// Check if already added
+			if (movementVector.getX() != 1) {
+				movementVector.addX(1);
+			}
+		}
+		if (Input.isShift()) {
+			// TODO: Implement projectiles
+		}
+		position.vecAdd(movementVector);
 	}
 
 }
