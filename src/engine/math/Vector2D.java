@@ -14,12 +14,12 @@ public class Vector2D {
 		y += inputVector.getY();
 	}
 	
-	public Vector2D addX(double xvalue){
-		return new Vector2D(x + xvalue , y);
+	public void addX(double xvalue){
+		x += xvalue;
 	}
 	
-	public Vector2D addY(double yvalue){
-		return new Vector2D(x, y + yvalue);
+	public void addY(double yvalue){
+		y += yvalue;
 	}
 
 	public double getX() {

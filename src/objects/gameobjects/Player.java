@@ -28,27 +28,29 @@ public class Player extends Sprite {
 		if (Input.isForward()) {
 			// Check if already added
 			if (movementVector.getY() != -yvel) {
-				movementVector.setY(-yvel);
+				movementVector.addY(-yvel);
 				System.out.println(movementVector.getY());
 			}
+		} else if (!Input.isForward()) {
+
 		}
 		if (Input.isBackward()) {
 			// Check if already added
 			if (movementVector.getY() != yvel) {
-				movementVector.setY(yvel);
+				movementVector.addY(yvel);
 				System.out.println(movementVector.getY());
 			}
 		}
 		if (Input.isLeft()) {
 			// Check if already added
-			if (movementVector.getX() != -1) {
-				movementVector.addX(-1);
+			if (movementVector.getX() != -xvel) {
+				movementVector.addX(-xvel);
 			}
 		}
 		if (Input.isRight()) {
 			// Check if already added
-			if (movementVector.getX() != 1) {
-				movementVector.addX(1);
+			if (movementVector.getX() != xvel) {
+				movementVector.addX(xvel);
 			}
 		}
 		if (Input.isShift()) {
