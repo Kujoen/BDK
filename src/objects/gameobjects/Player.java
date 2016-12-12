@@ -10,26 +10,27 @@ import engine.math.Vector2D;
 
 public class Player extends Sprite {
 
-	boolean hasShifted = false;
+	// BOOLEAN----------------------------------------------------|
+	private boolean hasShifted = false;
+	// -----------------------------------------------------------|
 
-	public Player(Vector2D position, double xvel, double yvel, ObjectID ID) {
-		super(position, xvel, yvel, ID);
-		this.hitbox = new Hitbox(this, 2);
+	public Player(Vector2D position, double xvel, double yvel, int health, ObjectID ID) {
+		super(position, xvel, yvel, health, ID);
 	}
 
+	// UPDATING--------------------------------------------------------------------------|
+	/**
+	 * Updates the player sprite
+	 */
 	@Override
 	public void update() {
 		movePlayer();
 	}
 
-	@Override
-	public void render(Graphics g) {
-		g.setColor(Color.BLUE);
-		g.fillRect((int) position.getX(), (int) position.getY(), 25, 25);
-	}
-
+	/**
+	 * moves the player based on input
+	 */
 	private void movePlayer() {
-		// TODO: use the movement vector
 		if (Input.isForward()) {
 			if (position.getY() > 0) {
 				position.addY(-yvel);
@@ -64,6 +65,14 @@ public class Player extends Sprite {
 			xvel *= 2;
 			hasShifted = false;
 		}
-
 	}
+
+	// --------------------------------------------------------------------------|
+	// RENDERING-----------------------------------------------------------------|
+	@Override
+	public void render(Graphics g) {
+		g.setColor(Color.BLUE);
+		g.fillRect((int) position.getX(), (int) position.getY(), 25, 25);
+	}
+	//---------------------------------------------------------------------------|
 }

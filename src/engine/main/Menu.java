@@ -20,23 +20,41 @@ import engine.input.Input;
 
 public class Menu {
 
-	// We have three different menus, Mainmenu, Optionsmenu, Pausemenu
-	private int menustate = 0;
-	private boolean isLoaded = false;
-	private Image image;
+	// INT-----------------------------------|
+	private int menuID;
+	// --------------------------------------|
+	// ENGINEOBJECTS-------------------------|
 	private Game game;
-
-	// Initialise three Button Spaces
-	private Rectangle button1 = new Rectangle(159, 172, 172, 47);
-	private Rectangle button2 = new Rectangle(159, 255, 172, 47);
-	private Rectangle button3 = new Rectangle(159, 335, 172, 47);
+	// --------------------------------------|
+	// BOOLEAN-------------------------------|
+	private boolean isLoaded;
+	// --------------------------------------|
+	// UI------------------------------------|
+	private Image image;
+	private Rectangle button1;
+	private Rectangle button2;
+	private Rectangle button3;
+	//---------------------------------------|
 
 	public Menu(Game game) {
 		this.game = game;
+		this.menuID = game.getDefaultMenuId();
+		this.isLoaded = false;
+		
+		//Setup UI
+		button1 = new Rectangle(159, 172, 172, 47);
+		button2 = new Rectangle(159, 255, 172, 47);
+		button3 = new Rectangle(159, 335, 172, 47);
 	}
 
+	// RENDERING--------------------------------------------------------------------|
+	/**
+	 * Renders the menu based on the menuID
+	 * 
+	 * @param g
+	 */
 	public void render(Graphics g) {
-		switch (menustate) {
+		switch (menuID) {
 		case 0:
 			renderMainMenu(g);
 			break;
@@ -51,8 +69,50 @@ public class Menu {
 		}
 	}
 
+	/**
+	 * Renders the main menu
+	 * 
+	 * @param g
+	 */
+	private void renderMainMenu(Graphics g) {
+		if (!isLoaded) {
+			try {
+				image = ImageIO.read(new File("res/images/mainmenu.bmp"));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			isLoaded = true;
+		}
+		g.drawImage(image, 0, 0, null);
+	}
+
+	/**
+	 * Renders the options Menu
+	 * 
+	 * @param g
+	 */
+	private void renderOptionsMenu(Graphics g) {
+		// TODO Auto-generated method stub
+
+	}
+
+	/**
+	 * Renders the pause Menu
+	 * 
+	 * @param g
+	 */
+	private void renderPauseMenu(Graphics g) {
+		// TODO Auto-generated method stub
+
+	}
+
+	// -----------------------------------------------------------------------------|
+	// UPDATING---------------------------------------------------------------------|
+	/**
+	 * Updates the menu based on the menuID
+	 */
 	public void update() {
-		switch (menustate) {
+		switch (menuID) {
 		case 0:
 			updateMainMenu();
 			break;
@@ -67,9 +127,8 @@ public class Menu {
 		}
 	}
 
-	/*
-	 * Check for mouse clicks that occured on Menu Buttons, then execute
-	 * whatever was pressed
+	/**
+	 * updates the main menu by checking if a button was pressed
 	 */
 	private void updateMainMenu() {
 		Point mouseCord = new Point(Input.getMousex(), Input.getMousey());
@@ -83,85 +142,80 @@ public class Menu {
 	}
 
 	private void clickCreditsButton() {
-
-		menuInfoBox("Made by Soliture", "Credits");
-		Input.setMousex(0);
-		Input.setMousey(0);
-
-		// DEBUGGING
-		System.out.println("credits pressed");
+		// TODO implement credits screen
 	}
 
 	private void clickOptionsButton() {
-		// Load Options Menu
-		this.setMenustate(1);
-		// DEBUGING
-		System.out.println("options pressed");
+		// TODO implement options screen
 	}
 
 	private void clickPlayButton() {
-		// Remove menu and start first level
+		// Set menu to false and level to true
 		game.setMenu(false);
-		// Set Menustate to 2, because next time menu will be called it will be
-		// during the level, wich means it has to load the options menu
-		this.setMenustate(2);
-		// DEBUGGING
-		System.out.println("play pressed");
+		game.setLevel(true);
+		// Set MenuID to 2, because next time menu will be called it will be
+		// during the level, wich means it has to load the pause-menu
+		this.setMenuID(2);
 	}
 
 	private void updateOptionsMenu() {
-		// TODO Auto-generated method stub
-
+		// TODO Implement options-menu
 	}
 
 	private void updatePauseMenu() {
-		// TODO Auto-generated method stub
-
+		// TODO Implement pause-menu
 	}
 
-	private void renderMainMenu(Graphics g) {
-		if (!isLoaded) {
-			try {
-				image = ImageIO.read(new File("res/images/mainmenu.bmp"));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			isLoaded = true;
-			/*
-			 * DEBUGGINGSystem.out.println("loading");
-			 */
-
-		}
-		g.drawImage(image, 0, 0, null);
-
-		// DEBUGGING
-		g.setColor(Color.RED);
-		g.drawRect(button1.x, button1.y, button1.width, button1.height);
-		g.drawRect(button2.x, button2.y, button2.width, button2.height);
-		g.drawRect(button3.x, button3.y, button3.width, button3.height);
-
+	// -----------------------------------------------------------------------------|
+	// GETTERS AND
+	// SETTERS----------------------------------------------------------------------|
+	public int getMenuID() {
+		return menuID;
 	}
 
-	private void renderOptionsMenu(Graphics g) {
-		// TODO Auto-generated method stub
-
+	public void setMenuID(int menuID) {
+		this.menuID = menuID;
 	}
 
-	private void renderPauseMenu(Graphics g) {
-		// TODO Auto-generated method stub
-
+	public Game getGame() {
+		return game;
 	}
 
-	public static void menuInfoBox(String infoMessage, String titleBar) {
-		JOptionPane.showMessageDialog(null, infoMessage, titleBar, JOptionPane.INFORMATION_MESSAGE);
+	public void setGame(Game game) {
+		this.game = game;
 	}
 
-	public int getMenustate() {
-		return menustate;
+	public boolean isLoaded() {
+		return isLoaded;
 	}
 
-	public void setMenustate(int menustate) {
-		this.menustate = menustate;
+	public void setLoaded(boolean isLoaded) {
+		this.isLoaded = isLoaded;
 	}
+
+	public Rectangle getButton1() {
+		return button1;
+	}
+
+	public void setButton1(Rectangle button1) {
+		this.button1 = button1;
+	}
+
+	public Rectangle getButton2() {
+		return button2;
+	}
+
+	public void setButton2(Rectangle button2) {
+		this.button2 = button2;
+	}
+
+	public Rectangle getButton3() {
+		return button3;
+	}
+
+	public void setButton3(Rectangle button3) {
+		this.button3 = button3;
+	}
+	// -----------------------------------------------------------------------------|
 
 }

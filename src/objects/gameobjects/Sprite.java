@@ -7,22 +7,40 @@ import engine.math.Hitbox;
 import engine.math.Vector2D;
 
 public abstract class Sprite {
-
+	// MATHOBJECTS-----------------------------------------|
 	protected Vector2D position;
+	// ----------------------------------------------------|
+	// DOUBLE----------------------------------------------|
+	protected double xvel;
+	protected double yvel;
+	// ----------------------------------------------------|
+	// INT-------------------------------------------------|
+	protected double health;
+	// ----------------------------------------------------|
+	// GAMEOBJECTS-----------------------------------------|
+	protected ObjectID ID;
+	// ----------------------------------------------------|
+
+	public Sprite(Vector2D position, double xvel, double yvel, int health, ObjectID ID) {
+		this.position = position;
+		this.xvel = xvel;
+		this.yvel = yvel;
+		this.health = health;
+		this.ID = ID;
+	}
+
+	public abstract void update();
+
+	public abstract void render(Graphics g);
+
+	// GETTERS AND SETTERS
+	// ------------------------------------------------------------------------------|
 	public Vector2D getPosition() {
 		return position;
 	}
 
 	public void setPosition(Vector2D position) {
 		this.position = position;
-	}
-
-	public Vector2D getMovementVector() {
-		return movementVector;
-	}
-
-	public void setMovementVector(Vector2D movementVector) {
-		this.movementVector = movementVector;
 	}
 
 	public double getXvel() {
@@ -49,29 +67,12 @@ public abstract class Sprite {
 		ID = iD;
 	}
 
-	public Hitbox getHitbox() {
-		return hitbox;
+	public double getHealth() {
+		return health;
 	}
 
-	public void setHitbox(Hitbox hitbox) {
-		this.hitbox = hitbox;
+	public void setHealth(double health) {
+		this.health = health;
 	}
-
-	protected Vector2D movementVector = new Vector2D(0, 0);
-	protected double xvel;
-	protected double yvel;
-	protected ObjectID ID;
-	protected Hitbox hitbox;
-
-	public Sprite(Vector2D position, double xvel, double yvel, ObjectID ID) {
-		this.position = position;
-		this.xvel = xvel;
-		this.yvel = yvel;
-		this.ID = ID;
-	}
-
-	public abstract void update();
-
-	public abstract void render(Graphics g);
-
+	// ------------------------------------------------------------------------------|
 }
