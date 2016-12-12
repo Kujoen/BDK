@@ -1,6 +1,7 @@
 package objects.gameobjects;
 
 import java.awt.Graphics;
+import java.util.ArrayList;
 import java.util.Set;
 
 import engine.math.Hitbox;
@@ -19,6 +20,8 @@ public abstract class Sprite {
 	// ----------------------------------------------------|
 	// GAMEOBJECTS-----------------------------------------|
 	protected ObjectID ID;
+	protected ArrayList<Sprite> requestRemoveList;
+	protected ArrayList<Sprite> requestSpawnList;
 	// ----------------------------------------------------|
 
 	public Sprite(Vector2D position, double xvel, double yvel, int health, ObjectID ID) {
@@ -27,6 +30,8 @@ public abstract class Sprite {
 		this.yvel = yvel;
 		this.health = health;
 		this.ID = ID;
+		this.requestRemoveList = new ArrayList<>();
+		this.requestSpawnList = new ArrayList<>();
 	}
 
 	public abstract void update();
@@ -74,5 +79,22 @@ public abstract class Sprite {
 	public void setHealth(double health) {
 		this.health = health;
 	}
+	
+	public ArrayList<Sprite> getRequestRemoveList() {
+		return requestRemoveList;
+	}
+
+	public void setRequestRemoveList(ArrayList<Sprite> requestRemoveList) {
+		this.requestRemoveList = requestRemoveList;
+	}
+
+	public ArrayList<Sprite> getRequestSpawnList() {
+		return requestSpawnList;
+	}
+
+	public void setRequestSpawnList(ArrayList<Sprite> requestSpawnList) {
+		this.requestSpawnList = requestSpawnList;
+	}
+	
 	// ------------------------------------------------------------------------------|
 }

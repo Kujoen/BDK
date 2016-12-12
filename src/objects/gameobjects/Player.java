@@ -13,6 +13,9 @@ public class Player extends Sprite {
 	// BOOLEAN----------------------------------------------------|
 	private boolean hasShifted = false;
 	// -----------------------------------------------------------|
+	// INT--------------------------------------------------------|
+	private int counterProjectileTick = 0;
+	// -----------------------------------------------------------|
 
 	public Player(Vector2D position, double xvel, double yvel, int health, ObjectID ID) {
 		super(position, xvel, yvel, health, ID);
@@ -25,6 +28,7 @@ public class Player extends Sprite {
 	@Override
 	public void update() {
 		movePlayer();
+		spawnPlayerProjectiles();
 	}
 
 	/**
@@ -67,12 +71,30 @@ public class Player extends Sprite {
 		}
 	}
 
+	/**
+	 * check if the player is holding spacebar, if yes Player Projectiles will
+	 * be added to the requestSpawnList
+	 */
+	public void spawnPlayerProjectiles() {
+		if (Input.isSpacebar()) {
+			if (counterProjectileTick % 5 == 0) {
+				requestSpawnList.add(new Projectile(
+						new Vector2D(this.position.getX() + SpriteSize.PLAYER_SIZE / 2 - SpriteSize.SIZE_MEDIUM / 2,
+								this.position.getY()),
+						Projectile.PROJECTILE_SPEED, Projectile.PROJECTILE_SPEED, 0, ObjectID.PROJECTILE,
+						Projectile.MOVEMENT_SPIRAL));
+				counterProjectileTick++;
+			}
+			counterProjectileTick++;
+		}
+	}
+
 	// --------------------------------------------------------------------------|
 	// RENDERING-----------------------------------------------------------------|
 	@Override
 	public void render(Graphics g) {
 		g.setColor(Color.BLUE);
-		g.fillRect((int) position.getX(), (int) position.getY(), 25, 25);
+		g.fillRect((int) position.getX(), (int) position.getY(), SpriteSize.PLAYER_SIZE, SpriteSize.PLAYER_SIZE);
 	}
-	//---------------------------------------------------------------------------|
+	// ---------------------------------------------------------------------------|
 }

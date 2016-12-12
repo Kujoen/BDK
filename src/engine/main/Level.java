@@ -29,14 +29,15 @@ public class Level {
 	private Image imgBackgroundFragment1;
 	private Image imgBackgroundFragment2;
 	private Player player;
-	private ArrayList<Sprite> spritelist;
+	private ArrayList<Sprite> spriteList = new ArrayList<>();
+	private ArrayList<Sprite> removeList;
+	private ArrayList<Sprite> spawnList;
 	// --------------------------------------------------------|
 	// INT-----------------------------------------------------|
 	private int backgroundFragment1x = 0;
 	private int backgroundFragment1y;
 	private int backgroundFragment2x = 0;
 	private int backgroundFragment2y;
-	private int projectileTickCount = 0;
 	private int levelFileReaderTickCount = 0;
 	// --------------------------------------------------------|
 	// BOOLEAN-------------------------------------------------|
@@ -52,21 +53,21 @@ public class Level {
 	public Level(Game game) {
 		this.game = game;
 		this.player = null;
-		this.spritelist = new ArrayList<>();
 		this.isLoaded = false;
 
 		// Add the player to the spriteList
 		this.player = new Player(new Vector2D(game.getWindow().GAMEHEIGHT / 2, game.getWindow().getHeight() / 2),
 				PLAYER_VEL, PLAYER_VEL, PLAYER_HEALTH, ObjectID.PLAYER);
-		spritelist.add(player);
+		spriteList.add(player);
 
 		// Load the level-file
 		this.loadLevel(DEFAULT_LEVEL);
 	}
 
 	/**
-	 * Loads the level file wich will be used in the updateLevel method.
-	 * If Level is currently already running a level, the previous ones data will be wiped.
+	 * Loads the level file wich will be used in the updateLevel method. If
+	 * Level is currently already running a level, the previous ones data will
+	 * be wiped.
 	 * 
 	 * @param levelID
 	 */
@@ -131,7 +132,8 @@ public class Level {
 	 * @param g
 	 */
 	private void renderSprites(Graphics g) {
-		for (Sprite s : spritelist) {
+		// Render all sprites
+		for (Sprite s : spriteList) {
 			s.render(g);
 		}
 	}
@@ -139,56 +141,18 @@ public class Level {
 	// -----------------------------------------------------------------------------|
 	// UPDATING---------------------------------------------------------------------|
 	/**
-	 * Checks if the levelFile/player is spawning sprites, then updates the background,
-	 * followed by the sprite positions, and then the sprite count
+	 * Checks if the levelFile/player is spawning sprites, then updates the
+	 * background, followed by the sprite positions, and then the sprite count
 	 */
 	public void update() {
-		// Check if the levelFile(AI) is spawning in Sprites
-		updateLevel();
-
-		// Check in Input if the player is spawning Sprites
-		checkForPlayer();
-
+		// Update the background and the positions of already existing sprites
 		updateBackground();
-		updateSpritePosition();
-		updateSpriteCount();
-	}
+		updateSprites();
 
-	/**
-	 * Reads data from the loaded levelfile. It reads one line every 60 ticks.
-	 * If it detects a new sprite creation request, it will read all lines
-	 * needed to create the sprite. The levelfile acts as the AI spawner in this
-	 * game. We use an external file to make changing what spawns easy. To read
-	 * more about how the levelfiles work read the ReadMe.
-	 */
-	private void updateLevel() {
-		if(levelFileReaderTickCount % 60 == 0){
-			
-			
-			
-			levelFileReaderTickCount++;
-		}
-		levelFileReaderTickCount++;
-	}
-
-	/**
-	 * Checks if player is pressing spacebbar, if yes it will spawn a projectile
-	 * at the players position
-	 */
-	private void checkForPlayer() {
-		if (player == null) {
-			if (!spritelist.isEmpty()) {
-				player = (Player) spritelist.get(0);
-			}
-		}
-		if (Input.isSpacebar()) {
-			if (projectileTickCount % 5 == 0) {
-				spritelist.add(new Projectile(new Vector2D(player.getPosition().getX(), player.getPosition().getY()), 0,
-						10, 0, ObjectID.PROJECTILE));
-				projectileTickCount++;
-			}
-		}
-		projectileTickCount++;
+		// Update sprite lists
+		updateLevelFile();
+		updateDeleteRequests();
+		updateSpawnRequests();
 	}
 
 	/**
@@ -202,24 +166,62 @@ public class Level {
 	/**
 	 * calls the update method is all sprites
 	 */
-	private void updateSpritePosition() {
-		for (Sprite s : spritelist) {
+	private void updateSprites() {
+		// Update sprite positions
+		for (Sprite s : spriteList) {
 			s.update();
 		}
 	}
 
 	/**
-	 * adds out-of-bounds sprites to a delete-list and then removes those
-	 * objects from the spritelist
+	 * Reads data from the loaded levelfile. It reads one line every 60 ticks.
+	 * If it detects a new sprite creation request, it will read all lines
+	 * needed to create the sprite. The levelfile acts as the AI spawner in this
+	 * game. We use an external file to make changing what spawns easy. To read
+	 * more about how the levelfiles work read the ReadMe.
 	 */
-	private void updateSpriteCount() {
-		ArrayList<Sprite> removelist = new ArrayList<>();
-		for (Sprite s : spritelist) {
-			if (s instanceof Projectile && s.getPosition().getY() < 0) {
-				removelist.add(s);
-			}
+	private void updateLevelFile() {
+		if (levelFileReaderTickCount % 60 == 0) {
+			// TODO: implement levelFile
+			levelFileReaderTickCount++;
 		}
-		spritelist.removeAll(removelist);
+		levelFileReaderTickCount++;
+	}
+
+	/**
+	 * checks if any sprites have been added to the delete list and removes them
+	 * from the main list
+	 */
+	private void updateDeleteRequests() {
+		removeList = new ArrayList<>();
+
+		for (Sprite s : spriteList) {
+			removeList.addAll(s.getRequestRemoveList());
+			s.getRequestRemoveList().clear();
+		}
+
+		if (!removeList.isEmpty()) {
+			spriteList.removeAll(removeList);
+		}
+	}
+
+	/**
+	 * checks if any sprites have been added to the spawn list and adds them to
+	 * the main list
+	 * 
+	 * @return
+	 */
+	private void updateSpawnRequests() {
+		spawnList = new ArrayList<>();
+
+		for (Sprite s : spriteList) {
+			spawnList.addAll(s.getRequestSpawnList());
+			s.getRequestSpawnList().clear();
+		}
+
+		if (!spawnList.isEmpty()) {
+			spriteList.addAll(spawnList);
+		}
 	}
 
 	// ------------------------------------------------------------------------------|
@@ -241,22 +243,6 @@ public class Level {
 		this.player = player;
 	}
 
-	public ArrayList<Sprite> getSpritelist() {
-		return spritelist;
-	}
-
-	public void setSpritelist(ArrayList<Sprite> spritelist) {
-		this.spritelist = spritelist;
-	}
-
-	public int getProjectileTickCount() {
-		return projectileTickCount;
-	}
-
-	public void setProjectileTickCount(int projectileTickCount) {
-		this.projectileTickCount = projectileTickCount;
-	}
-
 	public int getLevelFileReaderTickCount() {
 		return levelFileReaderTickCount;
 	}
@@ -272,5 +258,30 @@ public class Level {
 	public void setLoaded(boolean isLoaded) {
 		this.isLoaded = isLoaded;
 	}
+
+	public ArrayList<Sprite> getSpriteList() {
+		return spriteList;
+	}
+
+	public void setSpriteList(ArrayList<Sprite> spriteList) {
+		this.spriteList = spriteList;
+	}
+
+	public ArrayList<Sprite> getRemoveList() {
+		return removeList;
+	}
+
+	public void setRemoveList(ArrayList<Sprite> removeList) {
+		this.removeList = removeList;
+	}
+
+	public ArrayList<Sprite> getSpawnList() {
+		return spawnList;
+	}
+
+	public void setSpawnList(ArrayList<Sprite> spawnList) {
+		this.spawnList = spawnList;
+	}
+
 	// -----------------------------------------------------------------------------|
 }

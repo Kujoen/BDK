@@ -13,7 +13,7 @@ public class Debugdrawer {
 		// Check for menu specific debug
 		if (game.isMenu()) {
 			Menu menu = game.getMenu();
-			
+
 			g.drawRect((int) menu.getButton1().getX(), (int) menu.getButton1().getY(),
 					(int) menu.getButton1().getWidth(), (int) menu.getButton1().getHeight());
 			g.drawRect((int) menu.getButton2().getX(), (int) menu.getButton2().getY(),
@@ -25,7 +25,7 @@ public class Debugdrawer {
 
 		// Check for level specific debug
 		if (game.isLevel()) {
-			g.drawString("Sprite Count : " + game.getLevel().getSpritelist().size(), 0, 30);
+			g.drawString("Sprite Count : " + (game.getLevel().getSpriteList().size()), 0, 30);
 		}
 
 	}
