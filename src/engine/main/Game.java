@@ -24,6 +24,14 @@ public class Game extends Canvas implements Runnable {
 	private boolean isRunning = false;
 	private boolean isMenu = true;
 	private boolean isDebug = true;
+	public boolean isDebug() {
+		return isDebug;
+	}
+
+	public void setDebug(boolean isDebug) {
+		this.isDebug = isDebug;
+	}
+
 	private boolean isMouseListening = false;
 
 	private Thread thread;
@@ -142,10 +150,9 @@ public class Game extends Canvas implements Runnable {
 
 	public void setMenu(boolean isMenu) {
 		this.isMenu = isMenu;
-		if(isMenu){
+		if (isMenu) {
 			level.stopLevelTimer();
-		}
-		else if(!isMenu){
+		} else if (!isMenu) {
 			level.startLevelTimer();
 		}
 	}

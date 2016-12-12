@@ -27,8 +27,7 @@ public class LevelTimer {
 	private static void updateLevelOne(int leveltime, Level level) {
 		switch (leveltime) {
 		case 1:
-			level.getSpriteset().add(new Player(new Vector2D(0, 0),5, 5, ObjectID.PLAYER));
-
+			level.getSpritelist().add(new Player(new Vector2D(Window.GAMEHEIGHT/2, Window.GAMEWIDTH/2),5, 5, ObjectID.PLAYER));
 			break;
 		default:
 			break;

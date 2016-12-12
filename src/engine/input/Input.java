@@ -25,6 +25,8 @@ public class Input {
 	private static boolean isLeft = false;
 	private static boolean isRight = false;
 	private static boolean isShift = false;
+	private static boolean isSpacebar = false;
+	
 	private static int mousex;
 	private static int mousey;
 
@@ -34,7 +36,6 @@ public class Input {
 		public void mouseClicked(MouseEvent e) {
 			mousex = e.getX();
 			mousey = e.getY();
-
 		}
 
 		@Override
@@ -84,6 +85,9 @@ public class Input {
 			case 16:
 				isShift = true;
 				break;
+			case 32:
+				isSpacebar = true;
+				break;
 			case 27:
 				System.exit(0);
 				break;
@@ -109,6 +113,9 @@ public class Input {
 				break;
 			case 16:
 				isShift = false;
+				break;
+			case 32:
+				isSpacebar = false;
 				break;
 			default:
 				break;
@@ -180,4 +187,13 @@ public class Input {
 	public static void setShift(boolean isShift) {
 		Input.isShift = isShift;
 	}
+	
+	public static boolean isSpacebar() {
+		return isSpacebar;
+	}
+
+	public static void setSpacebar(boolean isSpacebar) {
+		Input.isSpacebar = isSpacebar;
+	}
+
 }

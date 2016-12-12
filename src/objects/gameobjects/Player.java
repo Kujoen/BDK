@@ -2,14 +2,19 @@ package objects.gameobjects;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.Set;
 
 import engine.input.Input;
+import engine.math.Hitbox;
 import engine.math.Vector2D;
 
 public class Player extends Sprite {
 
+	boolean hasShifted = false;
+
 	public Player(Vector2D position, double xvel, double yvel, ObjectID ID) {
 		super(position, xvel, yvel, ID);
+		this.hitbox = new Hitbox(this, 2);
 	}
 
 	@Override
@@ -24,39 +29,41 @@ public class Player extends Sprite {
 	}
 
 	private void movePlayer() {
-		// Update movementvector based on input
+		// TODO: use the movement vector
 		if (Input.isForward()) {
-			// Check if already added
-			if (movementVector.getY() != -yvel) {
-				movementVector.addY(-yvel);
-				System.out.println(movementVector.getY());
+			if (position.getY() > 0) {
+				position.addY(-yvel);
 			}
-		} else if (!Input.isForward()) {
-
 		}
 		if (Input.isBackward()) {
-			// Check if already added
-			if (movementVector.getY() != yvel) {
-				movementVector.addY(yvel);
-				System.out.println(movementVector.getY());
+			if (position.getY() < 475) {
+				position.addY(yvel);
 			}
 		}
-		if (Input.isLeft()) {
-			// Check if already added
-			if (movementVector.getX() != -xvel) {
-				movementVector.addX(-xvel);
-			}
-		}
-		if (Input.isRight()) {
-			// Check if already added
-			if (movementVector.getX() != xvel) {
-				movementVector.addX(xvel);
-			}
-		}
-		if (Input.isShift()) {
-			// TODO: Implement projectiles
-		}
-		position.vecAdd(movementVector);
-	}
 
+		if (Input.isLeft()) {
+			if (position.getX() > 50) {
+				position.addX(-xvel);
+			}
+		}
+
+		if (Input.isRight()) {
+			if (position.getX() < 425) {
+				position.addX(xvel);
+			}
+		}
+
+		if (Input.isShift()) {
+			if (!hasShifted) {
+				yvel /= 2;
+				xvel /= 2;
+				hasShifted = true;
+			}
+		} else if (hasShifted == true) {
+			yvel *= 2;
+			xvel *= 2;
+			hasShifted = false;
+		}
+
+	}
 }
