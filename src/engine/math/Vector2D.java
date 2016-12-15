@@ -14,6 +14,11 @@ public class Vector2D {
 		y += inputVector.getY();
 	}
 	
+	public void vecScale(double scalingFactor){
+		x *= scalingFactor;
+		y *= scalingFactor;
+	}
+	
 	public void addX(double xvalue){
 		x += xvalue;
 	}

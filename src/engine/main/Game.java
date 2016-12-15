@@ -66,7 +66,8 @@ public class Game extends Canvas implements Runnable {
 		level = new Level(this);
 		debug = new Debugdrawer();
 	}
-
+	
+	// GAME/FLOW CONTROLLERS-------------------------------------------------------------|
 	/**
 	 * Starts a new game if there is no other gamethread running
 	 */
@@ -78,6 +79,14 @@ public class Game extends Canvas implements Runnable {
 			thread.start();
 		}
 
+	}
+	
+	/**
+	 * Called by the levelController when the end of the level is detected. Shows a level completed screen and then starts the next
+	 * level after a brief delay.
+	 */
+	public void startNextLevel(){
+		
 	}
 
 	@Override
@@ -111,7 +120,8 @@ public class Game extends Canvas implements Runnable {
 			}
 		}
 	}
-
+	//  -----------------------------------------------------------------------------|
+	// UPDATING----------------------------------------------------------------------|
 	/**
 	 * calls the update method of Input and the selected gameobject
 	 */
@@ -147,7 +157,8 @@ public class Game extends Canvas implements Runnable {
 			}
 		}
 	}
-
+	// -------------------------------------------------------------------------------|
+	// RENDERING----------------------------------------------------------------------|
 	/**
 	 * Renders the current active gameobject
 	 */
@@ -176,7 +187,7 @@ public class Game extends Canvas implements Runnable {
 		g.dispose();
 		bs.show();
 	}
-
+	// -----------------------------------------------------------------------------|
 	// GETTERS AND SETTERS
 	// -----------------------------------------------------------------------------|
 

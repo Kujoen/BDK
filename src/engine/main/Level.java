@@ -16,6 +16,7 @@ import javax.swing.text.html.HTMLDocument.Iterator;
 
 import engine.input.Input;
 import engine.math.Vector2D;
+import objects.IO.LevelFileIO;
 import objects.gameobjects.ObjectID;
 import objects.gameobjects.Player;
 import objects.gameobjects.Projectile;
@@ -24,6 +25,7 @@ import objects.gameobjects.Sprite;
 public class Level {
 	// ENGINEOBJECTS-------------------------------------------|
 	private Game game;
+	private LevelController levelController;
 	// --------------------------------------------------------|
 	// GAMEOBJECTS---------------------------------------------|
 	private Image imgBackgroundFragment1;
@@ -44,10 +46,13 @@ public class Level {
 	private boolean isLoaded;
 	// --------------------------------------------------------|
 	// FINALS--------------------------------------------------|
-	private final int BACKGROUND_SCROLLSPEED = 2;
-	private final int PLAYER_VEL = 5;
-	private final int PLAYER_HEALTH = 1;
-	private final int DEFAULT_LEVEL = 0;
+	public static final int BACKGROUND_SCROLLSPEED = 2;
+	public static final int PLAYER_VEL = 5;
+	public static final int PLAYER_HEALTH = 1;
+	public static final int DEFAULT_LEVEL = 0;
+	// --------------------------------------------------------|
+	// IO------------------------------------------------------|
+	private File levelFile;
 	// --------------------------------------------------------|
 
 	public Level(Game game) {
@@ -62,6 +67,9 @@ public class Level {
 
 		// Load the level-file
 		this.loadLevel(DEFAULT_LEVEL);
+		
+		// Add the levelController
+		this.levelController = new LevelController(this);
 	}
 
 	/**
@@ -73,7 +81,8 @@ public class Level {
 	 */
 	private void loadLevel(int levelID) {
 		switch (levelID) {
-		case 0:
+		case 0:	
+			levelFile = new File("res/data/level1.ltw");
 			break;
 		case 1:
 			break;
@@ -182,7 +191,12 @@ public class Level {
 	 */
 	private void updateLevelFile() {
 		if (levelFileReaderTickCount % 60 == 0) {
-			// TODO: implement levelFile
+			try {
+				levelController.readNextCommand();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
 			levelFileReaderTickCount++;
 		}
 		levelFileReaderTickCount++;
@@ -281,6 +295,22 @@ public class Level {
 
 	public void setSpawnList(ArrayList<Sprite> spawnList) {
 		this.spawnList = spawnList;
+	}
+
+	public LevelController getLevelController() {
+		return levelController;
+	}
+
+	public void setLevelController(LevelController levelController) {
+		this.levelController = levelController;
+	}
+
+	public File getLevelFile() {
+		return levelFile;
+	}
+
+	public void setLevelFile(File levelFile) {
+		this.levelFile = levelFile;
 	}
 
 	// -----------------------------------------------------------------------------|

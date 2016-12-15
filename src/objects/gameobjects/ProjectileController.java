@@ -7,26 +7,25 @@ public class ProjectileController {
 
 	// INT--------------------------------------------------|
 	private int movementType;
-	private int counterFunctionCalls;
 	// -----------------------------------------------------|
 	// FINALS-----------------------------------------------|
 	private final int DEFAULT_MOVEMENT_TYPE = 0;
-	// ------------------------------------------------------|
+	// -----------------------------------------------------|
 	// MATHOBJECTS------------------------------------------|
-	private Vector2D originalVector;
-	// ------------------------------------------------------|
+	private MovementFunctions mFunction;
+	// -----------------------------------------------------|
 	// GAMEOBJECTS------------------------------------------|
 	private Projectile projectile;
-	// ------------------------------------------------------|
+	// -----------------------------------------------------|
 
 	public ProjectileController(int movementType, Projectile projectile) {
 		this.movementType = movementType;
 		this.projectile = projectile;
-		originalVector = projectile.getPosition();
+		this.mFunction = new MovementFunctions(projectile);
 	}
 
 	/**
-	 * Returns a vector2D moved based on the chosen movement type of the
+	 * moves projectile based on the chosen movement type of the
 	 * projectile
 	 * 
 	 * @return
@@ -38,8 +37,9 @@ public class ProjectileController {
 					projectile.getPosition().getY() + projectile.PROJECTILE_SPEED));
 			break;
 		case Projectile.MOVEMENT_SPIRAL:
-			projectile.setPosition(MovementFunctions.calcArchimedeanSpiral(originalVector, counterFunctionCalls));
-			counterFunctionCalls++;
+			mFunction.calcArchimedeanSpiral();
+			break;
+		case Projectile.MOVEMENT_VECTOR:
 			break;
 		}
 	}

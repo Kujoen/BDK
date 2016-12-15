@@ -13,6 +13,7 @@ public class Projectile extends Sprite {
 	public static final double PROJECTILE_SPEED = -10;
 	public static final int MOVEMENT_PLAYER_PROJECTILE = 0;
 	public static final int MOVEMENT_SPIRAL = 1;
+	public static final int MOVEMENT_VECTOR = 2;
 	//------------------------------------------------|
 	// GAMEOBJECTS------------------------------------|
 	private ProjectileController pController;
