@@ -54,4 +54,8 @@ public class MovementFunctions {
 		return result;*/
 	}
 
+	public void calcMovementVector(Vector2D movementDirection) {
+		projectile.getPosition().vecAdd(movementDirection);
+	}
+
 }

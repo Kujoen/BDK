@@ -13,6 +13,7 @@ public class ProjectileController {
 	// -----------------------------------------------------|
 	// MATHOBJECTS------------------------------------------|
 	private MovementFunctions mFunction;
+	private Vector2D movementDirection;
 	// -----------------------------------------------------|
 	// GAMEOBJECTS------------------------------------------|
 	private Projectile projectile;
@@ -22,6 +23,13 @@ public class ProjectileController {
 		this.movementType = movementType;
 		this.projectile = projectile;
 		this.mFunction = new MovementFunctions(projectile);
+	}
+	
+	public ProjectileController(int movementType, Projectile projectile, Vector2D movementVector){
+		this.movementType = movementType;
+		this.projectile = projectile;
+		this.mFunction = new MovementFunctions(projectile);
+		this.movementDirection = movementVector;
 	}
 
 	/**
@@ -34,12 +42,13 @@ public class ProjectileController {
 		switch (movementType) {
 		case Projectile.MOVEMENT_PLAYER_PROJECTILE:
 			projectile.setPosition(new Vector2D(projectile.getPosition().getX(),
-					projectile.getPosition().getY() + projectile.PROJECTILE_SPEED));
+					projectile.getPosition().getY() + projectile.PROJECTILE_PLAYERSPEED));
 			break;
 		case Projectile.MOVEMENT_SPIRAL:
 			mFunction.calcArchimedeanSpiral();
 			break;
 		case Projectile.MOVEMENT_VECTOR:
+			mFunction.calcMovementVector(movementDirection);
 			break;
 		}
 	}

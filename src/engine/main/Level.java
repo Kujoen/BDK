@@ -60,7 +60,7 @@ public class Level {
 		this.player = null;
 		this.isLoaded = false;
 
-		// Add the player to the spriteList
+        //Add the player to the spriteList
 		this.player = new Player(new Vector2D(game.getWindow().GAMEHEIGHT / 2, game.getWindow().getHeight() / 2),
 				PLAYER_VEL, PLAYER_VEL, PLAYER_HEALTH, ObjectID.PLAYER);
 		spriteList.add(player);

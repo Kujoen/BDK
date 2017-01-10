@@ -10,7 +10,7 @@ import engine.math.Vector2D;
 public class Projectile extends Sprite {
 
 	// FINALS-----------------------------------------|
-	public static final double PROJECTILE_SPEED = -10;
+	public static final double PROJECTILE_PLAYERSPEED = -10;
 	public static final int MOVEMENT_PLAYER_PROJECTILE = 0;
 	public static final int MOVEMENT_SPIRAL = 1;
 	public static final int MOVEMENT_VECTOR = 2;
@@ -22,6 +22,11 @@ public class Projectile extends Sprite {
 	public Projectile(Vector2D position, double xvel, double yvel, int health, ObjectID ID, int movementType) {
 		super(position, xvel, yvel, health, ID);
 		pController = new ProjectileController(movementType, this);
+	}
+	
+	public Projectile(Vector2D position, double xvel, double yvel, int health, ObjectID ID, int movementType , Vector2D movementVector) {
+		super(position, xvel, yvel, health, ID);
+		pController = new ProjectileController(movementType, this , movementVector);
 	}
 
 	// UPDATING--------------------------------------------------------------------------|

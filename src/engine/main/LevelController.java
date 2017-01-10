@@ -49,7 +49,7 @@ public class LevelController {
 		System.out.println("command : " + commandList.get(commandCounter));
 
 		if (commandList.get(commandCounter).equals("exit")) {
-			System.exit(0);
+			//System.exit(0);
 		}
 
 		commandCounter++;
