@@ -10,7 +10,7 @@ import engine.math.Vector2D;
 public class Projectile extends Sprite {
 
 	// FINALS-----------------------------------------|
-	public static final double PROJECTILE_PLAYERSPEED = -10;
+	public static final double SPEED_PLAYER_PROJECTILE = -10;
 	public static final int MOVEMENT_PLAYER_PROJECTILE = 0;
 	public static final int MOVEMENT_SPIRAL = 1;
 	public static final int MOVEMENT_VECTOR = 2;

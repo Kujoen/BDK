@@ -77,12 +77,12 @@ public class Player extends Sprite {
 	 */
 	public void spawnPlayerProjectiles() {
 		if (Input.isSpacebar()) {
-			if (counterProjectileTick % 1 == 0) {
+			if (counterProjectileTick % 4 == 0) {
 				requestSpawnList.add(new Projectile(
 						new Vector2D(this.position.getX() + SpriteSize.PLAYER_SIZE / 2 - SpriteSize.SIZE_MEDIUM / 2,
 								this.position.getY()),
-						Projectile.PROJECTILE_PLAYERSPEED, Projectile.PROJECTILE_PLAYERSPEED, 0, ObjectID.PROJECTILE,
-						Projectile.MOVEMENT_VECTOR, new Vector2D (0,10)));
+						Projectile.SPEED_PLAYER_PROJECTILE, Projectile.SPEED_PLAYER_PROJECTILE, 0, ObjectID.PROJECTILE,
+						Projectile.MOVEMENT_PLAYER_PROJECTILE));
 				counterProjectileTick++;
 			}
 			counterProjectileTick++;

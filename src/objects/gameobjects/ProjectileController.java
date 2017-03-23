@@ -42,7 +42,7 @@ public class ProjectileController {
 		switch (movementType) {
 		case Projectile.MOVEMENT_PLAYER_PROJECTILE:
 			projectile.setPosition(new Vector2D(projectile.getPosition().getX(),
-					projectile.getPosition().getY() + projectile.PROJECTILE_PLAYERSPEED));
+					projectile.getPosition().getY() + projectile.SPEED_PLAYER_PROJECTILE));
 			break;
 		case Projectile.MOVEMENT_SPIRAL:
 			mFunction.calcArchimedeanSpiral();
