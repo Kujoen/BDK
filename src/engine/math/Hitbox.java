@@ -10,4 +10,5 @@ public class Hitbox {
 	public Hitbox(Sprite sprite , int type){
 		this.sprite = sprite;
 	}
+	
 }

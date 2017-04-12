@@ -2,36 +2,36 @@ package objects.gameobjects;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
 import java.util.Set;
 
+import javax.imageio.ImageIO;
+
 import engine.math.Hitbox;
+import engine.math.MovementFunctions;
 import engine.math.Vector2D;
 
 public class Projectile extends Sprite {
 
-	// FINALS-----------------------------------------|
-	public static final double SPEED_PLAYER_PROJECTILE = -10;
-	public static final int MOVEMENT_PLAYER_PROJECTILE = 0;
-	public static final int MOVEMENT_SPIRAL = 1;
-	public static final int MOVEMENT_VECTOR = 2;
+	// IMAGE------------------------------------------|
+	private Image currentimage;
 	//------------------------------------------------|
-	// GAMEOBJECTS------------------------------------|
-	private ProjectileController pController;
+	// INT--------------------------------------------|
+	private int animationtickcounter = 0;
+	private int animationposcounter = 0;
 	//------------------------------------------------|
 
-	public Projectile(Vector2D position, double xvel, double yvel, int health, ObjectID ID, int movementType) {
-		super(position, xvel, yvel, health, ID);
-		pController = new ProjectileController(movementType, this);
-	}
-	
-	public Projectile(Vector2D position, double xvel, double yvel, int health, ObjectID ID, int movementType , Vector2D movementVector) {
-		super(position, xvel, yvel, health, ID);
-		pController = new ProjectileController(movementType, this , movementVector);
+	public Projectile(Vector2D position, Vector2D movementvector, int health, ObjectID ID, String spritefilename, boolean isanimated) {
+		super(position, movementvector, health, ID, spritefilename, isanimated);
+		
 	}
 
 	// UPDATING--------------------------------------------------------------------------|
 	@Override
 	public void update() {
+		animationController();
 		moveProjectile();
 		checkForRemove();
 	}
@@ -40,7 +40,7 @@ public class Projectile extends Sprite {
 	 * moves the projectile
 	 */
 	private void moveProjectile() {
-		pController.moveProjectile();
+		position.vecAdd(movementvector);
 	}
 
 	/**
@@ -56,10 +56,52 @@ public class Projectile extends Sprite {
 	// RENDERING-----------------------------------------------------------------|
 	@Override
 	public void render(Graphics g) {
-		g.setColor(Color.RED);
-		g.fillRect((int) position.getX(), (int) position.getY(), SpriteSize.SIZE_MEDIUM, SpriteSize.SIZE_MEDIUM);
+		g.drawImage(currentimage, (int)position.getX(), (int)position.getY(), null);
 	}
 	// ---------------------------------------------------------------------------|
+
+	@Override
+	public void loadNewSubImage(int sectionid) {
+		switch(sectionid){
+		case 0:
+			break;
+		case 1:
+			break;
+		case 2:
+			break;
+		}
+		
+	}
+
+	@Override
+	public void animationController() {
+		if(animationtickcounter % 10 != 0){
+			switch(animationposcounter % 6){
+			case 0:
+				currentimage = spritefile.getSubimage(0, 0, 20, 20);
+				break;
+			case 1:
+				currentimage = spritefile.getSubimage(20, 0, 20, 20);
+				break;
+			case 2:
+				currentimage = spritefile.getSubimage(40, 0, 20, 20);
+				break;
+			case 3:
+				currentimage = spritefile.getSubimage(0, 20, 20, 20);
+				break;
+			case 4:
+				currentimage = spritefile.getSubimage(20, 20, 20, 20);
+				break;
+			case 5: 
+				currentimage = spritefile.getSubimage(40, 20, 20, 20);
+				break;
+			}
+			
+		}
+		
+		animationtickcounter++;
+		animationposcounter++;
+	}
 
 	//GETTERS AND SETTERS
 	//----------------------------------------------------------------------------|

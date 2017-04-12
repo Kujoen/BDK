@@ -61,8 +61,13 @@ public class Level {
 		this.isLoaded = false;
 
         //Add the player to the spriteList
-		this.player = new Player(new Vector2D(game.getWindow().GAMEHEIGHT / 2, game.getWindow().getHeight() / 2),
-				PLAYER_VEL, PLAYER_VEL, PLAYER_HEALTH, ObjectID.PLAYER);
+		this.player = new Player(
+				new Vector2D(game.getWindow().GAMEHEIGHT / 2, game.getWindow().getHeight() / 2),
+				new Vector2D(10,10), 
+				1, 
+				ObjectID.PLAYER,
+				"player_placeholder",
+				true);
 		spriteList.add(player);
 
 		// Load the level-file
