@@ -43,22 +43,39 @@ public class LevelController {
 	}
 
 	/**
-	 * Grads a line from the levelFile and executes its command
+	 * reads a line from the levelFile and executes its command
 	 */
 	public void readNextCommand() throws Exception {
-		System.out.println("command : " + commandList.get(commandCounter));
+		
+		String command = commandList.get(commandCounter);
+		
+		System.out.println("command : " + command);
 
-		if (commandList.get(commandCounter).equals("exit")) {
-			//System.exit(0);
+		// Exits the programm
+		if (command.equals("exit")) {
+			System.exit(0);
+		}
+		// Displays a changeable Leveltitle
+		else if(command.contains("display")){
+			int startindex = command.indexOf("{");
+			System.out.println(startindex);
+			String message = command.substring(startindex);
+			
+			level.getGame().setDisplayLeveltitle(true);
+			level.getGame().setLeveltitle(message);
+		}
+		// Stops display of leveltitle
+		else if(command.contains("stopdsplay")){
+			level.getGame().setDisplayLeveltitle(false);
 		}
 
 		commandCounter++;
 	}
 
 	public void initialiseCommandCompareList() {
-		commandCompareList = new ArrayList<>();
-		commandCompareList.add("wait");
-		commandCompareList.add("exit");
+		
+		// TODO: implement a commandCompareList for the checkCommandList
+		
 	}
 
 	public void checkCommandList() throws Exception {

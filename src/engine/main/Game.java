@@ -28,6 +28,9 @@ public class Game extends Canvas implements Runnable {
 	private boolean isLevel;
 	private boolean isMouseListening;
 	private boolean isPaused;
+	private boolean isDisplayLeveltitle;
+	// STRINGS-----------------------------------------|
+	private String leveltitle;
 	// ------------------------------------------------|
 	// FINALS------------------------------------------|
 	private static final long serialVersionUID = 1L;
@@ -172,11 +175,12 @@ public class Game extends Canvas implements Runnable {
 		Graphics g = bs.getDrawGraphics();
 
 		if (!isPaused) {
-			//Check wich gameobject is being drawn
+			//Check if menu/level
 			if (isMenu) {
 				menu.render(g);
 			} else if (isLevel) {
 				level.render(g);
+				drawUI(g);
 			}
 		}
 
@@ -187,6 +191,19 @@ public class Game extends Canvas implements Runnable {
 
 		g.dispose();
 		bs.show();
+	}
+	
+	private void drawUI(Graphics g) {
+		
+		if(isDisplayLeveltitle){
+			drawLevelTitle(g);
+		}
+		
+	}
+	
+	private void drawLevelTitle(Graphics g) {
+		g.setColor(Color.RED);
+		g.drawString(leveltitle, window.GAMEWIDTH / 2, window.GAMEHEIGHT / 2);
 	}
 	// -----------------------------------------------------------------------------|
 	// GETTERS AND SETTERS
@@ -290,6 +307,22 @@ public class Game extends Canvas implements Runnable {
 
 	public static int getDefaultMenuId() {
 		return DEFAULT_MENU_ID;
+	}
+
+	public boolean isLeveltitle() {
+		return isDisplayLeveltitle;
+	}
+
+	public void setDisplayLeveltitle(boolean isLevelTitle) {
+		this.isDisplayLeveltitle = isLevelTitle;
+	}
+
+	public String getLeveltitle() {
+		return leveltitle;
+	}
+
+	public void setLeveltitle(String leveltitle) {
+		this.leveltitle = leveltitle;
 	}
 
 	// ------------------------------------------------------------------------------|
