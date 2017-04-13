@@ -108,8 +108,10 @@ public class Level {
 	
 		if(!isLoaded){
 			general_background = ImageData.getGeneral_background();
-			g.drawImage(general_background, 0, 0, null);
+			isLoaded = true;
 		}
+		
+		g.drawImage(general_background, 0, 0, null);
 		
 	}
 

@@ -5,12 +5,14 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 import java.io.File;
 
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 
 import engine.input.Input;
+import objects.data.ImageData;
 
 /**
  * Menu draws the menus based on menustate and updates based on input (clicks)
@@ -30,10 +32,12 @@ public class Menu {
 	private boolean isLoaded;
 	// --------------------------------------|
 	// UI------------------------------------|
-	private Image image;
 	private Rectangle button1;
 	private Rectangle button2;
 	private Rectangle button3;
+	//---------------------------------------|
+	// IMAGES--------------------------------|
+	private BufferedImage general_background;
 	//---------------------------------------|
 
 	public Menu(Game game) {
@@ -76,14 +80,12 @@ public class Menu {
 	 */
 	private void renderMainMenu(Graphics g) {
 		if (!isLoaded) {
-			try {
-				image = ImageIO.read(new File("res/images/mainmenu.bmp"));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			general_background = ImageData.getGeneral_background();
 			isLoaded = true;
 		}
-		g.drawImage(image, game.getACTUAL_PUFFER_WIDTH(), game.getACTUAL_PUFFER_HEIGHT() , null);
+		
+		g.drawImage(general_background, 0, 0, null);
+		
 	}
 
 	/**
