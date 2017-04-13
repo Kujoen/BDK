@@ -83,7 +83,7 @@ public class Menu {
 			}
 			isLoaded = true;
 		}
-		g.drawImage(image, 0, 0, null);
+		g.drawImage(image, game.getACTUAL_PUFFER_WIDTH(), game.getACTUAL_PUFFER_HEIGHT() , null);
 	}
 
 	/**

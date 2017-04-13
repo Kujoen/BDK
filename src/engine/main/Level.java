@@ -16,7 +16,6 @@ import javax.swing.text.html.HTMLDocument.Iterator;
 
 import engine.input.Input;
 import engine.math.Vector2D;
-import objects.IO.LevelFileIO;
 import objects.gameobjects.ObjectID;
 import objects.gameobjects.Player;
 import objects.gameobjects.Projectile;
@@ -25,7 +24,6 @@ import objects.gameobjects.Sprite;
 public class Level {
 	// ENGINEOBJECTS-------------------------------------------|
 	private Game game;
-	private LevelController levelController;
 	// --------------------------------------------------------|
 	// GAMEOBJECTS---------------------------------------------|
 	private Image imgBackgroundFragment1;
@@ -62,7 +60,7 @@ public class Level {
 
         //Add the player to the spriteList
 		this.player = new Player(
-				new Vector2D(game.getWindow().GAMEHEIGHT / 2, game.getWindow().getHeight() / 2),
+				new Vector2D(game.getWindow().getACTUALWIDTH() / 2, game.getWindow().getACTUALHEIGHT() / 2),
 				new Vector2D(10,10), 
 				1, 
 				ObjectID.PLAYER,
@@ -72,9 +70,6 @@ public class Level {
 
 		// Load the level-file
 		this.loadLevel(DEFAULT_LEVEL);
-		
-		// Add the levelController
-		this.levelController = new LevelController(this);
 	}
 
 	/**
@@ -123,7 +118,7 @@ public class Level {
 			}
 			try {
 				imgBackgroundFragment2 = ImageIO.read(new File("res/images/level1background.bmp"));
-				backgroundFragment2y = -Window.GAMEHEIGHT;
+				backgroundFragment2y = -Window.getACTUALHEIGHT();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -133,10 +128,10 @@ public class Level {
 		g.drawImage(imgBackgroundFragment1, backgroundFragment1x, backgroundFragment1y, null);
 		g.drawImage(imgBackgroundFragment2, backgroundFragment2x, backgroundFragment2y, null);
 		// Check if background has to reset position
-		if (backgroundFragment1y == Window.GAMEHEIGHT) {
-			backgroundFragment1y = -Window.GAMEHEIGHT;
-		} else if (backgroundFragment2y == Window.GAMEHEIGHT) {
-			backgroundFragment2y = -Window.GAMEHEIGHT;
+		if (backgroundFragment1y == Window.getACTUALHEIGHT()) {
+			backgroundFragment1y = -Window.getACTUALHEIGHT();
+		} else if (backgroundFragment2y == Window.getACTUALHEIGHT()) {
+			backgroundFragment2y = -Window.getACTUALHEIGHT();
 		}
 	}
 
@@ -164,7 +159,6 @@ public class Level {
 		updateSprites();
 
 		// Update sprite lists
-		updateLevelFile();
 		updateDeleteRequests();
 		updateSpawnRequests();
 	}
@@ -185,26 +179,6 @@ public class Level {
 		for (Sprite s : spriteList) {
 			s.update();
 		}
-	}
-
-	/**
-	 * Reads data from the loaded levelfile. It reads one line every 60 ticks.
-	 * If it detects a new sprite creation request, it will read all lines
-	 * needed to create the sprite. The levelfile acts as the AI spawner in this
-	 * game. We use an external file to make changing what spawns easy. To read
-	 * more about how the levelfiles work read the ReadMe.
-	 */
-	private void updateLevelFile() {
-		if (levelFileReaderTickCount % 60 == 0) {
-			try {
-				levelController.readNextCommand();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}	
-			levelFileReaderTickCount++;
-		}
-		levelFileReaderTickCount++;
 	}
 
 	/**
@@ -300,14 +274,6 @@ public class Level {
 
 	public void setSpawnList(ArrayList<Sprite> spawnList) {
 		this.spawnList = spawnList;
-	}
-
-	public LevelController getLevelController() {
-		return levelController;
-	}
-
-	public void setLevelController(LevelController levelController) {
-		this.levelController = levelController;
 	}
 
 	public File getLevelFile() {

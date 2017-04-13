@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
+import javax.swing.JOptionPane;
+
 import engine.input.Input;
 
 /**
@@ -37,7 +39,19 @@ public class Game extends Canvas implements Runnable {
 	private static final double TICKRATE = 60.0;
 	private static final int DEFAULT_LEVEL_ID = 0;
 	private static final int DEFAULT_MENU_ID = 0;
+	private static final int DEFAULT_PLAY_WIDTH = 520;
+	private static final int DEFAULT_PLAY_HEIGHT = 576;
+	private static final int DEFAULT_PUFFER_HEIGHT = 72;
+	private static final int DEFAULT_PUFFER_WIDTH = 380;
+	private static final int DEFAULT_GRIDPUFFER_HEIGHT = 8;
+	private static final int DEFAULT_GRIDPUFFER_WIDTH = 8;
 	// INTS--------------------------------------------|
+	private static int ACTUAL_PLAY_WIDTH;
+	private static int ACTUAL_PLAY_HEIGHT;
+	private static int ACTUAL_PUFFER_HEIGHT;
+	private static int ACTUAL_PUFFER_WIDTH;
+	private static int ACTUAL_GRIDPUFFER_HEIGHT;
+	private static int ACTUAL_GRIDPUFFER_WIDTH;
 	private int framesPerSecond = 0;
 	private int updatesPerSecond = 0;
 	// OTHER-------------------------------------------|
@@ -45,6 +59,37 @@ public class Game extends Canvas implements Runnable {
 	// ------------------------------------------------|
 
 	public static void main(String[] args) {
+		
+		// Ask if fullscreen or default size
+		JOptionPane optionpane = new JOptionPane();
+		int reply = optionpane.showConfirmDialog(null, "Would you like to run Clonehou in fullscreen ?" , "Window Settings", JOptionPane.YES_NO_OPTION);
+		if(reply == JOptionPane.YES_OPTION){
+			
+			Window.setACTUALHEIGHT((int)Window.getScreenheight());
+			Window.setACTUALWIDTH((int)Window.getScreenwidth());
+			
+			double height_scaling_factor = Window.getScreenheight() / Window.getDefaultheight();
+			
+			ACTUAL_PLAY_HEIGHT = (int)(DEFAULT_PLAY_HEIGHT * height_scaling_factor);
+			ACTUAL_PUFFER_HEIGHT = (int)(DEFAULT_PUFFER_HEIGHT * height_scaling_factor);
+			ACTUAL_GRIDPUFFER_HEIGHT = (int)(DEFAULT_GRIDPUFFER_HEIGHT * height_scaling_factor);
+			
+			double width_scaling_factor = Window.getScreenwidth() / Window.getDefaultwidth();
+			
+			ACTUAL_PLAY_WIDTH = (int)(DEFAULT_PLAY_WIDTH * width_scaling_factor);
+			ACTUAL_PUFFER_WIDTH = (int)(DEFAULT_PUFFER_WIDTH * width_scaling_factor);
+			ACTUAL_GRIDPUFFER_WIDTH = (int)(DEFAULT_GRIDPUFFER_WIDTH * height_scaling_factor);
+			
+		}else{
+			Window.setACTUALHEIGHT(Window.getDefaultheight());
+			Window.setACTUALWIDTH(Window.getDefaultwidth());
+			ACTUAL_PLAY_WIDTH = DEFAULT_PLAY_WIDTH;
+			ACTUAL_PLAY_HEIGHT = DEFAULT_PLAY_HEIGHT;
+			ACTUAL_PUFFER_HEIGHT = DEFAULT_PUFFER_HEIGHT;
+			ACTUAL_PUFFER_WIDTH = DEFAULT_PUFFER_WIDTH;
+		}
+		
+		
 		Window window = new Window("LTW");
 	}
 
@@ -53,7 +98,7 @@ public class Game extends Canvas implements Runnable {
 	 * @param window
 	 */
 	public Game(Window window) {
-		this.setSize(Window.GAMEWIDTH, Window.GAMEHEIGHT);
+		this.setSize(Window.getACTUALWIDTH(), Window.getACTUALHEIGHT());
 		this.addKeyListener(Input.KeyInputListener);
 		this.window = window;
 
@@ -202,8 +247,8 @@ public class Game extends Canvas implements Runnable {
 	}
 	
 	private void drawLevelTitle(Graphics g) {
-		g.setColor(Color.RED);
-		g.drawString(leveltitle, window.GAMEWIDTH / 2, window.GAMEHEIGHT / 2);
+		
+	
 	}
 	// -----------------------------------------------------------------------------|
 	// GETTERS AND SETTERS
@@ -323,6 +368,38 @@ public class Game extends Canvas implements Runnable {
 
 	public void setLeveltitle(String leveltitle) {
 		this.leveltitle = leveltitle;
+	}
+
+	public static int getACTUAL_PLAY_WIDTH() {
+		return ACTUAL_PLAY_WIDTH;
+	}
+
+	public static void setACTUAL_PLAY_WIDTH(int aCTUAL_PLAY_WIDTH) {
+		ACTUAL_PLAY_WIDTH = aCTUAL_PLAY_WIDTH;
+	}
+
+	public static int getACTUAL_PLAY_HEIGHT() {
+		return ACTUAL_PLAY_HEIGHT;
+	}
+
+	public static void setACTUAL_PLAY_HEIGHT(int aCTUAL_PLAY_HEIGHT) {
+		ACTUAL_PLAY_HEIGHT = aCTUAL_PLAY_HEIGHT;
+	}
+
+	public static int getACTUAL_PUFFER_HEIGHT() {
+		return ACTUAL_PUFFER_HEIGHT;
+	}
+
+	public static void setACTUAL_PUFFER_HEIGHT(int aCTUAL_PUFFER_HEIGHT) {
+		ACTUAL_PUFFER_HEIGHT = aCTUAL_PUFFER_HEIGHT;
+	}
+
+	public static int getACTUAL_PUFFER_WIDTH() {
+		return ACTUAL_PUFFER_WIDTH;
+	}
+
+	public static void setACTUAL_PUFFER_WIDTH(int aCTUAL_PUFFER_WIDTH) {
+		ACTUAL_PUFFER_WIDTH = aCTUAL_PUFFER_WIDTH;
 	}
 
 	// ------------------------------------------------------------------------------|

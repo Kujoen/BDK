@@ -1,0 +1,14 @@
+TODO:
+Create scorescreen next to gamescreeen.
+Create default screensize templates and allow scaling to fullscreen.
+		----------> Default play area will be 
+
+
+Levelprogress :
+
+Flying over fields
+Flying over mountains
+Flying over clouds
+Flying over Earth
+
+-----------------> 4 levels
