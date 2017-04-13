@@ -3,7 +3,11 @@ package objects.gameobjects;
 import java.awt.Graphics;
 
 import engine.math.Vector2D;
-
+/**
+ * 
+ * @author DonutConsulting
+ *
+ */
 public class Enemy extends Sprite {
 
 	public Enemy(Vector2D position, Vector2D movementvector, int health, ObjectID ID, String spritefilename, boolean isanimated) {
