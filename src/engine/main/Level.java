@@ -37,9 +37,9 @@ public class Level {
 	private ArrayList<Sprite> spawnList;
 	// --------------------------------------------------------|
 	private int scrolling_background1x = Game.getACTUAL_PUFFER_WIDTH();
-	private int scrolling_background1y = 0;
+	private int scrolling_background1y = Game.getACTUAL_PUFFER_HEIGHT();
 	private int scrolling_background2x = Game.getACTUAL_PUFFER_WIDTH();
-	private int scrolling_background2y = 0 - Game.getACTUAL_PLAY_HEIGHT();
+	private int scrolling_background2y = Game.getACTUAL_PUFFER_HEIGHT() - Game.getACTUAL_PLAY_HEIGHT();
 	// INT-----------------------------------------------------|
 	private int levelFileReaderTickCount = 0;
 	// --------------------------------------------------------|
@@ -115,6 +115,10 @@ public class Level {
 		g.drawImage(general_background, 0, 0, null);
 		g.drawImage(scrolling_background1, scrolling_background1x, scrolling_background1y, null);
 		g.drawImage(scrolling_background2, scrolling_background2x, scrolling_background2y, null);
+		
+		g.setColor(Color.BLACK);
+		g.fillRect(Game.getACTUAL_PUFFER_WIDTH(), 0, Game.getACTUAL_PLAY_WIDTH(), Game.getACTUAL_PUFFER_HEIGHT());
+		g.fillRect(Game.getACTUAL_PUFFER_WIDTH(), Game.getACTUAL_PLAY_HEIGHT() + Game.getACTUAL_PUFFER_HEIGHT(), Game.getACTUAL_PLAY_WIDTH(), Game.getACTUAL_PUFFER_HEIGHT());
 	}
 
 	/**
