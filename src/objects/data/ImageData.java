@@ -7,6 +7,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import engine.main.Game;
 import engine.main.Window;
 
 public class ImageData {
@@ -19,6 +20,7 @@ public class ImageData {
 	public static void loadimages(){
 		try {
 			general_background = ImageIO.read(new File("res/images/background_placeholder.png"));
+			scrolling_background = ImageIO.read(new File("res/images/scrolling_background_placeholder.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -27,6 +29,7 @@ public class ImageData {
 	
 	public static void scaleimages(double height_scaling_factor, double width_scaling_factor){
 		general_background = scale(general_background, Window.getACTUALWIDTH(), Window.getACTUALHEIGHT());
+		scrolling_background = scale(scrolling_background, Game.getACTUAL_PLAY_WIDTH(), Game.getACTUAL_PLAY_HEIGHT());
 	}
 	
 	private static BufferedImage scale(BufferedImage imagetoscale, int nWidth, int nHeight){

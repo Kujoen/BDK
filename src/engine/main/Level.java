@@ -29,11 +29,17 @@ public class Level {
 	// --------------------------------------------------------|
 	// GAMEOBJECTS---------------------------------------------|
 	private BufferedImage general_background;
+	private BufferedImage scrolling_background1;
+	private BufferedImage scrolling_background2;
 	private Player player;
 	private ArrayList<Sprite> spriteList = new ArrayList<>();
 	private ArrayList<Sprite> removeList;
 	private ArrayList<Sprite> spawnList;
 	// --------------------------------------------------------|
+	private int scrolling_background1x = Game.getACTUAL_PUFFER_WIDTH();
+	private int scrolling_background1y = 0;
+	private int scrolling_background2x = Game.getACTUAL_PUFFER_WIDTH();
+	private int scrolling_background2y = 0 - Game.getACTUAL_PLAY_HEIGHT();
 	// INT-----------------------------------------------------|
 	private int levelFileReaderTickCount = 0;
 	// --------------------------------------------------------|
@@ -77,15 +83,8 @@ public class Level {
 	 * @param levelID
 	 */
 	private void loadLevel(int levelID) {
-		switch (levelID) {
-		case 0:	
-			levelFile = new File("res/data/level1.ltw");
-			break;
-		case 1:
-			break;
-		case 2:
-			break;
-		}
+		
+		
 	}
 
 	// RENDERING--------------------------------------------------------------------|
@@ -108,11 +107,14 @@ public class Level {
 	
 		if(!isLoaded){
 			general_background = ImageData.getGeneral_background();
+			scrolling_background1= ImageData.getScrolling_background();
+			scrolling_background2= ImageData.getScrolling_background();
 			isLoaded = true;
 		}
 		
 		g.drawImage(general_background, 0, 0, null);
-		
+		g.drawImage(scrolling_background1, scrolling_background1x, scrolling_background1y, null);
+		g.drawImage(scrolling_background2, scrolling_background2x, scrolling_background2y, null);
 	}
 
 	/**
@@ -148,6 +150,16 @@ public class Level {
 	 */
 	private void updateBackground() {
 		
+		scrolling_background1y++;
+		scrolling_background2y++;
+		
+		if(scrolling_background1y == Game.getACTUAL_PLAY_HEIGHT() + Game.getACTUAL_PUFFER_HEIGHT()){
+			scrolling_background1y = Game.getACTUAL_PUFFER_HEIGHT() - Game.getACTUAL_PLAY_HEIGHT();
+		}
+		
+		if(scrolling_background2y == Game.getACTUAL_PLAY_HEIGHT() + Game.getACTUAL_PUFFER_HEIGHT()){
+			scrolling_background2y = Game.getACTUAL_PUFFER_HEIGHT() - Game.getACTUAL_PLAY_HEIGHT();
+		}
 	}
 
 	/**
