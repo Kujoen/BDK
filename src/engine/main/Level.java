@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -16,6 +17,7 @@ import javax.swing.text.html.HTMLDocument.Iterator;
 
 import engine.input.Input;
 import engine.math.Vector2D;
+import objects.data.ImageData;
 import objects.gameobjects.ObjectID;
 import objects.gameobjects.Player;
 import objects.gameobjects.Projectile;
@@ -26,18 +28,13 @@ public class Level {
 	private Game game;
 	// --------------------------------------------------------|
 	// GAMEOBJECTS---------------------------------------------|
-	private Image imgBackgroundFragment1;
-	private Image imgBackgroundFragment2;
+	private BufferedImage general_background;
 	private Player player;
 	private ArrayList<Sprite> spriteList = new ArrayList<>();
 	private ArrayList<Sprite> removeList;
 	private ArrayList<Sprite> spawnList;
 	// --------------------------------------------------------|
 	// INT-----------------------------------------------------|
-	private int backgroundFragment1x = 0;
-	private int backgroundFragment1y;
-	private int backgroundFragment2x = 0;
-	private int backgroundFragment2y;
 	private int levelFileReaderTickCount = 0;
 	// --------------------------------------------------------|
 	// BOOLEAN-------------------------------------------------|
@@ -108,31 +105,12 @@ public class Level {
 	 * @param g
 	 */
 	private void renderBackground(Graphics g) {
-		// Load background
-		if (!isLoaded) {
-			try {
-				imgBackgroundFragment1 = ImageIO.read(new File("res/images/level1background.bmp"));
-				backgroundFragment1y = 0;
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			try {
-				imgBackgroundFragment2 = ImageIO.read(new File("res/images/level1background.bmp"));
-				backgroundFragment2y = -Window.getACTUALHEIGHT();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			isLoaded = true;
+	
+		if(!isLoaded){
+			general_background = ImageData.getGeneral_background();
+			g.drawImage(general_background, 0, 0, null);
 		}
-		// Draw Background
-		g.drawImage(imgBackgroundFragment1, backgroundFragment1x, backgroundFragment1y, null);
-		g.drawImage(imgBackgroundFragment2, backgroundFragment2x, backgroundFragment2y, null);
-		// Check if background has to reset position
-		if (backgroundFragment1y == Window.getACTUALHEIGHT()) {
-			backgroundFragment1y = -Window.getACTUALHEIGHT();
-		} else if (backgroundFragment2y == Window.getACTUALHEIGHT()) {
-			backgroundFragment2y = -Window.getACTUALHEIGHT();
-		}
+		
 	}
 
 	/**
@@ -167,8 +145,7 @@ public class Level {
 	 * moves the background
 	 */
 	private void updateBackground() {
-		backgroundFragment1y += BACKGROUND_SCROLLSPEED;
-		backgroundFragment2y += BACKGROUND_SCROLLSPEED;
+		
 	}
 
 	/**

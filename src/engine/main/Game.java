@@ -8,6 +8,7 @@ import java.awt.image.BufferStrategy;
 import javax.swing.JOptionPane;
 
 import engine.input.Input;
+import objects.data.ImageData;
 
 /**
  * Class contains methods regarding the game screen. All game components are
@@ -60,8 +61,12 @@ public class Game extends Canvas implements Runnable {
 
 	public static void main(String[] args) {
 		
+		//loadimages
+		ImageData.loadimages();
+		
 		// Ask if fullscreen or default size
 		JOptionPane optionpane = new JOptionPane();
+		
 		int reply = optionpane.showConfirmDialog(null, "Would you like to run Clonehou in fullscreen ?" , "Window Settings", JOptionPane.YES_NO_OPTION);
 		if(reply == JOptionPane.YES_OPTION){
 			
@@ -80,6 +85,8 @@ public class Game extends Canvas implements Runnable {
 			ACTUAL_PUFFER_WIDTH = (int)(DEFAULT_PUFFER_WIDTH * width_scaling_factor);
 			ACTUAL_GRIDPUFFER_WIDTH = (int)(DEFAULT_GRIDPUFFER_WIDTH * height_scaling_factor);
 			
+			ImageData.scaleimages(height_scaling_factor, width_scaling_factor);
+			
 		}else{
 			Window.setACTUALHEIGHT(Window.getDefaultheight());
 			Window.setACTUALWIDTH(Window.getDefaultwidth());
@@ -87,8 +94,9 @@ public class Game extends Canvas implements Runnable {
 			ACTUAL_PLAY_HEIGHT = DEFAULT_PLAY_HEIGHT;
 			ACTUAL_PUFFER_HEIGHT = DEFAULT_PUFFER_HEIGHT;
 			ACTUAL_PUFFER_WIDTH = DEFAULT_PUFFER_WIDTH;
+			ACTUAL_GRIDPUFFER_HEIGHT = DEFAULT_GRIDPUFFER_HEIGHT;
+			ACTUAL_GRIDPUFFER_WIDTH = DEFAULT_GRIDPUFFER_WIDTH;
 		}
-		
 		
 		Window window = new Window("LTW");
 	}
