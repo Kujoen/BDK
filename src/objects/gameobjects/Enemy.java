@@ -1,6 +1,7 @@
 package objects.gameobjects;
 
 import java.awt.Graphics;
+import java.awt.Image;
 
 import engine.math.Vector2D;
 /**
@@ -9,6 +10,10 @@ import engine.math.Vector2D;
  *
  */
 public class Enemy extends Sprite {
+	
+		// IMAGE------------------------------------------------------|
+		private Image EnemyImage;
+		// -----------------------------------------------------------|
 
 	public Enemy(Vector2D position, Vector2D movementvector, int health, ObjectID ID, String spritefilename, boolean isanimated) {
 		super(position,movementvector, health, ID, spritefilename, isanimated);
@@ -21,7 +26,8 @@ public class Enemy extends Sprite {
 
 	@Override
 	public void render(Graphics g) {
-		
+
+
 	}
 
 	@Override
