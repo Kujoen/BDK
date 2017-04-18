@@ -64,7 +64,7 @@ public class Level {
         //Add the player to the spriteList
 		this.player = new Player(
 				new Vector2D(game.getWindow().getACTUALWIDTH() / 2, game.getWindow().getACTUALHEIGHT() / 2),
-				new Vector2D(8,8), 
+				new Vector2D(6,6), 
 				1, 
 				ObjectID.PLAYER,
 				"player_placeholder",
@@ -112,13 +112,10 @@ public class Level {
 			isLoaded = true;
 		}
 		
-		g.drawImage(general_background, 0, 0, null);
 		g.drawImage(scrolling_background1, scrolling_background1x, scrolling_background1y, null);
 		g.drawImage(scrolling_background2, scrolling_background2x, scrolling_background2y, null);
-		
-		g.setColor(Color.BLACK);
-		g.fillRect(Game.getACTUAL_PUFFER_WIDTH(), 0, Game.getACTUAL_PLAY_WIDTH(), Game.getACTUAL_PUFFER_HEIGHT());
-		g.fillRect(Game.getACTUAL_PUFFER_WIDTH(), Game.getACTUAL_PLAY_HEIGHT() + Game.getACTUAL_PUFFER_HEIGHT(), Game.getACTUAL_PLAY_WIDTH(), Game.getACTUAL_PUFFER_HEIGHT());
+		g.drawImage(general_background, 0, 0, null);
+
 	}
 
 	/**

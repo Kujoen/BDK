@@ -64,9 +64,9 @@ public class Player extends Sprite {
 		}
 		
 		if (Input.isBackward()) {
-			if(position.getY() < (Game.getACTUAL_PLAY_HEIGHT() + Game.getACTUAL_PUFFER_HEIGHT() - SpriteData.PLAYER_SIZE)){
-				if((position.getY() + yvel) > (Game.getACTUAL_PLAY_HEIGHT() + Game.getACTUAL_PUFFER_HEIGHT() - SpriteData.PLAYER_SIZE)){
-					position.setY((Game.getACTUAL_PLAY_HEIGHT() + Game.getACTUAL_PUFFER_HEIGHT() - SpriteData.PLAYER_SIZE));
+			if(position.getY() < (Game.getACTUAL_PLAY_HEIGHT() + Game.getACTUAL_PUFFER_HEIGHT() - SpriteData.getACTUAL_PLAYER_SIZE())){
+				if((position.getY() + yvel) > (Game.getACTUAL_PLAY_HEIGHT() + Game.getACTUAL_PUFFER_HEIGHT() - SpriteData.getACTUAL_PLAYER_SIZE())){
+					position.setY((Game.getACTUAL_PLAY_HEIGHT() + Game.getACTUAL_PUFFER_HEIGHT() - SpriteData.getACTUAL_PLAYER_SIZE()));
 				}else{
 					position.addY(yvel);
 				}
@@ -88,9 +88,9 @@ public class Player extends Sprite {
 		}
 
 		if (Input.isRight()) {
-			if(position.getX() < (Game.getACTUAL_PUFFER_WIDTH() + Game.getACTUAL_PLAY_WIDTH() - 1 - SpriteData.PLAYER_SIZE)){
-				if((position.getX() + xvel) >  (Game.getACTUAL_PUFFER_WIDTH() + Game.getACTUAL_PLAY_WIDTH() - 1 - SpriteData.PLAYER_SIZE)){
-					position.setX( (Game.getACTUAL_PUFFER_WIDTH() + Game.getACTUAL_PLAY_WIDTH() - 1 - SpriteData.PLAYER_SIZE));
+			if(position.getX() < (Game.getACTUAL_PUFFER_WIDTH() + Game.getACTUAL_PLAY_WIDTH() - SpriteData.getACTUAL_PLAYER_SIZE())){
+				if((position.getX() + xvel) >  (Game.getACTUAL_PUFFER_WIDTH() + Game.getACTUAL_PLAY_WIDTH() - SpriteData.getACTUAL_PLAYER_SIZE())){
+					position.setX( (Game.getACTUAL_PUFFER_WIDTH() + Game.getACTUAL_PLAY_WIDTH() - SpriteData.getACTUAL_PLAYER_SIZE()));
 				}else{
 					position.addX(xvel);
 				}
@@ -125,7 +125,7 @@ public class Player extends Sprite {
 			if (tickcounter % 4 == 0) {
 				
 				requestSpawnList.add(new Projectile(
-						new Vector2D(this.position.getX() + SpriteData.PLAYER_SIZE / 2 - SpriteData.PLAYER_PROJECTILE_SIZE / 2,this.position.getY()), 
+						new Vector2D(this.position.getX() + SpriteData.getACTUAL_PLAYER_SIZE() / 2 - SpriteData.getACTUAL_PLAYER_PROJECTILE_SIZE() / 2,this.position.getY()), 
 						new Vector2D(0,-10), 
 						0, 
 						ObjectID.PROJECTILE,
@@ -142,7 +142,9 @@ public class Player extends Sprite {
 	// RENDERING-----------------------------------------------------------------|
 	@Override
 	public void render(Graphics g) {
-		g.drawImage(currentimage, (int)position.getX(), (int)position.getY(), null);
+		//g.drawImage(currentimage, (int)position.getX(), (int)position.getY(), null);
+		g.setColor(Color.RED);
+		g.fillRect((int)position.getX(), (int)position.getY(), SpriteData.getACTUAL_PLAYER_SIZE(), SpriteData.getACTUAL_PLAYER_SIZE());
 	}
 	// ---------------------------------------------------------------------------|
 

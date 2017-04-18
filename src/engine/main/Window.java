@@ -32,11 +32,11 @@ public class Window extends JFrame {
 	private static final double SCREENWIDTH = screenSize.getWidth();
 	private static final int DEFAULTHEIGHT = (int) 720;
 	private static final int DEFAULTWIDTH = (int) 1280;
-	private static final double SCALING_FACTOR = 1.5;
 	private static final long serialVersionUID = 1L;
 	//--------------------------------------------------------------------------|
 	
 	public Window(String title) {
+		
 		this.setSize(ACTUALWIDTH, ACTUALHEIGHT);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
@@ -89,10 +89,6 @@ public class Window extends JFrame {
 
 	public static int getDefaultwidth() {
 		return DEFAULTWIDTH;
-	}
-
-	public static double getScalingFactor() {
-		return SCALING_FACTOR;
 	}
 
 	public static long getSerialversionuid() {

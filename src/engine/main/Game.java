@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 
 import engine.input.Input;
 import objects.data.ImageData;
+import objects.data.SpriteData;
 
 /**
  * Class contains methods regarding the game screen. All game components are
@@ -87,6 +88,8 @@ public class Game extends Canvas implements Runnable {
 			
 			ImageData.scaleimages(height_scaling_factor, width_scaling_factor);
 			
+			SpriteData.scaleData(height_scaling_factor);
+			
 		}else{
 			Window.setACTUALHEIGHT(Window.getDefaultheight());
 			Window.setACTUALWIDTH(Window.getDefaultwidth());
@@ -96,8 +99,9 @@ public class Game extends Canvas implements Runnable {
 			ACTUAL_PUFFER_WIDTH = DEFAULT_PUFFER_WIDTH;
 			ACTUAL_GRIDPUFFER_HEIGHT = DEFAULT_GRIDPUFFER_HEIGHT;
 			ACTUAL_GRIDPUFFER_WIDTH = DEFAULT_GRIDPUFFER_WIDTH;
+			
+			SpriteData.scaleData(1);
 		}
-		
 		Window window = new Window("LTW");
 	}
 
