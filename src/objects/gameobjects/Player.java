@@ -11,8 +11,10 @@ import java.util.Set;
 import javax.imageio.ImageIO;
 
 import engine.input.Input;
+import engine.main.Game;
 import engine.math.Hitbox;
 import engine.math.Vector2D;
+import objects.data.SpriteData;
 
 public class Player extends Sprite {
 
@@ -49,22 +51,30 @@ public class Player extends Sprite {
 	 */
 	private void movePlayer() {
 		if (Input.isForward()) {
-			if (position.getY() > 0) {
-				position.addY(-yvel);
+			if ((position.getY() > Game.getACTUAL_PUFFER_HEIGHT())) {
+				if((position.getY() -yvel) < Game.getACTUAL_PUFFER_HEIGHT()){
+					position.setY(Game.getACTUAL_PUFFER_HEIGHT());
+				}else{
+					position.addY(-yvel);
+				}		
 			}
-			
 			loadNewSubImage(3);
 		}
+		
 		if (Input.isBackward()) {
-			if (position.getY() < 475) {
-				position.addY(yvel);
+			if(position.getY() < (Game.getACTUAL_PLAY_HEIGHT() + Game.getACTUAL_PUFFER_HEIGHT() - SpriteData.PLAYER_PROJECTILE_SIZE)){
+				if((position.getY() + yvel) > (Game.getACTUAL_PLAY_HEIGHT() + Game.getACTUAL_PUFFER_HEIGHT() - SpriteData.PLAYER_PROJECTILE_SIZE)){
+					position.setY((Game.getACTUAL_PLAY_HEIGHT() + Game.getACTUAL_PUFFER_HEIGHT() - SpriteData.PLAYER_PROJECTILE_SIZE));
+				}else{
+					position.addY(yvel);
+				}
 			}
 			
 			loadNewSubImage(4);
 		}
 
 		if (Input.isLeft()) {
-			if (position.getX() > 50) {
+			if (position.getX() > Game.getACTUAL_PUFFER_WIDTH()) {
 				position.addX(-xvel);
 			}
 			
@@ -72,7 +82,7 @@ public class Player extends Sprite {
 		}
 
 		if (Input.isRight()) {
-			if (position.getX() < 425) {
+			if (position.getX() < (Game.getACTUAL_PUFFER_WIDTH() + Game.getACTUAL_PLAY_WIDTH() - SpriteData.PLAYER_SIZE)) {
 				position.addX(xvel);
 			}
 			
@@ -108,7 +118,7 @@ public class Player extends Sprite {
 			if (tickcounter % 4 == 0) {
 				
 				requestSpawnList.add(new Projectile(
-						new Vector2D(this.position.getX() + SpriteSize.PLAYER_SIZE / 2 - SpriteSize.PLAYER_PROJECTILE_SIZE / 2,this.position.getY()), 
+						new Vector2D(this.position.getX() + SpriteData.PLAYER_SIZE / 2 - SpriteData.PLAYER_PROJECTILE_SIZE / 2,this.position.getY()), 
 						new Vector2D(0,-10), 
 						0, 
 						ObjectID.PROJECTILE,

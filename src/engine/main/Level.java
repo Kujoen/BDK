@@ -143,7 +143,7 @@ public class Level {
 		// Update the background and the positions of already existing sprites
 		updateBackground();
 		updateSprites();
-
+		
 		// Update sprite lists
 		updateDeleteRequests();
 		updateSpawnRequests();

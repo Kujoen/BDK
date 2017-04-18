@@ -28,6 +28,7 @@ public class Debugdrawer {
 			g.drawString("Sprite Count : " + (game.getLevel().getSpriteList().size()), 0, 30);
 		}
 
+		g.drawRect(Game.getACTUAL_PUFFER_WIDTH(), Game.getACTUAL_PUFFER_HEIGHT(), 10,10);
 	}
 
 }
