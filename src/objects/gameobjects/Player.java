@@ -50,6 +50,7 @@ public class Player extends Sprite {
 	 * moves the player based on input
 	 */
 	private void movePlayer() {
+		
 		if (Input.isForward()) {
 			if ((position.getY() > Game.getACTUAL_PUFFER_HEIGHT())) {
 				if((position.getY() -yvel) < Game.getACTUAL_PUFFER_HEIGHT()){
@@ -58,13 +59,14 @@ public class Player extends Sprite {
 					position.addY(-yvel);
 				}		
 			}
+			
 			loadNewSubImage(3);
 		}
 		
 		if (Input.isBackward()) {
-			if(position.getY() < (Game.getACTUAL_PLAY_HEIGHT() + Game.getACTUAL_PUFFER_HEIGHT() - SpriteData.PLAYER_PROJECTILE_SIZE)){
-				if((position.getY() + yvel) > (Game.getACTUAL_PLAY_HEIGHT() + Game.getACTUAL_PUFFER_HEIGHT() - SpriteData.PLAYER_PROJECTILE_SIZE)){
-					position.setY((Game.getACTUAL_PLAY_HEIGHT() + Game.getACTUAL_PUFFER_HEIGHT() - SpriteData.PLAYER_PROJECTILE_SIZE));
+			if(position.getY() < (Game.getACTUAL_PLAY_HEIGHT() + Game.getACTUAL_PUFFER_HEIGHT() - SpriteData.PLAYER_SIZE)){
+				if((position.getY() + yvel) > (Game.getACTUAL_PLAY_HEIGHT() + Game.getACTUAL_PUFFER_HEIGHT() - SpriteData.PLAYER_SIZE)){
+					position.setY((Game.getACTUAL_PLAY_HEIGHT() + Game.getACTUAL_PUFFER_HEIGHT() - SpriteData.PLAYER_SIZE));
 				}else{
 					position.addY(yvel);
 				}
@@ -75,15 +77,23 @@ public class Player extends Sprite {
 
 		if (Input.isLeft()) {
 			if (position.getX() > Game.getACTUAL_PUFFER_WIDTH()) {
-				position.addX(-xvel);
+				if((position.getX() - xvel) < Game.getACTUAL_PUFFER_WIDTH()){
+					position.setX(Game.getACTUAL_PUFFER_WIDTH());
+				}else{
+					position.addX(-xvel);
+				}
 			}
 			
 			loadNewSubImage(0);
 		}
 
 		if (Input.isRight()) {
-			if (position.getX() < (Game.getACTUAL_PUFFER_WIDTH() + Game.getACTUAL_PLAY_WIDTH() - SpriteData.PLAYER_SIZE)) {
-				position.addX(xvel);
+			if(position.getX() < (Game.getACTUAL_PUFFER_WIDTH() + Game.getACTUAL_PLAY_WIDTH() - 1 - SpriteData.PLAYER_SIZE)){
+				if((position.getX() + xvel) >  (Game.getACTUAL_PUFFER_WIDTH() + Game.getACTUAL_PLAY_WIDTH() - 1 - SpriteData.PLAYER_SIZE)){
+					position.setX( (Game.getACTUAL_PUFFER_WIDTH() + Game.getACTUAL_PLAY_WIDTH() - 1 - SpriteData.PLAYER_SIZE));
+				}else{
+					position.addX(xvel);
+				}
 			}
 			
 			loadNewSubImage(2);
@@ -92,19 +102,16 @@ public class Player extends Sprite {
 		if(!Input.isRight() && !Input.isLeft() && !Input.isForward() && !Input.isBackward()){
 			loadNewSubImage(1);
 		}
-		
-		
-		
 
 		if (Input.isShift()) {
 			if (!hasShifted) {
-				yvel /= 2;
-				xvel /= 2;
+				yvel /= 4;
+				xvel /= 4;
 				hasShifted = true;
 			}
 		} else if (hasShifted == true) {
-			yvel *= 2;
-			xvel *= 2;
+			yvel *= 4;
+			xvel *= 4;
 			hasShifted = false;
 		}
 	}

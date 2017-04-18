@@ -64,7 +64,7 @@ public class Level {
         //Add the player to the spriteList
 		this.player = new Player(
 				new Vector2D(game.getWindow().getACTUALWIDTH() / 2, game.getWindow().getACTUALHEIGHT() / 2),
-				new Vector2D(10,10), 
+				new Vector2D(8,8), 
 				1, 
 				ObjectID.PLAYER,
 				"player_placeholder",
@@ -153,7 +153,6 @@ public class Level {
 	 * moves the background
 	 */
 	private void updateBackground() {
-		
 		scrolling_background1y++;
 		scrolling_background2y++;
 		
