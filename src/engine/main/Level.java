@@ -112,9 +112,10 @@ public class Level {
 			isLoaded = true;
 		}
 		
+		g.drawImage(general_background, 0, 0, null);
 		g.drawImage(scrolling_background1, scrolling_background1x, scrolling_background1y, null);
 		g.drawImage(scrolling_background2, scrolling_background2x, scrolling_background2y, null);
-		g.drawImage(general_background, 0, 0, null);
+		
 
 	}
 

@@ -42,6 +42,8 @@ public class Player extends Sprite {
 	 */
 	@Override
 	public void update() {
+		System.out.println(position.getX() + "          " + Game.getACTUAL_PUFFER_WIDTH());
+		
 		movePlayer();
 		spawnPlayerProjectiles();
 	}
