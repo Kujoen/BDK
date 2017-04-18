@@ -2,24 +2,29 @@ package objects.data;
 
 public class SpriteData {
 	// FINALS//----------------------------------------------|
-	public static final int DEFAULT_PLAYER_SPEED = 8;
-	public static final int DEFAULT_PLAYER_SIZE = 48;
-	public static final int DEFAULT_PLAYER_PROJECTILE_SIZE = 20;
+	private static final int DEFAULT_PLAYER_SPEED = 8;
+	private static final int DEFAULT_PLAYER_SIZE = 48;
+	private static final int DEFAULT_PLAYER_PROJECTILE_SIZE = 20;
+	private static final int DEFAULT_SCROLLING_SPEED = 2;
 	//-------------------------------------------------------|
 	// INTS//------------------------------------------------|
-	public static int ACTUAL_PLAYER_SPEED;
-	public static int ACTUAL_PLAYER_SIZE;
-	public static int ACTUAL_PLAYER_PROJECTILE_SIZE;
+	private static int ACTUAL_PLAYER_SPEED;
+	private static int ACTUAL_PLAYER_SIZE;
+	private static int ACTUAL_PLAYER_PROJECTILE_SIZE;
+	private static int ACTUAL_SCROLLING_SPEED;
 	//-------------------------------------------------------|
 	
 	public static void scaleData(double scaling_factor){
 		ACTUAL_PLAYER_SPEED =(int) (DEFAULT_PLAYER_SPEED * scaling_factor);
 		ACTUAL_PLAYER_SIZE =(int) (DEFAULT_PLAYER_SIZE * scaling_factor);
 		ACTUAL_PLAYER_PROJECTILE_SIZE =(int) (DEFAULT_PLAYER_PROJECTILE_SIZE * scaling_factor);
-		
-		System.out.println("scale : " + scaling_factor + "        " + "speed : " + ACTUAL_PLAYER_SPEED + "         " + "size : "  + ACTUAL_PLAYER_SIZE);
+		ACTUAL_SCROLLING_SPEED = (int) (DEFAULT_SCROLLING_SPEED * scaling_factor);
 	}
 
+	// -----------------------------------------------------------------------------|
+	// GETTERS AND SETTERS
+	// -----------------------------------------------------------------------------|
+	
 	public static int getACTUAL_PLAYER_SPEED() {
 		return ACTUAL_PLAYER_SPEED;
 	}
@@ -55,4 +60,18 @@ public class SpriteData {
 	public static int getDefaultPlayerProjectileSize() {
 		return DEFAULT_PLAYER_PROJECTILE_SIZE;
 	}
+
+	public static int getACTUAL_SCROLLING_SPEED() {
+		return ACTUAL_SCROLLING_SPEED;
+	}
+
+	public static void setACTUAL_SCROLLING_SPEED(int aCTUAL_SCROLLING_SPEED) {
+		ACTUAL_SCROLLING_SPEED = aCTUAL_SCROLLING_SPEED;
+	}
+
+	public static int getDefaultScrollingSpeed() {
+		return DEFAULT_SCROLLING_SPEED;
+	}
+	
+	// -----------------------------------------------------------------------------|
 }

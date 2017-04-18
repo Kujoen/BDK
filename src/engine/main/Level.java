@@ -18,6 +18,7 @@ import javax.swing.text.html.HTMLDocument.Iterator;
 import engine.input.Input;
 import engine.math.Vector2D;
 import objects.data.ImageData;
+import objects.data.SpriteData;
 import objects.gameobjects.ObjectID;
 import objects.gameobjects.Player;
 import objects.gameobjects.Projectile;
@@ -46,15 +47,6 @@ public class Level {
 	// BOOLEAN-------------------------------------------------|
 	private boolean isLoaded;
 	// --------------------------------------------------------|
-	// FINALS--------------------------------------------------|
-	public static final int BACKGROUND_SCROLLSPEED = 2;
-	public static final int PLAYER_VEL = 5;
-	public static final int PLAYER_HEALTH = 1;
-	public static final int DEFAULT_LEVEL = 0;
-	// --------------------------------------------------------|
-	// IO------------------------------------------------------|
-	private File levelFile;
-	// --------------------------------------------------------|
 
 	public Level(Game game) {
 		this.game = game;
@@ -64,15 +56,13 @@ public class Level {
         //Add the player to the spriteList
 		this.player = new Player(
 				new Vector2D(game.getWindow().getACTUALWIDTH() / 2, game.getWindow().getACTUALHEIGHT() / 2),
-				new Vector2D(6,6), 
+				new Vector2D(SpriteData.getACTUAL_PLAYER_SPEED(), SpriteData.getACTUAL_PLAYER_SPEED()), 
 				1, 
 				ObjectID.PLAYER,
 				"player_placeholder",
 				true);
 		spriteList.add(player);
 
-		// Load the level-file
-		this.loadLevel(DEFAULT_LEVEL);
 	}
 
 	/**
@@ -116,6 +106,9 @@ public class Level {
 		g.drawImage(scrolling_background1, scrolling_background1x, scrolling_background1y, null);
 		g.drawImage(scrolling_background2, scrolling_background2x, scrolling_background2y, null);
 		
+		g.setColor(Color.BLACK);
+		g.fillRect(Game.getACTUAL_PUFFER_WIDTH(), 0, Game.getACTUAL_PLAY_WIDTH(), Game.getACTUAL_PUFFER_HEIGHT());
+		g.fillRect(Game.getACTUAL_PUFFER_WIDTH(), (Game.getACTUAL_PLAY_HEIGHT() + Game.getACTUAL_PUFFER_HEIGHT()), Game.getACTUAL_PLAY_WIDTH(), Game.getACTUAL_PUFFER_HEIGHT() + Game.getMissingPixels());
 
 	}
 
@@ -151,8 +144,8 @@ public class Level {
 	 * moves the background
 	 */
 	private void updateBackground() {
-		scrolling_background1y++;
-		scrolling_background2y++;
+		scrolling_background1y += SpriteData.getACTUAL_SCROLLING_SPEED();
+		scrolling_background2y += SpriteData.getACTUAL_SCROLLING_SPEED();
 		
 		if(scrolling_background1y == Game.getACTUAL_PLAY_HEIGHT() + Game.getACTUAL_PUFFER_HEIGHT()){
 			scrolling_background1y = Game.getACTUAL_PUFFER_HEIGHT() - Game.getACTUAL_PLAY_HEIGHT();
@@ -266,14 +259,6 @@ public class Level {
 
 	public void setSpawnList(ArrayList<Sprite> spawnList) {
 		this.spawnList = spawnList;
-	}
-
-	public File getLevelFile() {
-		return levelFile;
-	}
-
-	public void setLevelFile(File levelFile) {
-		this.levelFile = levelFile;
 	}
 
 	// -----------------------------------------------------------------------------|

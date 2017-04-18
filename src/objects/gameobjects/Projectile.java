@@ -9,6 +9,7 @@ import java.util.Set;
 
 import javax.imageio.ImageIO;
 
+import engine.main.Game;
 import engine.math.Hitbox;
 import engine.math.MovementFunctions;
 import engine.math.Vector2D;
@@ -22,10 +23,13 @@ public class Projectile extends Sprite {
 	private int animationtickcounter = 0;
 	private int animationposcounter = 0;
 	//------------------------------------------------|
+	// Spielerei--------------------------------------|
+	private MovementFunctions mFunction;
+	//------------------------------------------------|
 
 	public Projectile(Vector2D position, Vector2D movementvector, int health, ObjectID ID, String spritefilename, boolean isanimated) {
 		super(position, movementvector, health, ID, spritefilename, isanimated);
-		
+		mFunction = new MovementFunctions(this);
 	}
 
 	// UPDATING--------------------------------------------------------------------------|
@@ -47,7 +51,7 @@ public class Projectile extends Sprite {
 	 * check if this projectile is out of bound and should be removed
 	 */
 	private void checkForRemove() {
-		if (this.position.getY() < 0) {
+		if (this.position.getY() < Game.getACTUAL_PUFFER_HEIGHT()) {
 			requestRemoveList.add(this);
 		}
 	}
