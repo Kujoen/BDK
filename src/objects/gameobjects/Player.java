@@ -115,7 +115,7 @@ public class Player extends Sprite {
 				
 				requestSpawnList.add(new Projectile(
 						new Vector2D(this.position.getX() + SpriteData.getACTUAL_PLAYER_SIZE() / 2 - SpriteData.getACTUAL_PLAYER_PROJECTILE_SIZE() / 2,this.position.getY()), 
-						new Vector2D(0,-16), 
+						new Vector2D(0, SpriteData.getACTUAL_PLAYER_PROJECTILE_SPEED()), 
 						0, 
 						ObjectID.PLAYER_PROJECTILE,
 						false));

@@ -81,6 +81,7 @@ public class Game extends Canvas implements Runnable {
 			ACTUAL_PLAY_WIDTH = (int)(DEFAULT_PLAY_WIDTH * width_scaling_factor);
 			ACTUAL_PUFFER_WIDTH = (int)(DEFAULT_PUFFER_WIDTH * width_scaling_factor);
 
+			Menu.scaleMenuData(height_scaling_factor);
 			SpriteData.scaleData(height_scaling_factor);
 			ImageData.scaleimages();
 			
@@ -92,6 +93,7 @@ public class Game extends Canvas implements Runnable {
 			ACTUAL_PUFFER_HEIGHT = DEFAULT_PUFFER_HEIGHT;
 			ACTUAL_PUFFER_WIDTH = DEFAULT_PUFFER_WIDTH;
 			
+			Menu.scaleMenuData(1.0);
 			SpriteData.scaleData(1.0);
 		}
 		

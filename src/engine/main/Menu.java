@@ -21,34 +21,56 @@ import objects.data.ImageData;
  */
 
 public class Menu {
-
+	// FINALS--------------------------------|
+	private static final int DEFAULT_PUFFER_WIDTH = 320;
+	private static final int DEFAULT_TITLE_WIDTH = 640;
+	private static final int DEFAULT_TITLE_HEIGHT = 180;
+	private static final int DEFAULT_BUTTON_HEIGHT = 80;
+	private static final int DEFAULT_BUTTON_WIDTH = 320;
+	//---------------------------------------|
 	// INT-----------------------------------|
+	private static int ACTUAL_PUFFER_WIDTH;
+	private static int ACTUAL_TITLE_WIDTH;
+	private static int ACTUAL_TITLE_HEIGHT;
+	private static int ACTUAL_BUTTON_HEIGHT;
+	private static int ACTUAL_BUTTON_WIDTH;
 	private int menuID;
 	// --------------------------------------|
 	// ENGINEOBJECTS-------------------------|
 	private Game game;
 	// --------------------------------------|
-	// BOOLEAN-------------------------------|
-	private boolean isLoaded;
-	// --------------------------------------|
 	// UI------------------------------------|
-	private Rectangle button1;
-	private Rectangle button2;
-	private Rectangle button3;
+	private Rectangle button_story;
+	private Rectangle button_endless;
+	private Rectangle button_options;
 	//---------------------------------------|
-	// IMAGES--------------------------------|
-	private BufferedImage mainmenu_background;
+	// SPRITES-------------------------------|
+	private static BufferedImage mainmenu_background;
+	private static BufferedImage mainmenu_title;
+	private static BufferedImage mainmenu_button_story;
 	//---------------------------------------|
 
 	public Menu(Game game) {
 		this.game = game;
 		this.menuID = game.getDefaultMenuId();
-		this.isLoaded = false;
 		
 		//Setup UI
-		button1 = new Rectangle(159, 172, 172, 47);
-		button2 = new Rectangle(159, 255, 172, 47);
-		button3 = new Rectangle(159, 335, 172, 47);
+		button_story = new Rectangle((Menu.getACTUAL_PUFFER_WIDTH() + Menu.getACTUAL_PUFFER_WIDTH() - (Menu.getACTUAL_BUTTON_WIDTH() / 2)), 
+										Menu.getACTUAL_BUTTON_HEIGHT() + Menu.getACTUAL_TITLE_HEIGHT(), 
+										Menu.getACTUAL_BUTTON_WIDTH(), 
+										Menu.getACTUAL_BUTTON_HEIGHT());
+		
+		this.mainmenu_background = ImageData.getMainmenu_background();
+		this.mainmenu_button_story = ImageData.getMainmenu_button_story();
+		this.mainmenu_title = ImageData.getMainmenu_title();
+	}
+	
+	public static void scaleMenuData(double scaling_factor){
+		ACTUAL_PUFFER_WIDTH = (int)(DEFAULT_PUFFER_WIDTH * scaling_factor);
+		ACTUAL_TITLE_WIDTH = (int)(DEFAULT_TITLE_WIDTH * scaling_factor);
+		ACTUAL_TITLE_HEIGHT = (int)(DEFAULT_TITLE_HEIGHT * scaling_factor);
+		ACTUAL_BUTTON_HEIGHT = (int)(DEFAULT_BUTTON_HEIGHT * scaling_factor);
+		ACTUAL_BUTTON_WIDTH = (int)(DEFAULT_BUTTON_WIDTH * scaling_factor);
 	}
 
 	// RENDERING--------------------------------------------------------------------|
@@ -79,13 +101,13 @@ public class Menu {
 	 * @param g
 	 */
 	private void renderMainMenu(Graphics g) {
-		if (!isLoaded) {
-			mainmenu_background = ImageData.getMainmenu_background();
-			isLoaded = true;
-		}
 		
 		g.drawImage(mainmenu_background, 0, 0, null);
-		
+		g.drawImage(mainmenu_title, Menu.getACTUAL_PUFFER_WIDTH(), 0, null);
+		g.drawImage(mainmenu_button_story, 
+							(Menu.getACTUAL_PUFFER_WIDTH() + Menu.getACTUAL_PUFFER_WIDTH() - (Menu.getACTUAL_BUTTON_WIDTH() / 2)),
+							Menu.getACTUAL_BUTTON_HEIGHT() + Menu.getACTUAL_TITLE_HEIGHT(), 
+							null);
 	}
 
 	/**
@@ -134,13 +156,13 @@ public class Menu {
 	 */
 	private void updateMainMenu() {
 		Point mouseCord = new Point(Input.getMousex(), Input.getMousey());
-		if (button1.contains(mouseCord)) {
+		if (button_story.contains(mouseCord)) {
 			clickPlayButton();
-		} else if (button2.contains(mouseCord)) {
+		} /*else if (button_endless.contains(mouseCord)) {
 			clickOptionsButton();
-		} else if (button3.contains(mouseCord)) {
+		} else if (button_options.contains(mouseCord)) {
 			clickCreditsButton();
-		}
+		}*/
 	}
 
 	private void clickCreditsButton() {
@@ -186,38 +208,48 @@ public class Menu {
 	public void setGame(Game game) {
 		this.game = game;
 	}
-
-	public boolean isLoaded() {
-		return isLoaded;
+	
+	public static int getACTUAL_PUFFER_WIDTH() {
+		return ACTUAL_PUFFER_WIDTH;
 	}
 
-	public void setLoaded(boolean isLoaded) {
-		this.isLoaded = isLoaded;
+	public static void setACTUAL_PUFFER_WIDTH(int aCTUAL_PUFFER_WIDTH) {
+		ACTUAL_PUFFER_WIDTH = aCTUAL_PUFFER_WIDTH;
 	}
 
-	public Rectangle getButton1() {
-		return button1;
+	public static int getACTUAL_TITLE_WIDTH() {
+		return ACTUAL_TITLE_WIDTH;
 	}
 
-	public void setButton1(Rectangle button1) {
-		this.button1 = button1;
+	public static void setACTUAL_TITLE_WIDTH(int aCTUAL_TITLE_WIDTH) {
+		ACTUAL_TITLE_WIDTH = aCTUAL_TITLE_WIDTH;
 	}
 
-	public Rectangle getButton2() {
-		return button2;
+	public static int getACTUAL_TITLE_HEIGHT() {
+		return ACTUAL_TITLE_HEIGHT;
 	}
 
-	public void setButton2(Rectangle button2) {
-		this.button2 = button2;
+	public static void setACTUAL_TITLE_HEIGHT(int aCTUAL_TITLE_HEIGHT) {
+		ACTUAL_TITLE_HEIGHT = aCTUAL_TITLE_HEIGHT;
 	}
 
-	public Rectangle getButton3() {
-		return button3;
+	public static int getACTUAL_BUTTON_HEIGHT() {
+		return ACTUAL_BUTTON_HEIGHT;
 	}
 
-	public void setButton3(Rectangle button3) {
-		this.button3 = button3;
+	public static void setACTUAL_BUTTON_HEIGHT(int aCTUAL_BUTTON_HEIGHT) {
+		ACTUAL_BUTTON_HEIGHT = aCTUAL_BUTTON_HEIGHT;
 	}
+
+	public static int getACTUAL_BUTTON_WIDTH() {
+		return ACTUAL_BUTTON_WIDTH;
+	}
+
+	public static void setACTUAL_BUTTON_WIDTH(int aCTUAL_BUTTON_WIDTH) {
+		ACTUAL_BUTTON_WIDTH = aCTUAL_BUTTON_WIDTH;
+	}
+
 	// -----------------------------------------------------------------------------|
 
+	
 }

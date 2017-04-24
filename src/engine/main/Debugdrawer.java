@@ -13,14 +13,12 @@ public class Debugdrawer {
 		// Check for menu specific debug
 		if (game.isMenu()) {
 			Menu menu = game.getMenu();
-
-			g.drawRect((int) menu.getButton1().getX(), (int) menu.getButton1().getY(),
-					(int) menu.getButton1().getWidth(), (int) menu.getButton1().getHeight());
-			g.drawRect((int) menu.getButton2().getX(), (int) menu.getButton2().getY(),
-					(int) menu.getButton2().getWidth(), (int) menu.getButton2().getHeight());
-			g.drawRect((int) menu.getButton3().getX(), (int) menu.getButton3().getY(),
-					(int) menu.getButton3().getWidth(), (int) menu.getButton3().getHeight());
-			g.drawString("menuID : " + menu.getMenuID(), 0, 30);
+			
+			g.setColor(Color.RED);
+			g.drawRect((Menu.getACTUAL_PUFFER_WIDTH() + Menu.getACTUAL_PUFFER_WIDTH() - (Menu.getACTUAL_BUTTON_WIDTH() / 2)), 
+										Menu.getACTUAL_BUTTON_HEIGHT() + Menu.getACTUAL_TITLE_HEIGHT(), 
+										Menu.getACTUAL_BUTTON_WIDTH(), 
+										Menu.getACTUAL_BUTTON_HEIGHT());
 		}
 
 		// Check for level specific debug
