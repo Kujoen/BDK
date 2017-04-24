@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 
 import engine.math.Hitbox;
 import engine.math.Vector2D;
+import objects.data.ImageData;
 
 public abstract class Sprite {
 	// MATHOBJECTS-----------------------------------------|
@@ -27,10 +28,8 @@ public abstract class Sprite {
 	// INT-------------------------------------------------|
 	protected int health;
 	// ----------------------------------------------------|
-	// STRING----------------------------------------------|
-	protected String spritefilename;
 	//-----------------------------------------------------|
-	// IMAGE/SPRITESHEET-----------------------------------|
+	// SPRITE----------------------------------------------|
 	protected BufferedImage spritefile;
 	//-----------------------------------------------------|
 	// GAMEOBJECTS-----------------------------------------|
@@ -53,35 +52,25 @@ public abstract class Sprite {
   * 	Projectile, Enemy or Player.
   * 	
   */
-	public Sprite(Vector2D position, Vector2D movementvector, int health, ObjectID ID, String spritefilename, boolean isanimated) {
+	public Sprite(Vector2D position, Vector2D movementvector, int health, ObjectID ID, boolean isanimated) {
 		this.position = position;
 		
 		this.movementvector = movementvector;
 		this.xvel = movementvector.getX();
 		this.yvel = movementvector.getY();
-		
 		this.health = health;
 		this.ID = ID;
-		
-		//Load the sprite image
-		this.spritefilename = spritefilename;
-		try {
-			spritefile = ImageIO.read(new File("res/images/" + spritefilename + ".png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		this.isanimated = isanimated;
-		
 		this.requestRemoveList = new ArrayList<>();
 		this.requestSpawnList = new ArrayList<>();
+		
+		this.spritefile = ImageData.getSpriteForID(ID);
+		
 	}
 
 	public abstract void update();
 
 	public abstract void render(Graphics g);
-	
-	public abstract void loadNewSubImage(int sectionid);
 	
 	public abstract void animationController();
 

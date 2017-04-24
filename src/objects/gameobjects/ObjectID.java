@@ -1,5 +1,5 @@
 package objects.gameobjects;
 
 public enum ObjectID {
-	PLAYER, ENEMY , PROJECTILE;
+	PLAYER, PLAYER_PROJECTILE;
 }

@@ -80,10 +80,9 @@ public class Game extends Canvas implements Runnable {
 			
 			ACTUAL_PLAY_WIDTH = (int)(DEFAULT_PLAY_WIDTH * width_scaling_factor);
 			ACTUAL_PUFFER_WIDTH = (int)(DEFAULT_PUFFER_WIDTH * width_scaling_factor);
-			
-			ImageData.scaleimages(height_scaling_factor, width_scaling_factor);
-			
+
 			SpriteData.scaleData(height_scaling_factor);
+			ImageData.scaleimages();
 			
 		}else{
 			Window.setACTUALHEIGHT(Window.getDefaultheight());
@@ -93,7 +92,7 @@ public class Game extends Canvas implements Runnable {
 			ACTUAL_PUFFER_HEIGHT = DEFAULT_PUFFER_HEIGHT;
 			ACTUAL_PUFFER_WIDTH = DEFAULT_PUFFER_WIDTH;
 			
-			SpriteData.scaleData(1);
+			SpriteData.scaleData(1.0);
 		}
 		
 		missingPixels = (int)(Window.getScreenheight() - (ACTUAL_PUFFER_HEIGHT + ACTUAL_PLAY_HEIGHT + ACTUAL_PUFFER_HEIGHT));

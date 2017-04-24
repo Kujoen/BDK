@@ -29,9 +29,9 @@ public class Level {
 	private Game game;
 	// --------------------------------------------------------|
 	// GAMEOBJECTS---------------------------------------------|
-	private BufferedImage general_background;
-	private BufferedImage scrolling_background1;
-	private BufferedImage scrolling_background2;
+	private BufferedImage play_background;
+	private BufferedImage play_scrolling_background1;
+	private BufferedImage play_scrolling_background2;
 	private Player player;
 	private ArrayList<Sprite> spriteList = new ArrayList<>();
 	private ArrayList<Sprite> removeList;
@@ -59,22 +59,9 @@ public class Level {
 				new Vector2D(SpriteData.getACTUAL_PLAYER_SPEED(), SpriteData.getACTUAL_PLAYER_SPEED()), 
 				1, 
 				ObjectID.PLAYER,
-				"player_placeholder",
-				true);
+				false);
 		spriteList.add(player);
 
-	}
-
-	/**
-	 * Loads the level file wich will be used in the updateLevel method. If
-	 * Level is currently already running a level, the previous ones data will
-	 * be wiped.
-	 * 
-	 * @param levelID
-	 */
-	private void loadLevel(int levelID) {
-		
-		
 	}
 
 	// RENDERING--------------------------------------------------------------------|
@@ -96,15 +83,15 @@ public class Level {
 	private void renderBackground(Graphics g) {
 	
 		if(!isLoaded){
-			general_background = ImageData.getGeneral_background();
-			scrolling_background1= ImageData.getScrolling_background();
-			scrolling_background2= ImageData.getScrolling_background();
+			play_background = ImageData.getPlay_background();
+			play_scrolling_background1= ImageData.getPlay_scrolling_background();
+			play_scrolling_background2= ImageData.getPlay_scrolling_background();
 			isLoaded = true;
 		}
 		
-		g.drawImage(general_background, 0, 0, null);
-		g.drawImage(scrolling_background1, scrolling_background1x, scrolling_background1y, null);
-		g.drawImage(scrolling_background2, scrolling_background2x, scrolling_background2y, null);
+		g.drawImage(play_background, 0, 0, null);
+		g.drawImage(play_scrolling_background1, scrolling_background1x, scrolling_background1y, null);
+		g.drawImage(play_scrolling_background2, scrolling_background2x, scrolling_background2y, null);
 		
 		g.setColor(Color.BLACK);
 		g.fillRect(Game.getACTUAL_PUFFER_WIDTH(), 0, Game.getACTUAL_PLAY_WIDTH(), Game.getACTUAL_PUFFER_HEIGHT());

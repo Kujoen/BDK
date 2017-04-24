@@ -25,15 +25,9 @@ public class Player extends Sprite {
 	private int tickcounter = 0;
 	private int lastsectionid = 1;
 	// -----------------------------------------------------------|
-	// IMAGE------------------------------------------------------|
-	private Image currentimage;
-	// -----------------------------------------------------------|
 	
-	public Player(Vector2D position, Vector2D movementvector, int health, ObjectID ID, String spritefilename, boolean isanimated) {
-		super(position, movementvector, health, ID, spritefilename, isanimated);
-		
-		currentimage = (Image) spritefile.getSubimage(25, 0, 26, 25);
-		
+	public Player(Vector2D position, Vector2D movementvector, int health, ObjectID ID, boolean isanimated) {
+		super(position, movementvector, health, ID, isanimated);
 	}
 
 	// UPDATING--------------------------------------------------------------------------|
@@ -60,7 +54,6 @@ public class Player extends Sprite {
 				}		
 			}
 			
-			loadNewSubImage(3);
 		}
 		
 		if (Input.isBackward()) {
@@ -72,7 +65,6 @@ public class Player extends Sprite {
 				}
 			}
 			
-			loadNewSubImage(4);
 		}
 
 		if (Input.isLeft()) {
@@ -84,7 +76,6 @@ public class Player extends Sprite {
 				}
 			}
 			
-			loadNewSubImage(0);
 		}
 
 		if (Input.isRight()) {
@@ -96,11 +87,9 @@ public class Player extends Sprite {
 				}
 			}
 			
-			loadNewSubImage(2);
 		}
 		
 		if(!Input.isRight() && !Input.isLeft() && !Input.isForward() && !Input.isBackward()){
-			loadNewSubImage(1);
 		}
 
 		if (Input.isShift()) {
@@ -126,10 +115,9 @@ public class Player extends Sprite {
 				
 				requestSpawnList.add(new Projectile(
 						new Vector2D(this.position.getX() + SpriteData.getACTUAL_PLAYER_SIZE() / 2 - SpriteData.getACTUAL_PLAYER_PROJECTILE_SIZE() / 2,this.position.getY()), 
-						new Vector2D(0,-10), 
+						new Vector2D(0,-16), 
 						0, 
-						ObjectID.PROJECTILE,
-						"player_projectilesheet",
+						ObjectID.PLAYER_PROJECTILE,
 						false));
 				
 				tickcounter++;
@@ -142,52 +130,9 @@ public class Player extends Sprite {
 	// RENDERING-----------------------------------------------------------------|
 	@Override
 	public void render(Graphics g) {
-		//g.drawImage(currentimage, (int)position.getX(), (int)position.getY(), null);
-		g.setColor(Color.RED);
-		g.fillRect((int)position.getX(), (int)position.getY(), SpriteData.getACTUAL_PLAYER_SIZE(), SpriteData.getACTUAL_PLAYER_SIZE());
+		g.drawImage(spritefile, (int)position.getX(), (int)position.getY(), null);
 	}
 	// ---------------------------------------------------------------------------|
-
-	@Override
-	public void loadNewSubImage(int sectionid) {
-		switch(sectionid){
-		case 0:
-			if(!(sectionid == lastsectionid)){
-				currentimage = (Image) spritefile.getSubimage(0, 0, 26, 25);
-				
-				lastsectionid = sectionid;
-			}
-			break;
-		case 1:
-			if(!(sectionid == lastsectionid)){
-				currentimage = (Image) spritefile.getSubimage(25, 0, 26, 25);
-				
-				lastsectionid = sectionid;
-			}
-			break;
-		case 2:
-			if(!(sectionid == lastsectionid)){
-				currentimage = (Image) spritefile.getSubimage(50, 0, 26, 25);
-				
-				lastsectionid = sectionid;
-			}
-			break;
-		case 3:
-			if(!(sectionid == lastsectionid)){
-				currentimage = (Image) spritefile.getSubimage(0, 24, 26, 25);
-				
-				lastsectionid = sectionid;
-			}
-			break;
-		case 4:
-			if(!(sectionid == lastsectionid)){
-				currentimage = (Image) spritefile.getSubimage(25, 24, 26, 25);
-				
-				lastsectionid = sectionid;
-			}
-			break;
-		}
-	}
 
 	@Override
 	public void animationController() {

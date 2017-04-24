@@ -4,35 +4,49 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.SynchronousQueue;
 
 import javax.imageio.ImageIO;
 
 import engine.main.Game;
 import engine.main.Window;
+import objects.gameobjects.ObjectID;
 
 public class ImageData {
 	
 	// IMAGES-----------------------------------|
-	private static BufferedImage scrolling_background;
-	private static BufferedImage general_background;
+	private static BufferedImage play_scrolling_background;
+	private static BufferedImage play_background;
+	private static BufferedImage mainmenu_background;
+	private static BufferedImage player;
+	private static BufferedImage player_projectile;
 	//------------------------------------------|
 	
 	public static void loadimages(){
 		try {
-			general_background = ImageIO.read(new File("res/images/background_placeholder.png"));
-			scrolling_background = ImageIO.read(new File("res/images/scrolling_background_placeholder.png"));
+			play_background = ImageIO.read(new File("res/sprites/play_background.png"));
+			play_scrolling_background = ImageIO.read(new File("res/sprites/play_scrolling_background.png"));
+			mainmenu_background = ImageIO.read(new File("res/sprites/mainmenu_background.png"));
+			player = ImageIO.read(new File("res/sprites/player.png"));
+			player_projectile = ImageIO.read(new File("res/sprites/player_projectile.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	public static void scaleimages(double height_scaling_factor, double width_scaling_factor){
-		general_background = scale(general_background, Window.getACTUALWIDTH(), Window.getACTUALHEIGHT());
-		scrolling_background = scale(scrolling_background, Game.getACTUAL_PLAY_WIDTH(), Game.getACTUAL_PLAY_HEIGHT());
+	public static void scaleimages(){
+		play_background = scale(play_background, Window.getACTUALWIDTH(), Window.getACTUALHEIGHT());
+		play_scrolling_background = scale(play_scrolling_background, Game.getACTUAL_PLAY_WIDTH(), Game.getACTUAL_PLAY_HEIGHT());
+		mainmenu_background = scale(mainmenu_background, Window.getACTUALWIDTH(), Window.getACTUALHEIGHT());
+		player = scale(player, SpriteData.getACTUAL_PLAYER_SIZE(), SpriteData.getACTUAL_PLAYER_SIZE());
+		player_projectile = scale(player_projectile, SpriteData.getACTUAL_PLAYER_PROJECTILE_SIZE(), SpriteData.getACTUAL_PLAYER_PROJECTILE_SIZE());
 	}
 	
 	private static BufferedImage scale(BufferedImage imagetoscale, int nWidth, int nHeight){
+	
+		System.out.println(nWidth + "            " + nHeight);
+		
 		 BufferedImage scaledImage = null;
 	        if (imagetoscale != null) {
 	            scaledImage = new BufferedImage(nWidth, nHeight, imagetoscale.getType());
@@ -43,24 +57,42 @@ public class ImageData {
 	        return scaledImage;
 	}
 	
+	public static BufferedImage getSpriteForID(ObjectID ID){
+		switch(ID){
+		case PLAYER:
+			return player;
+		case PLAYER_PROJECTILE:
+			return player_projectile;
+		}
+		return null;
+	}
+	
 	// -----------------------------------------------------------------------------|
 	// GETTERS AND SETTERS
 	// -----------------------------------------------------------------------------|
-	
-	public static BufferedImage getScrolling_background() {
-		return scrolling_background;
+
+	public static BufferedImage getPlay_scrolling_background() {
+		return play_scrolling_background;
 	}
 
-	public static void setScrolling_background(BufferedImage scrolling_background) {
-		ImageData.scrolling_background = scrolling_background;
+	public static void setPlay_scrolling_background(BufferedImage play_scrolling_background) {
+		ImageData.play_scrolling_background = play_scrolling_background;
 	}
 
-	public static BufferedImage getGeneral_background() {
-		return general_background;
+	public static BufferedImage getPlay_background() {
+		return play_background;
 	}
 
-	public static void setGeneral_background(BufferedImage general_background) {
-		ImageData.general_background = general_background;
+	public static void setPlay_background(BufferedImage play_background) {
+		ImageData.play_background = play_background;
+	}
+
+	public static BufferedImage getMainmenu_background() {
+		return mainmenu_background;
+	}
+
+	public static void setMainmenu_background(BufferedImage mainmenu_background) {
+		ImageData.mainmenu_background = mainmenu_background;
 	}
 
 }

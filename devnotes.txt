@@ -1,7 +1,9 @@
 TODO:
 Create scorescreen next to gamescreeen.
 Create default screensize templates and allow scaling to fullscreen.
-		----------> Default play area will be 
+		----------> Default play area will be 1280 x 720
+
+Create mainmenu 
 
 
 Levelprogress :

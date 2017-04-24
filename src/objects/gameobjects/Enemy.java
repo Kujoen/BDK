@@ -15,8 +15,8 @@ public class Enemy extends Sprite {
 		private Image EnemyImage;
 		// -----------------------------------------------------------|
 
-	public Enemy(Vector2D position, Vector2D movementvector, int health, ObjectID ID, String spritefilename, boolean isanimated) {
-		super(position,movementvector, health, ID, spritefilename, isanimated);
+	public Enemy(Vector2D position, Vector2D movementvector, int health, ObjectID ID,  boolean isanimated) {
+		super(position,movementvector, health, ID,  isanimated);
 	}
 
 	@Override
@@ -28,12 +28,6 @@ public class Enemy extends Sprite {
 	public void render(Graphics g) {
 
 
-	}
-
-	@Override
-	public void loadNewSubImage(int sectionid) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

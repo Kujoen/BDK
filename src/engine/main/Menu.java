@@ -37,7 +37,7 @@ public class Menu {
 	private Rectangle button3;
 	//---------------------------------------|
 	// IMAGES--------------------------------|
-	private BufferedImage general_background;
+	private BufferedImage mainmenu_background;
 	//---------------------------------------|
 
 	public Menu(Game game) {
@@ -80,11 +80,11 @@ public class Menu {
 	 */
 	private void renderMainMenu(Graphics g) {
 		if (!isLoaded) {
-			general_background = ImageData.getGeneral_background();
+			mainmenu_background = ImageData.getMainmenu_background();
 			isLoaded = true;
 		}
 		
-		g.drawImage(general_background, 0, 0, null);
+		g.drawImage(mainmenu_background, 0, 0, null);
 		
 	}
 
