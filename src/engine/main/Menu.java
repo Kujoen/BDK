@@ -48,8 +48,13 @@ public class Menu {
 	private static BufferedImage mainmenu_background;
 	private static BufferedImage mainmenu_title;
 	private static BufferedImage mainmenu_button_story;
+	private static BufferedImage mainmenu_button_endless;
+	private static BufferedImage mainmenu_button_options;
 	//---------------------------------------|
-
+	// BOOLEAN-------------------------------|
+	private static boolean shouldReload = true;
+	//---------------------------------------|
+	
 	public Menu(Game game) {
 		this.game = game;
 		this.menuID = game.getDefaultMenuId();
@@ -60,8 +65,20 @@ public class Menu {
 										Menu.getACTUAL_BUTTON_WIDTH(), 
 										Menu.getACTUAL_BUTTON_HEIGHT());
 		
+		button_endless = new Rectangle((Menu.getACTUAL_PUFFER_WIDTH() + Menu.getACTUAL_PUFFER_WIDTH() - (Menu.getACTUAL_BUTTON_WIDTH() / 2)), 
+				(Menu.getACTUAL_BUTTON_HEIGHT() * 2) + Menu.getACTUAL_TITLE_HEIGHT(), 
+				Menu.getACTUAL_BUTTON_WIDTH(), 
+				Menu.getACTUAL_BUTTON_HEIGHT());
+		
+		button_options = new Rectangle((Menu.getACTUAL_PUFFER_WIDTH() + Menu.getACTUAL_PUFFER_WIDTH() - (Menu.getACTUAL_BUTTON_WIDTH() / 2)), 
+				(Menu.getACTUAL_BUTTON_HEIGHT() * 3) + Menu.getACTUAL_TITLE_HEIGHT(), 
+				Menu.getACTUAL_BUTTON_WIDTH(), 
+				Menu.getACTUAL_BUTTON_HEIGHT());
+		
 		this.mainmenu_background = ImageData.getMainmenu_background();
 		this.mainmenu_button_story = ImageData.getMainmenu_button_story();
+		this.mainmenu_button_endless = ImageData.getMainmenu_button_endless();
+		this.mainmenu_button_options = ImageData.getMainmenu_button_options();
 		this.mainmenu_title = ImageData.getMainmenu_title();
 	}
 	
@@ -101,13 +118,25 @@ public class Menu {
 	 * @param g
 	 */
 	private void renderMainMenu(Graphics g) {
-		
+		if(shouldReload){
 		g.drawImage(mainmenu_background, 0, 0, null);
 		g.drawImage(mainmenu_title, Menu.getACTUAL_PUFFER_WIDTH(), 0, null);
 		g.drawImage(mainmenu_button_story, 
 							(Menu.getACTUAL_PUFFER_WIDTH() + Menu.getACTUAL_PUFFER_WIDTH() - (Menu.getACTUAL_BUTTON_WIDTH() / 2)),
 							Menu.getACTUAL_BUTTON_HEIGHT() + Menu.getACTUAL_TITLE_HEIGHT(), 
 							null);
+		g.drawImage(mainmenu_button_story, 
+				(Menu.getACTUAL_PUFFER_WIDTH() + Menu.getACTUAL_PUFFER_WIDTH() - (Menu.getACTUAL_BUTTON_WIDTH() / 2)),
+				(Menu.getACTUAL_BUTTON_HEIGHT() * 3) + Menu.getACTUAL_TITLE_HEIGHT(), 
+				null);
+		g.drawImage(mainmenu_button_story, 
+				(Menu.getACTUAL_PUFFER_WIDTH() + Menu.getACTUAL_PUFFER_WIDTH() - (Menu.getACTUAL_BUTTON_WIDTH() / 2)),
+				(Menu.getACTUAL_BUTTON_HEIGHT() * 5) + Menu.getACTUAL_TITLE_HEIGHT(), 
+				null);
+		
+		shouldReload = false;
+		}
+		
 	}
 
 	/**

@@ -122,6 +122,7 @@ public class Game extends Canvas implements Runnable {
 		menu = new Menu(this);
 		level = new Level(this);
 		debug = new Debugdrawer();
+		
 	}
 	
 	// GAME/FLOW CONTROLLERS-------------------------------------------------------------|
@@ -252,6 +253,7 @@ public class Game extends Canvas implements Runnable {
 		if(isDisplayLeveltitle){
 			drawLevelTitle(g);
 		}
+		
 		
 	}
 	

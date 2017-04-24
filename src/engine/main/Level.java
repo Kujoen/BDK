@@ -29,7 +29,10 @@ public class Level {
 	private Game game;
 	// --------------------------------------------------------|
 	// GAMEOBJECTS---------------------------------------------|
-	private BufferedImage play_background;
+	private BufferedImage play_background_section_a;
+	private BufferedImage play_background_section_b;
+	private BufferedImage play_background_section_c;
+	private BufferedImage play_background_section_d;
 	private BufferedImage play_scrolling_background1;
 	private BufferedImage play_scrolling_background2;
 	private Player player;
@@ -83,20 +86,25 @@ public class Level {
 	private void renderBackground(Graphics g) {
 	
 		if(!isLoaded){
-			play_background = ImageData.getPlay_background();
+			play_background_section_a = ImageData.getPlay_background_section_a();
+			play_background_section_b = ImageData.getPlay_background_section_b();
+			play_background_section_c = ImageData.getPlay_background_section_c();
+			play_background_section_d = ImageData.getPlay_background_section_d();
 			play_scrolling_background1= ImageData.getPlay_scrolling_background();
 			play_scrolling_background2= ImageData.getPlay_scrolling_background();
 			isLoaded = true;
 		}
-		
-		g.drawImage(play_background, 0, 0, null);
+		 
+		// Draw the scrolling background first
 		g.drawImage(play_scrolling_background1, scrolling_background1x, scrolling_background1y, null);
 		g.drawImage(play_scrolling_background2, scrolling_background2x, scrolling_background2y, null);
 		
-		g.setColor(Color.BLACK);
-		g.fillRect(Game.getACTUAL_PUFFER_WIDTH(), 0, Game.getACTUAL_PLAY_WIDTH(), Game.getACTUAL_PUFFER_HEIGHT());
-		g.fillRect(Game.getACTUAL_PUFFER_WIDTH(), (Game.getACTUAL_PLAY_HEIGHT() + Game.getACTUAL_PUFFER_HEIGHT()), Game.getACTUAL_PLAY_WIDTH(), Game.getACTUAL_PUFFER_HEIGHT() + Game.getMissingPixels());
-
+		// Then draw the background fragments
+		g.drawImage(play_background_section_a, 0, 0, null);
+		g.drawImage(play_background_section_b, 0, Game.getACTUAL_PUFFER_HEIGHT(), null);
+		g.drawImage(play_background_section_c, Game.getACTUAL_PLAY_WIDTH() + Game.getACTUAL_PUFFER_WIDTH(), Game.getACTUAL_PUFFER_HEIGHT(), null);
+		g.drawImage(play_background_section_d, 0, Game.getACTUAL_PUFFER_HEIGHT() + Game.getACTUAL_PLAY_HEIGHT(), null); 
+		
 	}
 
 	/**

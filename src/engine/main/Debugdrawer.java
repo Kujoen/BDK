@@ -19,6 +19,15 @@ public class Debugdrawer {
 										Menu.getACTUAL_BUTTON_HEIGHT() + Menu.getACTUAL_TITLE_HEIGHT(), 
 										Menu.getACTUAL_BUTTON_WIDTH(), 
 										Menu.getACTUAL_BUTTON_HEIGHT());
+			g.drawRect((Menu.getACTUAL_PUFFER_WIDTH() + Menu.getACTUAL_PUFFER_WIDTH() - (Menu.getACTUAL_BUTTON_WIDTH() / 2)), 
+					(Menu.getACTUAL_BUTTON_HEIGHT() * 3) + Menu.getACTUAL_TITLE_HEIGHT(), 
+					Menu.getACTUAL_BUTTON_WIDTH(), 
+					Menu.getACTUAL_BUTTON_HEIGHT());
+			
+			g.drawRect((Menu.getACTUAL_PUFFER_WIDTH() + Menu.getACTUAL_PUFFER_WIDTH() - (Menu.getACTUAL_BUTTON_WIDTH() / 2)), 
+					(Menu.getACTUAL_BUTTON_HEIGHT() * 5) + Menu.getACTUAL_TITLE_HEIGHT(), 
+					Menu.getACTUAL_BUTTON_WIDTH(), 
+					Menu.getACTUAL_BUTTON_HEIGHT());
 		}
 
 		// Check for level specific debug

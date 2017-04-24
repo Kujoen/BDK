@@ -4,7 +4,8 @@ Create default screensize templates and allow scaling to fullscreen.
 		----------> Default play area will be 1280 x 720
 
 Create mainmenu 
-
+Create "tunnel" style segments in the level
+Create playscreen template sections and add it to the game
 
 Levelprogress :
 
