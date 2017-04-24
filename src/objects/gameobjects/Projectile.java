@@ -32,11 +32,9 @@ public class Projectile extends Sprite {
 	// UPDATING--------------------------------------------------------------------------|
 	@Override
 	public void update() {
-		
 		if(isanimated){
 			animationController();	
 		}
-		
 		moveProjectile();
 		checkForRemove();
 	}
