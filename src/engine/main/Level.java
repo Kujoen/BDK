@@ -19,6 +19,7 @@ import engine.input.Input;
 import engine.math.Vector2D;
 import objects.data.ImageData;
 import objects.data.SpriteData;
+import objects.gameobjects.Dummy;
 import objects.gameobjects.ObjectID;
 import objects.gameobjects.Player;
 import objects.gameobjects.Projectile;
@@ -45,7 +46,8 @@ public class Level {
 	private int scrolling_background2x = Game.getACTUAL_PUFFER_WIDTH();
 	private int scrolling_background2y = Game.getACTUAL_PUFFER_HEIGHT() - Game.getACTUAL_PLAY_HEIGHT();
 	// INT-----------------------------------------------------|
-	private int levelFileReaderTickCount = 0;
+	private int levelid = 0;
+	private int tickcounter = 0;
 	// --------------------------------------------------------|
 	// BOOLEAN-------------------------------------------------|
 	private boolean isLoaded;
@@ -74,16 +76,21 @@ public class Level {
 	 * @param g
 	 */
 	public void render(Graphics g) {
-		renderBackground(g);
+		renderScrollingBackground(g);
 		renderSprites(g);
+		renderBackgroundFragments(g);
 	}
 
+	private void renderScrollingBackground(Graphics g){
+			g.drawImage(play_scrolling_background1, scrolling_background1x, scrolling_background1y, null);
+			g.drawImage(play_scrolling_background2, scrolling_background2x, scrolling_background2y, null);
+	}
 	/**
 	 * Draws the background. Contains logic to loop the background
 	 * 
 	 * @param g
 	 */
-	private void renderBackground(Graphics g) {
+	private void renderBackgroundFragments(Graphics g) {
 	
 		if(!isLoaded){
 			play_background_section_a = ImageData.getPlay_background_section_a();
@@ -94,11 +101,6 @@ public class Level {
 			play_scrolling_background2= ImageData.getPlay_scrolling_background();
 			isLoaded = true;
 		}
-		 
-		// Draw the scrolling background first
-		g.drawImage(play_scrolling_background1, scrolling_background1x, scrolling_background1y, null);
-		g.drawImage(play_scrolling_background2, scrolling_background2x, scrolling_background2y, null);
-		
 		// Then draw the background fragments
 		g.drawImage(play_background_section_a, 0, 0, null);
 		g.drawImage(play_background_section_b, 0, Game.getACTUAL_PUFFER_HEIGHT(), null);
@@ -127,8 +129,9 @@ public class Level {
 	 */
 	public void update() {
 		// Update the background and the positions of already existing sprites
-		updateBackground();
+		updateScrollingBackground();
 		updateSprites();
+		updateLevel();
 		
 		// Update sprite lists
 		updateDeleteRequests();
@@ -138,7 +141,7 @@ public class Level {
 	/**
 	 * moves the background
 	 */
-	private void updateBackground() {
+	private void updateScrollingBackground() {
 		scrolling_background1y += SpriteData.getACTUAL_SCROLLING_SPEED();
 		scrolling_background2y += SpriteData.getACTUAL_SCROLLING_SPEED();
 		
@@ -158,6 +161,30 @@ public class Level {
 		// Update sprite positions
 		for (Sprite s : spriteList) {
 			s.update();
+		}
+	}
+	
+	private void updateLevel(){
+		switch(levelid){
+		case 0:
+			updateLevel1(tickcounter);
+			break;
+		}
+		
+		tickcounter++;
+	}
+	
+	private void updateLevel1(int tickcount){
+		switch(tickcount){
+		case 180:
+			spriteList.add(new Dummy(
+						new Vector2D(Game.getACTUAL_PUFFER_WIDTH() + (Game.getACTUAL_PLAY_WIDTH() / 2) ,	-SpriteData.getACTUAL_DUMMY_SIZE()), 
+						new Vector2D(0,3), 
+						10, 
+						ObjectID.DUMMY, 
+						false));
+
+			break;
 		}
 	}
 
@@ -214,14 +241,6 @@ public class Level {
 
 	public void setPlayer(Player player) {
 		this.player = player;
-	}
-
-	public int getLevelFileReaderTickCount() {
-		return levelFileReaderTickCount;
-	}
-
-	public void setLevelFileReaderTickCount(int levelFileReaderTickCount) {
-		this.levelFileReaderTickCount = levelFileReaderTickCount;
 	}
 
 	public boolean isLoaded() {

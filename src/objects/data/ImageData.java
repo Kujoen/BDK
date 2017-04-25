@@ -24,6 +24,7 @@ public class ImageData {
 	private static BufferedImage mainmenu_background;
 	private static BufferedImage player;
 	private static BufferedImage player_projectile;
+	private static BufferedImage dummy;
 	private static BufferedImage mainmenu_title;
 	private static BufferedImage mainmenu_button_story;
 	private static BufferedImage mainmenu_button_endless;
@@ -38,6 +39,7 @@ public class ImageData {
 			play_background_section_d = ImageIO.read(new File("res/sprites/play_background_section_d.png"));
 			play_scrolling_background = ImageIO.read(new File("res/sprites/play_scrolling_background.png"));
 			player = ImageIO.read(new File("res/sprites/player.png"));
+			dummy = ImageIO.read(new File("res/sprites/dummy.png"));
 			player_projectile = ImageIO.read(new File("res/sprites/player_projectile.png"));
 			mainmenu_title = ImageIO.read(new File("res/sprites/mainmenu_title.png"));
 			mainmenu_button_story = ImageIO.read(new File("res/sprites/mainmenu_button_story.png"));
@@ -57,6 +59,7 @@ public class ImageData {
 		play_background_section_d = scale(play_background_section_d,  Window.getACTUALWIDTH(), Game.getACTUAL_PUFFER_HEIGHT());
 		play_scrolling_background = scale(play_scrolling_background, Game.getACTUAL_PLAY_WIDTH(), Game.getACTUAL_PLAY_HEIGHT());
 		player = scale(player, SpriteData.getACTUAL_PLAYER_SIZE(), SpriteData.getACTUAL_PLAYER_SIZE());
+		dummy = scale(dummy, SpriteData.getACTUAL_DUMMY_SIZE(), SpriteData.getACTUAL_DUMMY_SIZE());
 		player_projectile = scale(player_projectile, SpriteData.getACTUAL_PLAYER_PROJECTILE_SIZE(), SpriteData.getACTUAL_PLAYER_PROJECTILE_SIZE());
 		mainmenu_title = scale(mainmenu_title, Menu.getACTUAL_TITLE_WIDTH(), Menu.getACTUAL_TITLE_HEIGHT());
 		mainmenu_background = scale(mainmenu_background, Window.getACTUALWIDTH(), Window.getACTUALHEIGHT());
@@ -82,6 +85,8 @@ public class ImageData {
 			return player;
 		case PLAYER_PROJECTILE:
 			return player_projectile;
+		case DUMMY:
+			return dummy;
 		}
 		return null;
 	}

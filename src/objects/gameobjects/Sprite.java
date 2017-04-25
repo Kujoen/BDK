@@ -33,6 +33,7 @@ public abstract class Sprite {
 	protected BufferedImage spritefile;
 	//-----------------------------------------------------|
 	// GAMEOBJECTS-----------------------------------------|
+	protected Hitbox hitbox;
 	protected ObjectID ID;
 	protected ArrayList<Sprite> requestRemoveList;
 	protected ArrayList<Sprite> requestSpawnList;
@@ -65,7 +66,7 @@ public abstract class Sprite {
 		this.requestSpawnList = new ArrayList<>();
 		
 		this.spritefile = ImageData.getSpriteForID(ID);
-		
+		this.hitbox = new Hitbox(this);
 	}
 
 	public abstract void update();

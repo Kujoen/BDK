@@ -9,25 +9,20 @@ import engine.math.Vector2D;
  * @author DonutConsulting
  *
  */
-public class Enemy extends Sprite {
-	
-		// IMAGE------------------------------------------------------|
-		private Image EnemyImage;
-		// -----------------------------------------------------------|
-
-	public Enemy(Vector2D position, Vector2D movementvector, int health, ObjectID ID,  boolean isanimated) {
+public class Dummy extends Sprite {
+	public Dummy(Vector2D position, Vector2D movementvector, int health, ObjectID ID, boolean isanimated){
 		super(position,movementvector, health, ID,  isanimated);
 	}
 
 	@Override
 	public void update() {
-		
+		position.vecAdd(movementvector);
+		hitbox.updateHitbox();
 	}
 
 	@Override
 	public void render(Graphics g) {
-
-
+		g.drawImage(spritefile,(int) position.getX(),(int) position.getY(), null);
 	}
 
 	@Override
@@ -35,5 +30,4 @@ public class Enemy extends Sprite {
 		// TODO Auto-generated method stub
 		
 	}
-
 }
