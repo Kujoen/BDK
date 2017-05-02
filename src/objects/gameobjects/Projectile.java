@@ -50,6 +50,10 @@ public class Projectile extends Sprite {
 	private void checkForRemove() {
 		if (this.position.getY() < Game.getACTUAL_PUFFER_HEIGHT()) {
 			requestRemoveList.add(this);
+		}else if(this.position.getY() > (Game.getACTUAL_PUFFER_HEIGHT() + Game.getACTUAL_PLAY_HEIGHT())){
+			requestRemoveList.add(this);
+		}else if(this.position.getX() < Game.getACTUAL_PLAY_WIDTH() || this.position.getX() > (Game.getACTUAL_PLAY_WIDTH() + Game.getACTUAL_PUFFER_WIDTH())){
+			requestRemoveList.add(this);
 		}
 	}
 	

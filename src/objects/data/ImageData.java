@@ -28,6 +28,7 @@ public class ImageData {
 	private static BufferedImage mainmenu_background;
 	private static BufferedImage player;
 	private static BufferedImage player_projectile;
+	private static BufferedImage energyorb_projectile;
 	private static BufferedImage mainmenu_title;
 	private static BufferedImage mainmenu_button_story;
 	private static BufferedImage mainmenu_button_endless;
@@ -46,6 +47,7 @@ public class ImageData {
 			play_scrolling_background = ImageIO.read(new File("res/sprites/play_scrolling_background.png"));
 			player = ImageIO.read(new File("res/sprites/player.png"));
 			player_projectile = ImageIO.read(new File("res/sprites/player_projectile.png"));
+			energyorb_projectile = ImageIO.read(new File("res/sprites/energyorb_projectile.png"));
 			mainmenu_title = ImageIO.read(new File("res/sprites/mainmenu_title.png"));
 			mainmenu_button_story = ImageIO.read(new File("res/sprites/mainmenu_button_story.png"));
 			mainmenu_button_endless = ImageIO.read(new File("res/sprites/mainmenu_button_endless.png"));
@@ -82,7 +84,8 @@ public class ImageData {
 		play_background_section_d = scale(play_background_section_d,  Window.getACTUALWIDTH(), Game.getACTUAL_PUFFER_HEIGHT());
 		play_scrolling_background = scale(play_scrolling_background, Game.getACTUAL_PLAY_WIDTH(), Game.getACTUAL_PLAY_HEIGHT());
 		player = scale(player, SpriteData.getActual_player_sprite_size(), SpriteData.getActual_player_sprite_size());
-		player_projectile = scale(player_projectile, SpriteData.getActual_player_projectile_sprite_size(), SpriteData.getActual_player_projectile_sprite_size());
+		energyorb_projectile = scale(energyorb_projectile, SpriteData.getActual_energyorb_projectile_sprite_size(), SpriteData.getActual_energyorb_projectile_sprite_size());
+		player_projectile = scale(player_projectile, SpriteData.getActual_player_projectile_sprite_size(), SpriteData.getActual_player_projectile_sprite_size() * 4);
 		mainmenu_title = scale(mainmenu_title, Menu.getACTUAL_TITLE_WIDTH(), Menu.getACTUAL_TITLE_HEIGHT());
 		mainmenu_background = scale(mainmenu_background, Window.getACTUALWIDTH(), Window.getACTUALHEIGHT());
 		mainmenu_button_story = scale(mainmenu_button_story, Menu.getACTUAL_BUTTON_WIDTH(), Menu.getACTUAL_BUTTON_HEIGHT());
@@ -90,9 +93,9 @@ public class ImageData {
 		mainmenu_button_options = scale(mainmenu_button_options, Menu.getACTUAL_BUTTON_WIDTH(), Menu.getACTUAL_BUTTON_HEIGHT());
 		
 		//Scale the SpriteSheets
-		for(BufferedImage image : energyorb_spritesheet){
-			image = scale(image, SpriteData.getActual_energyorb_sprite_size(), SpriteData.getActual_energyorb_sprite_size());
-			System.out.println("hi");
+		for(BufferedImage i : energyorb_spritesheet){
+			i = scale(i, SpriteData.getActual_energyorb_sprite_size(), SpriteData.getActual_energyorb_sprite_size());
+			System.out.println(SpriteData.getActual_energyorb_sprite_size());
 		}
 	}
 	
@@ -113,6 +116,8 @@ public class ImageData {
 			return player;
 		case PLAYER_PROJECTILE:
 			return player_projectile;
+		case ENERGYORB_PROJECTILE:
+			return energyorb_projectile;
 		}
 		return null;
 	}

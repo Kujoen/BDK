@@ -3,7 +3,9 @@ package objects.gameobjects;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+import engine.math.Grid;
 import engine.math.Vector2D;
+import objects.data.SpriteData;
 
 public class EnergyOrb extends Sprite{
 	
@@ -101,7 +103,20 @@ public class EnergyOrb extends Sprite{
 	}
 	
 	private void spawnProjectiles(){
-		
+		if(animationstate == 1){
+			if(tickcounter % 6 == 0){
+				for (int i = 0; i < 1; i++) {
+					requestSpawnList.add(new Projectile( 
+							new Vector2D(position.getX() + (SpriteData.getActual_energyorb_sprite_size() / 2) - (SpriteData.getActual_energyorb_projectile_sprite_size() / 2), 
+									position.getY() + (SpriteData.getActual_energyorb_sprite_size() / 2) - (SpriteData.getActual_energyorb_projectile_sprite_size() / 2)), 
+							new Vector2D(0,10), 
+							0, 
+							ObjectID.ENERGYORB_PROJECTILE));
+					
+					i++;
+				}	
+			}
+		}
 	}
 
 }

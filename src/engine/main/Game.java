@@ -8,6 +8,7 @@ import java.awt.image.BufferStrategy;
 import javax.swing.JOptionPane;
 
 import engine.input.Input;
+import engine.math.Grid;
 import objects.data.ImageData;
 import objects.data.SpriteData;
 
@@ -83,6 +84,7 @@ public class Game extends Canvas implements Runnable {
 
 			Menu.scaleMenuData(height_scaling_factor);
 			SpriteData.scaleData(height_scaling_factor);
+			Grid.scaleGrid(height_scaling_factor);
 			ImageData.scaleimages();
 			
 		}else{
@@ -94,7 +96,9 @@ public class Game extends Canvas implements Runnable {
 			ACTUAL_PUFFER_WIDTH = DEFAULT_PUFFER_WIDTH;
 			
 			Menu.scaleMenuData(1.0);
+			Grid.scaleGrid(1.0);
 			SpriteData.scaleData(1.0);
+			ImageData.scaleimages();
 		}
 		
 		missingPixels = (int)(Window.getScreenheight() - (ACTUAL_PUFFER_HEIGHT + ACTUAL_PLAY_HEIGHT + ACTUAL_PUFFER_HEIGHT));
