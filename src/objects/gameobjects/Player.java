@@ -27,7 +27,7 @@ public class Player extends Sprite {
 	// -----------------------------------------------------------|
 	
 	public Player(Vector2D position, Vector2D movementvector, int health, ObjectID ID, boolean isanimated) {
-		super(position, movementvector, health, ID, isanimated);
+		super(position, movementvector, health, ID);
 	}
 
 	// UPDATING--------------------------------------------------------------------------|
@@ -57,9 +57,9 @@ public class Player extends Sprite {
 		}
 		
 		if (Input.isBackward()) {
-			if(position.getY() < (Game.getACTUAL_PLAY_HEIGHT() + Game.getACTUAL_PUFFER_HEIGHT() - SpriteData.getACTUAL_PLAYER_SIZE())){
-				if((position.getY() + yvel) > (Game.getACTUAL_PLAY_HEIGHT() + Game.getACTUAL_PUFFER_HEIGHT() - SpriteData.getACTUAL_PLAYER_SIZE())){
-					position.setY((Game.getACTUAL_PLAY_HEIGHT() + Game.getACTUAL_PUFFER_HEIGHT() - SpriteData.getACTUAL_PLAYER_SIZE()));
+			if(position.getY() < (Game.getACTUAL_PLAY_HEIGHT() + Game.getACTUAL_PUFFER_HEIGHT() - SpriteData.getActual_player_projectile_sprite_size())){
+				if((position.getY() + yvel) > (Game.getACTUAL_PLAY_HEIGHT() + Game.getACTUAL_PUFFER_HEIGHT() - SpriteData.getActual_player_projectile_sprite_size())){
+					position.setY((Game.getACTUAL_PLAY_HEIGHT() + Game.getACTUAL_PUFFER_HEIGHT() - SpriteData.getActual_player_projectile_sprite_size()));
 				}else{
 					position.addY(yvel);
 				}
@@ -79,9 +79,9 @@ public class Player extends Sprite {
 		}
 
 		if (Input.isRight()) {
-			if(position.getX() < (Game.getACTUAL_PUFFER_WIDTH() + Game.getACTUAL_PLAY_WIDTH() - SpriteData.getACTUAL_PLAYER_SIZE())){
-				if((position.getX() + xvel) >  (Game.getACTUAL_PUFFER_WIDTH() + Game.getACTUAL_PLAY_WIDTH() - SpriteData.getACTUAL_PLAYER_SIZE())){
-					position.setX( (Game.getACTUAL_PUFFER_WIDTH() + Game.getACTUAL_PLAY_WIDTH() - SpriteData.getACTUAL_PLAYER_SIZE()));
+			if(position.getX() < (Game.getACTUAL_PUFFER_WIDTH() + Game.getACTUAL_PLAY_WIDTH() - SpriteData.getActual_player_projectile_sprite_size())){
+				if((position.getX() + xvel) >  (Game.getACTUAL_PUFFER_WIDTH() + Game.getACTUAL_PLAY_WIDTH() - SpriteData.getActual_player_projectile_sprite_size())){
+					position.setX( (Game.getACTUAL_PUFFER_WIDTH() + Game.getACTUAL_PLAY_WIDTH() - SpriteData.getActual_player_projectile_sprite_size()));
 				}else{
 					position.addX(xvel);
 				}
@@ -114,11 +114,10 @@ public class Player extends Sprite {
 			if (tickcounter % 4 == 0) {
 				
 				requestSpawnList.add(new Projectile(
-						new Vector2D(this.position.getX() + SpriteData.getACTUAL_PLAYER_SIZE() / 2 - SpriteData.getACTUAL_PLAYER_PROJECTILE_SIZE() / 2,this.position.getY()), 
-						new Vector2D(0, SpriteData.getACTUAL_PLAYER_PROJECTILE_SPEED()), 
+						new Vector2D(this.position.getX() + (SpriteData.getActual_player_sprite_size() / 2) - (SpriteData.getActual_player_projectile_sprite_size() / 2),this.position.getY()), 
+						new Vector2D(0, SpriteData.getActual_player_projectile_speed()), 
 						0, 
-						ObjectID.PLAYER_PROJECTILE,
-						false));
+						ObjectID.PLAYER_PROJECTILE));
 				
 				tickcounter++;
 			}

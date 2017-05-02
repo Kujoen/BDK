@@ -22,19 +22,8 @@ public class Hitbox {
 			hitrec.setBounds(
 					(int)sprite.getPosition().getX(), 
 					(int)sprite.getPosition().getY(), 
-					SpriteData.getACTUAL_PLAYER_SIZE(), 
-					SpriteData.getACTUAL_PLAYER_SIZE()
-					);
-			
-			break;
-			
-		case DUMMY:
-			hitrec = new Rectangle();
-			hitrec.setBounds(
-					(int)sprite.getPosition().getX(), 
-					(int)sprite.getPosition().getY(), 
-					SpriteData.getACTUAL_DUMMY_SIZE(),
-					SpriteData.getACTUAL_DUMMY_SIZE()
+					SpriteData.getActual_player_sprite_size(), 
+					SpriteData.getActual_player_sprite_size()
 					);
 			break;
 		}

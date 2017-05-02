@@ -24,17 +24,15 @@ public class Projectile extends Sprite {
 	private MovementFunctions mFunction;
 	//------------------------------------------------|
 
-	public Projectile(Vector2D position, Vector2D movementvector, int health, ObjectID ID, boolean isanimated) {
-		super(position, movementvector, health, ID,  isanimated);
+	public Projectile(Vector2D position, Vector2D movementvector, int health, ObjectID ID) {
+		super(position, movementvector, health, ID);
 		mFunction = new MovementFunctions(this);
 	}
 
 	// UPDATING--------------------------------------------------------------------------|
 	@Override
 	public void update() {
-		if(isanimated){
-			animationController();	
-		}
+		animationController();	
 		moveProjectile();
 		checkForRemove();
 	}
@@ -54,6 +52,11 @@ public class Projectile extends Sprite {
 			requestRemoveList.add(this);
 		}
 	}
+	
+	@Override
+	public void animationController() {
+		
+	}
 
 	// --------------------------------------------------------------------------|
 	// RENDERING-----------------------------------------------------------------|
@@ -62,12 +65,6 @@ public class Projectile extends Sprite {
 		g.drawImage(spritefile, (int)position.getX(), (int)position.getY(), null);
 	}
 	// ---------------------------------------------------------------------------|
-
-	@Override
-	public void animationController() {
-		
-	}
-
 	//GETTERS AND SETTERS
 	//----------------------------------------------------------------------------|
 	//----------------------------------------------------------------------------|

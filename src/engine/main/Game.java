@@ -100,7 +100,6 @@ public class Game extends Canvas implements Runnable {
 		missingPixels = (int)(Window.getScreenheight() - (ACTUAL_PUFFER_HEIGHT + ACTUAL_PLAY_HEIGHT + ACTUAL_PUFFER_HEIGHT));
 		
 		Window window = new Window("LTW");
-		System.out.println(SpriteData.getACTUAL_DUMMY_SIZE());
 	}
 
 	/**

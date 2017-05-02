@@ -18,8 +18,6 @@ public abstract class Sprite {
 	// MATHOBJECTS-----------------------------------------|
 	protected Vector2D position;
 	protected Vector2D movementvector;
-	// BOOLEAN---------------------------------------------|
-	protected boolean isanimated;
 	// ----------------------------------------------------|
 	// DOUBLE----------------------------------------------|
 	protected double xvel;
@@ -27,10 +25,11 @@ public abstract class Sprite {
 	// ----------------------------------------------------|
 	// INT-------------------------------------------------|
 	protected int health;
-	// ----------------------------------------------------|
 	//-----------------------------------------------------|
 	// SPRITE----------------------------------------------|
 	protected BufferedImage spritefile;
+	// SPRITESHEET-----------------------------------------|
+	protected ArrayList<BufferedImage> spritesheet;
 	//-----------------------------------------------------|
 	// GAMEOBJECTS-----------------------------------------|
 	protected Hitbox hitbox;
@@ -53,7 +52,7 @@ public abstract class Sprite {
   * 	Projectile, Enemy or Player.
   * 	
   */
-	public Sprite(Vector2D position, Vector2D movementvector, int health, ObjectID ID, boolean isanimated) {
+	public Sprite(Vector2D position, Vector2D movementvector, int health, ObjectID ID) {
 		this.position = position;
 		
 		this.movementvector = movementvector;
@@ -61,11 +60,16 @@ public abstract class Sprite {
 		this.yvel = movementvector.getY();
 		this.health = health;
 		this.ID = ID;
-		this.isanimated = isanimated;
 		this.requestRemoveList = new ArrayList<>();
 		this.requestSpawnList = new ArrayList<>();
 		
+		// Get spritefile as single sprite or as spritesheet
 		this.spritefile = ImageData.getSpriteForID(ID);
+		// Check if have to get spritesheet
+		if(this.spritefile == null){
+			this.spritesheet = ImageData.getSpriteSheetForID(ID);
+		}
+		
 		this.hitbox = new Hitbox(this);
 	}
 

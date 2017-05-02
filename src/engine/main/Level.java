@@ -19,7 +19,7 @@ import engine.input.Input;
 import engine.math.Vector2D;
 import objects.data.ImageData;
 import objects.data.SpriteData;
-import objects.gameobjects.Dummy;
+import objects.gameobjects.EnergyOrb;
 import objects.gameobjects.ObjectID;
 import objects.gameobjects.Player;
 import objects.gameobjects.Projectile;
@@ -61,7 +61,7 @@ public class Level {
         //Add the player to the spriteList
 		this.player = new Player(
 				new Vector2D(game.getWindow().getACTUALWIDTH() / 2, game.getWindow().getACTUALHEIGHT() / 2),
-				new Vector2D(SpriteData.getACTUAL_PLAYER_SPEED(), SpriteData.getACTUAL_PLAYER_SPEED()), 
+				new Vector2D(SpriteData.getActual_player_speed(), SpriteData.getActual_player_speed()), 
 				1, 
 				ObjectID.PLAYER,
 				false);
@@ -142,8 +142,8 @@ public class Level {
 	 * moves the background
 	 */
 	private void updateScrollingBackground() {
-		scrolling_background1y += SpriteData.getACTUAL_SCROLLING_SPEED();
-		scrolling_background2y += SpriteData.getACTUAL_SCROLLING_SPEED();
+		scrolling_background1y += SpriteData.getActual_background_scrolling_speed();
+		scrolling_background2y += SpriteData.getActual_background_scrolling_speed();
 		
 		if(scrolling_background1y == Game.getACTUAL_PLAY_HEIGHT() + Game.getACTUAL_PUFFER_HEIGHT()){
 			scrolling_background1y = Game.getACTUAL_PUFFER_HEIGHT() - Game.getACTUAL_PLAY_HEIGHT();
@@ -177,13 +177,11 @@ public class Level {
 	private void updateLevel1(int tickcount){
 		switch(tickcount){
 		case 180:
-			spriteList.add(new Dummy(
-						new Vector2D(Game.getACTUAL_PUFFER_WIDTH() + (Game.getACTUAL_PLAY_WIDTH() / 2) ,	-SpriteData.getACTUAL_DUMMY_SIZE()), 
-						new Vector2D(0,3), 
-						10, 
-						ObjectID.DUMMY, 
-						false));
-
+			spriteList.add(new EnergyOrb(
+					new Vector2D(Game.getACTUAL_PUFFER_WIDTH() + (Game.getACTUAL_PLAY_WIDTH() / 2) - (SpriteData.getActual_energyorb_sprite_size() / 2),Game.getACTUAL_PUFFER_HEIGHT() * 2),
+					new Vector2D(0,0), 
+					10,
+					ObjectID.ENERGYORB));
 			break;
 		}
 	}
