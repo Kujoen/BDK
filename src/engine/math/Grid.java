@@ -28,7 +28,7 @@ public class Grid {
 	public static int getYFor(int y, ObjectID ID){
 		switch(ID){
 		case ENERGYORB:
-			return (int)(Game.getACTUAL_PUFFER_WIDTH() + ( y * actual_grid_size) - (SpriteData.getActual_energyorb_sprite_size() / 2));
+			return (int)(Game.getACTUAL_PUFFER_HEIGHT() + ( y * actual_grid_size) - (SpriteData.getActual_energyorb_sprite_size() / 2));
 		}
 		return 0;
 	}

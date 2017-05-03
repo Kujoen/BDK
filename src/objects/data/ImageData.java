@@ -93,9 +93,11 @@ public class ImageData {
 		mainmenu_button_options = scale(mainmenu_button_options, Menu.getACTUAL_BUTTON_WIDTH(), Menu.getACTUAL_BUTTON_HEIGHT());
 		
 		//Scale the SpriteSheets
-		for(BufferedImage i : energyorb_spritesheet){
-			i = scale(i, SpriteData.getActual_energyorb_sprite_size(), SpriteData.getActual_energyorb_sprite_size());
-			System.out.println(SpriteData.getActual_energyorb_sprite_size());
+		for(BufferedImage imagetoscale : energyorb_spritesheet){
+			int index = energyorb_spritesheet.indexOf(imagetoscale);
+			BufferedImage scaledimage = energyorb_spritesheet.get(index);
+			scaledimage = scale(scaledimage, SpriteData.getActual_energyorb_sprite_size(), SpriteData.getActual_energyorb_sprite_size());
+			energyorb_spritesheet.set(index, scaledimage);
 		}
 	}
 	

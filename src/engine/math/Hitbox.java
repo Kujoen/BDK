@@ -10,20 +10,28 @@ public class Hitbox {
 	
 	private Sprite sprite;
 	private Rectangle hitrec;
-	private boolean isplayer;
 	
 	public Hitbox(Sprite sprite){
+		
 		this.sprite = sprite;
+		this.hitrec = new Rectangle();	
+		
 		
 		switch(sprite.getID()){
 		case PLAYER:
-			isplayer = true;
-			hitrec = new Rectangle();	
 			hitrec.setBounds(
 					(int)sprite.getPosition().getX(), 
 					(int)sprite.getPosition().getY(), 
 					SpriteData.getActual_player_sprite_size(), 
 					SpriteData.getActual_player_sprite_size()
+					);
+			break;
+		case ENERGYORB:
+			hitrec.setBounds(
+					(int)sprite.getPosition().getX(), 
+					(int)sprite.getPosition().getY(), 
+					SpriteData.getActual_energyorb_sprite_size(), 
+					SpriteData.getActual_energyorb_sprite_size()
 					);
 			break;
 		}

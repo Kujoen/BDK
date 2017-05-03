@@ -16,6 +16,7 @@ import javax.swing.Timer;
 import javax.swing.text.html.HTMLDocument.Iterator;
 
 import engine.input.Input;
+import engine.math.Grid;
 import engine.math.Vector2D;
 import objects.data.ImageData;
 import objects.data.SpriteData;
@@ -178,7 +179,7 @@ public class Level {
 		switch(tickcount){
 		case 180:
 			spriteList.add(new EnergyOrb(
-					new Vector2D(Game.getACTUAL_PUFFER_WIDTH() + (Game.getACTUAL_PLAY_WIDTH() / 2) - (SpriteData.getActual_energyorb_sprite_size() / 2),Game.getACTUAL_PUFFER_HEIGHT() * 2),
+					new Vector2D(Grid.getXFor(33, ObjectID.ENERGYORB), Grid.getYFor(36, ObjectID.ENERGYORB)),
 					new Vector2D(0,0), 
 					10,
 					ObjectID.ENERGYORB));

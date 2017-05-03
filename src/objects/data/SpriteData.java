@@ -7,7 +7,7 @@ public class SpriteData {
 	private static final int DEFAULT_PLAYER_PROJECTILE_SPRITE_SIZE = 8;
 	private static final int DEFAULT_PLAYER_PROJECTILE_SPEED = -16;
 	private static final int DEFAULT_BACKGROUND_SCROLLING_SPEED = 2;
-	private static final int DEFAULT_ENERGYORB_SPRITE_SIZE = 128;
+	private static final int DEFAULT_ENERGYORB_SPRITE_SIZE = 256;
 	private static final int DEFAULT_ENERGYORB_PROJECTILE_SPRITE_SIZE = 16;
 	//-------------------------------------------------------|
 	// INTS//------------------------------------------------|
