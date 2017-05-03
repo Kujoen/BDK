@@ -125,11 +125,11 @@ public class Menu {
 							(Menu.getACTUAL_PUFFER_WIDTH() + Menu.getACTUAL_PUFFER_WIDTH() - (Menu.getACTUAL_BUTTON_WIDTH() / 2)),
 							Menu.getACTUAL_BUTTON_HEIGHT() + Menu.getACTUAL_TITLE_HEIGHT(), 
 							null);
-		g.drawImage(mainmenu_button_story, 
+		g.drawImage(mainmenu_button_endless, 
 				(Menu.getACTUAL_PUFFER_WIDTH() + Menu.getACTUAL_PUFFER_WIDTH() - (Menu.getACTUAL_BUTTON_WIDTH() / 2)),
 				(Menu.getACTUAL_BUTTON_HEIGHT() * 3) + Menu.getACTUAL_TITLE_HEIGHT(), 
 				null);
-		g.drawImage(mainmenu_button_story, 
+		g.drawImage(mainmenu_button_options, 
 				(Menu.getACTUAL_PUFFER_WIDTH() + Menu.getACTUAL_PUFFER_WIDTH() - (Menu.getACTUAL_BUTTON_WIDTH() / 2)),
 				(Menu.getACTUAL_BUTTON_HEIGHT() * 5) + Menu.getACTUAL_TITLE_HEIGHT(), 
 				null);
