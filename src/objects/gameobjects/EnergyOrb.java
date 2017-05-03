@@ -104,12 +104,12 @@ public class EnergyOrb extends Sprite{
 	
 	private void spawnProjectiles(){
 		if(animationstate == 1){
-			if(tickcounter % 6 == 0){
+			if(tickcounter % 2 == 0){
 				for (int i = 0; i < 1; i++) {
 					requestSpawnList.add(new Projectile( 
 							new Vector2D(position.getX() + (SpriteData.getActual_energyorb_sprite_size() / 2) - (SpriteData.getActual_energyorb_projectile_sprite_size() / 2), 
 									position.getY() + (SpriteData.getActual_energyorb_sprite_size() / 2) - (SpriteData.getActual_energyorb_projectile_sprite_size() / 2)), 
-							new Vector2D(0,10), 
+							new Vector2D(0,4), 
 							0, 
 							ObjectID.ENERGYORB_PROJECTILE));
 					
