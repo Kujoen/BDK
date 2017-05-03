@@ -52,7 +52,7 @@ public class Projectile extends Sprite {
 			requestRemoveList.add(this);
 		}else if(this.position.getY() > (Game.getACTUAL_PUFFER_HEIGHT() + Game.getACTUAL_PLAY_HEIGHT())){
 			requestRemoveList.add(this);
-		}else if(this.position.getX() < Game.getACTUAL_PLAY_WIDTH() || this.position.getX() > (Game.getACTUAL_PLAY_WIDTH() + Game.getACTUAL_PUFFER_WIDTH())){
+		}else if(this.position.getX() < Game.getACTUAL_PUFFER_WIDTH() || this.position.getX() > (Game.getACTUAL_PLAY_WIDTH() + Game.getACTUAL_PUFFER_WIDTH())){
 			requestRemoveList.add(this);
 		}
 	}
