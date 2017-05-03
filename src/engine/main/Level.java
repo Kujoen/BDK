@@ -179,7 +179,13 @@ public class Level {
 		switch(tickcount){
 		case 180:
 			spriteList.add(new EnergyOrb(
-					new Vector2D(Grid.getXFor(33, ObjectID.ENERGYORB), Grid.getYFor(36, ObjectID.ENERGYORB)),
+					new Vector2D(Grid.getXFor(16, ObjectID.ENERGYORB), Grid.getYFor(16, ObjectID.ENERGYORB)),
+					new Vector2D(0,0), 
+					10,
+					ObjectID.ENERGYORB));
+			
+			spriteList.add(new EnergyOrb(
+					new Vector2D(Grid.getXFor(48, ObjectID.ENERGYORB), Grid.getYFor(16, ObjectID.ENERGYORB)),
 					new Vector2D(0,0), 
 					10,
 					ObjectID.ENERGYORB));

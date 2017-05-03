@@ -11,7 +11,7 @@ public class Debugdrawer {
 		g.drawString("UPS : " + game.getUpdatesPerSecond(), 0, 20);
 
 		// Check for menu specific debug
-		if (game.isMenu()) {
+		/*if (game.isMenu()) {
 			Menu menu = game.getMenu();
 			
 			g.setColor(Color.RED);
@@ -28,7 +28,7 @@ public class Debugdrawer {
 					(Menu.getACTUAL_BUTTON_HEIGHT() * 5) + Menu.getACTUAL_TITLE_HEIGHT(), 
 					Menu.getACTUAL_BUTTON_WIDTH(), 
 					Menu.getACTUAL_BUTTON_HEIGHT());
-		}
+		}*/
 
 		// Check for level specific debug
 		if (game.isLevel()) {
