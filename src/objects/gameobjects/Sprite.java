@@ -10,6 +10,7 @@ import java.util.Set;
 
 import javax.imageio.ImageIO;
 
+import engine.main.Window;
 import engine.math.Hitbox;
 import engine.math.Vector2D;
 import objects.data.ImageData;
@@ -71,6 +72,23 @@ public abstract class Sprite {
 		}
 		
 		this.hitbox = new Hitbox(this);
+	}
+	
+	public void checkHitbox(){
+		// Check the hitboxes of non-projectiles
+		if(!(this instanceof Projectile)){
+			for(Sprite s : Window.getGame().getLevel().getSpriteList()){
+				if(!(this instanceof Player)){
+					if(s.ID == ObjectID.PLAYER_PROJECTILE){
+						if(this.hitbox.getHitrec().contains(s.hitbox.getHitrec())){
+							health--;
+							requestRemoveList.add(s);
+						}
+					}
+				}
+			}
+		}
+	
 	}
 
 	public abstract void update();

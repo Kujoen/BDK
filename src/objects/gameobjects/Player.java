@@ -57,9 +57,9 @@ public class Player extends Sprite {
 		}
 		
 		if (Input.isBackward()) {
-			if(position.getY() < (Game.getACTUAL_PLAY_HEIGHT() + Game.getACTUAL_PUFFER_HEIGHT() - SpriteData.getActual_player_projectile_sprite_size())){
-				if((position.getY() + yvel) > (Game.getACTUAL_PLAY_HEIGHT() + Game.getACTUAL_PUFFER_HEIGHT() - SpriteData.getActual_player_projectile_sprite_size())){
-					position.setY((Game.getACTUAL_PLAY_HEIGHT() + Game.getACTUAL_PUFFER_HEIGHT() - SpriteData.getActual_player_projectile_sprite_size()));
+			if(position.getY() < (Game.getACTUAL_PLAY_HEIGHT() + Game.getACTUAL_PUFFER_HEIGHT() - SpriteData.getActual_player_sprite_size())){
+				if((position.getY() + yvel) > (Game.getACTUAL_PLAY_HEIGHT() + Game.getACTUAL_PUFFER_HEIGHT() - SpriteData.getActual_player_sprite_size())){
+					position.setY((Game.getACTUAL_PLAY_HEIGHT() + Game.getACTUAL_PUFFER_HEIGHT() - SpriteData.getActual_player_sprite_size()));
 				}else{
 					position.addY(yvel);
 				}
@@ -79,9 +79,9 @@ public class Player extends Sprite {
 		}
 
 		if (Input.isRight()) {
-			if(position.getX() < (Game.getACTUAL_PUFFER_WIDTH() + Game.getACTUAL_PLAY_WIDTH() - SpriteData.getActual_player_projectile_sprite_size())){
-				if((position.getX() + xvel) >  (Game.getACTUAL_PUFFER_WIDTH() + Game.getACTUAL_PLAY_WIDTH() - SpriteData.getActual_player_projectile_sprite_size())){
-					position.setX( (Game.getACTUAL_PUFFER_WIDTH() + Game.getACTUAL_PLAY_WIDTH() - SpriteData.getActual_player_projectile_sprite_size()));
+			if(position.getX() < (Game.getACTUAL_PUFFER_WIDTH() + Game.getACTUAL_PLAY_WIDTH() - SpriteData.getActual_player_sprite_size())){
+				if((position.getX() + xvel) >  (Game.getACTUAL_PUFFER_WIDTH() + Game.getACTUAL_PLAY_WIDTH() - SpriteData.getActual_player_sprite_size())){
+					position.setX( (Game.getACTUAL_PUFFER_WIDTH() + Game.getACTUAL_PLAY_WIDTH() - SpriteData.getActual_player_sprite_size()));
 				}else{
 					position.addX(xvel);
 				}

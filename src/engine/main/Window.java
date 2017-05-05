@@ -23,6 +23,9 @@ public class Window extends JFrame {
 	// UI-----------------------------------------------------------------------|
 	private static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	//--------------------------------------------------------------------------|
+	// GAMEOBJECTS--------------------------------------------------------------|
+	private static Game game;
+	//--------------------------------------------------------------------------|
 	// INT----------------------------------------------------------------------|
 	private static int ACTUALHEIGHT;
 	private static int ACTUALWIDTH;
@@ -46,6 +49,7 @@ public class Window extends JFrame {
 		this.addKeyListener(Input.KeyInputListener);
 		
 		Game game = new Game(this);
+		this.game = game;
 		this.add(game);
 		this.setVisible(true);
 		game.startGame();
@@ -93,6 +97,18 @@ public class Window extends JFrame {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public static Game getGame() {
+		return game;
+	}
+
+	public static void setGame(Game game) {
+		Window.game = game;
+	}
+
+	public static void setScreenSize(Dimension screenSize) {
+		Window.screenSize = screenSize;
 	}
 	
 }

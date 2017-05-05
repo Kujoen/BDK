@@ -35,6 +35,7 @@ public class Projectile extends Sprite {
 		animationController();	
 		moveProjectile();
 		checkForRemove();
+		hitbox.updateHitbox();
 	}
 
 	/**
@@ -67,6 +68,9 @@ public class Projectile extends Sprite {
 	@Override
 	public void render(Graphics g) {
 		g.drawImage(spritefile, (int)position.getX(), (int)position.getY(), null);
+		
+		g.setColor(Color.RED);
+		g.drawRect((int)hitbox.getHitrec().getX(),(int)hitbox.getHitrec().getY(), (int)hitbox.getHitrec().getWidth(), (int)hitbox.getHitrec().getHeight());
 	}
 	// ---------------------------------------------------------------------------|
 	//GETTERS AND SETTERS

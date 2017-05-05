@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.SynchronousQueue;
+import java.util.function.Function;
 
 import javax.imageio.ImageIO;
 import javax.swing.text.html.HTMLDocument.Iterator;
@@ -93,12 +94,15 @@ public class ImageData {
 		mainmenu_button_options = scale(mainmenu_button_options, Menu.getACTUAL_BUTTON_WIDTH(), Menu.getACTUAL_BUTTON_HEIGHT());
 		
 		//Scale the SpriteSheets
-		for(BufferedImage imagetoscale : energyorb_spritesheet){
-			int index = energyorb_spritesheet.indexOf(imagetoscale);
-			BufferedImage scaledimage = energyorb_spritesheet.get(index);
-			scaledimage = scale(scaledimage, SpriteData.getActual_energyorb_sprite_size(), SpriteData.getActual_energyorb_sprite_size());
-			energyorb_spritesheet.set(index, scaledimage);
-		}
+//		for(BufferedImage imagetoscale : energyorb_spritesheet){
+//			int index = energyorb_spritesheet.indexOf(imagetoscale);
+//			BufferedImage scaledimage = energyorb_spritesheet.get(index);
+//			scaledimage = scale(scaledimage, SpriteData.getActual_energyorb_sprite_size(), SpriteData.getActual_energyorb_sprite_size());
+//			energyorb_spritesheet.set(index, scaledimage);
+//		}
+		
+		energyorb_spritesheet.stream().forEach(x -> energyorb_spritesheet.set(energyorb_spritesheet.indexOf(x), scale(x,SpriteData.getActual_energyorb_sprite_size(),SpriteData.getActual_energyorb_sprite_size())));
+		
 	}
 	
 	private static BufferedImage scale(BufferedImage imagetoscale, int nWidth, int nHeight){

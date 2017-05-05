@@ -34,6 +34,12 @@ public class Hitbox {
 					SpriteData.getActual_energyorb_sprite_size()
 					);
 			break;
+		case PLAYER_PROJECTILE:
+			hitrec.setBounds(
+					(int)sprite.getPosition().getX(), 
+					(int)sprite.getPosition().getY(), 
+					SpriteData.getActual_player_projectile_sprite_size(), 
+					SpriteData.getActual_player_projectile_sprite_size() * 4);
 		}
 		
 	}

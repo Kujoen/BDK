@@ -1,5 +1,6 @@
 package objects.gameobjects;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
@@ -27,8 +28,14 @@ public class EnergyOrb extends Sprite {
 
 	@Override
 	public void update() {
+				
+		if(health <= 0){
+			requestRemoveList.add(this);
+		}
+		
 		spawnProjectiles();
 		animationController();
+		checkHitbox();
 
 		tickcounter++;
 	}
@@ -36,6 +43,9 @@ public class EnergyOrb extends Sprite {
 	@Override
 	public void render(Graphics g) {
 		g.drawImage(currentimage, (int) position.getX(), (int) position.getY(), null);
+		
+		g.setColor(Color.RED);
+		g.drawRect((int)hitbox.getHitrec().getX(),(int)hitbox.getHitrec().getY(), (int)hitbox.getHitrec().getWidth(), (int)hitbox.getHitrec().getHeight());
 	}
 
 	@Override
@@ -114,7 +124,6 @@ public class EnergyOrb extends Sprite {
 							new Vector2D(Math.sin(currentangle) * SpriteData.getActual_player_projectile_speed() / 4,
 									Math.cos(currentangle) * SpriteData.getActual_player_projectile_speed() / 4),
 							0, ObjectID.ENERGYORB_PROJECTILE));
-
 				}
 			}
 		}
