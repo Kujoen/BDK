@@ -19,6 +19,11 @@ public class Vector2D {
 		y *= scalingFactor;
 	}
 	
+	public Vector2D getThisScaled(double scalingFactor){
+		Vector2D resultVector = new Vector2D(x * scalingFactor, y *scalingFactor);
+		return resultVector;
+	}
+	
 	public void addX(double xvalue){
 		x += xvalue;
 	}

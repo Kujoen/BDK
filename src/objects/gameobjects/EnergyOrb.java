@@ -115,15 +115,20 @@ public class EnergyOrb extends Sprite {
 		if (animationstate == 1) {
 			if (tickcounter % 10 == 0) {
 				for (double currentangle = 0.0; currentangle < 2 * Math.PI; currentangle += (Math.PI / 16)) {
-					requestSpawnList.add(new Projectile(
-							new Vector2D(
-									position.getX() + (SpriteData.getActual_energyorb_sprite_size() / 2)
-											- (SpriteData.getActual_energyorb_projectile_sprite_size() / 2),
-									position.getY() + (SpriteData.getActual_energyorb_sprite_size() / 2)
-											- (SpriteData.getActual_energyorb_projectile_sprite_size() / 2)),
-							new Vector2D(Math.sin(currentangle) * SpriteData.getActual_player_projectile_speed() / 4,
-									Math.cos(currentangle) * SpriteData.getActual_player_projectile_speed() / 4),
-							0, ObjectID.ENERGYORB_PROJECTILE));
+
+					Vector2D currentVector = new Vector2D(Math.sin(currentangle), Math.cos(currentangle));
+					requestSpawnList
+							.add(new Projectile(
+									new Vector2D(
+											position.getX() + (SpriteData.getActual_energyorb_sprite_size() / 2)
+													- (SpriteData.getActual_energyorb_projectile_sprite_size() / 2)
+													+ currentVector.getX()
+															* SpriteData.getActual_energyorb_sprite_size() / 6,
+											position.getY() + (SpriteData.getActual_energyorb_sprite_size() / 2)
+													- (SpriteData.getActual_energyorb_projectile_sprite_size() / 2)
+													+ currentVector.getY()
+															* SpriteData.getActual_energyorb_sprite_size() / 6),
+									currentVector.getThisScaled(5), 0, ObjectID.ENERGYORB_PROJECTILE));
 				}
 			}
 		}
