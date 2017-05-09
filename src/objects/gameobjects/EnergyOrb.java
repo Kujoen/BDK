@@ -115,7 +115,7 @@ public class EnergyOrb extends Sprite {
 		if (animationstate == 1) {
 			if (tickcounter % 10 == 0) {
 				for (double currentangle = 0.0; currentangle < 2 * Math.PI; currentangle += (Math.PI / 16)) {
-
+ 
 					Vector2D currentVector = new Vector2D(Math.sin(currentangle), Math.cos(currentangle));
 					requestSpawnList
 							.add(new Projectile(
@@ -133,5 +133,4 @@ public class EnergyOrb extends Sprite {
 			}
 		}
 	}
-
 }

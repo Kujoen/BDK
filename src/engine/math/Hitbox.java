@@ -28,10 +28,10 @@ public class Hitbox {
 			break;
 		case ENERGYORB:
 			hitrec.setBounds(
-					(int)sprite.getPosition().getX(), 
-					(int)sprite.getPosition().getY(), 
-					SpriteData.getActual_energyorb_sprite_size(), 
-					SpriteData.getActual_energyorb_sprite_size()
+					(int)sprite.getPosition().getX() + (SpriteData.getActual_energyorb_sprite_size() / 2)  - (SpriteData.getActual_energyorb_hitbox_size() / 2), 
+					(int)sprite.getPosition().getY() + (SpriteData.getActual_energyorb_sprite_size() / 2)  - (SpriteData.getActual_energyorb_hitbox_size() / 2), 
+					SpriteData.getActual_energyorb_hitbox_size(), 
+					SpriteData.getActual_energyorb_hitbox_size()
 					);
 			break;
 		case PLAYER_PROJECTILE:
