@@ -19,7 +19,7 @@ import engine.main.Window;
 import objects.gameobjects.ObjectID;
 
 public class ImageData {
-	
+
 	// SPRITES-----------------------------------|
 	private static BufferedImage play_scrolling_background;
 	private static BufferedImage play_background_section_a;
@@ -34,12 +34,16 @@ public class ImageData {
 	private static BufferedImage mainmenu_button_story;
 	private static BufferedImage mainmenu_button_endless;
 	private static BufferedImage mainmenu_button_options;
-	//------------------------------------------|
+
+	private static BufferedImage score_text;
+
+	// ------------------------------------------|
 	// SPRITESHEETS-----------------------------|
 	private static ArrayList<BufferedImage> energyorb_spritesheet = new ArrayList();
-	//------------------------------------------|
-	
-	public static void loadimages(){
+	private static ArrayList<BufferedImage> score_spritesheet = new ArrayList();
+	// ------------------------------------------|
+
+	public static void loadimages() {
 		try {
 			play_background_section_a = ImageIO.read(new File("res/sprites/play_background_section_a.png"));
 			play_background_section_b = ImageIO.read(new File("res/sprites/play_background_section_b.png"));
@@ -54,7 +58,19 @@ public class ImageData {
 			mainmenu_button_endless = ImageIO.read(new File("res/sprites/mainmenu_button_endless.png"));
 			mainmenu_button_options = ImageIO.read(new File("res/sprites/mainmenu_button_options.png"));
 			mainmenu_background = ImageIO.read(new File("res/sprites/mainmenu_background.png"));
-			
+
+			score_text = ImageIO.read(new File("res/sprites/Score.png"));
+			score_spritesheet.add((BufferedImage) ImageIO.read(new File("res/sprites/Score_0.png")));
+			score_spritesheet.add((BufferedImage) ImageIO.read(new File("res/sprites/Score_1.png")));
+			score_spritesheet.add((BufferedImage) ImageIO.read(new File("res/sprites/Score_2.png")));
+			score_spritesheet.add((BufferedImage) ImageIO.read(new File("res/sprites/Score_3.png")));
+			score_spritesheet.add((BufferedImage) ImageIO.read(new File("res/sprites/Score_4.png")));
+			score_spritesheet.add((BufferedImage) ImageIO.read(new File("res/sprites/Score_5.png")));
+			score_spritesheet.add((BufferedImage) ImageIO.read(new File("res/sprites/Score_6.png")));
+			score_spritesheet.add((BufferedImage) ImageIO.read(new File("res/sprites/Score_7.png")));
+			score_spritesheet.add((BufferedImage) ImageIO.read(new File("res/sprites/Score_8.png")));
+			score_spritesheet.add((BufferedImage) ImageIO.read(new File("res/sprites/Score_9.png")));
+
 			energyorb_spritesheet.add((BufferedImage) ImageIO.read(new File("res/sprites/energyorb_default_1.png")));
 			energyorb_spritesheet.add((BufferedImage) ImageIO.read(new File("res/sprites/energyorb_default_2.png")));
 			energyorb_spritesheet.add((BufferedImage) ImageIO.read(new File("res/sprites/energyorb_default_3.png")));
@@ -77,47 +93,65 @@ public class ImageData {
 			e.printStackTrace();
 		}
 	}
-	
-	public static void scaleimages(){
-		play_background_section_a = scale(play_background_section_a, Window.getACTUALWIDTH(), Game.getACTUAL_PUFFER_HEIGHT());
-		play_background_section_b = scale(play_background_section_b, Game.getACTUAL_PUFFER_WIDTH(), Game.getACTUAL_PLAY_HEIGHT());
-		play_background_section_c = scale(play_background_section_c, Game.getACTUAL_PUFFER_WIDTH(), Game.getACTUAL_PLAY_HEIGHT());
-		play_background_section_d = scale(play_background_section_d,  Window.getACTUALWIDTH(), Game.getACTUAL_PUFFER_HEIGHT());
-		play_scrolling_background = scale(play_scrolling_background, Game.getACTUAL_PLAY_WIDTH(), Game.getACTUAL_PLAY_HEIGHT());
+
+	public static void scaleimages() {
+		play_background_section_a = scale(play_background_section_a, Window.getACTUALWIDTH(),
+				Game.getACTUAL_PUFFER_HEIGHT());
+		play_background_section_b = scale(play_background_section_b, Game.getACTUAL_PUFFER_WIDTH(),
+				Game.getACTUAL_PLAY_HEIGHT());
+		play_background_section_c = scale(play_background_section_c, Game.getACTUAL_PUFFER_WIDTH(),
+				Game.getACTUAL_PLAY_HEIGHT());
+		play_background_section_d = scale(play_background_section_d, Window.getACTUALWIDTH(),
+				Game.getACTUAL_PUFFER_HEIGHT());
+		play_scrolling_background = scale(play_scrolling_background, Game.getACTUAL_PLAY_WIDTH(),
+				Game.getACTUAL_PLAY_HEIGHT());
 		player = scale(player, SpriteData.getActual_player_sprite_size(), SpriteData.getActual_player_sprite_size());
-		energyorb_projectile = scale(energyorb_projectile, SpriteData.getActual_energyorb_projectile_sprite_size(), SpriteData.getActual_energyorb_projectile_sprite_size());
-		player_projectile = scale(player_projectile, SpriteData.getActual_player_projectile_sprite_size(), SpriteData.getActual_player_projectile_sprite_size() * 4);
+		energyorb_projectile = scale(energyorb_projectile, SpriteData.getActual_energyorb_projectile_sprite_size(),
+				SpriteData.getActual_energyorb_projectile_sprite_size());
+		player_projectile = scale(player_projectile, SpriteData.getActual_player_projectile_sprite_size(),
+				SpriteData.getActual_player_projectile_sprite_size() * 4);
 		mainmenu_title = scale(mainmenu_title, Menu.getACTUAL_TITLE_WIDTH(), Menu.getACTUAL_TITLE_HEIGHT());
 		mainmenu_background = scale(mainmenu_background, Window.getACTUALWIDTH(), Window.getACTUALHEIGHT());
-		mainmenu_button_story = scale(mainmenu_button_story, Menu.getACTUAL_BUTTON_WIDTH(), Menu.getACTUAL_BUTTON_HEIGHT());
-		mainmenu_button_endless = scale(mainmenu_button_endless, Menu.getACTUAL_BUTTON_WIDTH(), Menu.getACTUAL_BUTTON_HEIGHT());
-		mainmenu_button_options = scale(mainmenu_button_options, Menu.getACTUAL_BUTTON_WIDTH(), Menu.getACTUAL_BUTTON_HEIGHT());
-		
-		//Scale the SpriteSheets
-//		for(BufferedImage imagetoscale : energyorb_spritesheet){
-//			int index = energyorb_spritesheet.indexOf(imagetoscale);
-//			BufferedImage scaledimage = energyorb_spritesheet.get(index);
-//			scaledimage = scale(scaledimage, SpriteData.getActual_energyorb_sprite_size(), SpriteData.getActual_energyorb_sprite_size());
-//			energyorb_spritesheet.set(index, scaledimage);
-//		}
-		
-		energyorb_spritesheet.stream().forEach(x -> energyorb_spritesheet.set(energyorb_spritesheet.indexOf(x), scale(x,SpriteData.getActual_energyorb_sprite_size(),SpriteData.getActual_energyorb_sprite_size())));
-		
+		mainmenu_button_story = scale(mainmenu_button_story, Menu.getACTUAL_BUTTON_WIDTH(),
+				Menu.getACTUAL_BUTTON_HEIGHT());
+		mainmenu_button_endless = scale(mainmenu_button_endless, Menu.getACTUAL_BUTTON_WIDTH(),
+				Menu.getACTUAL_BUTTON_HEIGHT());
+		mainmenu_button_options = scale(mainmenu_button_options, Menu.getACTUAL_BUTTON_WIDTH(),
+				Menu.getACTUAL_BUTTON_HEIGHT());
+		score_text = scale(score_text, SpriteData.getActual_scoretext_sprite_width(),
+				SpriteData.getActual_scoretext_sprite_heigth());
+
+		// Scale the SpriteSheets
+		// for(BufferedImage imagetoscale : energyorb_spritesheet){
+		// int index = energyorb_spritesheet.indexOf(imagetoscale);
+		// BufferedImage scaledimage = energyorb_spritesheet.get(index);
+		// scaledimage = scale(scaledimage,
+		// SpriteData.getActual_energyorb_sprite_size(),
+		// SpriteData.getActual_energyorb_sprite_size());
+		// energyorb_spritesheet.set(index, scaledimage);
+		// }
+
+		energyorb_spritesheet.stream().forEach(x -> energyorb_spritesheet.set(energyorb_spritesheet.indexOf(x),
+				scale(x, SpriteData.getActual_energyorb_sprite_size(), SpriteData.getActual_energyorb_sprite_size())));
+
+		score_spritesheet.stream().forEach(x -> score_spritesheet.set(score_spritesheet.indexOf(x),
+				scale(x, SpriteData.getActual_score_sprite_width(), SpriteData.getActual_score_sprite_heigth())));
+
 	}
-	
-	private static BufferedImage scale(BufferedImage imagetoscale, int nWidth, int nHeight){
-		 BufferedImage scaledImage = null;
-	        if (imagetoscale != null) {
-	            scaledImage = new BufferedImage(nWidth, nHeight, imagetoscale.getType());
-	            Graphics2D graphics2D = scaledImage.createGraphics();
-	            graphics2D.drawImage(imagetoscale, 0, 0, nWidth, nHeight, null);
-	            graphics2D.dispose();
-	        }
-	        return scaledImage;
+
+	private static BufferedImage scale(BufferedImage imagetoscale, int nWidth, int nHeight) {
+		BufferedImage scaledImage = null;
+		if (imagetoscale != null) {
+			scaledImage = new BufferedImage(nWidth, nHeight, imagetoscale.getType());
+			Graphics2D graphics2D = scaledImage.createGraphics();
+			graphics2D.drawImage(imagetoscale, 0, 0, nWidth, nHeight, null);
+			graphics2D.dispose();
+		}
+		return scaledImage;
 	}
-	
-	public static BufferedImage getSpriteForID(ObjectID ID){
-		switch(ID){
+
+	public static BufferedImage getSpriteForID(ObjectID ID) {
+		switch (ID) {
 		case PLAYER:
 			return player;
 		case PLAYER_PROJECTILE:
@@ -127,15 +161,15 @@ public class ImageData {
 		}
 		return null;
 	}
-	
-	public static ArrayList getSpriteSheetForID(ObjectID ID){
-		switch(ID){
-			case ENERGYORB:
-				return energyorb_spritesheet;
+
+	public static ArrayList getSpriteSheetForID(ObjectID ID) {
+		switch (ID) {
+		case ENERGYORB:
+			return energyorb_spritesheet;
 		}
 		return energyorb_spritesheet;
 	}
-	
+
 	// -----------------------------------------------------------------------------|
 	// GETTERS AND SETTERS
 	// -----------------------------------------------------------------------------|
