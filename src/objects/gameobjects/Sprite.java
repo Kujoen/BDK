@@ -90,6 +90,10 @@ public abstract class Sprite {
 		}
 	
 	}
+	
+	public void updateHitbox(){
+		this.hitbox.updateHitbox();
+	}
 
 	public abstract void update();
 

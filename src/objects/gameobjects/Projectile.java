@@ -35,7 +35,7 @@ public class Projectile extends Sprite {
 		animationController();	
 		moveProjectile();
 		checkForRemove();
-		hitbox.updateHitbox();
+		updateHitbox();
 	}
 
 	/**

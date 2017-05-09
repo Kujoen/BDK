@@ -38,6 +38,8 @@ public class Player extends Sprite {
 	public void update() {		
 		movePlayer();
 		spawnPlayerProjectiles();
+		updateHitbox();
+		checkHitbox();
 	}
 
 	/**
