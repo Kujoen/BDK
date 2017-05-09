@@ -28,11 +28,11 @@ public class EnergyOrb extends Sprite {
 
 	@Override
 	public void update() {
-				
-		if(health <= 0){
+
+		if (health <= 0) {
 			requestRemoveList.add(this);
 		}
-		
+
 		spawnProjectiles();
 		animationController();
 		checkHitbox();
@@ -43,9 +43,10 @@ public class EnergyOrb extends Sprite {
 	@Override
 	public void render(Graphics g) {
 		g.drawImage(currentimage, (int) position.getX(), (int) position.getY(), null);
-		
+
 		g.setColor(Color.RED);
-		g.drawRect((int)hitbox.getHitrec().getX(),(int)hitbox.getHitrec().getY(), (int)hitbox.getHitrec().getWidth(), (int)hitbox.getHitrec().getHeight());
+		g.drawRect((int) hitbox.getHitrec().getX(), (int) hitbox.getHitrec().getY(),
+				(int) hitbox.getHitrec().getWidth(), (int) hitbox.getHitrec().getHeight());
 	}
 
 	@Override
@@ -115,20 +116,20 @@ public class EnergyOrb extends Sprite {
 		if (animationstate == 1) {
 			if (tickcounter % 10 == 0) {
 				for (double currentangle = 0.0; currentangle < 2 * Math.PI; currentangle += (Math.PI / 16)) {
- 
-					Vector2D currentVector = new Vector2D(Math.sin(currentangle), Math.cos(currentangle));
-					requestSpawnList
-							.add(new Projectile(
-									new Vector2D(
-											position.getX() + (SpriteData.getActual_energyorb_sprite_size() / 2)
-													- (SpriteData.getActual_energyorb_projectile_sprite_size() / 2)
-													+ currentVector.getX()
-															* SpriteData.getActual_energyorb_sprite_size() / 6,
-											position.getY() + (SpriteData.getActual_energyorb_sprite_size() / 2)
-													- (SpriteData.getActual_energyorb_projectile_sprite_size() / 2)
-													+ currentVector.getY()
-															* SpriteData.getActual_energyorb_sprite_size() / 6),
-									currentVector.getThisScaled(5), 0, ObjectID.ENERGYORB_PROJECTILE));
+					
+						Vector2D currentVector = new Vector2D(Math.sin(currentangle), Math.cos(currentangle));
+						requestSpawnList.add(new Projectile(
+								new Vector2D(
+										position.getX() + (SpriteData.getActual_energyorb_sprite_size() / 2)
+												- (SpriteData.getActual_energyorb_projectile_sprite_size() / 2)
+												+ currentVector.getX() * SpriteData.getActual_energyorb_sprite_size()
+														/ 6,
+										position.getY() + (SpriteData.getActual_energyorb_sprite_size() / 2)
+												- (SpriteData.getActual_energyorb_projectile_sprite_size() / 2)
+												+ currentVector.getY() * SpriteData.getActual_energyorb_sprite_size()
+														/ 6),
+								currentVector.getThisScaled(5), 0, ObjectID.ENERGYORB_PROJECTILE));
+					
 				}
 			}
 		}
