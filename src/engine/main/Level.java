@@ -39,6 +39,7 @@ public class Level {
 	private BufferedImage play_scrolling_background2;
 	private Player player;
 	private ArrayList<Sprite> spriteList = new ArrayList<>();
+	private ArrayList<Sprite> projectileList = new ArrayList<>();
 	private ArrayList<Sprite> removeList;
 	private ArrayList<Sprite> spawnList;
 	// --------------------------------------------------------|
