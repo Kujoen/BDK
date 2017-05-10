@@ -10,6 +10,11 @@ public class SpriteData {
 	private static final int DEFAULT_ENERGYORB_SPRITE_SIZE = 256;
 	private static final int DEFAULT_ENERGYORB_HITBOX_SIZE = 64;
 	private static final int DEFAULT_ENERGYORB_PROJECTILE_SPRITE_SIZE = 16;
+
+	private static final int DEFAULT_SCORE_SPRITE_HEIGTH = 20;
+	private static final int DEFAULT_SCORE_SPRITE_WIDTH = 20;
+	private static final int DEFAULT_SCORETEXT_SPRITE_HEIGTH = 20;
+	private static final int DEFAULT_SCORETEXT_SPRITE_WIDTH = 20;
 	//-------------------------------------------------------|
 	// INTS//------------------------------------------------|
 	private static int actual_player_speed;
@@ -20,6 +25,11 @@ public class SpriteData {
 	private static int actual_energyorb_sprite_size;
 	private static int actual_energyorb_hitbox_size;
 	private static int actual_energyorb_projectile_sprite_size;
+	
+	private static int actual_score_sprite_heigth;
+	private static int actual_score_sprite_width;
+	private static int actual_scoretext_sprite_heigth;
+	private static int actual_scoretext_sprite_width;
 	//-------------------------------------------------------|
 	
 	public static void scaleData(double scaling_factor){
@@ -31,6 +41,11 @@ public class SpriteData {
 		actual_energyorb_sprite_size = (int) (DEFAULT_ENERGYORB_SPRITE_SIZE * scaling_factor);
 		actual_energyorb_hitbox_size = (int) (DEFAULT_ENERGYORB_HITBOX_SIZE * scaling_factor);
 		actual_energyorb_projectile_sprite_size = (int)(DEFAULT_ENERGYORB_PROJECTILE_SPRITE_SIZE * scaling_factor);
+		actual_score_sprite_heigth = (int)(DEFAULT_SCORE_SPRITE_HEIGTH * scaling_factor);
+		actual_score_sprite_width = (int)(DEFAULT_SCORE_SPRITE_WIDTH * scaling_factor);
+		actual_scoretext_sprite_heigth = (int)(DEFAULT_SCORETEXT_SPRITE_HEIGTH * scaling_factor);
+		actual_scoretext_sprite_width = (int)(DEFAULT_SCORETEXT_SPRITE_WIDTH * scaling_factor);
+
 	}
 
 	// -----------------------------------------------------------------------------|
@@ -98,6 +113,62 @@ public class SpriteData {
 
 	public static void setActual_energyorb_hitbox_size(int actual_energyorb_hitbox_size) {
 		SpriteData.actual_energyorb_hitbox_size = actual_energyorb_hitbox_size;
+	}
+
+	/**
+	 * @return the actual_score_sprite_heigth
+	 */
+	public static int getActual_score_sprite_heigth() {
+		return actual_score_sprite_heigth;
+	}
+
+	/**
+	 * @param actual_score_sprite_heigth the actual_score_sprite_heigth to set
+	 */
+	public static void setActual_score_sprite_heigth(int actual_score_sprite_heigth) {
+		SpriteData.actual_score_sprite_heigth = actual_score_sprite_heigth;
+	}
+
+	/**
+	 * @return the actual_score_sprite_width
+	 */
+	public static int getActual_score_sprite_width() {
+		return actual_score_sprite_width;
+	}
+
+	/**
+	 * @param actual_score_sprite_width the actual_score_sprite_width to set
+	 */
+	public static void setActual_score_sprite_width(int actual_score_sprite_width) {
+		SpriteData.actual_score_sprite_width = actual_score_sprite_width;
+	}
+
+	/**
+	 * @return the actual_scoretext_sprite_heigth
+	 */
+	public static int getActual_scoretext_sprite_heigth() {
+		return actual_scoretext_sprite_heigth;
+	}
+
+	/**
+	 * @param actual_scoretext_sprite_heigth the actual_scoretext_sprite_heigth to set
+	 */
+	public static void setActual_scoretext_sprite_heigth(int actual_scoretext_sprite_heigth) {
+		SpriteData.actual_scoretext_sprite_heigth = actual_scoretext_sprite_heigth;
+	}
+
+	/**
+	 * @return the actual_scoretext_sprite_width
+	 */
+	public static int getActual_scoretext_sprite_width() {
+		return actual_scoretext_sprite_width;
+	}
+
+	/**
+	 * @param actual_scoretext_sprite_width the actual_scoretext_sprite_width to set
+	 */
+	public static void setActual_scoretext_sprite_width(int actual_scoretext_sprite_width) {
+		SpriteData.actual_scoretext_sprite_width = actual_scoretext_sprite_width;
 	}
 	
 	// -----------------------------------------------------------------------------|

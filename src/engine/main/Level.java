@@ -35,6 +35,7 @@ public class Level {
 	// INT-----------------------------------------------------|
 	private int levelid = 0;
 	private int tickcounter = 0;
+	private int score = 0;
 	// --------------------------------------------------------|
 	// BOOLEAN-------------------------------------------------|
 	private boolean isLoaded;
@@ -45,13 +46,14 @@ public class Level {
 		this.player = null;
 		this.isLoaded = false;
 
-        //Add the player to the spriteList
+		// Add the player to the spriteList
 		this.player = new Player(
 				new Vector2D(game.getWindow().getACTUALWIDTH() / 2, game.getWindow().getACTUALHEIGHT() / 2),
 				new Vector2D(SpriteData.getActual_player_speed(), SpriteData.getActual_player_speed()), 
 				1, 
 				ObjectID.PLAYER,
 				true);
+		
 		spriteList.add(player);
 
 	}
@@ -66,34 +68,37 @@ public class Level {
 		renderScrollingBackground(g);
 		renderSprites(g);
 		renderBackgroundFragments(g);
+		renderScore(g);
 	}
 
-	private void renderScrollingBackground(Graphics g){
-			g.drawImage(play_scrolling_background1, scrolling_background1x, scrolling_background1y, null);
-			g.drawImage(play_scrolling_background2, scrolling_background2x, scrolling_background2y, null);
+	private void renderScrollingBackground(Graphics g) {
+		g.drawImage(play_scrolling_background1, scrolling_background1x, scrolling_background1y, null);
+		g.drawImage(play_scrolling_background2, scrolling_background2x, scrolling_background2y, null);
 	}
+
 	/**
 	 * Draws the background. Contains logic to loop the background
 	 * 
 	 * @param g
 	 */
 	private void renderBackgroundFragments(Graphics g) {
-	
-		if(!isLoaded){
+
+		if (!isLoaded) {
 			play_background_section_a = ImageData.getPlay_background_section_a();
 			play_background_section_b = ImageData.getPlay_background_section_b();
 			play_background_section_c = ImageData.getPlay_background_section_c();
 			play_background_section_d = ImageData.getPlay_background_section_d();
-			play_scrolling_background1= ImageData.getPlay_scrolling_background();
-			play_scrolling_background2= ImageData.getPlay_scrolling_background();
+			play_scrolling_background1 = ImageData.getPlay_scrolling_background();
+			play_scrolling_background2 = ImageData.getPlay_scrolling_background();
 			isLoaded = true;
 		}
 		// Then draw the background fragments
 		g.drawImage(play_background_section_a, 0, 0, null);
 		g.drawImage(play_background_section_b, 0, Game.getACTUAL_PUFFER_HEIGHT(), null);
-		g.drawImage(play_background_section_c, Game.getACTUAL_PLAY_WIDTH() + Game.getACTUAL_PUFFER_WIDTH(), Game.getACTUAL_PUFFER_HEIGHT(), null);
-		g.drawImage(play_background_section_d, 0, Game.getACTUAL_PUFFER_HEIGHT() + Game.getACTUAL_PLAY_HEIGHT(), null); 
-		
+		g.drawImage(play_background_section_c, Game.getACTUAL_PLAY_WIDTH() + Game.getACTUAL_PUFFER_WIDTH(),
+				Game.getACTUAL_PUFFER_HEIGHT(), null);
+		g.drawImage(play_background_section_d, 0, Game.getACTUAL_PUFFER_HEIGHT() + Game.getACTUAL_PLAY_HEIGHT(), null);
+
 	}
 
 	/**
@@ -108,6 +113,16 @@ public class Level {
 		}
 	}
 
+	private void renderScore(Graphics g) {
+		int scoreLength = 1;
+		for (int i = 1; i < 10; i++) {
+			if ((score / (10 ^ i)) != 0) {
+				scoreLength = i;
+			}
+		}
+		
+	}
+
 	// -----------------------------------------------------------------------------|
 	// UPDATING---------------------------------------------------------------------|
 	/**
@@ -119,7 +134,7 @@ public class Level {
 		updateScrollingBackground();
 		updateSprites();
 		updateLevel();
-		
+
 		// Update sprite lists
 		updateDeleteRequests();
 		updateSpawnRequests();
@@ -131,12 +146,12 @@ public class Level {
 	private void updateScrollingBackground() {
 		scrolling_background1y += SpriteData.getActual_background_scrolling_speed();
 		scrolling_background2y += SpriteData.getActual_background_scrolling_speed();
-		
-		if(scrolling_background1y == Game.getACTUAL_PLAY_HEIGHT() + Game.getACTUAL_PUFFER_HEIGHT()){
+
+		if (scrolling_background1y == Game.getACTUAL_PLAY_HEIGHT() + Game.getACTUAL_PUFFER_HEIGHT()) {
 			scrolling_background1y = Game.getACTUAL_PUFFER_HEIGHT() - Game.getACTUAL_PLAY_HEIGHT();
 		}
-		
-		if(scrolling_background2y == Game.getACTUAL_PLAY_HEIGHT() + Game.getACTUAL_PUFFER_HEIGHT()){
+
+		if (scrolling_background2y == Game.getACTUAL_PLAY_HEIGHT() + Game.getACTUAL_PUFFER_HEIGHT()) {
 			scrolling_background2y = Game.getACTUAL_PUFFER_HEIGHT() - Game.getACTUAL_PLAY_HEIGHT();
 		}
 	}
@@ -150,31 +165,27 @@ public class Level {
 			s.update();
 		}
 	}
-	
-	private void updateLevel(){
-		switch(levelid){
+
+	private void updateLevel() {
+		switch (levelid) {
 		case 0:
 			updateLevel1(tickcounter);
 			break;
 		}
-		
+
 		tickcounter++;
 	}
-	
-	private void updateLevel1(int tickcount){
-		switch(tickcount){
+
+	private void updateLevel1(int tickcount) {
+		switch (tickcount) {
 		case 180:
 			spriteList.add(new EnergyOrb(
 					new Vector2D(Grid.getXFor(16, ObjectID.ENERGYORB), Grid.getYFor(16, ObjectID.ENERGYORB)),
-					new Vector2D(0,0), 
-					10,
-					ObjectID.ENERGYORB));
-			
+					new Vector2D(0, 0), 10, ObjectID.ENERGYORB));
+
 			spriteList.add(new EnergyOrb(
 					new Vector2D(Grid.getXFor(48, ObjectID.ENERGYORB), Grid.getYFor(16, ObjectID.ENERGYORB)),
-					new Vector2D(0,0), 
-					10,
-					ObjectID.ENERGYORB));
+					new Vector2D(0, 0), 10, ObjectID.ENERGYORB));
 			break;
 		}
 	}
