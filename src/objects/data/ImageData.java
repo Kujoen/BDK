@@ -27,7 +27,6 @@ public class ImageData {
 	private static BufferedImage play_background_section_c;
 	private static BufferedImage play_background_section_d;
 	private static BufferedImage mainmenu_background;
-	private static BufferedImage player;
 	private static BufferedImage player_projectile;
 	private static BufferedImage energyorb_projectile;
 	private static BufferedImage mainmenu_title;
@@ -37,6 +36,7 @@ public class ImageData {
 	//------------------------------------------|
 	// SPRITESHEETS-----------------------------|
 	private static ArrayList<BufferedImage> energyorb_spritesheet = new ArrayList();
+	private static ArrayList<BufferedImage> player_spritesheet = new ArrayList();
 	//------------------------------------------|
 	
 	public static void loadimages(){
@@ -46,7 +46,6 @@ public class ImageData {
 			play_background_section_c = ImageIO.read(new File("res/sprites/play_background_section_c.png"));
 			play_background_section_d = ImageIO.read(new File("res/sprites/play_background_section_d.png"));
 			play_scrolling_background = ImageIO.read(new File("res/sprites/play_scrolling_background.png"));
-			player = ImageIO.read(new File("res/sprites/player.png"));
 			player_projectile = ImageIO.read(new File("res/sprites/player_projectile.png"));
 			energyorb_projectile = ImageIO.read(new File("res/sprites/energyorb_projectile.png"));
 			mainmenu_title = ImageIO.read(new File("res/sprites/mainmenu_title.png"));
@@ -72,6 +71,16 @@ public class ImageData {
 			energyorb_spritesheet.add((BufferedImage) ImageIO.read(new File("res/sprites/energyorb_spawn_9.png")));
 			energyorb_spritesheet.add((BufferedImage) ImageIO.read(new File("res/sprites/energyorb_spawn_10.png")));
 			energyorb_spritesheet.add((BufferedImage) ImageIO.read(new File("res/sprites/energyorb_spawn_11.png")));
+			
+			player_spritesheet.add((BufferedImage) ImageIO.read(new File("res/sprites/player_idle_1.png")));
+			player_spritesheet.add((BufferedImage) ImageIO.read(new File("res/sprites/player_idle_2.png")));
+			player_spritesheet.add((BufferedImage) ImageIO.read(new File("res/sprites/player_idle_3.png")));
+			player_spritesheet.add((BufferedImage) ImageIO.read(new File("res/sprites/player_idle_4.png")));
+			player_spritesheet.add((BufferedImage) ImageIO.read(new File("res/sprites/player_idle_5.png")));
+			player_spritesheet.add((BufferedImage) ImageIO.read(new File("res/sprites/player_idle_6.png")));
+			player_spritesheet.add((BufferedImage) ImageIO.read(new File("res/sprites/player_idle_7.png")));
+			player_spritesheet.add((BufferedImage) ImageIO.read(new File("res/sprites/player_idle_8.png")));
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -84,7 +93,6 @@ public class ImageData {
 		play_background_section_c = scale(play_background_section_c, Game.getACTUAL_PUFFER_WIDTH(), Game.getACTUAL_PLAY_HEIGHT());
 		play_background_section_d = scale(play_background_section_d,  Window.getACTUALWIDTH(), Game.getACTUAL_PUFFER_HEIGHT());
 		play_scrolling_background = scale(play_scrolling_background, Game.getACTUAL_PLAY_WIDTH(), Game.getACTUAL_PLAY_HEIGHT());
-		player = scale(player, SpriteData.getActual_player_sprite_size(), SpriteData.getActual_player_sprite_size());
 		energyorb_projectile = scale(energyorb_projectile, SpriteData.getActual_energyorb_projectile_sprite_size(), SpriteData.getActual_energyorb_projectile_sprite_size());
 		player_projectile = scale(player_projectile, SpriteData.getActual_player_projectile_sprite_size(), SpriteData.getActual_player_projectile_sprite_size() * 4);
 		mainmenu_title = scale(mainmenu_title, Menu.getACTUAL_TITLE_WIDTH(), Menu.getACTUAL_TITLE_HEIGHT());
@@ -92,17 +100,9 @@ public class ImageData {
 		mainmenu_button_story = scale(mainmenu_button_story, Menu.getACTUAL_BUTTON_WIDTH(), Menu.getACTUAL_BUTTON_HEIGHT());
 		mainmenu_button_endless = scale(mainmenu_button_endless, Menu.getACTUAL_BUTTON_WIDTH(), Menu.getACTUAL_BUTTON_HEIGHT());
 		mainmenu_button_options = scale(mainmenu_button_options, Menu.getACTUAL_BUTTON_WIDTH(), Menu.getACTUAL_BUTTON_HEIGHT());
-		
-		//Scale the SpriteSheets
-//		for(BufferedImage imagetoscale : energyorb_spritesheet){
-//			int index = energyorb_spritesheet.indexOf(imagetoscale);
-//			BufferedImage scaledimage = energyorb_spritesheet.get(index);
-//			scaledimage = scale(scaledimage, SpriteData.getActual_energyorb_sprite_size(), SpriteData.getActual_energyorb_sprite_size());
-//			energyorb_spritesheet.set(index, scaledimage);
-//		}
-		
+			
 		energyorb_spritesheet.stream().forEach(x -> energyorb_spritesheet.set(energyorb_spritesheet.indexOf(x), scale(x,SpriteData.getActual_energyorb_sprite_size(),SpriteData.getActual_energyorb_sprite_size())));
-		
+		player_spritesheet.stream().forEach(x -> player_spritesheet.set(player_spritesheet.indexOf(x), scale(x,SpriteData.getActual_player_sprite_size(),SpriteData.getActual_player_sprite_size())));
 	}
 	
 	private static BufferedImage scale(BufferedImage imagetoscale, int nWidth, int nHeight){
@@ -118,8 +118,6 @@ public class ImageData {
 	
 	public static BufferedImage getSpriteForID(ObjectID ID){
 		switch(ID){
-		case PLAYER:
-			return player;
 		case PLAYER_PROJECTILE:
 			return player_projectile;
 		case ENERGYORB_PROJECTILE:
@@ -130,6 +128,10 @@ public class ImageData {
 	
 	public static ArrayList getSpriteSheetForID(ObjectID ID){
 		switch(ID){
+		
+			case PLAYER:
+			return player_spritesheet;
+			
 			case ENERGYORB:
 				return energyorb_spritesheet;
 		}

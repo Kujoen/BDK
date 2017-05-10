@@ -22,9 +22,12 @@ public class Player extends Sprite {
 	private boolean hasShifted = false;
 	// -----------------------------------------------------------|
 	// INT--------------------------------------------------------|
+	private int animationtickcounter = 0;
 	private int tickcounter = 0;
 	private int lastsectionid = 1;
 	// -----------------------------------------------------------|
+	// SPRITE-----------------------------------------------------|
+	private BufferedImage currentimage;
 	
 	public Player(Vector2D position, Vector2D movementvector, int health, ObjectID ID, boolean isanimated) {
 		super(position, movementvector, health, ID);
@@ -37,6 +40,7 @@ public class Player extends Sprite {
 	@Override
 	public void update() {		
 		movePlayer();
+		animationController();
 		spawnPlayerProjectiles();
 		updateHitbox();
 		checkHitbox();
@@ -106,6 +110,40 @@ public class Player extends Sprite {
 			hasShifted = false;
 		}
 	}
+	
+	@Override
+	public void animationController() {
+		switch(animationtickcounter % 80){
+			case 0:
+				spritefile = spritesheet.get(0);
+				break;
+			case 10:
+				spritefile = spritesheet.get(1);
+				break;
+			case 20:
+				spritefile = spritesheet.get(2);
+				break;
+			case 30:
+				spritefile = spritesheet.get(3);
+				break;
+			case 40:
+				spritefile = spritesheet.get(4);
+				break;
+			case 50:
+				spritefile = spritesheet.get(5);
+				break;
+
+			case 60:
+				spritefile = spritesheet.get(6);
+				break;
+
+			case 70:
+				spritefile = spritesheet.get(7);
+				break;
+		}
+		
+		animationtickcounter++;
+	}
 
 	/**
 	 * check if the player is holding spacebar, if yes Player Projectiles will
@@ -135,8 +173,5 @@ public class Player extends Sprite {
 	}
 	// ---------------------------------------------------------------------------|
 
-	@Override
-	public void animationController() {
-	
-	}
+
 }

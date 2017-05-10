@@ -1,21 +1,8 @@
 package engine.main;
 
-import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.imageio.ImageIO;
-import javax.swing.Timer;
-import javax.swing.text.html.HTMLDocument.Iterator;
-
-import engine.input.Input;
 import engine.math.Grid;
 import engine.math.Vector2D;
 import objects.data.ImageData;
@@ -23,7 +10,6 @@ import objects.data.SpriteData;
 import objects.gameobjects.EnergyOrb;
 import objects.gameobjects.ObjectID;
 import objects.gameobjects.Player;
-import objects.gameobjects.Projectile;
 import objects.gameobjects.Sprite;
 
 public class Level {
@@ -39,7 +25,6 @@ public class Level {
 	private BufferedImage play_scrolling_background2;
 	private Player player;
 	private ArrayList<Sprite> spriteList = new ArrayList<>();
-	private ArrayList<Sprite> projectileList = new ArrayList<>();
 	private ArrayList<Sprite> removeList;
 	private ArrayList<Sprite> spawnList;
 	// --------------------------------------------------------|
@@ -66,7 +51,7 @@ public class Level {
 				new Vector2D(SpriteData.getActual_player_speed(), SpriteData.getActual_player_speed()), 
 				1, 
 				ObjectID.PLAYER,
-				false);
+				true);
 		spriteList.add(player);
 
 	}

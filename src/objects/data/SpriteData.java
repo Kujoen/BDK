@@ -3,7 +3,7 @@ package objects.data;
 public class SpriteData {
 	// FINALS//----------------------------------------------|
 	private static final int DEFAULT_PLAYER_SPEED = 8;
-	private static final int DEFAULT_PLAYER_SPRITE_SIZE = 32;
+	private static final int DEFAULT_PLAYER_SPRITE_SIZE = 64;
 	private static final int DEFAULT_PLAYER_PROJECTILE_SPRITE_SIZE = 8;
 	private static final int DEFAULT_PLAYER_PROJECTILE_SPEED = -16;
 	private static final int DEFAULT_BACKGROUND_SCROLLING_SPEED = 2;
