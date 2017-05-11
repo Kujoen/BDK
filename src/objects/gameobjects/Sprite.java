@@ -15,7 +15,7 @@ import engine.math.Hitbox;
 import engine.math.Vector2D;
 import objects.data.ImageData;
 
-public abstract class Sprite {
+public abstract class Sprite{
 	// MATHOBJECTS-----------------------------------------|
 	protected Vector2D position;
 	protected Vector2D movementvector;
@@ -70,7 +70,6 @@ public abstract class Sprite {
 		if(this.spritefile == null){
 			this.spritesheet = ImageData.getSpriteSheetForID(ID);
 		}
-		
 		this.hitbox = new Hitbox(this);
 	}
 	
@@ -88,7 +87,6 @@ public abstract class Sprite {
 				}
 			}
 		}
-	
 	}
 	
 	public void updateHitbox(){
@@ -96,9 +94,7 @@ public abstract class Sprite {
 	}
 
 	public abstract void update();
-
 	public abstract void render(Graphics g);
-	
 	public abstract void animationController();
 
 	// GETTERS AND SETTERS

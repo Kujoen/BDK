@@ -3,6 +3,8 @@ package engine.main;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+
+import controllers.LevelController;
 import engine.math.Grid;
 import engine.math.Vector2D;
 import objects.data.ImageData;
@@ -13,28 +15,32 @@ import objects.gameobjects.Player;
 import objects.gameobjects.Sprite;
 
 public class Level {
+	// CONTROLLERS---------------------------------------------|
+	private LevelController levelcontroller;
 	// ENGINEOBJECTS-------------------------------------------|
 	private Game game;
 	// --------------------------------------------------------|
-	// GAMEOBJECTS---------------------------------------------|
+	// SPRITES-------------------------------------------------|
 	private BufferedImage play_background_section_a;
 	private BufferedImage play_background_section_b;
 	private BufferedImage play_background_section_c;
 	private BufferedImage play_background_section_d;
 	private BufferedImage play_scrolling_background1;
 	private BufferedImage play_scrolling_background2;
+	
+	//---------------------------------------------------------|
+	// GAMEOBJECTS---------------------------------------------|
 	private Player player;
 	private ArrayList<Sprite> spriteList = new ArrayList<>();
 	private ArrayList<Sprite> removeList;
 	private ArrayList<Sprite> spawnList;
 	// --------------------------------------------------------|
+	// INT-----------------------------------------------------|
 	private int scrolling_background1x = Game.getACTUAL_PUFFER_WIDTH();
 	private int scrolling_background1y = Game.getACTUAL_PUFFER_HEIGHT();
 	private int scrolling_background2x = Game.getACTUAL_PUFFER_WIDTH();
 	private int scrolling_background2y = Game.getACTUAL_PUFFER_HEIGHT() - Game.getACTUAL_PLAY_HEIGHT();
-	// INT-----------------------------------------------------|
 	private int levelid = 0;
-	private int tickcounter = 0;
 	private int score = 0;
 	// --------------------------------------------------------|
 	// BOOLEAN-------------------------------------------------|
@@ -42,20 +48,10 @@ public class Level {
 	// --------------------------------------------------------|
 
 	public Level(Game game) {
+		this.levelcontroller = new LevelController(this);
 		this.game = game;
 		this.player = null;
 		this.isLoaded = false;
-
-		// Add the player to the spriteList
-		this.player = new Player(
-				new Vector2D(game.getWindow().getACTUALWIDTH() / 2, game.getWindow().getACTUALHEIGHT() / 2),
-				new Vector2D(SpriteData.getActual_player_speed(), SpriteData.getActual_player_speed()), 
-				1, 
-				ObjectID.PLAYER,
-				true);
-		
-		spriteList.add(player);
-
 	}
 
 	// RENDERING--------------------------------------------------------------------|
@@ -133,7 +129,8 @@ public class Level {
 		// Update the background and the positions of already existing sprites
 		updateScrollingBackground();
 		updateSprites();
-		updateLevel();
+		updateScore();
+		levelcontroller.updateLevel();
 
 		// Update sprite lists
 		updateDeleteRequests();
@@ -165,29 +162,9 @@ public class Level {
 			s.update();
 		}
 	}
-
-	private void updateLevel() {
-		switch (levelid) {
-		case 0:
-			updateLevel1(tickcounter);
-			break;
-		}
-
-		tickcounter++;
-	}
-
-	private void updateLevel1(int tickcount) {
-		switch (tickcount) {
-		case 180:
-			spriteList.add(new EnergyOrb(
-					new Vector2D(Grid.getXFor(16, ObjectID.ENERGYORB), Grid.getYFor(16, ObjectID.ENERGYORB)),
-					new Vector2D(0, 0), 10, ObjectID.ENERGYORB));
-
-			spriteList.add(new EnergyOrb(
-					new Vector2D(Grid.getXFor(48, ObjectID.ENERGYORB), Grid.getYFor(16, ObjectID.ENERGYORB)),
-					new Vector2D(0, 0), 10, ObjectID.ENERGYORB));
-			break;
-		}
+	
+	private void updateScore(){
+		
 	}
 
 	/**
@@ -275,6 +252,14 @@ public class Level {
 
 	public void setSpawnList(ArrayList<Sprite> spawnList) {
 		this.spawnList = spawnList;
+	}
+
+	public int getLevelid() {
+		return levelid;
+	}
+
+	public void setLevelid(int levelid) {
+		this.levelid = levelid;
 	}
 
 	// -----------------------------------------------------------------------------|
