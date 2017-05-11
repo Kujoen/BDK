@@ -26,8 +26,6 @@ public class Player extends Sprite {
 	private int tickcounter = 0;
 	private int lastsectionid = 1;
 	// -----------------------------------------------------------|
-	// SPRITE-----------------------------------------------------|
-	private BufferedImage currentimage;
 	
 	public Player(Vector2D position, Vector2D movementvector, int health, ObjectID ID, boolean isanimated) {
 		super(position, movementvector, health, ID);

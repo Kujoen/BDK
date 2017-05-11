@@ -156,6 +156,10 @@ public class ImageData {
 		
 		return null;
 	}
+	
+	public static BufferedImage getScoreSprite(int ScoreNumber){
+		return score_spritesheet.get(ScoreNumber);
+	}
 
 
 	// -----------------------------------------------------------------------------|
