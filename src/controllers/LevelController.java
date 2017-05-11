@@ -35,7 +35,6 @@ public class LevelController {
 	private void updateLevel1(){
 		switch(leveltickcounter){
 		case 0:
-			
 			Player player = new Player(
 					new Vector2D(level.getGame().getWindow().getACTUALWIDTH() / 2, level.getGame().getWindow().getACTUALHEIGHT() / 2),
 					new Vector2D(SpriteData.getActual_player_speed(), SpriteData.getActual_player_speed()), 
@@ -43,8 +42,9 @@ public class LevelController {
 					ObjectID.PLAYER,
 					true);
 			
+			level.getSpriteList().add(player);
 			level.setPlayer(player);
-			
+				break;
 		case 180:
 			level.getSpriteList().add(new EnergyOrb(
 					new Vector2D(Grid.getXFor(16, ObjectID.ENERGYORB), Grid.getYFor(16, ObjectID.ENERGYORB)),
