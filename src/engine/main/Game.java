@@ -54,6 +54,7 @@ public class Game extends Canvas implements Runnable {
 	private static int missingPixels = 0;
 	private int framesPerSecond = 0;
 	private int updatesPerSecond = 0;
+	private int tickcounter = 0;
 	// OTHER-------------------------------------------|
 	private Thread thread;
 	// ------------------------------------------------|
@@ -218,6 +219,8 @@ public class Game extends Canvas implements Runnable {
 				level.update();
 			}
 		}
+		
+		tickcounter++;
 	}
 	
 	// -------------------------------------------------------------------------------|
@@ -423,6 +426,14 @@ public class Game extends Canvas implements Runnable {
 
 	public static void setMissingPixels(int missingPixels) {
 		Game.missingPixels = missingPixels;
+	}
+
+	public int getTickcounter() {
+		return tickcounter;
+	}
+
+	public void setTickcounter(int tickcounter) {
+		this.tickcounter = tickcounter;
 	}
 
 	// ------------------------------------------------------------------------------|

@@ -77,7 +77,7 @@ public abstract class Sprite {
 	public void checkHitbox(){
 		// Check the hitboxes of non-projectiles
 		if(!(this instanceof Projectile)){
-			for(Sprite s : Window.getGame().getLevel().getSpriteList()){
+			for(Sprite s : Window.getGlobalgame().getLevel().getSpriteList()){
 				if(!(this instanceof Player)){
 					if(s.ID == ObjectID.PLAYER_PROJECTILE){
 						if(this.hitbox.getHitrec().contains(s.hitbox.getHitrec())){

@@ -1,4 +1,4 @@
-package objects.gameobjects;
+package controllers;
 
 public class EnemyController {
 
