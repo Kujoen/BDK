@@ -1,5 +1,6 @@
 package bdk.data;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -8,8 +9,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
-
-import bdk.game.component.Component;
 
 public class BdkImageData {
 
@@ -37,6 +36,22 @@ public class BdkImageData {
 			graphics2D.dispose();
 		}
 		return scaledImage;
+	}
+	
+	public static BufferedImage highlight(BufferedImage imageToHighlight , Color color) {
+		BufferedImage highlightedImage = null;
+		
+		if (imageToHighlight != null){
+			highlightedImage = new BufferedImage(imageToHighlight.getWidth() , imageToHighlight.getHeight() , imageToHighlight.getType());
+			Graphics2D graphics2D = highlightedImage.createGraphics();
+			graphics2D.drawImage(imageToHighlight, 0 , 0 , imageToHighlight.getWidth(), imageToHighlight.getHeight(), null);
+			//Draw the highlights
+			graphics2D.setColor(color);
+			graphics2D.drawRect(0, 0, imageToHighlight.getWidth() - 1, imageToHighlight.getHeight() - 1);
+			graphics2D.dispose();
+		}
+		
+		return highlightedImage; 
 	}
 	
 	//----------------------------------------------------------------------------------|

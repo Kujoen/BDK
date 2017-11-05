@@ -4,12 +4,17 @@ import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import bdk.editor.actor.BdkActorEditor;
 import bdk.editor.actor.BdkActorEditorPanel;
@@ -24,9 +29,6 @@ public class S2GeneralPropertiesPanel extends BdkActorEditorPanel {
 	// --Type
 	JLabel typeLabel;
 	JComboBox typeComboBox;
-	// --Health
-	JLabel healthLabel;
-	JTextField healthTextField;
 	// --Image
 	JLabel imageHintLabel;
 	JLabel imageNameLabel;
@@ -37,14 +39,34 @@ public class S2GeneralPropertiesPanel extends BdkActorEditorPanel {
 		nameLabel = new JLabel("Actor name : ");
 		nameTextField = new JTextField();
 		nameTextField.setEnabled(false);
+		nameTextField.getDocument().addDocumentListener(new DocumentListener() {
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				bdkActorEditor.getCurrentActor().setActorName(currentActor.getActorName());
+				bdkActorEditor.notifyDataChanged();
+			}
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				
+			}
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				
+			}			
+		});
 
 		typeLabel = new JLabel("Actor type : ");
 		typeComboBox = new JComboBox(Actor.ACTOR_TYPES);
 		typeComboBox.setEnabled(false);
-
-		healthLabel = new JLabel("Actor health : ");
-		healthTextField = new JTextField();
-		healthTextField.setEnabled(false);
+		typeComboBox.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if(e.getStateChange() == ItemEvent.SELECTED){
+					bdkActorEditor.getCurrentActor().setActorType(e.getItem().toString());
+					bdkActorEditor.notifyDataChanged();
+				}
+			}
+		});
 
 		imageHintLabel = new JLabel("Current image : ");
 		imageNameLabel = new JLabel("");
@@ -56,8 +78,9 @@ public class S2GeneralPropertiesPanel extends BdkActorEditorPanel {
 		contentPane = new JPanel();
 		contentPane.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
-		c.weightx = 0.5;
-		c.weighty = 0.5;
+		c.weightx = 1.0;
+		c.weighty = 1.0;
+		c.gridwidth = 1;
 		c.fill = c.HORIZONTAL;
 
 		// --Name
@@ -78,24 +101,15 @@ public class S2GeneralPropertiesPanel extends BdkActorEditorPanel {
 		c.gridy = 1;
 		contentPane.add(typeComboBox, c);
 
-		// --Health
-		c.gridx = 0;
-		c.gridy = 2;
-		contentPane.add(healthLabel, c);
-
-		c.gridx = 1;
-		c.gridy = 2;
-		contentPane.add(healthTextField, c);
-
 		// --Image
 		c.gridx = 0;
-		c.gridy = 3;
+		c.gridy = 2;
 		contentPane.add(imageHintLabel, c);
 
 		c.gridx = 1;
-		c.gridy = 3;
+		c.gridy = 2;
 		contentPane.add(imageNameLabel, c);
-
+		
 		// -----------------------------------------------------------------|
 
 		setLayout(new GridLayout(1, 1));
@@ -112,13 +126,11 @@ public class S2GeneralPropertiesPanel extends BdkActorEditorPanel {
 				
 				typeComboBox.setSelectedItem(currentActor.getActorType());
 				typeComboBox.setEnabled(true);
-				
-				//healthTextField.setText(currentActor.getHealth().toString());
-				//healthTextField.setEnabled(true);
+
 				
 				//Check if actor has an image
-				if(currentActor.isImageAdded()){
-					imageNameLabel.setText(currentActor.getImagePath());
+				if(!currentActor.getImagePath().isEmpty()){
+					imageNameLabel.setText(currentActor.getImagePath().substring(currentActor.getImagePath().lastIndexOf("\\") + 1));
 					imageNameLabel.setEnabled(true);
 				}else{
 					imageNameLabel.setText("No image selected");

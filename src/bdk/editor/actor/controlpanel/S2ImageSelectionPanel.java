@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -12,6 +14,7 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -39,7 +42,7 @@ public class S2ImageSelectionPanel extends BdkActorEditorPanel {
 	private int imageCount;
 	private JLabel imageLabel;
 	// --
-	private Map<BufferedImage, String> imageMap;
+	private Map<Icon, String> imageMap;
 
 	public S2ImageSelectionPanel(BdkActorEditor parent) {
 		super(parent);
@@ -105,7 +108,7 @@ public class S2ImageSelectionPanel extends BdkActorEditorPanel {
 
 		scrollPanel = new JScrollPane(scrollContentPane);
 		scrollPanel.setVerticalScrollBarPolicy(scrollPanel.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPanel.setHorizontalScrollBarPolicy(scrollPanel.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPanel.setHorizontalScrollBarPolicy(scrollPanel.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPanel.setColumnHeaderView(buttonPane);
 
 		setLayout(new GridLayout(1, 1));
@@ -113,11 +116,12 @@ public class S2ImageSelectionPanel extends BdkActorEditorPanel {
 	}
 
 	private void displayImagePreview() {
+		
 		scrollContentPane.removeAll();
 		scrollContentPane.setLayout(new GridLayout(0, gridWidth));
 		imageWidth = scrollContentPane.getWidth() / gridWidth;
 		imageCount = 0;
-		imageMap = new HashMap<BufferedImage, String>();
+		imageMap = new HashMap<Icon, String>();
 
 		// Check if currently a actor is selected
 		if (!(currentActor == null)) {
@@ -126,30 +130,61 @@ public class S2ImageSelectionPanel extends BdkActorEditorPanel {
 				// Search the directory of the actortype
 				File dir = new File(BdkMainWindow.getGameName() + "/sprites/actors/" + currentActor.getActorType());
 				File[] listOfFiles = dir.listFiles();
+				
 				for (int i = 0; i < listOfFiles.length; i++) {
 					if (listOfFiles[i].isFile()) {
 						if (listOfFiles[i].getName().contains(".png")) {
 							try {
 								BufferedImage image = ImageIO.read(listOfFiles[i]);
-								// Does the image have to be rescaled to fit
-								// into a column ?
+								// Does the image have to be rescaled to fit into a column ?
 								if (image.getWidth() < imageWidth || image.getWidth() > imageWidth) {
 									image = BdkImageData.scale(image, imageWidth,
 											imageWidth * (image.getHeight() / image.getWidth()));
 								}
 
-								// Put the image into the imagemap so we can
-								// find it later
-								imageMap.put(image, listOfFiles[i].getPath());
-
-								// Add the image to a JLabel
 								imageLabel = new JLabel("");
-								// Highlight the image if its the current
-								// selected image
-								if (listOfFiles[i].getPath() == currentActor.getImagePath()) {
-									imageLabel.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+								imageLabel.addMouseListener( new MouseListener(){
+
+									@Override
+									public void mouseClicked(MouseEvent arg0) {
+										JLabel pressedLabel = (JLabel) arg0.getSource();
+										bdkActorEditor.getCurrentActor().setImagePath(imageMap.get(pressedLabel.getIcon()));
+										bdkActorEditor.notifyDataChanged();
+									}
+
+									@Override
+									public void mouseEntered(MouseEvent arg0) {
+										// TODO Auto-generated method stub
+										
+									}
+
+									@Override
+									public void mouseExited(MouseEvent arg0) {
+										// TODO Auto-generated method stub
+										
+									}
+
+									@Override
+									public void mousePressed(MouseEvent arg0) {
+										// TODO Auto-generated method stub
+										
+									}
+
+									@Override
+									public void mouseReleased(MouseEvent arg0) {
+										// TODO Auto-generated method stub
+										
+									}				
+								});
+								
+								//Highlight the image if its the current selected image
+								if (listOfFiles[i].getPath().equals(currentActor.getImagePath())) {
+									image = BdkImageData.highlight(image, Color.RED);
 								}
+								
+								// Put the image into the imagemap so we can find it later
 								imageLabel.setIcon(new ImageIcon(image));
+								imageMap.put(imageLabel.getIcon(), listOfFiles[i].getPath());
 
 								// Add the JLabel to the panel
 								scrollContentPane.add(imageLabel);

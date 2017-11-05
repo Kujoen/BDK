@@ -45,7 +45,7 @@ public class PreviewPanel extends BdkActorEditorPanel {
 		startPreviewButton.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+	
 			}
 		});
 		
@@ -102,7 +102,7 @@ public class PreviewPanel extends BdkActorEditorPanel {
 		// PREVIEWPANEL-------------------------------------------------------------------------|
 		// PreviewGame requires a preferred size, but the rest will still scale
 		// with the editor
-		previewGame = new Game(parent);
+		previewGame = new Game();
 		previewGamePanel = new JPanel();
 		previewGamePanel.setLayout(new GridLayout(1,1));
 		previewGamePanel.add(previewGame);

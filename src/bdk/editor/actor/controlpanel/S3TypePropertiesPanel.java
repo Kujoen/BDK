@@ -3,9 +3,9 @@ package bdk.editor.actor.controlpanel;
 import bdk.editor.actor.BdkActorEditor;
 import bdk.editor.actor.BdkActorEditorPanel;
 
-public class S2MainPropertiesPanel extends BdkActorEditorPanel{
+public class S3TypePropertiesPanel extends BdkActorEditorPanel {
 
-	public S2MainPropertiesPanel(BdkActorEditor parent) {
+	public S3TypePropertiesPanel(BdkActorEditor parent) {
 		super(parent);
 		// TODO Auto-generated constructor stub
 	}

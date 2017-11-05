@@ -15,18 +15,18 @@ import bdk.editor.actor.BdkActorEditorPanel;
 public class ControlPanel extends BdkActorEditorPanel{
 	
 	S1ActorSelectionPanel actorSelectionPanel;
-	S2MainPropertiesPanel mainPropertiesPanel;
+	S2GeneralPropertiesPanel mainPropertiesPanel;
 	S2ImageSelectionPanel imageSelectionPanel;
-	S3AdvancedPropertiesPanel advancedPropertiesPanel;
+	S3TypePropertiesPanel advancedPropertiesPanel;
 	JPanel s2SubPanel;
 
 	public ControlPanel(BdkActorEditor parent) {
 		super(parent);
 		
 		actorSelectionPanel = new S1ActorSelectionPanel(parent);
-		mainPropertiesPanel = new S2MainPropertiesPanel(parent);
+		mainPropertiesPanel = new S2GeneralPropertiesPanel(parent);
 		imageSelectionPanel = new S2ImageSelectionPanel(parent);
-		advancedPropertiesPanel = new S3AdvancedPropertiesPanel(parent);
+		advancedPropertiesPanel = new S3TypePropertiesPanel(parent);
 		
 //		Add section2 panels to their subpanel
 		s2SubPanel = new JPanel();

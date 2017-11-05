@@ -34,6 +34,7 @@ public abstract class Sprite extends Entity {
 	public Sprite(double x, double y, String spriteType) {
 		super(x, y);
 		this.spriteType = spriteType;
+		this.imagePath = "";
 	}
 
 	public abstract void render(Graphics2D g);

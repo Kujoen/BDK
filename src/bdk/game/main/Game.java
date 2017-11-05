@@ -1,12 +1,14 @@
 package bdk.game.main;
 
 import java.awt.Canvas;
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
+import java.util.ArrayList;
+import java.util.logging.Level;
 
 import bdk.data.GameInfo;
 import bdk.editor.actor.BdkActorEditor;
+import bdk.game.component.Menu;
 
 /**
  * Class contains methods regarding the game screen. All game components are
@@ -25,34 +27,24 @@ public class Game extends Canvas implements Runnable {
 	private static final long serialVersionUID = 1L;
 	private static final double TICKRATE = 60.0;
 	private Thread thread;
-	// PREVIEW------------------------------------------|
-	private BdkActorEditor bdkActorEditor;
-	private int previewState;
-	private boolean isPreview = false;
-	public static final int PREVIEW_PARTICLESYSTEM = 0;
+	//--Components
+	private ArrayList<Level> levelList;
+	private ArrayList<Menu>	menuList;
+	
 	//--------------------------------------------------|
 	
 	/**
-	 * Constructor used by the BdkParticleEditor to use Game to render a particlesystem preview
-	 * @param bdkParticleEditor
-	 * @param width
-	 * @param height
+	 * Constructor used by the BdkParticleEditor to use Game to render a actorsystem preview
 	 */
-	public Game(BdkActorEditor bdkActorEditor){
-		this.bdkActorEditor = bdkActorEditor;
-		this.previewState = PREVIEW_PARTICLESYSTEM;
-		this.isPreview = true;
+	public Game(){
+		
 	}
 	
 	/**
-	 * Refreshes the data used for the current preview
+	 * Refreshes the data (Used by the editor)
 	 */
 	public void notifyDataChanged(){
-		// Update data based on previewState
-		switch(previewState){
-		case PREVIEW_PARTICLESYSTEM:
-			break;
-		}
+		
 	}
 	
 	//------------------------------------------------------------------------------|
@@ -110,16 +102,9 @@ public class Game extends Canvas implements Runnable {
 	 * Depending on the current gamesetting update may only be called on request.
 	 */
 	public void update() {
-		if(isPreview){
-			updatePreview();
-		}else{
-			
-		}
+
 	}
 	
-	private void updatePreview(){
-		
-	}
 	// -------------------------------------------------------------------------------|
 	// RENDERING
 	// -------------------------------------------------------------------------------|
@@ -133,26 +118,11 @@ public class Game extends Canvas implements Runnable {
 			return;
 		}
 		Graphics2D g = (Graphics2D) bs.getDrawGraphics();
-		
-		if(isPreview){
-			renderPreview(g);
-		}else{
-			
-		}
 				
 		g.dispose();
 		bs.show();
 	}
 	
-	private void renderPreview(Graphics2D g){
-		//Draw clearscreen
-		g.setColor(Color.WHITE);
-		g.fillRect(0, 0, getWidth(), getHeight());
-		//Draw bound rectangle
-		g.setColor(Color.RED);
-		g.drawRect(0, 0, getWidth()-1, getHeight()-1);
-		
-	}
 	// -----------------------------------------------------------------------------|
 	// GETTERS AND SETTERS
 	// -----------------------------------------------------------------------------|

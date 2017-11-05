@@ -75,12 +75,19 @@ public class BdkActorEditor extends JPanel {
 		menuItemNew.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				InputStringDialog dialog = new InputStringDialog();
-				String result = dialog.showDialog("New actor collection", "Actor collection name : ");
-				if (!(result == null)) {
-					currentActorCollection = new ActorCollection(result);
-					notifyDataChanged();
-				}
+				
+				//Currently do not allow custom naming, collection will be named after the file
+//				InputStringDialog dialog = new InputStringDialog();
+//				String result = dialog.showDialog("New actor collection", "Actor collection name : ");
+//				if (!(result == null)) {
+//					currentActorCollection = new ActorCollection(result);
+//					notifyDataChanged();
+//				}
+				
+				currentActorCollection = new ActorCollection("");
+				notifyDataChanged();
+				
+				
 			}
 		});
 
@@ -100,8 +107,10 @@ public class BdkActorEditor extends JPanel {
 					    file = new File(file.getParentFile(), FilenameUtils.getBaseName(file.getName())+".ac"); // ALTERNATIVELY: remove the extension (if any) and replace it with ".xml"
 					}
 					
+					//THE NAME OF THE ACTOR COLLECTION IN THE FILE !!!
+					currentActorCollection.setCollectionName(file.getName());
+					
 					FileUtil.saveSerializableObject(currentActorCollection, file.getPath());
-					System.out.println("File saved");
 				}
 			}
 		});
@@ -138,6 +147,7 @@ public class BdkActorEditor extends JPanel {
 		previewPanel.notifyDataChanged();
 		componentPanel.notifyDataChanged();
 	}
+	
 	// --------------------------------------------------------------------------------------------|
 	// GETTERS & SETTERS
 	// --------------------------------------------------------------------------------------------|

@@ -13,6 +13,8 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import bdk.editor.actor.BdkActorEditor;
 import bdk.editor.actor.BdkActorEditorPanel;
@@ -43,9 +45,10 @@ public class S1ActorSelectionPanel extends BdkActorEditorPanel {
 		buttonPane.setLayout(new GridLayout(1, 0));
 
 		actorCollectionName = new JLabel();
-		actorCollectionName.setBackground(Color.GRAY);
+		actorCollectionName.setBackground(Color.WHITE);
 		actorCollectionName.setForeground(Color.RED);
-
+		
+		
 		buttonCreateActor = new JButton("Create");
 		buttonCreateActor.setEnabled(false);
 		buttonCreateActor.addActionListener(new ActionListener() {
@@ -69,10 +72,7 @@ public class S1ActorSelectionPanel extends BdkActorEditorPanel {
 			public void actionPerformed(ActionEvent e) {
 				//Filter out -1 because it means nothing is selected
 				if(!listToDisplay.isSelectionEmpty()){
-					System.out.println("deleted");
-					System.out.println(bdkActorEditor.getCurrentActorCollection().getActorAmount());
 					bdkActorEditor.getCurrentActorCollection().removeActorAt(listToDisplay.getSelectedIndex());
-					System.out.println(bdkActorEditor.getCurrentActorCollection().getActorAmount());
 					bdkActorEditor.notifyDataChanged();
 				}
 			}
@@ -137,6 +137,12 @@ public class S1ActorSelectionPanel extends BdkActorEditorPanel {
 					actorNames[i] = currentActorCollection.getActorAt(i).getActorName();
 				}
 				listToDisplay.setListData(actorNames);
+			} else {
+				
+				buttonDeleteActor.setEnabled(false);
+				//Hack to stop the list from displaying the deleted object
+				listToDisplay.setListData(new Object[0]);
+				
 			}
 
 			revalidate();

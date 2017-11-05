@@ -26,7 +26,7 @@ public class GameInfo implements Serializable {
 	public GameInfo() {
 		gameInfo = new HashMap<String, String>();
 		gameInfo.put("NAME", "defaultgame");
-		gameInfo.put("CREATOR", "ByteUs Studios");
+		gameInfo.put("CREATOR", "Soliture");
 	}
 	
 	/**
