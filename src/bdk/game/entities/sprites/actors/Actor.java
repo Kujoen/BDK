@@ -2,12 +2,18 @@ package bdk.game.entities.sprites.actors;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;
+import java.util.List;
 
 import bdk.game.entities.sprites.Sprite;
-import bdk.game.entities.sprites.actors.controllers.emitter.Emitter;
-import bdk.game.entities.sprites.actors.controllers.initializers.Initializer;
-import bdk.game.entities.sprites.actors.controllers.operators.Operator;
+import bdk.game.entities.sprites.actors.components.emitter.Emitter;
+import bdk.game.entities.sprites.actors.components.initializers.Initializer;
+import bdk.game.entities.sprites.actors.components.operators.Operator;
 
+/**
+ * 
+ * @author Andreas Farley
+ *
+ */
 public class Actor extends Sprite{
 
 	//--Properties
@@ -21,8 +27,9 @@ public class Actor extends Sprite{
 	public static final String[] ACTOR_TYPES = new String[]{ACTOR_ENEMY, ACTOR_PLAYER, ACTOR_PROJECTILE};
 	//--Controllers
 	private Emitter emitter;
-	private ArrayList<Initializer> initializerList;
-	private ArrayList<Operator> operatorList;
+	private List<Initializer> initializerList;
+	private List<Operator> operatorList;
+	private List<Actor> childList;
 	
 	public Actor(String actorName) {
 		super(0, 0, Sprite.TYPE_ACTOR);
@@ -42,6 +49,38 @@ public class Actor extends Sprite{
 	//---------------------------------------------------------------------|
 	//GETTERS & SETTERS
 	//---------------------------------------------------------------------|
+	
+	public Emitter getEmitter() {
+		return emitter;
+	}
+
+	public void setEmitter(Emitter emitter) {
+		this.emitter = emitter;
+	}
+
+	public List<Initializer> getInitializerList() {
+		return initializerList;
+	}
+
+	public void setInitializerList(ArrayList<Initializer> initializerList) {
+		this.initializerList = initializerList;
+	}
+
+	public List<Operator> getOperatorList() {
+		return operatorList;
+	}
+
+	public List<Actor> getChildList() {
+		return childList;
+	}
+
+	public void setChildList(List<Actor> childList) {
+		this.childList = childList;
+	}
+
+	public void setOperatorList(ArrayList<Operator> operatorList) {
+		this.operatorList = operatorList;
+	}
 	
 	public String getActorType() {
 		return actorType;

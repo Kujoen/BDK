@@ -9,67 +9,87 @@ import javax.swing.JPanel;
 import bdk.editor.actor.BdkActorEditor;
 import bdk.editor.actor.BdkActorEditorPanel;
 import bdk.editor.actor.componentpanel.rows.TitleRow;
-import de.soliture.ui.expandinglist.JExpandingList;
+import bdk.game.entities.sprites.actors.components.Component;
+import bdk.game.entities.sprites.actors.components.emitter.EmitOnce;
+import bdk.game.entities.sprites.actors.components.emitter.Emitter;
+import soliture.ui.swingextensions.expandinglist.JExpandingList;
 
-public class ComponentPanel extends BdkActorEditorPanel{
-	
+public class ComponentPanel extends BdkActorEditorPanel {
+
 	JPanel contentPane;
 	JExpandingList expandingList;
-	
-	//--Main rows
+
+	// --Main rows
 	TitleRow rowEmitter;
 	TitleRow rowInitializer;
 	TitleRow rowOperator;
 	TitleRow rowChildren;
 
 	public ComponentPanel(BdkActorEditor parent) {
-		super(parent);	
-		
+		super(parent);
+
 		this.setLayout(new GridLayout(1, 1));
 
 	}
 
-	private void buildList(){
+	private void buildList() {
 		this.removeAll();
 		expandingList = new JExpandingList(40, 6);
 		this.add(expandingList);
-		
-		//--Emitter
+
+		// EMITTER*****************************************************************|
 		rowEmitter = new TitleRow("Emitter");
-		rowEmitter.getAddButton().addActionListener(new ActionListener(){
+		rowEmitter.getAddButton().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
+				Emitter selectedEmitter =(Emitter) SelectComponentDialog.showSelectionDialog(
+						Component.getSelectableEmittersFor(currentActor).toArray(), "Select an Emitter");
+				if(selectedEmitter != null) {
+					
+					//TODO: Implement the new updating system, no longe call notifyDataChanged(); from here
+//					bdkActorEditor.getCurrentActor().setEmitter(selectedEmitter);
+//					bdkActorEditor.notifyDataChanged();
+					
+				}
 			}
 		});
-		rowEmitter.getInfoButton().addActionListener(new ActionListener(){
+		rowEmitter.getInfoButton().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				// TODO: Implement an info-window for all titlerows
 			}
 		});
 		
-		//--Initalizer
+		//-Add subrows of the titlerow
+		if(currentActor.getEmitter() != null) {
+			//There can be only one emitter so ne need for loops here
+			if(currentActor.getEmitter() instanceof EmitOnce) {
+				
+			}
+		}
+
+		// INITIALIZERS************************************************************|
 		rowInitializer = new TitleRow("Initializers");
-		
-		//--Operator
+
+		// OPERATORS***************************************************************|
 		rowOperator = new TitleRow("Operators");
 
-		//--Children
+		// CHILDREN****************************************************************|
 		rowChildren = new TitleRow("Children");
-		
-		expandingList.addRow(rowEmitter.getTitleRow());
-		expandingList.addRow(rowInitializer.getTitleRow());
-		expandingList.addRow(rowOperator.getTitleRow());
-		expandingList.addRow(rowChildren.getTitleRow());
+
+		expandingList.addRow(rowEmitter);
+		expandingList.addRow(rowInitializer);
+		expandingList.addRow(rowOperator);
+		expandingList.addRow(rowChildren);
 	}
 
 	@Override
 	public void notifyDataChanged() {
 		this.currentActor = bdkActorEditor.getCurrentActor();
 		this.currentActorCollection = bdkActorEditor.getCurrentActorCollection();
-		
-		if(currentActor != null){
+
+		if (currentActor != null) {
 			buildList();
 		}
 	}

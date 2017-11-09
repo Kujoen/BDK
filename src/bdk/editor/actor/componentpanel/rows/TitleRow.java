@@ -9,14 +9,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
-import de.soliture.ui.expandinglist.ExpandableRow;
+import soliture.ui.swingextensions.expandinglist.ExpandableRow;
 
-public class TitleRow {
-	
-	//--ExpandingList Components
-	ExpandableRow titleRow;
-	
-	//--JComponents
+public class TitleRow extends ExpandableRow{
+
+	//--JComponents of the titlerow
 	JButton expandButton;
 	JButton addButton;
 	JButton infoButton;
@@ -32,8 +29,6 @@ public class TitleRow {
 	}
 	
 	private void initialiseRow(){
-		
-		titleRow = new ExpandableRow();
 		
 		rowTitle.setForeground(Color.BLACK);
 		rowTitle.setFont(new Font("Terminal" , Font.PLAIN, 16));
@@ -59,8 +54,8 @@ public class TitleRow {
 		expandButton.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				titleRow.expandRow();
-				if(titleRow.isExpanded()){
+				expandRow();
+				if(isExpanded()){
 					expandButton.setIcon(new ImageIcon(TitleRow.class.getResource("/resources/icons/expand_less.png")));
 				} else {
 					expandButton.setIcon(new ImageIcon(TitleRow.class.getResource("/resources/icons/expand_more.png")));
@@ -68,11 +63,10 @@ public class TitleRow {
 			}
 		});
 		
-		titleRow.addComponentToRow(expandButton, 0, 1);
-		titleRow.addComponentToRow(rowTitle, 1, 3);
-		titleRow.addComponentToRow(addButton, 4, 1);
-		titleRow.addComponentToRow(infoButton, 5, 1);
-				
+		addComponentToRow(expandButton, 0, 1);
+		addComponentToRow(rowTitle, 1, 3);
+		addComponentToRow(addButton, 4, 1);
+		addComponentToRow(infoButton, 5, 1);		
 	}
 	
 	// --------------------------------------------------------------------------------------------|
@@ -110,13 +104,4 @@ public class TitleRow {
 	public void setRowTitle(JLabel rowTitle) {
 		this.rowTitle = rowTitle;
 	}
-
-	public ExpandableRow getTitleRow() {
-		return titleRow;
-	}
-
-	public void setTitleRow(ExpandableRow titleRow) {
-		this.titleRow = titleRow;
-	}
-
 }

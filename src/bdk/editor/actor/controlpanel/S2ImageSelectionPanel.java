@@ -26,6 +26,11 @@ import bdk.editor.actor.BdkActorEditor;
 import bdk.editor.actor.BdkActorEditorPanel;
 import bdk.editor.main.BdkMainWindow;
 
+/**
+ * 
+ * @author Andreas Farley
+ *
+ */
 public class S2ImageSelectionPanel extends BdkActorEditorPanel {
 
 	// Column Viewport of the scrollpane--------------|

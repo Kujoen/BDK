@@ -47,8 +47,7 @@ public class S1ActorSelectionPanel extends BdkActorEditorPanel {
 		actorCollectionName = new JLabel();
 		actorCollectionName.setBackground(Color.WHITE);
 		actorCollectionName.setForeground(Color.RED);
-		
-		
+
 		buttonCreateActor = new JButton("Create");
 		buttonCreateActor.setEnabled(false);
 		buttonCreateActor.addActionListener(new ActionListener() {
@@ -70,9 +69,10 @@ public class S1ActorSelectionPanel extends BdkActorEditorPanel {
 		buttonDeleteActor.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//Filter out -1 because it means nothing is selected
-				if(!listToDisplay.isSelectionEmpty()){
+				// Filter out -1 because it means nothing is selected
+				if (!listToDisplay.isSelectionEmpty()) {
 					bdkActorEditor.getCurrentActorCollection().removeActorAt(listToDisplay.getSelectedIndex());
+					bdkActorEditor.setCurrentActor(null);
 					bdkActorEditor.notifyDataChanged();
 				}
 			}
@@ -101,13 +101,16 @@ public class S1ActorSelectionPanel extends BdkActorEditorPanel {
 		// -------------------------------------------------------------------------------------------|
 		listToDisplay = new JList();
 		listToDisplay.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		listToDisplay.addMouseListener(new MouseAdapter(){
-			public void mouseClicked(MouseEvent e){
-				//Gotta save the index before changing data because JList loses focus for whatever reason
-				int index = listToDisplay.getSelectedIndex();
-				bdkActorEditor.setCurrentActor(currentActorCollection.getActorAt(listToDisplay.getSelectedIndex()));
-				bdkActorEditor.notifyDataChanged();
-				listToDisplay.setSelectedIndex(index);
+		listToDisplay.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				// Gotta save the index before changing data because JList loses focus for
+				// whatever reason
+				if (listToDisplay.isEnabled()) {
+					int index = listToDisplay.getSelectedIndex();
+					bdkActorEditor.setCurrentActor(currentActorCollection.getActorAt(listToDisplay.getSelectedIndex()));
+					bdkActorEditor.notifyDataChanged();
+					listToDisplay.setSelectedIndex(index);
+				}
 			}
 		});
 
@@ -128,6 +131,7 @@ public class S1ActorSelectionPanel extends BdkActorEditorPanel {
 
 			// Check if the actorcollection has any actors
 			if (!(currentActorCollection.getActorAmount() == 0)) {
+				listToDisplay.setEnabled(true);
 				// If yes enable the delete button
 				buttonDeleteActor.setEnabled(true);
 
@@ -138,11 +142,11 @@ public class S1ActorSelectionPanel extends BdkActorEditorPanel {
 				}
 				listToDisplay.setListData(actorNames);
 			} else {
-				
+
 				buttonDeleteActor.setEnabled(false);
-				//Hack to stop the list from displaying the deleted object
+				// Hack to stop the list from displaying the deleted object
 				listToDisplay.setListData(new Object[0]);
-				
+				listToDisplay.setEnabled(false);
 			}
 
 			revalidate();

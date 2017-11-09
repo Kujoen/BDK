@@ -130,6 +130,9 @@ public class BdkActorEditor extends JPanel {
 		setLayout(new BorderLayout());
 		add(centerPanel, BorderLayout.CENTER);
 		add(menuBar, BorderLayout.NORTH);
+		
+		//Testing notifications
+				
 	}
 	
 	private void displayMenuButtons(){
