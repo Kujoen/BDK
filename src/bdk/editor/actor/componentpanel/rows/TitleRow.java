@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
+import bdk.editor.util.BdkFont;
 import soliture.ui.swingextensions.expandinglist.ExpandableRow;
 
 public class TitleRow extends ExpandableRow{
@@ -31,7 +32,7 @@ public class TitleRow extends ExpandableRow{
 	private void initialiseRow(){
 		
 		rowTitle.setForeground(Color.BLACK);
-		rowTitle.setFont(new Font("Terminal" , Font.PLAIN, 16));
+		rowTitle.setFont(new BdkFont(Font.BOLD, 20));
 		
 		addButton.setEnabled(true);
 		addButton.setBorder(null);
@@ -64,9 +65,9 @@ public class TitleRow extends ExpandableRow{
 		});
 		
 		addComponentToRow(expandButton, 0, 1);
-		addComponentToRow(rowTitle, 1, 3);
-		addComponentToRow(addButton, 4, 1);
-		addComponentToRow(infoButton, 5, 1);		
+		addComponentToRow(rowTitle, 1, 9);
+		addComponentToRow(addButton, 10, 1);
+		addComponentToRow(infoButton, 11, 1);		
 	}
 	
 	// --------------------------------------------------------------------------------------------|

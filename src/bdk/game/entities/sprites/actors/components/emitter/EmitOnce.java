@@ -1,11 +1,10 @@
 package bdk.game.entities.sprites.actors.components.emitter;
 
-import soliture.ui.swingextensions.expandinglist.ExpandableRow;
+import bdk.editor.actor.componentpanel.rows.ComponentRow;
 
 /**
  * 
- * @author Andreas Farley
- *	An emitter that will only emit once
+ * @author Andreas Farley An emitter that will only emit once
  */
 public class EmitOnce extends Emitter {
 
@@ -14,13 +13,14 @@ public class EmitOnce extends Emitter {
 	public EmitOnce() {
 		this.emissionAmount = 0;
 	}
-	
-	@Override
-	public ExpandableRow getDataRow() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
+	@Override
+	public ComponentRow getComponentRow() {
+		
+		ComponentRow newRow = new ComponentRow("Emit Once");
+		return newRow;
+		
+	}
 
 	// --------------------------------------------------------------------------------------------|
 	// GETTERS & SETTERS
@@ -33,5 +33,5 @@ public class EmitOnce extends Emitter {
 	public void setEmissionAmount(int emissionAmount) {
 		this.emissionAmount = emissionAmount;
 	}
-	
+
 }

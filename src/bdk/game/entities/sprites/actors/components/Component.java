@@ -3,13 +3,10 @@ package bdk.game.entities.sprites.actors.components;
 import java.util.ArrayList;
 import java.util.List;
 
+import bdk.editor.actor.componentpanel.rows.ComponentRow;
 import bdk.game.entities.sprites.actors.Actor;
 import bdk.game.entities.sprites.actors.components.emitter.EmitContinuously;
 import bdk.game.entities.sprites.actors.components.emitter.EmitOnce;
-import bdk.game.entities.sprites.actors.components.emitter.Emitter;
-import bdk.game.entities.sprites.actors.components.initializers.Initializer;
-import bdk.game.entities.sprites.actors.components.operators.Operator;
-import soliture.ui.swingextensions.expandinglist.ExpandableRow;
 
 /**
  * 
@@ -18,12 +15,14 @@ import soliture.ui.swingextensions.expandinglist.ExpandableRow;
  */
 public abstract class Component {
 	
+	public abstract ComponentRow getComponentRow();
+	
+	/**
+	 * Return the classes name 
+	 */
 	public String toString() {
 		return this.getClass().getSimpleName();
 	}
-	
-	public abstract ExpandableRow getDataRow();
-	
 	
 	// Static methods used by other classes for data collection***************************|
 	public static List<Component> getSelectableEmittersFor(Actor anActor){
@@ -48,4 +47,5 @@ public abstract class Component {
 		List<Component> operatorList = new ArrayList<Component>();
 		return operatorList;
 	}
+	// *************************************************************************************|
 }

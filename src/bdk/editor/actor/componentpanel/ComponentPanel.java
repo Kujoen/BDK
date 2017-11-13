@@ -32,36 +32,45 @@ public class ComponentPanel extends BdkActorEditorPanel {
 
 	private void buildList() {
 		this.removeAll();
-		expandingList = new JExpandingList(40, 6);
+		expandingList = new JExpandingList(40, 12);
 		this.add(expandingList);
 
-		// EMITTER*****************************************************************|
+		// EMITTER************************************************************|
 		rowEmitter = new TitleRow("Emitter");
+		
+		//-Add Button
 		rowEmitter.getAddButton().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				Emitter selectedEmitter =(Emitter) SelectComponentDialog.showSelectionDialog(
-						Component.getSelectableEmittersFor(bdkActorEditor.getCurrentActor()).toArray(), "Select an Emitter");
-				if(selectedEmitter != null) {
-					//No longer call notifyDataChanged() on bdkActorEditor since it has a listener on the current actor
+
+				Emitter selectedEmitter = (Emitter) SelectComponentDialog.showSelectionDialog(
+						Component.getSelectableEmittersFor(bdkActorEditor.getCurrentActor()).toArray(),
+						"Select an Emitter");
+				if (selectedEmitter != null) {
+					// No longer call notifyDataChanged() on bdkActorEditor since it has a listener
+					// on the current actor
 					bdkActorEditor.getCurrentActor().setEmitter(selectedEmitter);
 				}
 			}
 		});
+		//-Info Button
 		rowEmitter.getInfoButton().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO: Implement an info-window for all titlerows
 			}
 		});
-		
-		//-Add subrows of the titlerow
-		if(bdkActorEditor.getCurrentActor().getEmitter() != null) {
-			//There can be only one emitter so ne need for loops here
-			if(bdkActorEditor.getCurrentActor().getEmitter() instanceof EmitOnce) {
-				
+
+		//-Subrows
+		if (bdkActorEditor.getCurrentActor().getEmitter() != null) {
+			// There can be only one emitter so ne need for loops here
+			if (bdkActorEditor.getCurrentActor().getEmitter() instanceof EmitOnce) {
+				rowEmitter.addRow(bdkActorEditor.getCurrentActor().getEmitter().getComponentRow());
+			} else {
+				//TODO: Implement adding EmitContinuously
 			}
+			//Enable the expand button
+			rowEmitter.getExpandButton().setEnabled(true);
 		}
 
 		// INITIALIZERS************************************************************|
