@@ -1,9 +1,14 @@
 package bdk.editor.util;
 
-public class BdkException extends Exception{
+public class BdkException {
 
-	public BdkException(String message){
-		super(message);
+	public static void throwWithMessage(String message) {
+		try {
+			throw new Exception(message);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 }

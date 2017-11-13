@@ -27,7 +27,6 @@ public class Actor extends Sprite {
 	// --Properties
 	private String actorType;
 	private String actorName;
-	private int health;
 	// --Controllers
 	private Emitter emitter;
 	private List<Initializer> initializerList;
@@ -52,35 +51,6 @@ public class Actor extends Sprite {
 	@Override
 	public void render(Graphics2D g) {
 		// TODO Auto-generated method stub
-	}
-
-	// LISTENER STUFF-------------------------------------------------------|
-
-	private final List<PropertyChangeListener> listeners = new ArrayList<>();
-
-	public void addPropertyChangeListener(PropertyChangeListener listener) {
-		listeners.add(listener);
-	}
-
-	private void firePropertyChange(String property, Object oldValue, Object newValue) {
-		for (PropertyChangeListener l : listeners) {
-			l.propertyChange(new PropertyChangeEvent(this, property, oldValue, newValue));
-		}
-	}
-	// TESTING LISTENER-----------------------------------------------------|
-
-	public static void main(String[] args) {
-
-		Actor testActor = new Actor("test");
-		testActor.addPropertyChangeListener(new PropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent arg0) {
-				System.out.println(arg0.getPropertyName() + " changed");
-			}
-		});
-
-		testActor.setEmitter(new EmitOnce());
-
 	}
 
 	// ---------------------------------------------------------------------|
@@ -145,13 +115,5 @@ public class Actor extends Sprite {
 		String oldValue = this.actorName;
 		this.actorName = actorName;
 		firePropertyChange("Name", oldValue, actorName);
-	}
-
-	public int getHealth() {
-		return health;
-	}
-
-	public void setHealth(int health) {
-		this.health = health;
 	}
 }

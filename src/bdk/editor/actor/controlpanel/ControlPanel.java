@@ -8,14 +8,15 @@ import javax.swing.JPanel;
 import bdk.editor.actor.BdkActorEditor;
 import bdk.editor.actor.BdkActorEditorPanel;
 
-//********************************************************************************
-
-//********************************************************************************
-
+/**
+ * 
+ * @author Andreas Farley
+ *
+ */
 public class ControlPanel extends BdkActorEditorPanel{
 	
 	S1ActorSelectionPanel actorSelectionPanel;
-	S2GeneralPropertiesPanel mainPropertiesPanel;
+	S2GeneralPropertiesPanel generalPropertiesPanel;
 	S2ImageSelectionPanel imageSelectionPanel;
 	S3TypePropertiesPanel advancedPropertiesPanel;
 	JPanel s2SubPanel;
@@ -24,7 +25,7 @@ public class ControlPanel extends BdkActorEditorPanel{
 		super(parent);
 		
 		actorSelectionPanel = new S1ActorSelectionPanel(parent);
-		mainPropertiesPanel = new S2GeneralPropertiesPanel(parent);
+		generalPropertiesPanel = new S2GeneralPropertiesPanel(parent);
 		imageSelectionPanel = new S2ImageSelectionPanel(parent);
 		advancedPropertiesPanel = new S3TypePropertiesPanel(parent);
 		
@@ -32,7 +33,7 @@ public class ControlPanel extends BdkActorEditorPanel{
 		s2SubPanel = new JPanel();
 		s2SubPanel.setLayout(new GridLayout(1,2));
 		s2SubPanel.add(imageSelectionPanel);
-		s2SubPanel.add(mainPropertiesPanel);
+		s2SubPanel.add(generalPropertiesPanel);
 			
 		
 		setLayout(new GridLayout(3,1));
@@ -46,6 +47,6 @@ public class ControlPanel extends BdkActorEditorPanel{
 	public void notifyDataChanged() {
 		actorSelectionPanel.notifyDataChanged();
 		imageSelectionPanel.notifyDataChanged();
-		mainPropertiesPanel.notifyDataChanged();
+		generalPropertiesPanel.notifyDataChanged();
 	}
 }

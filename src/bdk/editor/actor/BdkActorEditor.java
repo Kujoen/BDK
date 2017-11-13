@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 
 import javax.swing.JFileChooser;
@@ -46,7 +48,7 @@ public class BdkActorEditor extends JPanel {
 		fileChooser = new JFileChooser();
 		fileChooser.setFileFilter(filter);
 		fileChooser.setCurrentDirectory(new File(BdkMainWindow.getGameName() + "/sprites/actors/collections"));
-		
+
 		// DATAVIEW-------------------------------------------------------------------------------|
 		componentPanel = new ComponentPanel(this);
 		// PROPERTYVIEW---------------------------------------------------------------------------|
@@ -64,9 +66,8 @@ public class BdkActorEditor extends JPanel {
 				if (result == JFileChooser.APPROVE_OPTION) {
 					File file = fileChooser.getSelectedFile();
 					ActorCollection newCollection = (ActorCollection) FileUtil.loadSerializedObject(file.getPath());
-					currentActorCollection = newCollection;
-					currentActor = null;
-					notifyDataChanged();
+					setCurrentActorCollection(new ActorCollection("default.ac"));
+					setCurrentActor(null);
 				}
 			}
 		});
@@ -75,19 +76,8 @@ public class BdkActorEditor extends JPanel {
 		menuItemNew.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				//Currently do not allow custom naming, collection will be named after the file
-//				InputStringDialog dialog = new InputStringDialog();
-//				String result = dialog.showDialog("New actor collection", "Actor collection name : ");
-//				if (!(result == null)) {
-//					currentActorCollection = new ActorCollection(result);
-//					notifyDataChanged();
-//				}
-				
-				currentActorCollection = new ActorCollection("");
-				notifyDataChanged();
-				
-				
+				setCurrentActorCollection(new ActorCollection("default.ac"));
+				setCurrentActor(null);
 			}
 		});
 
@@ -99,17 +89,17 @@ public class BdkActorEditor extends JPanel {
 				int result = fileChooser.showSaveDialog(BdkActorEditor.this);
 				if (result == JFileChooser.APPROVE_OPTION) {
 					File file = fileChooser.getSelectedFile();
-					//Check if file has correct extension
+					// Check if file has correct extension
 					if (FilenameUtils.getExtension(file.getName()).equalsIgnoreCase("ac")) {
-					    // filename is OK as-is
+						// filename is OK as-is
 					} else {
-					    file = new File(file.toString() + ".ac");  // append .xml if "foo.jpg.xml" is OK
-					    file = new File(file.getParentFile(), FilenameUtils.getBaseName(file.getName())+".ac"); // ALTERNATIVELY: remove the extension (if any) and replace it with ".xml"
+						file = new File(file.toString() + ".ac");
+						file = new File(file.getParentFile(), FilenameUtils.getBaseName(file.getName()) + ".ac");
 					}
-					
-					//THE NAME OF THE ACTOR COLLECTION IN THE FILE !!!
+
+					// THE NAME OF THE ACTOR COLLECTION IN THE FILE !!!
 					currentActorCollection.setCollectionName(file.getName());
-					
+
 					FileUtil.saveSerializableObject(currentActorCollection, file.getPath());
 				}
 			}
@@ -119,7 +109,9 @@ public class BdkActorEditor extends JPanel {
 		menuFile.add(menuItemOpen);
 		menuFile.add(menuItemNew);
 		menuFile.add(menuItemSave);
-		// ---------------------------------------------------------------------------------------|
+		// MENUBAR
+		// END-----------------------------------------------------------------------------|
+		// ----------------------------------------------------------------------------------------|
 
 		centerPanel = new JPanel();
 		centerPanel.setLayout(new GridLayout(1, 3));
@@ -130,27 +122,29 @@ public class BdkActorEditor extends JPanel {
 		setLayout(new BorderLayout());
 		add(centerPanel, BorderLayout.CENTER);
 		add(menuBar, BorderLayout.NORTH);
-		
-		//Testing notifications
-				
+
+		// Testing notifications
+
 	}
-	
-	private void displayMenuButtons(){
-		if(currentActorCollection != null){
+
+	private void displayMenuButtons() {
+		if (currentActorCollection != null) {
 			menuItemSave.setEnabled(true);
-		}else{
+		} else {
 			menuItemSave.setEnabled(false);
 		}
 	}
 
-	public void notifyDataChanged() {
+	private void notifyDataChanged() {
+		//-Do something
 		displayMenuButtons();
-		
+
+		//-Pass the notification on
 		controlPanel.notifyDataChanged();
 		previewPanel.notifyDataChanged();
 		componentPanel.notifyDataChanged();
 	}
-	
+
 	// --------------------------------------------------------------------------------------------|
 	// GETTERS & SETTERS
 	// --------------------------------------------------------------------------------------------|
@@ -159,16 +153,44 @@ public class BdkActorEditor extends JPanel {
 		return currentActorCollection;
 	}
 
+	/**
+	 * Setting the current actor selection will trigger a notifyDataChanged, also a propertyChangedListener is added if not null
+	 * 
+	 * @param newActorCollection
+	 */
 	public void setCurrentActorCollection(ActorCollection newActorCollection) {
 		this.currentActorCollection = newActorCollection;
+		//Add a listener
+		if(currentActorCollection != null) {
+			currentActorCollection.addPropertyChangeListener(new PropertyChangeListener() {
+				@Override
+				public void propertyChange(PropertyChangeEvent arg0) {
+					notifyDataChanged();
+				}
+			});
+		}
+		notifyDataChanged();
 	}
 
 	public Actor getCurrentActor() {
 		return currentActor;
 	}
 
+	/**
+	 * Setting the current actor will trigger a notifyDatachanged, also a propertyChangedListener is added if not null
+	 * @param newActor
+	 */
 	public void setCurrentActor(Actor newActor) {
 		this.currentActor = newActor;
+		if(currentActor != null) {
+			currentActor.addPropertyChangeListener(new PropertyChangeListener() {
+				@Override
+				public void propertyChange(PropertyChangeEvent arg0) {
+					notifyDataChanged();
+				}
+			});
+		}
+		notifyDataChanged();
 	}
 
 }

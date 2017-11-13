@@ -59,7 +59,6 @@ public class S1ActorSelectionPanel extends BdkActorEditorPanel {
 					Actor newActor = new Actor(result);
 					bdkActorEditor.getCurrentActorCollection().addActor(newActor);
 					bdkActorEditor.setCurrentActor(newActor);
-					bdkActorEditor.notifyDataChanged();
 				}
 			}
 		});
@@ -73,7 +72,6 @@ public class S1ActorSelectionPanel extends BdkActorEditorPanel {
 				if (!listToDisplay.isSelectionEmpty()) {
 					bdkActorEditor.getCurrentActorCollection().removeActorAt(listToDisplay.getSelectedIndex());
 					bdkActorEditor.setCurrentActor(null);
-					bdkActorEditor.notifyDataChanged();
 				}
 			}
 		});
@@ -103,12 +101,10 @@ public class S1ActorSelectionPanel extends BdkActorEditorPanel {
 		listToDisplay.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listToDisplay.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				// Gotta save the index before changing data because JList loses focus for
-				// whatever reason
 				if (listToDisplay.isEnabled()) {
+					//Save the selected index, since calling notifyDataChanged makes the list lose focus
 					int index = listToDisplay.getSelectedIndex();
-					bdkActorEditor.setCurrentActor(currentActorCollection.getActorAt(listToDisplay.getSelectedIndex()));
-					bdkActorEditor.notifyDataChanged();
+					bdkActorEditor.setCurrentActor(bdkActorEditor.getCurrentActorCollection().getActorAt(listToDisplay.getSelectedIndex()));
 					listToDisplay.setSelectedIndex(index);
 				}
 			}
@@ -125,20 +121,20 @@ public class S1ActorSelectionPanel extends BdkActorEditorPanel {
 	}
 
 	private void displayActorList() {
-		if (currentActorCollection != null) {
+		if (bdkActorEditor.getCurrentActorCollection() != null) {
 			buttonCreateActor.setEnabled(true);
-			actorCollectionName.setText(currentActorCollection.getCollectionName());
+			actorCollectionName.setText(bdkActorEditor.getCurrentActorCollection().getCollectionName());
 
 			// Check if the actorcollection has any actors
-			if (!(currentActorCollection.getActorAmount() == 0)) {
+			if (bdkActorEditor.getCurrentActorCollection().getCollectionSize() > 0) {
 				listToDisplay.setEnabled(true);
 				// If yes enable the delete button
 				buttonDeleteActor.setEnabled(true);
 
 				// And add the actors to the list
-				actorNames = new Object[currentActorCollection.getActorAmount()];
-				for (int i = 0; i < currentActorCollection.getActorAmount(); i++) {
-					actorNames[i] = currentActorCollection.getActorAt(i).getActorName();
+				actorNames = new Object[bdkActorEditor.getCurrentActorCollection().getCollectionSize()];
+				for (int i = 0; i < bdkActorEditor.getCurrentActorCollection().getCollectionSize(); i++) {
+					actorNames[i] = bdkActorEditor.getCurrentActorCollection().getActorAt(i).getActorName();
 				}
 				listToDisplay.setListData(actorNames);
 			} else {
@@ -156,8 +152,6 @@ public class S1ActorSelectionPanel extends BdkActorEditorPanel {
 
 	@Override
 	public void notifyDataChanged() {
-		currentActorCollection = bdkActorEditor.getCurrentActorCollection();
-		currentActor = bdkActorEditor.getCurrentActor();
 		displayActorList();
 	}
 }

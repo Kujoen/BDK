@@ -7,12 +7,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.HashMap;
-import java.util.Map;
 
-import org.apache.commons.io.FileUtils;
-import bdk.game.component.Component;
+import bdk.game.entities.sprites.actors.ActorCollection;
 
+/**
+ * 
+ * @author Andreas Farley
+ *
+ */
 public class FileUtil {
 
 	public static void saveSerializableObject(Object o, String path){
@@ -37,8 +39,12 @@ public class FileUtil {
 		try {
 			FileInputStream fis = new FileInputStream(new File(path));
 			ObjectInputStream ois = new ObjectInputStream(fis);
+			Object readObject = ois.readObject();
 			
-			return ois.readObject();
+			fis.close();
+			ois.close();
+			
+			return readObject;
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

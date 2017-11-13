@@ -121,7 +121,7 @@ public class S2ImageSelectionPanel extends BdkActorEditorPanel {
 	}
 
 	private void displayImagePreview() {
-		
+
 		scrollContentPane.removeAll();
 		scrollContentPane.setLayout(new GridLayout(0, gridWidth));
 		imageWidth = scrollContentPane.getWidth() / gridWidth;
@@ -129,13 +129,14 @@ public class S2ImageSelectionPanel extends BdkActorEditorPanel {
 		imageMap = new HashMap<Icon, String>();
 
 		// Check if currently a actor is selected
-		if (!(currentActor == null)) {
+		if (!(bdkActorEditor.getCurrentActor() == null)) {
 			// Check if actortype was set
-			if (!(currentActor.getActorType() == null)) {
+			if (!(bdkActorEditor.getCurrentActor().getActorType() == null)) {
 				// Search the directory of the actortype
-				File dir = new File(BdkMainWindow.getGameName() + "/sprites/actors/" + currentActor.getActorType());
+				File dir = new File(BdkMainWindow.getGameName() + "/sprites/actors/"
+						+ bdkActorEditor.getCurrentActor().getActorType());
 				File[] listOfFiles = dir.listFiles();
-				
+
 				for (int i = 0; i < listOfFiles.length; i++) {
 					if (listOfFiles[i].isFile()) {
 						if (listOfFiles[i].getName().contains(".png")) {
@@ -148,45 +149,45 @@ public class S2ImageSelectionPanel extends BdkActorEditorPanel {
 								}
 
 								imageLabel = new JLabel("");
-								imageLabel.addMouseListener( new MouseListener(){
+								imageLabel.addMouseListener(new MouseListener() {
 
 									@Override
 									public void mouseClicked(MouseEvent arg0) {
 										JLabel pressedLabel = (JLabel) arg0.getSource();
-										bdkActorEditor.getCurrentActor().setImagePath(imageMap.get(pressedLabel.getIcon()));
-										bdkActorEditor.notifyDataChanged();
+										bdkActorEditor.getCurrentActor()
+												.setImagePath(imageMap.get(pressedLabel.getIcon()));
 									}
 
 									@Override
 									public void mouseEntered(MouseEvent arg0) {
 										// TODO Auto-generated method stub
-										
+
 									}
 
 									@Override
 									public void mouseExited(MouseEvent arg0) {
 										// TODO Auto-generated method stub
-										
+
 									}
 
 									@Override
 									public void mousePressed(MouseEvent arg0) {
 										// TODO Auto-generated method stub
-										
+
 									}
 
 									@Override
 									public void mouseReleased(MouseEvent arg0) {
 										// TODO Auto-generated method stub
-										
-									}				
+
+									}
 								});
-								
-								//Highlight the image if its the current selected image
-								if (listOfFiles[i].getPath().equals(currentActor.getImagePath())) {
+
+								// Highlight the image if its the current selected image
+								if (listOfFiles[i].getPath().equals(bdkActorEditor.getCurrentActor().getImagePath())) {
 									image = BdkImageData.highlight(image, Color.RED);
 								}
-								
+
 								// Put the image into the imagemap so we can find it later
 								imageLabel.setIcon(new ImageIcon(image));
 								imageMap.put(imageLabel.getIcon(), listOfFiles[i].getPath());
@@ -223,8 +224,6 @@ public class S2ImageSelectionPanel extends BdkActorEditorPanel {
 
 	@Override
 	public void notifyDataChanged() {
-		currentActorCollection = bdkActorEditor.getCurrentActorCollection();
-		currentActor = bdkActorEditor.getCurrentActor();
 		displayImagePreview();
 	}
 

@@ -12,10 +12,11 @@ import bdk.game.entities.sprites.actors.ActorCollection;
  */
 public abstract class BdkActorEditorPanel extends JPanel{
 	
-	protected ActorCollection currentActorCollection;
-	protected Actor currentActor;
 	protected BdkActorEditor bdkActorEditor;
 
+	/**
+	 * Write stuff to do when the data has changed here
+	 */
 	public abstract void notifyDataChanged();
 	
 	public BdkActorEditorPanel(BdkActorEditor parent){

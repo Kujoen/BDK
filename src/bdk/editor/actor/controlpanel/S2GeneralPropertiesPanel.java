@@ -42,17 +42,18 @@ public class S2GeneralPropertiesPanel extends BdkActorEditorPanel {
 		nameTextField.getDocument().addDocumentListener(new DocumentListener() {
 			@Override
 			public void changedUpdate(DocumentEvent e) {
-				bdkActorEditor.getCurrentActor().setActorName(currentActor.getActorName());
-				bdkActorEditor.notifyDataChanged();
+				bdkActorEditor.getCurrentActor().setActorName(bdkActorEditor.getCurrentActor().getActorName());
 			}
+
 			@Override
 			public void insertUpdate(DocumentEvent e) {
-				
+
 			}
+
 			@Override
 			public void removeUpdate(DocumentEvent e) {
-				
-			}			
+
+			}
 		});
 
 		typeLabel = new JLabel("Actor type : ");
@@ -61,9 +62,8 @@ public class S2GeneralPropertiesPanel extends BdkActorEditorPanel {
 		typeComboBox.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				if(e.getStateChange() == ItemEvent.SELECTED){
+				if (e.getStateChange() == ItemEvent.SELECTED) {
 					bdkActorEditor.getCurrentActor().setActorType(e.getItem().toString());
-					bdkActorEditor.notifyDataChanged();
 				}
 			}
 		});
@@ -73,8 +73,8 @@ public class S2GeneralPropertiesPanel extends BdkActorEditorPanel {
 		imageNameLabel.setBackground(Color.GRAY);
 		imageNameLabel.setForeground(Color.RED);
 
-		//Adding to the layout
-		//------------------------------------------------|
+		// Adding to the layout
+		// ------------------------------------------------|
 		contentPane = new JPanel();
 		contentPane.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -109,7 +109,7 @@ public class S2GeneralPropertiesPanel extends BdkActorEditorPanel {
 		c.gridx = 1;
 		c.gridy = 2;
 		contentPane.add(imageNameLabel, c);
-		
+
 		// -----------------------------------------------------------------|
 
 		setLayout(new GridLayout(1, 1));
@@ -118,33 +118,33 @@ public class S2GeneralPropertiesPanel extends BdkActorEditorPanel {
 	}
 
 	private void displayGeneralProperties() {
-		if(currentActorCollection != null){
-			//Is there an actor to display information on 
-			if(currentActor != null){
-				nameTextField.setText(currentActor.getActorName());
+		if (bdkActorEditor.getCurrentActorCollection() != null) {
+			// Is there an actor to display information on
+			if (bdkActorEditor.getCurrentActor() != null) {
+				nameTextField.setText(bdkActorEditor.getCurrentActor().getActorName());
 				nameTextField.setEnabled(true);
-				
-				typeComboBox.setSelectedItem(currentActor.getActorType());
+
+				typeComboBox.setSelectedItem(bdkActorEditor.getCurrentActor().getActorType());
 				typeComboBox.setEnabled(true);
 
-				
-				//Check if actor has an image
-				if(!currentActor.getImagePath().isEmpty()){
-					imageNameLabel.setText(currentActor.getImagePath().substring(currentActor.getImagePath().lastIndexOf("\\") + 1));
+				// Check if actor has an image
+				if (!bdkActorEditor.getCurrentActor().getImagePath().isEmpty()) {
+					imageNameLabel.setText(bdkActorEditor.getCurrentActor().getImagePath()
+							.substring(bdkActorEditor.getCurrentActor().getImagePath().lastIndexOf("\\") + 1));
 					imageNameLabel.setEnabled(true);
-				}else{
+				} else {
 					imageNameLabel.setText("No image selected");
-					imageNameLabel.setEnabled(true);	
+					imageNameLabel.setEnabled(true);
 				}
-				
+
 			}
-			//No actor to display information on 
-			else{
+			// No actor to display information on
+			else {
 				nameTextField.setText("-");
 				nameTextField.setEnabled(false);
-				
+
 				typeComboBox.setEnabled(false);
-				
+
 				imageNameLabel.setName("-");
 				imageNameLabel.setEnabled(false);
 			}
@@ -153,8 +153,6 @@ public class S2GeneralPropertiesPanel extends BdkActorEditorPanel {
 
 	@Override
 	public void notifyDataChanged() {
-		currentActor = bdkActorEditor.getCurrentActor();
-		currentActorCollection = bdkActorEditor.getCurrentActorCollection();
 		displayGeneralProperties();
 	}
 

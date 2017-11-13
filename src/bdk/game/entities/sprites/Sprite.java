@@ -9,7 +9,7 @@ import bdk.game.entities.Entity;
  * Sprites are entites that are rendered on the play area. There are multiple
  * sprite types wich allow different types of interaction.
  * 
- * @author Kuj
+ * @author Andreas Farley
  *
  */
 public abstract class Sprite extends Entity {
@@ -38,13 +38,18 @@ public abstract class Sprite extends Entity {
 	}
 
 	public abstract void render(Graphics2D g);
-
+	
+	// ---------------------------------------------------------------------------------------------------------------|
+	// GETTERS & SETTERS
+	// ---------------------------------------------------------------------------------------------------------------|
 	public BufferedImage getSpriteImage() {
 		return spriteImage;
 	}
 
 	public void setSpriteImage(BufferedImage spriteImage) {
+		BufferedImage oldValue = this.spriteImage;
 		this.spriteImage = spriteImage;
+		firePropertyChange("spriteImage", oldValue, spriteImage);
 	}
 
 	public String getImagePath() {
@@ -52,10 +57,10 @@ public abstract class Sprite extends Entity {
 	}
 
 	public void setImagePath(String imagePath) {
+		String oldValue = this.imagePath;
 		this.imagePath = imagePath;
+		firePropertyChange("imagePath", oldValue, imagePath);
 	}
 
-	// ---------------------------------------------------------------------------------------------------------------|
-	// GETTERS & SETTERS
-	// ---------------------------------------------------------------------------------------------------------------|
+
 }

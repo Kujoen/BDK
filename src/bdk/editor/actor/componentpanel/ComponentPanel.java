@@ -27,9 +27,7 @@ public class ComponentPanel extends BdkActorEditorPanel {
 
 	public ComponentPanel(BdkActorEditor parent) {
 		super(parent);
-
 		this.setLayout(new GridLayout(1, 1));
-
 	}
 
 	private void buildList() {
@@ -44,13 +42,10 @@ public class ComponentPanel extends BdkActorEditorPanel {
 			public void actionPerformed(ActionEvent e) {
 				
 				Emitter selectedEmitter =(Emitter) SelectComponentDialog.showSelectionDialog(
-						Component.getSelectableEmittersFor(currentActor).toArray(), "Select an Emitter");
+						Component.getSelectableEmittersFor(bdkActorEditor.getCurrentActor()).toArray(), "Select an Emitter");
 				if(selectedEmitter != null) {
-					
-					//TODO: Implement the new updating system, no longe call notifyDataChanged(); from here
-//					bdkActorEditor.getCurrentActor().setEmitter(selectedEmitter);
-//					bdkActorEditor.notifyDataChanged();
-					
+					//No longer call notifyDataChanged() on bdkActorEditor since it has a listener on the current actor
+					bdkActorEditor.getCurrentActor().setEmitter(selectedEmitter);
 				}
 			}
 		});
@@ -62,9 +57,9 @@ public class ComponentPanel extends BdkActorEditorPanel {
 		});
 		
 		//-Add subrows of the titlerow
-		if(currentActor.getEmitter() != null) {
+		if(bdkActorEditor.getCurrentActor().getEmitter() != null) {
 			//There can be only one emitter so ne need for loops here
-			if(currentActor.getEmitter() instanceof EmitOnce) {
+			if(bdkActorEditor.getCurrentActor().getEmitter() instanceof EmitOnce) {
 				
 			}
 		}
@@ -86,10 +81,7 @@ public class ComponentPanel extends BdkActorEditorPanel {
 
 	@Override
 	public void notifyDataChanged() {
-		this.currentActor = bdkActorEditor.getCurrentActor();
-		this.currentActorCollection = bdkActorEditor.getCurrentActorCollection();
-
-		if (currentActor != null) {
+		if (bdkActorEditor.getCurrentActor() != null) {
 			buildList();
 		}
 	}
