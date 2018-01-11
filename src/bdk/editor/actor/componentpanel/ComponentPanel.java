@@ -47,8 +47,6 @@ public class ComponentPanel extends BdkActorEditorPanel {
 						Component.getSelectableEmittersFor(bdkActorEditor.getCurrentActor()).toArray(),
 						"Select an Emitter");
 				if (selectedEmitter != null) {
-					// No longer call notifyDataChanged() on bdkActorEditor since it has a listener
-					// on the current actor
 					bdkActorEditor.getCurrentActor().setEmitter(selectedEmitter);
 				}
 			}
@@ -63,12 +61,8 @@ public class ComponentPanel extends BdkActorEditorPanel {
 
 		//-Subrows
 		if (bdkActorEditor.getCurrentActor().getEmitter() != null) {
-			// There can be only one emitter so ne need for loops here
-			if (bdkActorEditor.getCurrentActor().getEmitter() instanceof EmitOnce) {
-				rowEmitter.addRow(bdkActorEditor.getCurrentActor().getEmitter().getComponentRow());
-			} else {
-				//TODO: Implement adding EmitContinuously
-			}
+			
+			rowEmitter.addRow(bdkActorEditor.getCurrentActor().getEmitter().getComponentRow());
 			//Enable the expand button
 			rowEmitter.getExpandButton().setEnabled(true);
 		}

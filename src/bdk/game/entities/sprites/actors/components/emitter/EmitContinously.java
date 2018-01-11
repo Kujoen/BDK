@@ -1,20 +1,22 @@
 package bdk.game.entities.sprites.actors.components.emitter;
 
 import bdk.editor.actor.componentpanel.rows.ComponentRow;
+import bdk.game.entities.sprites.actors.Actor;
 
 /**
  * 
  * @author Andreas Farley
  * 
  */
-public class EmitContinuously extends Emitter {
+public class EmitContinously extends Emitter {
 
 	private int emissionPerTick;
 	private int emissionRate;
 	private int emissionDelay;
 	private boolean hasEmissionDelay;
 
-	public EmitContinuously() {
+	public EmitContinously(Actor parentActor) {
+		super(parentActor);
 		this.emissionPerTick = 0;
 		this.emissionRate = 0;
 		this.emissionDelay = 0;

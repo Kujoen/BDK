@@ -35,11 +35,6 @@ public class BdkMainWindow extends JFrame {
 		});
 	}
 	
-	private static void getGameInfo(){
-		GameInfo gameinfo = (GameInfo) FileUtil.loadSerializedObject(GameInfo.PATH);
-		gameName = gameinfo.getGameInfo().get("NAME");
-	}
-	
 	/**
 	 * Create the frame.
 	 */
@@ -90,6 +85,18 @@ public class BdkMainWindow extends JFrame {
 
 	public static String getGameName() {
 		return gameName;
+	}
+	public BdkActorEditor getActorEditor() {
+		return actorEditor;
+	}
+
+	public void setActorEditor(BdkActorEditor actorEditor) {
+		this.actorEditor = actorEditor;
+	}
+
+	private static void getGameInfo(){
+		GameInfo gameinfo = (GameInfo) FileUtil.loadSerializedObject(GameInfo.PATH);
+		gameName = gameinfo.getGameInfo().get("NAME");
 	}
 
 }

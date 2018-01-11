@@ -1,5 +1,6 @@
 package bdk.game.entities.sprites.actors.components.emitter;
 
+import bdk.game.entities.sprites.actors.Actor;
 import bdk.game.entities.sprites.actors.components.Component;
 import soliture.ui.swingextensions.expandinglist.ExpandableRow;
 
@@ -9,7 +10,7 @@ import soliture.ui.swingextensions.expandinglist.ExpandableRow;
  *
  */
 public abstract class Emitter extends Component {
-	
-	//Just used for type differentiating
-	
+	public Emitter(Actor parentActor) {
+		super(parentActor);
+	}
 }

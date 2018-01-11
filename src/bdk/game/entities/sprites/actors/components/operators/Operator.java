@@ -10,11 +10,10 @@ import bdk.game.entities.sprites.actors.components.Component;
  */
 public abstract class Operator extends Component{
 
-	protected Actor actor;
 	protected int operatorTick = 0;
 	
-	public Operator(Actor anActor) {
-		this.actor = anActor;
+	public Operator(Actor parentActor) {
+		super(parentActor);
 	}
 	
 	public void update(){
@@ -27,14 +26,6 @@ public abstract class Operator extends Component{
 	// --------------------------------------------------------------------------------------------|
 	// GETTERS & SETTERS
 	// --------------------------------------------------------------------------------------------|
-	
-	public Actor getActor() {
-		return actor;
-	}
-
-	public void setActor(Actor actor) {
-		this.actor = actor;
-	}
 
 	public int getOperatorTick() {
 		return operatorTick;

@@ -9,6 +9,11 @@ import java.util.List;
 import bdk.editor.util.BdkException;
 import bdk.game.entities.sprites.actors.components.emitter.Emitter;
 
+/**
+ * 
+ * @author Andreas Farley
+ *
+ */
 public class ActorCollection implements Serializable {
 
 	private List<Actor> actorList;

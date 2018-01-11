@@ -10,6 +10,8 @@ import bdk.game.entities.sprites.actors.components.Component;
  */
 public abstract class Initializer extends Component{
 	
-	public abstract void initializeActor(Actor a);
-
+	public Initializer(Actor parentActor) {
+		super(parentActor);
+	}
+	public abstract void initializeActor();
 }

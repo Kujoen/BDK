@@ -5,15 +5,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Serializable HashMap containing info on the current game.
- * @author Kuj
+ * 
+ * @author Andreas Farley
  *
  */
 public class GameInfo implements Serializable {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	public static final String PATH = "cfg/gameinfo.cfg";

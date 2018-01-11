@@ -10,6 +10,11 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
+/**
+ * 
+ * @author Andreas Farley
+ *
+ */
 public class BdkImageData {
 
 	// Spritelist contains the images of all components

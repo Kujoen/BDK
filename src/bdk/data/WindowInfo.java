@@ -5,8 +5,8 @@ import java.io.Serializable;
 import bdk.game.main.Window;
 
 /**
- * Serializable HashMap containing info on the current game.
- * @author Kuj
+ * 
+ * @author Andreas Farley
  *
  */
 public class WindowInfo implements Serializable {
