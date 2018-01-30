@@ -15,6 +15,9 @@ import bdk.game.entities.sprites.actors.components.emitter.Emitter;
  *
  */
 public class ActorCollection implements Serializable {
+	
+	//Transient because we cant serialize this
+	transient private List<PropertyChangeListener> listeners = new ArrayList<>();
 
 	private List<Actor> actorList;
 	private String collectionName;
@@ -58,9 +61,10 @@ public class ActorCollection implements Serializable {
 	}
 
 	// LISTENER STUFF-------------------------------------------------------|
-	//Transient because we cant serialize this
-	transient private final List<PropertyChangeListener> listeners = new ArrayList<>();
-
+	public void refreshListenerList() {
+		listeners = new ArrayList<>();
+	}
+	
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
 		listeners.add(listener);
 	}

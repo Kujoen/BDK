@@ -53,6 +53,7 @@ public class BdkImageData {
 			//Draw the highlights
 			graphics2D.setColor(color);
 			graphics2D.drawRect(0, 0, imageToHighlight.getWidth() - 1, imageToHighlight.getHeight() - 1);
+
 			graphics2D.dispose();
 		}
 		

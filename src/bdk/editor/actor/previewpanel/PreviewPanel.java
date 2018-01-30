@@ -107,7 +107,7 @@ public class PreviewPanel extends BdkActorEditorPanel {
 		// PREVIEWPANEL-------------------------------------------------------------------------|
 		// PreviewGame requires a preferred size, but the rest will still scale
 		// with the editor
-		previewGame = new Game();
+		previewGame = new Game(Game.PREVIEW_ACTOREDITOR);
 		previewGamePanel = new JPanel();
 		previewGamePanel.setLayout(new GridLayout(1, 1));
 		previewGamePanel.add(previewGame);

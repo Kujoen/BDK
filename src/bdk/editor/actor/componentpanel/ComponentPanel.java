@@ -16,6 +16,8 @@ import soliture.ui.swingextensions.expandinglist.JExpandingList;
 
 public class ComponentPanel extends BdkActorEditorPanel {
 
+	Boolean hasBeenBuilt = false;
+
 	JPanel contentPane;
 	JExpandingList expandingList;
 
@@ -31,14 +33,21 @@ public class ComponentPanel extends BdkActorEditorPanel {
 	}
 
 	private void buildList() {
+
+		// If the list has already been built theres no reason to rebuild the entire
+		// thing...
+		if (hasBeenBuilt) {
+			//TODO: Dont rebuild the entire list once its already been built
+		}
+
 		this.removeAll();
 		expandingList = new JExpandingList(40, 12);
 		this.add(expandingList);
 
 		// EMITTER************************************************************|
 		rowEmitter = new TitleRow("Emitter");
-		
-		//-Add Button
+
+		// -Add Button
 		rowEmitter.getAddButton().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -51,7 +60,7 @@ public class ComponentPanel extends BdkActorEditorPanel {
 				}
 			}
 		});
-		//-Info Button
+		// -Info Button
 		rowEmitter.getInfoButton().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -59,11 +68,11 @@ public class ComponentPanel extends BdkActorEditorPanel {
 			}
 		});
 
-		//-Subrows
+		// -Subrows
 		if (bdkActorEditor.getCurrentActor().getEmitter() != null) {
-			
+
 			rowEmitter.addRow(bdkActorEditor.getCurrentActor().getEmitter().getComponentRow());
-			//Enable the expand button
+			// Enable the expand button
 			rowEmitter.getExpandButton().setEnabled(true);
 		}
 
@@ -84,8 +93,10 @@ public class ComponentPanel extends BdkActorEditorPanel {
 
 	@Override
 	public void notifyDataChanged() {
+
 		if (bdkActorEditor.getCurrentActor() != null) {
 			buildList();
+			hasBeenBuilt = true;
 		}
 	}
 }

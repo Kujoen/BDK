@@ -18,6 +18,7 @@ import bdk.game.entities.sprites.actors.Actor;
  */
 public class EmitOnce extends Emitter {
 
+	private static final long serialVersionUID = 1L;
 	private int emissionAmount;
 
 	public EmitOnce(Actor parentActor) {
@@ -33,24 +34,22 @@ public class EmitOnce extends Emitter {
 		textFieldRow1.getTextField().setText(Integer.toString(emissionAmount));
 		textFieldRow1.getTextField().addPropertyChangeListener(new PropertyChangeListener() {
 			@Override
-			public void propertyChange(PropertyChangeEvent arg0) {
+			public void propertyChange(PropertyChangeEvent event) {
+				if (event.getPropertyName() != "ancestor") {
+					
+					System.out.println(event.getPropertyName());
+					// No other way to update everything from this listener.... maybe find a
+					// solution later
+					BdkActorEditor bdkActorEditor = ((BdkMainWindow) SwingUtilities
+							.getWindowAncestor((JTextField) event.getSource())).getActorEditor();
 
-				// No other way to update everything from this listener.... maybe find a
-				// solution later
-				BdkActorEditor bdkActorEditor = ((BdkMainWindow) SwingUtilities
-						.getWindowAncestor((JTextField) arg0.getSource())).getActorEditor();
-				
-				EmitOnce currentEmitter = (EmitOnce) bdkActorEditor.getCurrentActor().getEmitter();
-				
-				//TODO: Curently crashing because it also triggers on an acestor event
-				System.out.println(arg0.getPropertyName());
-				
-				currentEmitter.setEmissionAmount((int) arg0.getNewValue());
+					EmitOnce currentEmitter = (EmitOnce) bdkActorEditor.getCurrentActor().getEmitter();
 
-				// Have to set emitter to force the update
+					currentEmitter.setEmissionAmount(Math.toIntExact((long) event.getNewValue()));
 
-				bdkActorEditor.getCurrentActor().setEmitter(currentEmitter);
-
+					// Have to set emitter to force the update
+					bdkActorEditor.getCurrentActor().setEmitter(currentEmitter);
+				}
 			}
 		});
 

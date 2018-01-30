@@ -1,5 +1,6 @@
 package bdk.game.entities.sprites.actors.components;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,7 @@ import bdk.game.entities.sprites.actors.components.emitter.EmitOnce;
  * @author Andreas Farley
  *
  */
-public abstract class Component {
+public abstract class Component implements Serializable{
 
 	protected Actor parentActor;
 
