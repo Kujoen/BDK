@@ -9,6 +9,8 @@ public class BdkException {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		throw new IllegalArgumentException();
 	}
 	
 }

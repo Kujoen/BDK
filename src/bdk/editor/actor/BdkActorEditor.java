@@ -50,7 +50,7 @@ public class BdkActorEditor extends JPanel {
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("Actor Collections", "ac");
 		fileChooser = new JFileChooser();
 		fileChooser.setFileFilter(filter);
-		fileChooser.setCurrentDirectory(new File(BdkMainWindow.getGameName() + "/sprites/actors/collections"));
+		fileChooser.setCurrentDirectory(new File(ActorCollection.COLLECTION_PATH));
 
 		// DATAVIEW-------------------------------------------------------------------------------|
 		componentPanel = new ComponentPanel(this);
@@ -69,7 +69,6 @@ public class BdkActorEditor extends JPanel {
 				if (result == JFileChooser.APPROVE_OPTION) {
 					File file = fileChooser.getSelectedFile();
 					ActorCollection newCollection = (ActorCollection) FileUtil.loadSerializedObject(file.getPath());
-
 					if (newCollection != null) {
 						setCurrentActorCollection(newCollection);
 						setCurrentActor(null);

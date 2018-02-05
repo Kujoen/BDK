@@ -14,7 +14,12 @@ import bdk.game.entities.Entity;
  */
 public abstract class Sprite extends Entity {
 
-	protected BufferedImage spriteImage;
+	// --Sprites need to keep the copy of the image they grab from bdkImageData
+	// during runtime. This is because the operator/initializer might make
+	// modifications to the image exclusively for this sprite. Transient because we
+	// alway load the image at runtime to reduce memory usage.
+	protected transient BufferedImage spriteImage;
+
 	protected String imagePath;
 	// --
 	protected String spriteType;
@@ -38,7 +43,7 @@ public abstract class Sprite extends Entity {
 	}
 
 	public abstract void render(Graphics2D g);
-	
+
 	// ---------------------------------------------------------------------------------------------------------------|
 	// GETTERS & SETTERS
 	// ---------------------------------------------------------------------------------------------------------------|
@@ -61,6 +66,5 @@ public abstract class Sprite extends Entity {
 		this.imagePath = imagePath;
 		firePropertyChange("imagePath", oldValue, imagePath);
 	}
-
 
 }

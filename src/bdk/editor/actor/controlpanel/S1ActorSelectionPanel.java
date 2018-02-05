@@ -13,8 +13,6 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 
 import bdk.editor.actor.BdkActorEditor;
 import bdk.editor.actor.BdkActorEditorPanel;
@@ -56,7 +54,7 @@ public class S1ActorSelectionPanel extends BdkActorEditorPanel {
 				InputStringDialog dialog = new InputStringDialog();
 				String result = dialog.showDialog("Actor creation", "Name of new Actor: ");
 				if (!(result == null)) {
-					Actor newActor = new Actor(result);
+					Actor newActor = new Actor(result, bdkActorEditor.getCurrentActorCollection().getCollectionName());
 					bdkActorEditor.getCurrentActorCollection().addActor(newActor);
 					bdkActorEditor.setCurrentActor(newActor);
 				}
@@ -134,7 +132,7 @@ public class S1ActorSelectionPanel extends BdkActorEditorPanel {
 				// And add the actors to the list
 				actorNames = new Object[bdkActorEditor.getCurrentActorCollection().getCollectionSize()];
 				for (int i = 0; i < bdkActorEditor.getCurrentActorCollection().getCollectionSize(); i++) {
-					actorNames[i] = bdkActorEditor.getCurrentActorCollection().getActorAt(i).getActorName();
+					actorNames[i] = bdkActorEditor.getCurrentActorCollection().getActorAt(i).getEntityName();
 				}
 				listToDisplay.setListData(actorNames);
 			} else {

@@ -42,7 +42,7 @@ public class S2GeneralPropertiesPanel extends BdkActorEditorPanel {
 		nameTextField.getDocument().addDocumentListener(new DocumentListener() {
 			@Override
 			public void changedUpdate(DocumentEvent e) {
-				bdkActorEditor.getCurrentActor().setActorName(bdkActorEditor.getCurrentActor().getActorName());
+				bdkActorEditor.getCurrentActor().setEntityName(bdkActorEditor.getCurrentActor().getEntityName());
 			}
 
 			@Override
@@ -121,7 +121,7 @@ public class S2GeneralPropertiesPanel extends BdkActorEditorPanel {
 		if (bdkActorEditor.getCurrentActorCollection() != null) {
 			// Is there an actor to display information on
 			if (bdkActorEditor.getCurrentActor() != null) {
-				nameTextField.setText(bdkActorEditor.getCurrentActor().getActorName());
+				nameTextField.setText(bdkActorEditor.getCurrentActor().getEntityName());
 				nameTextField.setEnabled(true);
 
 				typeComboBox.setSelectedItem(bdkActorEditor.getCurrentActor().getActorType());

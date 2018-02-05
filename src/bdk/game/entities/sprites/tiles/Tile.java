@@ -8,7 +8,7 @@ import bdk.game.entities.sprites.Sprite;
 /**
  * Tiles are static sprites which build the foundation of the level. They can have block/kill collision.
  * Unlike dynamic sprites, tiles have purely rectangle based hitboxes.
- * @author Kuj
+ * @author Andreas Farley
  */
 public class Tile extends Sprite{
 	
@@ -27,7 +27,7 @@ public class Tile extends Sprite{
 	}
 
 	/**
-	 * Tiles are only updated when the camera is update
+	 * Tiles are only updated when the camera is updated
 	 */
 	@Override
 	public void update() {

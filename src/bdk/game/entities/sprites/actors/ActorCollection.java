@@ -4,10 +4,12 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import bdk.editor.main.BdkMainWindow;
 import bdk.editor.util.BdkException;
-import bdk.game.entities.sprites.actors.components.emitter.Emitter;
 
 /**
  * 
@@ -15,23 +17,34 @@ import bdk.game.entities.sprites.actors.components.emitter.Emitter;
  *
  */
 public class ActorCollection implements Serializable {
-	
-	//Transient because we cant serialize this
-	transient private List<PropertyChangeListener> listeners = new ArrayList<>();
 
+	// --------------------------------------------------------------------------|
+	// Used for file IO
+	public static final String COLLECTION_PATH = BdkMainWindow.getGameName() + "/sprites/actors/collections";
+
+	// Runtime variables --------------------------------------------------------|
+	transient private List<PropertyChangeListener> listeners = new ArrayList<>();
+	transient private Map<String, Actor> actorCache;
+	// --------------------------------------------------------------------------|
 	private List<Actor> actorList;
 	private String collectionName;
+	// --------------------------------------------------------------------------|
 
 	public ActorCollection(String name) {
 		this.collectionName = name;
 		this.actorList = new ArrayList<Actor>();
 	}
+	
+	
+	// Runtime Actor hashing------------------------------------------------------|
+	
+	public void cacheActors() {
+		actorCache = new HashMap<String, Actor>();
+		actorList.stream().forEach(actor -> actorCache.put(actor.getEntityName(), actor));
+	}
+	
+	// Adding/Removing actors-----------------------------------------------------|
 
-	/**
-	 * Interface to access the actorList, triggers a listener event
-	 * 
-	 * @param actorToAdd
-	 */
 	public void addActor(Actor actorToAdd) {
 		if (actorToAdd != null) {
 			List<Actor> oldValue = this.actorList;
@@ -43,11 +56,6 @@ public class ActorCollection implements Serializable {
 		}
 	}
 
-	/**
-	 * Interface to access the actorList, triggers a listener event
-	 * 
-	 * @param index
-	 */
 	public void removeActorAt(int index) {
 		if (!actorList.isEmpty()) {
 			if (index < actorList.size() && index > -1) {
@@ -64,7 +72,7 @@ public class ActorCollection implements Serializable {
 	public void refreshListenerList() {
 		listeners = new ArrayList<>();
 	}
-	
+
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
 		listeners.add(listener);
 	}
@@ -82,14 +90,14 @@ public class ActorCollection implements Serializable {
 	public Actor getActorAt(int index) {
 		return actorList.get(index);
 	}
-	
+
 	public int getCollectionSize() {
-		if(actorList != null) {
+		if (actorList != null) {
 			return actorList.size();
 		}
 		return -1;
 	}
-	
+
 	public void setActorList(ArrayList<Actor> actorList) {
 		List<Actor> oldValue = (List<Actor>) this.actorList;
 		this.actorList = actorList;
@@ -104,6 +112,21 @@ public class ActorCollection implements Serializable {
 		String oldValue = this.collectionName;
 		this.collectionName = collectionName;
 		firePropertyChange("collectionName", oldValue, actorList);
+	}
+
+
+	public Map<String, Actor> getActorCache() {
+		return actorCache;
+	}
+
+
+	public void setActorCache(Map<String, Actor> actorCache) {
+		this.actorCache = actorCache;
+	}
+
+
+	public static String getCollectionPath() {
+		return COLLECTION_PATH;
 	}
 
 }

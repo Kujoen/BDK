@@ -16,6 +16,8 @@ import bdk.editor.actor.BdkActorEditor;
 
 public class BdkMainWindow extends JFrame {
 	
+	// \n[\s]* , storing this here
+	
 	private JTabbedPane mainPanel;
 	private BdkActorEditor actorEditor;
 	private static String gameName;

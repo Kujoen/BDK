@@ -19,10 +19,14 @@ public abstract class Entity implements Serializable {
 
 	// Every entity has an position
 	protected double x, y;
+	
+	// And a name
+	protected String entityName;
 
 	// When added to a level the entity will have to have access to the level. This
 	// information is only needed during and therefore transient.
 	protected transient Level level;
+
 	// Entity cant update/render when its not added to a level.
 	protected transient boolean isInitialized = false;
 
@@ -34,6 +38,10 @@ public abstract class Entity implements Serializable {
 		this.y = y;
 	}
 
+	/**
+	 * Called by the EntityLink when its time to spawn the entity
+	 * @param level
+	 */
 	public void initializeForLevel(Level level) {
 		this.level = level;
 		isInitialized = true;
@@ -57,4 +65,36 @@ public abstract class Entity implements Serializable {
 		listeners.add(listener);
 	}
 	// ---------------------------------------------------------------------|
+	
+	public double getX() {
+		return x;
+	}
+
+	public void setX(double x) {
+		this.x = x;
+	}
+
+	public double getY() {
+		return y;
+	}
+
+	public void setY(double y) {
+		this.y = y;
+	}
+
+	public String getEntityName() {
+		return entityName;
+	}
+
+	public void setEntityName(String entityName) {
+		this.entityName = entityName;
+	}
+
+	public boolean isInitialized() {
+		return isInitialized;
+	}
+
+	public void setInitialized(boolean isInitialized) {
+		this.isInitialized = isInitialized;
+	}
 }
