@@ -24,7 +24,6 @@ public class ActorCollection implements Serializable {
 
 	// Runtime variables --------------------------------------------------------|
 	transient private List<PropertyChangeListener> listeners = new ArrayList<>();
-	transient private Map<String, Actor> actorCache;
 	// --------------------------------------------------------------------------|
 	private List<Actor> actorList;
 	private String collectionName;
@@ -34,15 +33,7 @@ public class ActorCollection implements Serializable {
 		this.collectionName = name;
 		this.actorList = new ArrayList<Actor>();
 	}
-	
-	
-	// Runtime Actor hashing------------------------------------------------------|
-	
-	public void cacheActors() {
-		actorCache = new HashMap<String, Actor>();
-		actorList.stream().forEach(actor -> actorCache.put(actor.getEntityName(), actor));
-	}
-	
+
 	// Adding/Removing actors-----------------------------------------------------|
 
 	public void addActor(Actor actorToAdd) {
@@ -87,6 +78,14 @@ public class ActorCollection implements Serializable {
 	// GETTERS AND SETTERS
 	// ----------------------------------------------------------------------------------|
 
+	/*
+	 * Gets the first instance of an actor with the name specified in the parameter
+	 * 
+	 */
+	public Actor getActor(String actorName) {
+		return actorList.stream().filter(actor -> actor.getEntityName() == actorName).findFirst().get();
+	}
+
 	public Actor getActorAt(int index) {
 		return actorList.get(index);
 	}
@@ -101,7 +100,7 @@ public class ActorCollection implements Serializable {
 	public void setActorList(ArrayList<Actor> actorList) {
 		List<Actor> oldValue = (List<Actor>) this.actorList;
 		this.actorList = actorList;
-		firePropertyChange("actorList", oldValue, actorList);
+		firePropertyChange("setActorList", oldValue, actorList);
 	}
 
 	public String getCollectionName() {
@@ -111,19 +110,8 @@ public class ActorCollection implements Serializable {
 	public void setCollectionName(String collectionName) {
 		String oldValue = this.collectionName;
 		this.collectionName = collectionName;
-		firePropertyChange("collectionName", oldValue, actorList);
+		firePropertyChange("setCollectionName", oldValue, actorList);
 	}
-
-
-	public Map<String, Actor> getActorCache() {
-		return actorCache;
-	}
-
-
-	public void setActorCache(Map<String, Actor> actorCache) {
-		this.actorCache = actorCache;
-	}
-
 
 	public static String getCollectionPath() {
 		return COLLECTION_PATH;

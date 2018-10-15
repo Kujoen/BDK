@@ -3,6 +3,7 @@ package bdk.editor.actor.componentpanel;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
 
 import javax.swing.JPanel;
 
@@ -91,12 +92,15 @@ public class ComponentPanel extends BdkActorEditorPanel {
 		expandingList.addRow(rowChildren);
 	}
 
+	/**
+	 * We only want to buildList when the actor changed
+	 */
 	@Override
-	public void notifyDataChanged() {
-
+	public void notifyDataChanged(PropertyChangeEvent event) {
 		if (bdkActorEditor.getCurrentActor() != null) {
-			buildList();
-			hasBeenBuilt = true;
+			if(event.getPropertyName() == "setCurrentActor") {
+				buildList();
+			}
 		}
 	}
 }

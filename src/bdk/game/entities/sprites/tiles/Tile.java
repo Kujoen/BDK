@@ -18,20 +18,12 @@ public class Tile extends Sprite{
 
 	@Override
 	public void render(Graphics2D g) {
-		//First get the image from BdkImageData
-		if(spriteImage == null){
-			spriteImage = BdkImageData.getImageList().get(imagePath);
-		}
 		
-		g.drawImage(spriteImage, (int) x, (int) y, null);
 	}
 
-	/**
-	 * Tiles are only updated when the camera is updated
-	 */
 	@Override
 	public void update() {
-		//TODO: Add updating to tiles based on camera
+		
 	}
 
 }

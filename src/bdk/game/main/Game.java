@@ -4,10 +4,14 @@ import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
-import java.util.ArrayList;
-import bdk.game.component.Level;
+import java.io.File;
+import java.util.Arrays;
+import java.util.Map;
 
+import bdk.data.FileUtil;
 import bdk.data.GameInfo;
+import bdk.game.component.Component;
+import bdk.game.component.Level;
 import bdk.game.component.Menu;
 
 /**
@@ -18,22 +22,24 @@ import bdk.game.component.Menu;
  *
  */
 public class Game extends Canvas implements Runnable {
-	
-	
-	private static GameInfo gameInfo;
 
+	private static GameInfo gameInfo;
+	// ----------------------------------------------------------------------------------------|
 	// --States/Codes wich modify/control the game
 	public static final int PREVIEW_NONE = 0, PREVIEW_LEVELEDITOR = 1, PREVIEW_ACTOREDITOR = 2;
 	private int previewCode;
-	// The default gameState is 0 (aka the main menu, wich always has to have the code 0)
+	// The default gameState is 0 (aka the main menu)
 	private int gameState = 0;
-
-	
+	private int previousGameState = 0;
+	private boolean isLevelState = false;
+	private boolean hasStateTransitioned = false;
+	private boolean drawLoadingScreen = false;
+	// ----------------------------------------------------------------------------------------|
 	// --Used to store essential dimensions
 	public static final int HD_PLAY_WIDTH = 520;
 	public static final int HD_PLAY_HEIGHT = 600;
-	
-	// --All used for rendering/updating control
+	// ----------------------------------------------------------------------------------------|
+	// Used for rendering/updating control
 	private int framesPerSecond = 0;
 	private int updatesPerSecond = 0;
 	private boolean isRunning = false;
@@ -41,22 +47,22 @@ public class Game extends Canvas implements Runnable {
 	private static final long serialVersionUID = 1L;
 	private static final double TICKRATE = 60.0;
 	private Thread thread;
-	
+	// ----------------------------------------------------------------------------------------|
 	// --Components
-	private ArrayList<Level> levelList;
-	private ArrayList<Menu> menuList;
+	private Map<String, Component> componentCache;
 
-	// --------------------------------------------------|
+	private Level currentLevel;
+	private Menu currentMenu;
+	// ----------------------------------------------------------------------------------------|
 
-	/**
-	 * The goto-instructor
-	 */
 	public Game(int previewCode) {
-
+		this.gameInfo = (GameInfo) FileUtil.loadSerializedObject(GameInfo.FILEPATH);
 		this.previewCode = previewCode;
 
 		switch (previewCode) {
 		case PREVIEW_NONE:
+			this.setPreferredSize(new Dimension(Window.getHdWidth(), Window.getHdHeight()));
+			this.setSize(this.getPreferredSize());
 			break;
 		case PREVIEW_LEVELEDITOR:
 			break;
@@ -65,14 +71,24 @@ public class Game extends Canvas implements Runnable {
 			this.setSize(this.getPreferredSize());
 			break;
 		}
+	}
+
+	/**
+	 * Sets the gamestate to the new state. Also saves the previous game state;
+	 * 
+	 * @param newState
+	 */
+	private void transition(int newState, boolean isNewStateLevel) {
+		previousGameState = gameState;
+		gameState = newState;
 
 	}
 
 	/**
-	 * Refreshes the data (Used when in previewmode)
+	 * Called by BDKEditors
 	 */
 	public void notifyDataChanged() {
-		//TODO: parse the actor
+	
 	}
 
 	// ------------------------------------------------------------------------------|
@@ -110,19 +126,6 @@ public class Game extends Canvas implements Runnable {
 		isRunning = true;
 	}
 
-	/**
-	 * Initializes the levels/menus based on the gameinfo and previewCode
-	 */
-	private void initializeGame() {
-
-		switch (previewCode) {
-		case PREVIEW_ACTOREDITOR:
-			levelList = (ArrayList<Level>) Level.getLevelListForActorPreview();
-			break;
-		}
-
-	}
-
 	@Override
 	public void run() {
 		long previoustime = System.nanoTime();
@@ -157,21 +160,87 @@ public class Game extends Canvas implements Runnable {
 			}
 		}
 	}
+	
+	/**
+	 * Initializes the levels/menus based on the gameinfo and previewCode. Called by
+	 * the run thread after startGame().
+	 */
+	private void initializeGame() {
+
+		// switch (previewCode) {
+		// case PREVIEW_NONE:
+		// // Level loading --------------------------------------------------------|
+		// // Grab all files in the level directory
+		// File levelDir = new File(gameInfo.getGameInfo().get("NAME") +
+		// "/defaultgame/level/");
+		// File[] listOfLevelFiles = levelDir.listFiles();
+		// // Throw out any without .bdkl file type and levels not in the gameinfo
+		// listOfLevelFiles = (File[]) Arrays.stream(listOfLevelFiles).filter(
+		// file -> (file.getName().contains(".bdkl") &&
+		// gameInfo.getGameInfo().containsValue(file.getName())))
+		// .toArray();
+		// // Move the levels into the level-list
+		// Arrays.stream(listOfLevelFiles).forEach(file -> {
+		// Level levelToAdd = (Level)
+		// FileUtil.loadSerializedObject(file.getAbsolutePath());
+		// componentCache.put(levelToAdd.getComponentName(), levelToAdd);
+		// });
+		// // Menu loading----------------------------------------------------------|
+		// File menuDir = new File(gameInfo.getGameInfo().get("NAME") +
+		// "/defaultgame/menu/");
+		// File[] listOfMenuFiles = menuDir.listFiles();
+		// // Throw out any without .bdkl file type and menus not in the gameinfo
+		// listOfMenuFiles = (File[]) Arrays.stream(listOfMenuFiles).filter(
+		// file -> (file.getName().contains(".bdkm") &&
+		// gameInfo.getGameInfo().containsValue(file.getName())))
+		// .toArray();
+		// // Move the levels into the level-list
+		// Arrays.stream(listOfMenuFiles).forEach(file -> {
+		// Menu menuToAdd = (Menu)
+		// FileUtil.loadSerializedObject(file.getAbsolutePath());
+		// componentCache.put(menuToAdd.getComponentName(), menuToAdd);
+		// });
+		// // ----------------------------------------------------------------------|
+		// // Makes sure the main menu is loaded
+		// transition(0, false);
+		// break;
+		// case PREVIEW_LEVELEDITOR:
+		// break;
+		// case PREVIEW_ACTOREDITOR:
+		// break;
+		// }
+	}
 
 	// -----------------------------------------------------------------------------|
 	// UPDATING
 	// -----------------------------------------------------------------------------|
 
 	/**
-	 * Calls the update method of all gamecomponents, which call the updatemethod of
-	 * all their entitys. Depending on the current gamesetting update may only be
-	 * called on request.
+	 * Calls the update method of all gamecomponents, which call the update method
+	 * of all their entities. Depending on the current previewcode update may only
+	 * be called on request (Therefore public).
 	 */
 	public void update() {
+		// Currently preview/non-preview update the game the same. This could change
+		// though.
+		updateGame();
+	}
 
-		if (previewCode == PREVIEW_ACTOREDITOR) {
+	/**
+	 * Update hierarchy: StateTranstion -> Components
+	 */
+	private void updateGame() {
+		checkForStateTransition();
+		updateGameComponents();
+	}
 
+	private void checkForStateTransition() {
+		if (hasStateTransitioned) {
+			// ...
 		}
+	}
+
+	private void updateGameComponents() {
 
 	}
 
@@ -215,6 +284,14 @@ public class Game extends Canvas implements Runnable {
 
 	public static double getTickrate() {
 		return TICKRATE;
+	}
+
+	public static GameInfo getGameInfo() {
+		return gameInfo;
+	}
+
+	public static void setGameInfo(GameInfo gameInfo) {
+		Game.gameInfo = gameInfo;
 	}
 
 	// ------------------------------------------------------------------------------|

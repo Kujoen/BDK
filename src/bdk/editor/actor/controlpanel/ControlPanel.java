@@ -1,6 +1,7 @@
 package bdk.editor.actor.controlpanel;
 
 import java.awt.GridLayout;
+import java.beans.PropertyChangeEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -40,13 +41,13 @@ public class ControlPanel extends BdkActorEditorPanel{
 		add(actorSelectionPanel);
 		add(s2SubPanel);
 		add(advancedPropertiesPanel);
-		setBorder(BorderFactory.createTitledBorder("Properties"));
+		setBorder(BorderFactory.createTitledBorder("Actors"));
 	}
 
 	@Override
-	public void notifyDataChanged() {
-		actorSelectionPanel.notifyDataChanged();
-		imageSelectionPanel.notifyDataChanged();
-		generalPropertiesPanel.notifyDataChanged();
+	public void notifyDataChanged(PropertyChangeEvent event) {
+		actorSelectionPanel.notifyDataChanged(event);
+		imageSelectionPanel.notifyDataChanged(event);
+		generalPropertiesPanel.notifyDataChanged(event);
 	}
 }

@@ -4,8 +4,8 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
+import javax.swing.JTree;
 
-import bdk.data.FileUtil;
 import bdk.data.WindowInfo;
 
 /**

@@ -1,5 +1,7 @@
 package bdk.editor.actor.controlpanel;
 
+import java.beans.PropertyChangeEvent;
+
 import bdk.editor.actor.BdkActorEditor;
 import bdk.editor.actor.BdkActorEditorPanel;
 
@@ -11,7 +13,7 @@ public class S3TypePropertiesPanel extends BdkActorEditorPanel {
 	}
 
 	@Override
-	public void notifyDataChanged() {
+	public void notifyDataChanged(PropertyChangeEvent event) {
 		// TODO Auto-generated method stub
 		
 	}

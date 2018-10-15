@@ -1,11 +1,15 @@
 package bdk.game.component;
 
 import java.awt.Graphics2D;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import bdk.editor.main.BdkMainWindow;
 import bdk.game.component.grid.Grid;
 import bdk.game.entities.Entity;
+import bdk.game.entities.sprites.actors.Actor;
 import bdk.game.entities.sprites.actors.ActorCollection;
 import bdk.game.entities.sprites.actors.ActorLink;
 
@@ -19,23 +23,26 @@ import bdk.game.entities.sprites.actors.ActorLink;
  */
 public class Level extends Component {
 	
-	// Level information
-	
+	public static final String LEVEL_PATH = BdkMainWindow.getGameName() + "/levels";
+
+	// Runtime level information
 	private transient int levelTick;
+
+	// For now scrollSpeed is static, perhaps it should be modifiable in the future.
+	private int scrollSpeed;
 
 	// Entity information storage
 	// --------------------------------------------------------|
 
-	// --The grid contains section and tile information.
+	// --The grid contains all tiles.
 	private Grid grid;
 
 	// --List containing links to actors.
 	private List<ActorLink> actorLinkList;
 
-	// --Caches containing all entities and collection. The keys of actors are collectionName +
-	// actorName.
-	private Map<String, ActorCollection> actorCollectionCache;
-	private Map<String, Entity> tileCache;
+	// --Caches for the actors. We are caching each actor individually. We do not
+	// need a tile cache since the tiles are saved directly in the grid.
+	private transient Map<String, Actor> actorCache;
 
 	// Entity runtime buffers
 	// -------------------------------------------------------------|
@@ -47,13 +54,10 @@ public class Level extends Component {
 
 	// --One tilebuffer for each area (Can increase performance, for example only
 	// render non-center-tiles when they are updated, reduces rendering cost). Only
-	// center tiles should be deleted/spawned, thats why we only have one
+	// dynamic tiles should be deleted/spawned, thats why we only have one
 	// spawn/delete buffer for tiles (try to implement it that way).
-	private transient List<Entity> northTileBuffer;
-	private transient List<Entity> southTileBuffer;
-	private transient List<Entity> eastTileBuffer;
-	private transient List<Entity> westTileBuffer;
-	private transient List<Entity> centerTileBuffer;
+	private transient List<Entity> staticTileBuffer;
+	private transient List<Entity> dynamicTileBuffer;
 
 	// --Lists for controlling spawning/deleting entities (Lifemanagement)
 	private transient List<Entity> spawnEnemyBuffer;
@@ -71,8 +75,11 @@ public class Level extends Component {
 
 	// -----------------------------------------------------------------------------------|
 
-	public Level() {
-
+	public Level(String name) {
+		super(name);
+		
+		this.grid = new Grid();
+		this.actorLinkList = new ArrayList<ActorLink>();
 	}
 
 	/**
@@ -96,6 +103,32 @@ public class Level extends Component {
 	 */
 	public void intialize() {
 
+		this.levelTick = 0;
+
+		// --Initialize cache
+		this.actorCache = new HashMap<String, Actor>();
+
+		// --Initialize the buffers
+		this.enemyBuffer = new ArrayList<Entity>();
+		this.projectileBuffer = new ArrayList<Entity>();
+
+		this.dynamicTileBuffer = new ArrayList<Entity>();
+		this.staticTileBuffer = new ArrayList<Entity>();
+
+		this.spawnEnemyBuffer = new ArrayList<Entity>();
+		this.deleteEnemyBuffer = new ArrayList<Entity>();
+
+		this.spawnProjectileBuffer = new ArrayList<Entity>();
+		this.deleteProjectileBuffer = new ArrayList<Entity>();
+
+		this.spawnTileBuffer = new ArrayList<Entity>();
+		this.deleteTileBuffer = new ArrayList<Entity>();
+
+		this.deleteLinkBuffer = new ArrayList<ActorLink>();
+
+		// --Cache all the actors
+		actorLinkList.stream().forEach(acLink -> acLink.initializeLink(this));
+
 	}
 
 	// -----------------------------------------------------------------------------|
@@ -108,9 +141,11 @@ public class Level extends Component {
 	@Override
 	public void update() {
 		updateLevel();
-
 		updateEntities();
 		updateLifeManagement();
+
+		// Increase the levelTick
+		levelTick++;
 	}
 
 	/**
@@ -120,7 +155,6 @@ public class Level extends Component {
 	 * yet, or it returns a list of tiles.
 	 */
 	private void updateLevel() {
-
 	}
 
 	/**
@@ -144,7 +178,7 @@ public class Level extends Component {
 	}
 
 	/**
-	 * Updates all actor
+	 * Updates all actors
 	 */
 	private void updateActors() {
 
@@ -176,6 +210,14 @@ public class Level extends Component {
 
 	}
 
+	private void renderActors(Graphics2D g) {
+
+	}
+
+	// -------------------------------------------------------------------------------|
+	// GETTERS & SETTERS
+	// -------------------------------------------------------------------------------|
+
 	public Grid getGrid() {
 		return grid;
 	}
@@ -190,14 +232,6 @@ public class Level extends Component {
 
 	public void setActorLinkList(List<ActorLink> actorLinkList) {
 		this.actorLinkList = actorLinkList;
-	}
-
-	public Map<String, Entity> getTileCache() {
-		return tileCache;
-	}
-
-	public void setTileCache(Map<String, Entity> tileCache) {
-		this.tileCache = tileCache;
 	}
 
 	public List<Entity> getEnemyBuffer() {
@@ -216,44 +250,20 @@ public class Level extends Component {
 		this.projectileBuffer = projectileBuffer;
 	}
 
-	public List<Entity> getNorthTileBuffer() {
-		return northTileBuffer;
+	public List<Entity> getStaticTileBuffer() {
+		return staticTileBuffer;
 	}
 
-	public void setNorthTileBuffer(List<Entity> northTileBuffer) {
-		this.northTileBuffer = northTileBuffer;
+	public void setStaticTileBuffer(List<Entity> staticTileBuffer) {
+		this.staticTileBuffer = staticTileBuffer;
 	}
 
-	public List<Entity> getSouthTileBuffer() {
-		return southTileBuffer;
+	public List<Entity> getDynamicTileBuffer() {
+		return dynamicTileBuffer;
 	}
 
-	public void setSouthTileBuffer(List<Entity> southTileBuffer) {
-		this.southTileBuffer = southTileBuffer;
-	}
-
-	public List<Entity> getEastTileBuffer() {
-		return eastTileBuffer;
-	}
-
-	public void setEastTileBuffer(List<Entity> eastTileBuffer) {
-		this.eastTileBuffer = eastTileBuffer;
-	}
-
-	public List<Entity> getWestTileBuffer() {
-		return westTileBuffer;
-	}
-
-	public void setWestTileBuffer(List<Entity> westTileBuffer) {
-		this.westTileBuffer = westTileBuffer;
-	}
-
-	public List<Entity> getCenterTileBuffer() {
-		return centerTileBuffer;
-	}
-
-	public void setCenterTileBuffer(List<Entity> centerTileBuffer) {
-		this.centerTileBuffer = centerTileBuffer;
+	public void setDynamicTileBuffer(List<Entity> dynamicTileBuffer) {
+		this.dynamicTileBuffer = dynamicTileBuffer;
 	}
 
 	public List<Entity> getSpawnEnemyBuffer() {
@@ -312,10 +322,6 @@ public class Level extends Component {
 		this.deleteLinkBuffer = deleteLinkBuffer;
 	}
 
-	private void renderActors(Graphics2D g) {
-
-	}
-
 	public int getLevelTick() {
 		return levelTick;
 	}
@@ -324,12 +330,11 @@ public class Level extends Component {
 		this.levelTick = levelTick;
 	}
 
-	public Map<String, ActorCollection> getActorCollectionCache() {
-		return actorCollectionCache;
+	public Map<String, Actor> getActorCache() {
+		return actorCache;
 	}
 
-	public void setActorCollectionCache(Map<String, ActorCollection> actorCollectionCache) {
-		this.actorCollectionCache = actorCollectionCache;
+	public void setActorCollectionCache(Map<String, Actor> actorCache) {
+		this.actorCache = actorCache;
 	}
-
 }

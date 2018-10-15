@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -223,7 +224,7 @@ public class S2ImageSelectionPanel extends BdkActorEditorPanel {
 	}
 
 	@Override
-	public void notifyDataChanged() {
+	public void notifyDataChanged(PropertyChangeEvent event) {
 		displayImagePreview();
 	}
 

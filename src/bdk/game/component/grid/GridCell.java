@@ -1,5 +1,7 @@
 package bdk.game.component.grid;
 
+import java.io.Serializable;
+
 import bdk.game.entities.sprites.tiles.Tile;
 
 /**
@@ -12,10 +14,14 @@ import bdk.game.entities.sprites.tiles.Tile;
  *
  */
 
-public class GridCell {
+public class GridCell implements Serializable{
 
 	private Grid grid;
-	private Tile tile;
 	
-
+	private Tile tile;
+	private int rowIndex;
+	
+	public GridCell(Grid grid) {
+		this.grid = grid;
+	}
 }

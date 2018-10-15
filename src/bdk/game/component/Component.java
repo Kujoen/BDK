@@ -13,10 +13,14 @@ import java.util.ArrayList;
  */
 public abstract class Component implements Serializable {
 
-	// Contains the imagesPaths used by every Entity of this component, only set during runtime.
-	protected transient ArrayList<String> imagePathList;
 	// protected ArrayList<Sprite> spriteList;
 	protected String componentName;
+	protected int componentID;
+	protected int transitionToStateID;
+	
+	public Component(String name) {
+		this.componentName = name;
+	}
 
 	/**
 	 * Updates all entities in the entityList. This is abstract since components
@@ -32,12 +36,32 @@ public abstract class Component implements Serializable {
 	 */
 	public abstract void render(Graphics2D g);
 
-	public ArrayList<String> getImagePathList() {
-		return imagePathList;
+	// -------------------------------------------------------------------------------|
+	// GETTERS & SETTERS
+	// -------------------------------------------------------------------------------|
+
+	public String getComponentName() {
+		return componentName;
 	}
 
-	public void setImagePathList(ArrayList<String> imagePathList) {
-		this.imagePathList = imagePathList;
+	public void setComponentName(String componentName) {
+		this.componentName = componentName;
+	}
+
+	public int getComponentID() {
+		return componentID;
+	}
+
+	public void setComponentID(int componentID) {
+		this.componentID = componentID;
+	}
+	
+	public int getTransitionToStateID() {
+		return transitionToStateID;
+	}
+
+	public void setTransitionToStateID(int transitionToStateID) {
+		this.transitionToStateID = transitionToStateID;
 	}
 
 }

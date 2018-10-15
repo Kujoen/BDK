@@ -14,7 +14,7 @@ import bdk.game.entities.Entity;
  */
 public abstract class Sprite extends Entity {
 
-	// --Sprites need to keep the copy of the image they grab from bdkImageData
+	// --Sprites need to keep the copy of the image they grab from the level image cache
 	// during runtime. This is because the operator/initializer might make
 	// modifications to the image exclusively for this sprite. Transient because we
 	// alway load the image at runtime to reduce memory usage.

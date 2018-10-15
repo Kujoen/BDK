@@ -28,6 +28,12 @@ public abstract class EntityLink implements Serializable {
 		this.entityName = entityName;
 	}
 
+	/**
+	 * Sets this links level and caches this links entity to it. Also checks if that
+	 * entity should already be added to the spawn buffer (aka tickToSpawn == 0).
+	 * 
+	 * @param level
+	 */
 	public void initializeLink(Level level) {
 		this.level = level;
 
@@ -44,7 +50,7 @@ public abstract class EntityLink implements Serializable {
 	 */
 	protected abstract void cacheEntityToLevel();
 
-	protected abstract void checkForEntitySpawn();
+	public abstract void checkForEntitySpawn();
 
 	// -------------------------------------------------------------------------------|
 	// GETTERS & SETTERS

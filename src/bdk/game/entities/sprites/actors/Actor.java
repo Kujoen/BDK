@@ -65,7 +65,7 @@ public class Actor extends Sprite {
 	public void setEmitter(Emitter emitter) {
 		Emitter oldValue = this.emitter;
 		this.emitter = emitter;
-		firePropertyChange("Emitter", oldValue, emitter);
+		firePropertyChange("setEmitter", oldValue, emitter);
 	}
 
 	public List<Initializer> getInitializerList() {
@@ -75,7 +75,7 @@ public class Actor extends Sprite {
 	public void setInitializerList(List<Initializer> initializerList) {
 		List<Initializer> oldValue = this.initializerList;
 		this.initializerList = initializerList;
-		firePropertyChange("InitializerList", oldValue, initializerList);
+		firePropertyChange("setInitializerList", oldValue, initializerList);
 	}
 
 	public List<Actor> getChildList() {
@@ -85,7 +85,7 @@ public class Actor extends Sprite {
 	public void setChildList(List<Actor> childList) {
 		List<Actor> oldValue = this.childList;
 		this.childList = childList;
-		firePropertyChange("ChildList", oldValue, childList);
+		firePropertyChange("setChildList", oldValue, childList);
 	}
 
 	public List<Operator> getOperatorList() {
@@ -95,7 +95,7 @@ public class Actor extends Sprite {
 	public void setOperatorList(ArrayList<Operator> operatorList) {
 		List<Operator> oldValue = this.operatorList;
 		this.operatorList = operatorList;
-		firePropertyChange("OperatorList", oldValue, operatorList);
+		firePropertyChange("setOperatorList", oldValue, operatorList);
 	}
 
 	public String getActorType() {
@@ -105,7 +105,7 @@ public class Actor extends Sprite {
 	public void setActorType(String actorType) {
 		String oldValue = this.actorType;
 		this.actorType = actorType;
-		firePropertyChange("Type", oldValue, actorType);
+		firePropertyChange("setActorType", oldValue, actorType);
 	}
 
 	public String getCollectionName() {

@@ -34,32 +34,36 @@ public class ActorLink extends EntityLink {
 		this.collectionName = collectionName;
 	}
 
+	/**
+	 * Adds the actor to the levels actorCache. The key has the format
+	 * collectionName$$entityName
+	 */
 	@Override
 	protected void cacheEntityToLevel() {
-		// Check if the level already has actorCollection
-		if (!level.getActorCollectionCache().containsKey(collectionName)) {
+		// Check if the level already has this actor
+		if (level.getActorCache().containsKey(collectionName + "$$" + entityName)) {
+			// Level already has this actor cached
+		} else {
+			// Load the actor into the actorCache
 			ActorCollection actorCollectionToCache = (ActorCollection) FileUtil
 					.loadSerializedObject(ActorCollection.COLLECTION_PATH + "/" + collectionName + ".ac");
-			level.getActorCollectionCache().put(collectionName, actorCollectionToCache);
+
+			level.getActorCache().put(collectionName + "$$" + entityName, actorCollectionToCache.getActor(entityName));
 		}
 	}
 
 	/**
-	 * The only actor type we could be linking to are enemies, so add the new actor to the actorSpawnBuffer
+	 * The only actor type we could be linking to are enemies, so add the new actor
+	 * to the actorSpawnBuffer
 	 */
 	@Override
-	protected void checkForEntitySpawn() {
-		if(level.getLevelTick() == tickToSpawn) {
-			Actor actorToSpawn =  level.getActorCollectionCache().get(collectionName).getActorCache().get(entityName);
-			actorToSpawn.initializeForLevel(level);
-			
-			//TODO: Set x and y correctly based on origin coordinates
-			
-			level.getSpawnEnemyBuffer().add(actorToSpawn);
+	public void checkForEntitySpawn() {
+		// Is it time to spawn the entity ?
+		if (level.getLevelTick() == tickToSpawn) {
+			// TODO: Create a new instance of the actor by grabbing the cached actor from
+			// the levels actorCache and copying it. Initialize the new actor with
+			// initializeForLevel() and then put it in the request spawn buffer.
 		}
-		
-		// Remove thyself from the entitylink list
-		level.getDeleteLinkBuffer().add(this);
 	}
 
 }

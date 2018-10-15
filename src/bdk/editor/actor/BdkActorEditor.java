@@ -13,6 +13,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.ListCellRenderer;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.apache.commons.io.FilenameUtils;
@@ -21,12 +22,10 @@ import bdk.data.FileUtil;
 import bdk.editor.actor.componentpanel.ComponentPanel;
 import bdk.editor.actor.controlpanel.ControlPanel;
 import bdk.editor.actor.previewpanel.PreviewPanel;
-import bdk.editor.main.BdkMainWindow;
 import bdk.editor.util.BdkWarning;
 import bdk.editor.util.InputStringDialog;
 import bdk.game.entities.sprites.actors.Actor;
 import bdk.game.entities.sprites.actors.ActorCollection;
-import javafx.scene.canvas.GraphicsContext;
 
 public class BdkActorEditor extends JPanel {
 
@@ -43,7 +42,6 @@ public class BdkActorEditor extends JPanel {
 	// --------------------------------------------------------------|
 	private ActorCollection currentActorCollection;
 	private Actor currentActor;
-	
 
 	public BdkActorEditor() {
 		// FileChooser-----------------------------------------------------------------------------|
@@ -62,19 +60,16 @@ public class BdkActorEditor extends JPanel {
 		menuBar = new JMenuBar();
 		menuFile = new JMenu("File");
 		menuItemOpen = new JMenuItem("Open");
-		menuItemOpen.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int result = fileChooser.showOpenDialog(BdkActorEditor.this);
-				if (result == JFileChooser.APPROVE_OPTION) {
-					File file = fileChooser.getSelectedFile();
-					ActorCollection newCollection = (ActorCollection) FileUtil.loadSerializedObject(file.getPath());
-					if (newCollection != null) {
-						setCurrentActorCollection(newCollection);
-						setCurrentActor(null);
-					} else {
-						BdkWarning.showWarning("Something went wrong when opening the file");
-					}
+		menuItemOpen.addActionListener((e) -> {
+			int result = fileChooser.showOpenDialog(BdkActorEditor.this);
+			if (result == JFileChooser.APPROVE_OPTION) {
+				File file = fileChooser.getSelectedFile();
+				ActorCollection newCollection = (ActorCollection) FileUtil.loadSerializedObject(file.getPath());
+				if (newCollection != null) {
+					setCurrentActorCollection(newCollection);
+					setCurrentActor(null);
+				} else {
+					BdkWarning.showWarning("Something went wrong when opening the file");
 				}
 			}
 		});
@@ -89,7 +84,7 @@ public class BdkActorEditor extends JPanel {
 
 				if (resultName != null) {
 					setCurrentActorCollection(new ActorCollection(resultName));
-					setCurrentActor(null);
+					//setCurrentActor(null);
 				}
 			}
 
@@ -103,7 +98,7 @@ public class BdkActorEditor extends JPanel {
 
 				// Set the suggested name to the name of the collection.
 				fileChooser.setSelectedFile(new File(currentActorCollection.getCollectionName() + ".ac"));
-				
+
 				int result = fileChooser.showSaveDialog(BdkActorEditor.this);
 
 				if (result == JFileChooser.APPROVE_OPTION) {
@@ -115,15 +110,16 @@ public class BdkActorEditor extends JPanel {
 						file = new File(file.toString() + ".ac");
 
 						// Dont think this is needed, remove later ?
-						// file = new File(file.getParentFile(), FilenameUtils.getBaseName(file.getName()) + ".ac");
+						// file = new File(file.getParentFile(),
+						// FilenameUtils.getBaseName(file.getName()) + ".ac");
 					}
 
 					// Check if the user changed the file name
 					String selectedName = FilenameUtils.getBaseName(file.getName());
-					if(currentActorCollection.getCollectionName() != selectedName) {
+					if (currentActorCollection.getCollectionName() != selectedName) {
 						currentActorCollection.setCollectionName(selectedName);
 					}
-		
+
 					FileUtil.saveSerializableObject(currentActorCollection, file.getPath());
 				}
 			}
@@ -133,7 +129,8 @@ public class BdkActorEditor extends JPanel {
 		menuFile.add(menuItemOpen);
 		menuFile.add(menuItemNew);
 		menuFile.add(menuItemSave);
-		// MENUBAR END-----------------------------------------------------------------------------|
+		// MENUBAR
+		// END-----------------------------------------------------------------------------|
 		// ----------------------------------------------------------------------------------------|
 
 		centerPanel = new JPanel();
@@ -145,9 +142,6 @@ public class BdkActorEditor extends JPanel {
 		setLayout(new BorderLayout());
 		add(centerPanel, BorderLayout.CENTER);
 		add(menuBar, BorderLayout.NORTH);
-
-		// Testing notifications
-
 	}
 
 	private void displayMenuButtons() {
@@ -158,14 +152,17 @@ public class BdkActorEditor extends JPanel {
 		}
 	}
 
-	private void notifyDataChanged() {
+	/**
+	 * Is called by listeners whenever an actor/actorcollection attribute changes.
+	 */
+	private void notifyDataChanged(PropertyChangeEvent event) {
 		// -Do something
 		displayMenuButtons();
 
 		// -Pass the notification on
-		controlPanel.notifyDataChanged();
-		previewPanel.notifyDataChanged();
-		componentPanel.notifyDataChanged();
+		controlPanel.notifyDataChanged(event);
+		previewPanel.notifyDataChanged(event);
+		componentPanel.notifyDataChanged(event);
 	}
 
 	// --------------------------------------------------------------------------------------------|
@@ -189,12 +186,12 @@ public class BdkActorEditor extends JPanel {
 			currentActorCollection.refreshListenerList();
 			currentActorCollection.addPropertyChangeListener(new PropertyChangeListener() {
 				@Override
-				public void propertyChange(PropertyChangeEvent arg0) {
-					notifyDataChanged();
+				public void propertyChange(PropertyChangeEvent event) {
+					notifyDataChanged(event);
 				}
 			});
 		}
-		notifyDataChanged();
+		notifyDataChanged(new PropertyChangeEvent(newActorCollection, "setCurrentActorCollection", null, null));
 	}
 
 	public Actor getCurrentActor() {
@@ -213,12 +210,12 @@ public class BdkActorEditor extends JPanel {
 			currentActor.refreshListenerList();
 			currentActor.addPropertyChangeListener(new PropertyChangeListener() {
 				@Override
-				public void propertyChange(PropertyChangeEvent arg0) {
-					notifyDataChanged();
+				public void propertyChange(PropertyChangeEvent event) {
+					notifyDataChanged(event);
 				}
 			});
 		}
-		notifyDataChanged();
+		notifyDataChanged(new PropertyChangeEvent(newActor, "setCurrentActor", null, null));
 	}
 
 }
