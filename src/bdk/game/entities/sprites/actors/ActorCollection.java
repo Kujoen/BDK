@@ -25,6 +25,7 @@ public class ActorCollection implements Serializable {
 	// Runtime variables --------------------------------------------------------|
 	transient private List<PropertyChangeListener> listeners = new ArrayList<>();
 	// --------------------------------------------------------------------------|
+	// An ActorCollection has a list of actors and a name
 	private List<Actor> actorList;
 	private String collectionName;
 	// --------------------------------------------------------------------------|

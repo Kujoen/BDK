@@ -17,7 +17,6 @@ import javax.swing.JTextField;
 
 import bdk.editor.actor.BdkActorEditor;
 import bdk.editor.actor.BdkActorEditorPanel;
-import bdk.game.main.Game;
 
 /**
  * 
@@ -26,7 +25,7 @@ import bdk.game.main.Game;
  */
 public class PreviewPanel extends BdkActorEditorPanel {
 	// -------------------------------------|
-	private Game previewGame;
+	private PreviewGame previewGame;
 
 	private JPanel previewGamePanel;
 	private JPanel previewControlPanel;
@@ -108,16 +107,16 @@ public class PreviewPanel extends BdkActorEditorPanel {
 		// PREVIEWPANEL-------------------------------------------------------------------------|
 		// PreviewGame requires a preferred size, but the rest will still scale
 		// with the editor
-		previewGame = new Game(Game.PREVIEW_ACTOREDITOR);
+		previewGame = new PreviewGame();
 		previewGamePanel = new JPanel();
 		previewGamePanel.setLayout(new GridLayout(1, 1));
 		previewGamePanel.add(previewGame);
 		previewGamePanel.setBorder(BorderFactory.createTitledBorder(""));
 		// -------------------------------------------------------------------------------------|
 
-		// setLayout(new GridLayout(2,1));
-		// add(previewGamePanel);
-		// add(previewControlPanel);
+		 setLayout(new GridLayout(2,1));
+		 add(previewGamePanel);
+		 add(previewControlPanel);
 
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -138,14 +137,14 @@ public class PreviewPanel extends BdkActorEditorPanel {
 		// Add control panel
 		c.gridx = 0;
 		c.gridy = 5;
-		c.fill = c.HORIZONTAL;
+		c.fill = GridBagConstraints.HORIZONTAL;
 		add(previewControlPanel, c);
 
 		// Add preview panel
 		c.gridx = 0;
 		c.gridy = 0;
 		c.gridheight = 5;
-		c.fill = c.BOTH;
+		c.fill = GridBagConstraints.BOTH;
 		add(previewGamePanel, c);
 
 		setBorder(BorderFactory.createTitledBorder("Preview"));

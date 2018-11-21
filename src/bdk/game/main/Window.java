@@ -20,11 +20,13 @@ public class Window extends JFrame {
 
 	// UI------------------------------------------------------------------------------|
 	private static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-	// ---------------------------------------------------------------------------------|
+	//private static WindowInfo windowInfo;
+	// --------------------------------------------------------------------------------|
 	// FINALS--------------------------------------------------------------------------|
 	private static final int HD_WIDTH = 1280;
 	private static final int HD_HEIGHT = 720;
-	private static WindowInfo windowInfo;
+	
+	// VISUAL INSTANCES-----------------------------------------------------------------|
 	private static Window window;
 	private static Game game;
 	// ---------------------------------------------------------------------------------|
@@ -34,29 +36,19 @@ public class Window extends JFrame {
 		//Currently not used since we restrict window to HD windowed mode
 		//windowInfo = (WindowInfo)FileUtil.loadSerializedObject(WindowInfo.PATH);
 		
-		if(args.length == 0){
-			window = new Window(HD_WIDTH, HD_HEIGHT);
-		} else {
-			for(String x : args){
-				switch(x){
-				case "preview_leveleditor":
-					window = new Window(HD_WIDTH, HD_HEIGHT);
-				}
-			}
-		}
+		window = new Window(HD_WIDTH, HD_HEIGHT);
 	}
 	
 	public Window(int width, int height){
-		//Setup the window and the canvas
+		//Setup the window and the game
 		this.setTitle("BDK engine window");
 		this.setResizable(false);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
-		game = new Game(Game.PREVIEW_NONE);
+		game = new Game();
 
 		this.setUndecorated(false);
 		this.add(game);
-		this.pack();
 		this.setVisible(true);	
 		
 		game.startGame();		
@@ -70,6 +62,9 @@ public class Window extends JFrame {
 		return screenSize;
 	}
 
+	/*
+	 * Returns the current Window instance
+	 */
 	public static Window getWindow() {
 		return window;
 	}
@@ -78,6 +73,9 @@ public class Window extends JFrame {
 		Window.window = window;
 	}
 
+	/*
+	 * Return the game instance being displayed in the Window
+	 */
 	public static Game getGame() {
 		return game;
 	}
@@ -86,11 +84,17 @@ public class Window extends JFrame {
 		Window.game = game;
 	}
 
-	public static int getHdWidth() {
+	/*
+	 * Returns the current value for the windows default Width, which is the width of HD -> 1280
+	 */
+	public static int getDefaultWidth() {
 		return HD_WIDTH;
 	}
 
-	public static int getHdHeight() {
+	/*
+	 * Returns the current value for the windows default Width, which is the height of HD -> 720
+	 */
+	public static int getDefaultHeight() {
 		return HD_HEIGHT;
 	}
 }

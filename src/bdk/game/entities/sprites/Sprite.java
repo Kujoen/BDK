@@ -6,8 +6,8 @@ import java.awt.image.BufferedImage;
 import bdk.game.entities.Entity;
 
 /**
- * Sprites are entites that are rendered on the play area. There are multiple
- * sprite types wich allow different types of interaction.
+ * Sprites are entities that are rendered on the play area. There are multiple
+ * sprite types which allow different types of interaction.
  * 
  * @author Andreas Farley
  *
@@ -17,7 +17,7 @@ public abstract class Sprite extends Entity {
 	// --Sprites need to keep the copy of the image they grab from the level image cache
 	// during runtime. This is because the operator/initializer might make
 	// modifications to the image exclusively for this sprite. Transient because we
-	// alway load the image at runtime to reduce memory usage.
+	// always load the image at runtime to reduce I/O usage.
 	protected transient BufferedImage spriteImage;
 
 	protected String imagePath;

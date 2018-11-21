@@ -3,7 +3,7 @@ package bdk.data;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -49,7 +49,7 @@ public class GameInfo implements Serializable {
 		// Currently initialized with default values
 		gameInfo.put(GAMEPATH, FILEPATH);
 		gameInfo.put(GAMENAME, "defaultgame");
-		gameInfo.put(GAMECREATOR, "a.f");
+		gameInfo.put(GAMECREATOR, "");
 	}
 
 	// GameInfo creation, currently must be run when a new gameinfo is required.

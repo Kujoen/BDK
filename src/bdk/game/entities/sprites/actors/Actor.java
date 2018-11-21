@@ -26,8 +26,9 @@ public class Actor extends Sprite {
 	public static final String[] ACTOR_TYPES = new String[] { ACTOR_ENEMY, ACTOR_PLAYER, ACTOR_PROJECTILE };
 	// --Properties
 	private String actorType;
+	// An actor needs to know in what collection it is
 	private String collectionName;
-	// --Controllers
+	// --Components
 	private Emitter emitter;
 	private List<Initializer> initializerList;
 	private List<Operator> operatorList;
@@ -35,8 +36,10 @@ public class Actor extends Sprite {
 
 	public Actor(String actorName, String collectionName) {
 		super(0, 0, Sprite.TYPE_ACTOR);
+		
 		this.entityName = actorName;
 		this.setCollectionName(collectionName);
+		
 		this.initializerList = new ArrayList<>();
 		this.operatorList = new ArrayList<>();
 		this.childList = new ArrayList<>();
@@ -46,12 +49,12 @@ public class Actor extends Sprite {
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public void render(Graphics2D g) {
-		// TODO Auto-generated method stub
+		
 	}
 
 	// ---------------------------------------------------------------------|

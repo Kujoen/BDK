@@ -12,7 +12,7 @@ import bdk.game.component.Level;
  * An entity is an instance of an entity-object which is on the level and being
  * updated. Currently just using rendered Entities.
  * 
- * @author Kuj
+ * @author Soliture
  *
  */
 public abstract class Entity implements Serializable {
