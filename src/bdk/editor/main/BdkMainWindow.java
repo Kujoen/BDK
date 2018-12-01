@@ -9,10 +9,10 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 
-import bdk.data.FileUtil;
-import bdk.data.GameInfo;
+import bdk.cfg.GameConfig;
 import bdk.editor.actor.BdkActorEditor;
 import bdk.editor.level.BdkLevelEditor;
+import bdk.util.BdkFileManager;
 
 public class BdkMainWindow extends JFrame {
 
@@ -21,7 +21,7 @@ public class BdkMainWindow extends JFrame {
 	private BdkActorEditor actorEditor;
 	private BdkLevelEditor levelEditor;
 
-	private static GameInfo gameInfo;
+	private static GameConfig gameInfo;
 	private static String gameName;
 
 	/**
@@ -53,10 +53,10 @@ public class BdkMainWindow extends JFrame {
 	 * Loads the Info files from their respective paths
 	 */
 	public static void initializeConfigs() {
-		gameInfo = (GameInfo) FileUtil.loadSerializedObject(GameInfo.FILEPATH);
+		gameInfo = (GameConfig) BdkFileManager.loadSerializedObject(GameConfig.FILEPATH);
 
 		// Set the global cfg values
-		setGameName(gameInfo.getGameInfo().get(GameInfo.GAMENAME));
+		setGameName(gameInfo.getGameInfo().get(GameConfig.GAMENAME));
 	}
 
 	/**

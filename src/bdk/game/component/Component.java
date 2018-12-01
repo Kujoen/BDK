@@ -13,14 +13,15 @@ import java.util.ArrayList;
  */
 public abstract class Component implements Serializable {
 
-	// protected ArrayList<Sprite> spriteList;
+	// ---------------------------------------------------|
+
 	protected String componentName;
-	protected int componentID;
-	protected int transitionToStateID;
-	
+
+	// CONSTRUCTOR ---------------------------------------|
 	public Component(String name) {
 		this.componentName = name;
 	}
+	// ---------------------------------------------------|
 
 	/**
 	 * Updates all entities in the entityList. This is abstract since components
@@ -46,22 +47,6 @@ public abstract class Component implements Serializable {
 
 	public void setComponentName(String componentName) {
 		this.componentName = componentName;
-	}
-
-	public int getComponentID() {
-		return componentID;
-	}
-
-	public void setComponentID(int componentID) {
-		this.componentID = componentID;
-	}
-	
-	public int getTransitionToStateID() {
-		return transitionToStateID;
-	}
-
-	public void setTransitionToStateID(int transitionToStateID) {
-		this.transitionToStateID = transitionToStateID;
 	}
 
 }

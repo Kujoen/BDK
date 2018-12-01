@@ -22,10 +22,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import bdk.data.BdkImageData;
 import bdk.editor.actor.BdkActorEditor;
 import bdk.editor.actor.BdkActorEditorPanel;
 import bdk.editor.main.BdkMainWindow;
+import bdk.util.graphics.BdkImageEditor;
 
 /**
  * 
@@ -145,7 +145,7 @@ public class S2ImageSelectionPanel extends BdkActorEditorPanel {
 								BufferedImage image = ImageIO.read(listOfFiles[i]);
 								// Does the image have to be rescaled to fit into a column ?
 								if (image.getWidth() < imageWidth || image.getWidth() > imageWidth) {
-									image = BdkImageData.scale(image, imageWidth,
+									image = BdkImageEditor.scale(image, imageWidth,
 											imageWidth * (image.getHeight() / image.getWidth()));
 								}
 
@@ -186,7 +186,7 @@ public class S2ImageSelectionPanel extends BdkActorEditorPanel {
 
 								// Highlight the image if its the current selected image
 								if (listOfFiles[i].getPath().equals(bdkActorEditor.getCurrentActor().getImagePath())) {
-									image = BdkImageData.highlight(image, Color.RED);
+									image = BdkImageEditor.highlight(image, Color.RED);
 								}
 
 								// Put the image into the imagemap so we can find it later

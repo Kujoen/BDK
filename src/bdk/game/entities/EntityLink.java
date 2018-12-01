@@ -2,8 +2,8 @@ package bdk.game.entities;
 
 import java.io.Serializable;
 
-import bdk.data.Vector2D;
-import bdk.game.component.Level;
+import bdk.game.component.level.Level;
+import bdk.util.graphics.Vector2D;
 
 public abstract class EntityLink implements Serializable {
 

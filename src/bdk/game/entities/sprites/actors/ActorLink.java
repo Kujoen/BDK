@@ -2,12 +2,12 @@ package bdk.game.entities.sprites.actors;
 
 import java.util.Map;
 
-import bdk.data.FileUtil;
-import bdk.data.Vector2D;
 import bdk.editor.main.BdkMainWindow;
-import bdk.game.component.Level;
+import bdk.game.component.level.Level;
 import bdk.game.entities.Entity;
 import bdk.game.entities.EntityLink;
+import bdk.util.BdkFileManager;
+import bdk.util.graphics.Vector2D;
 
 /**
  * 
@@ -45,7 +45,7 @@ public class ActorLink extends EntityLink {
 			// Level already has this actor cached
 		} else {
 			// Load the actor into the actorCache
-			ActorCollection actorCollectionToCache = (ActorCollection) FileUtil
+			ActorCollection actorCollectionToCache = (ActorCollection) BdkFileManager
 					.loadSerializedObject(ActorCollection.COLLECTION_PATH + "/" + collectionName + ".ac");
 
 			level.getActorCache().put(collectionName + "$$" + entityName, actorCollectionToCache.getActor(entityName));

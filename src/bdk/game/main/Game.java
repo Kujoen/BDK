@@ -1,38 +1,36 @@
 package bdk.game.main;
 
 import java.awt.Canvas;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
-import java.io.File;
-import java.util.Arrays;
+import java.io.FileNotFoundException;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import bdk.data.FileUtil;
-import bdk.data.GameInfo;
-import bdk.editor.util.BdkException;
+import bdk.cfg.GameConfig;
 import bdk.game.component.Component;
-import bdk.game.component.Level;
-import bdk.game.component.Menu;
+import bdk.input.BdkInputListener;
+import bdk.util.BdkFileManager;
 
 /**
  * Class contains methods regarding the game screen. All game components are
- * drawn on a Canvas, which is displayed on a JFrame
+ * drawn on a Canvas, which is displayed on a JFrame. The game is operating on
+ * the dimension 512 x 288. This makes both width and height divisible by 16 and
+ * 32. Per default, this is then scaled up to 1280 x 720.
  * 
  * @author Soliture
  *
  */
 public class Game extends Canvas implements Runnable {
 
-	private static GameInfo gameInfo;
-	// ----------------------------------------------------------------------------------------|
-	// The default gameState is 0 (aka the main menu)
-	private int gameState = 0;
-	private boolean hasStateTransitioned = false;
-	// ----------------------------------------------------------------------------------------|
-	// --Used to store essential dimensions
-	public static final int HD_PLAY_WIDTH = 520;
-	public static final int HD_PLAY_HEIGHT = 600;
-	// ----------------------------------------------------------------------------------------|
+	private static final Logger LOGGER = Logger.getLogger("BDKGameLogger");
+
+	// 512 x 288
+	// ---------------------------------------------------------------------------------|
+	private GameConfig gameConfig;
+	// ---------------------------------------------------------------------------------|
 	// Used for rendering/updating control
 	private int framesPerSecond = 0;
 	private int updatesPerSecond = 0;
@@ -40,17 +38,35 @@ public class Game extends Canvas implements Runnable {
 	private boolean isPaused = false;
 	private static final long serialVersionUID = 1L;
 	private static final double TICKRATE = 60.0;
-	private Thread gameThread;
-	// ----------------------------------------------------------------------------------------|
+	private transient Thread gameThread;
+	// ---------------------------------------------------------------------------------|
 	// --Components
 	private Map<String, Component> componentCache;
+	// ---------------------------------------------------------------------------------|
+	private transient BdkInputListener inputListener;
+	// ---------------------------------------------------------------------------------|
 
-	private Level currentLevel;
-	private Menu currentMenu;
-	// ----------------------------------------------------------------------------------------|
+	/**
+	 * The Game object is a runnable canvas. The run thread renders the 'Game' on
+	 * the canvas.
+	 * 
+	 * @param gameDimension The dimension of the game canvas
+	 */
+	public Game(Dimension gameDimension) {
+		try {
+			this.gameConfig = (GameConfig) BdkFileManager.loadSerializedObject(GameConfig.FILEPATH);
+		} catch (FileNotFoundException e) {
+			Game.getLogger().log(Level.SEVERE, "Unable to open game config at: " + GameConfig.FILEPATH, e);
+		}
 
-	public Game() {
-		this.gameInfo = (GameInfo) FileUtil.loadSerializedObject(GameInfo.FILEPATH);
+		// We are packing the window around the canvas, therefore set pref. size
+		this.setPreferredSize(gameDimension);
+		this.setSize(gameDimension);
+
+		// Attach the listeners
+		this.inputListener = new BdkInputListener();
+		this.addKeyListener(this.inputListener.getKeyInputListener());
+		this.addMouseListener(this.inputListener.getMouseInputListener());
 	}
 
 	// ------------------------------------------------------------------------------|
@@ -58,47 +74,11 @@ public class Game extends Canvas implements Runnable {
 	// ------------------------------------------------------------------------------|
 
 	/**
-	 * Sets the gamestate to the new state. Also saves the previous game state;
-	 * 
-	 * @param newState
-	 */
-	private void transition(int newState, boolean isNewStateLevel) {
-		previousGameState = gameState;
-		gameState = newState;
-	}
-
-	/**
 	 * Initializes the levels/menus based on the gameinfo and previewCode. Called by
 	 * the run thread after startGame().
 	 */
 	private void initializeGame() {
 
-		// Level loading --------------------------------------------------------|
-		// Grab all files in the level directory
-		File levelDir = new File(gameInfo.getGameInfo().get("NAME") + "/defaultgame/level/");
-		File[] listOfLevelFiles = levelDir.listFiles();
-		// Throw out any without .bdkl file type and levels not in the gameinfo
-		listOfLevelFiles = (File[]) Arrays.stream(listOfLevelFiles).filter(
-				file -> (file.getName().contains(".bdkl") && gameInfo.getGameInfo().containsValue(file.getName())))
-				.toArray();
-		// Move the levels into the level-list
-		Arrays.stream(listOfLevelFiles).forEach(file -> {
-			Level levelToAdd = (Level) FileUtil.loadSerializedObject(file.getAbsolutePath());
-			componentCache.put(levelToAdd.getComponentName(), levelToAdd);
-		});
-		// Menu loading----------------------------------------------------------|
-		File menuDir = new File(gameInfo.getGameInfo().get("NAME") + "/defaultgame/menu/");
-		File[] listOfMenuFiles = menuDir.listFiles();
-		// Throw out any without .bdkl file type and menus not in the gameinfo
-		listOfMenuFiles = (File[]) Arrays.stream(listOfMenuFiles).filter(
-				file -> (file.getName().contains(".bdkm") && gameInfo.getGameInfo().containsValue(file.getName())))
-				.toArray();
-		// Move the levels into the level-list
-		Arrays.stream(listOfMenuFiles).forEach(file -> {
-			Menu menuToAdd = (Menu) FileUtil.loadSerializedObject(file.getAbsolutePath());
-			componentCache.put(menuToAdd.getComponentName(), menuToAdd);
-		});
-		// ----------------------------------------------------------------------|
 	}
 
 	// ------------------------------------------------------------------------------|
@@ -120,15 +100,13 @@ public class Game extends Canvas implements Runnable {
 	 * Stops the game thread and removes the running flag
 	 */
 	public void stopGame() {
-		gameThread.interrupt();
+		this.pauseGame();
+		this.isRunning = false;
 
 		try {
 			gameThread.join(1000);
-
-			// After the gameThread has stopped, remove the running flag
-			isRunning = false;
 		} catch (InterruptedException e) {
-			BdkException.throwWithMessage("Timed out waiting for game thread to stop");
+			Game.getLogger().log(Level.SEVERE, "Timed out waiting for game thread to stop", e);
 		}
 	}
 
@@ -193,17 +171,6 @@ public class Game extends Canvas implements Runnable {
 	 * Update hierarchy: StateTranstion -> Components
 	 */
 	private void updateGame() {
-		checkForStateTransition();
-		updateGameComponents();
-	}
-
-	private void checkForStateTransition() {
-		if (hasStateTransitioned) {
-			// ...
-		}
-	}
-
-	private void updateGameComponents() {
 
 	}
 
@@ -249,12 +216,24 @@ public class Game extends Canvas implements Runnable {
 		return TICKRATE;
 	}
 
-	public static GameInfo getGameInfo() {
-		return gameInfo;
+	public GameConfig getGameInfo() {
+		return gameConfig;
 	}
 
-	public static void setGameInfo(GameInfo gameInfo) {
-		Game.gameInfo = gameInfo;
+	public void setGameInfo(GameConfig gameInfo) {
+		this.gameConfig = gameInfo;
+	}
+
+	public static Logger getLogger() {
+		return LOGGER;
+	}
+
+	public BdkInputListener getInputListener() {
+		return inputListener;
+	}
+
+	public void setInputListener(BdkInputListener inputListener) {
+		this.inputListener = inputListener;
 	}
 
 	// -----------------------------------------------------------------------------|

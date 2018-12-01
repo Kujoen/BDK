@@ -18,14 +18,14 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.apache.commons.io.FilenameUtils;
 
-import bdk.data.FileUtil;
 import bdk.editor.actor.componentpanel.ComponentPanel;
 import bdk.editor.actor.controlpanel.ControlPanel;
 import bdk.editor.actor.previewpanel.PreviewPanel;
-import bdk.editor.util.BdkWarning;
-import bdk.editor.util.InputStringDialog;
 import bdk.game.entities.sprites.actors.Actor;
 import bdk.game.entities.sprites.actors.ActorCollection;
+import bdk.util.BdkFileManager;
+import bdk.util.ui.InputStringDialog;
+import bdk.util.ui.WarningDialog;
 
 public class BdkActorEditor extends JPanel {
 
@@ -64,12 +64,12 @@ public class BdkActorEditor extends JPanel {
 			int result = fileChooser.showOpenDialog(BdkActorEditor.this);
 			if (result == JFileChooser.APPROVE_OPTION) {
 				File file = fileChooser.getSelectedFile();
-				ActorCollection newCollection = (ActorCollection) FileUtil.loadSerializedObject(file.getPath());
+				ActorCollection newCollection = (ActorCollection) BdkFileManager.loadSerializedObject(file.getPath());
 				if (newCollection != null) {
 					setCurrentActorCollection(newCollection);
 					setCurrentActor(null);
 				} else {
-					BdkWarning.showWarning("Something went wrong when opening the file");
+					WarningDialog.showWarning("Something went wrong when opening the file");
 				}
 			}
 		});
@@ -120,7 +120,7 @@ public class BdkActorEditor extends JPanel {
 						currentActorCollection.setCollectionName(selectedName);
 					}
 
-					FileUtil.saveSerializableObject(currentActorCollection, file.getPath());
+					BdkFileManager.saveSerializableObject(currentActorCollection, file.getPath());
 				}
 			}
 		});

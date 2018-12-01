@@ -12,8 +12,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.text.NumberFormatter;
 import javax.swing.text.PlainDocument;
 
-import bdk.editor.util.BdkFont;
-import bdk.editor.util.BdkInputFilter;
+import bdk.util.ui.BdkFont;
+import bdk.util.ui.BdkInputFilter;
 import soliture.ui.swingextensions.expandinglist.ExpandableRow;
 
 /**

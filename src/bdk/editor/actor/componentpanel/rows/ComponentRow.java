@@ -8,8 +8,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
-import bdk.editor.util.BdkFont;
 import bdk.game.entities.sprites.actors.Actor;
+import bdk.util.ui.BdkFont;
 import soliture.ui.swingextensions.expandinglist.ExpandableRow;
 
 /**

@@ -2,8 +2,8 @@ package bdk.game.entities.sprites.tiles;
 
 import java.awt.Graphics2D;
 
-import bdk.data.BdkImageData;
 import bdk.game.entities.sprites.Sprite;
+import bdk.util.graphics.BdkImageEditor;
 
 /**
  * Tiles are static sprites which build the foundation of the level. They can have block/kill collision.

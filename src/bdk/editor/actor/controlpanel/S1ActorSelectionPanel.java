@@ -17,8 +17,8 @@ import javax.swing.ListSelectionModel;
 
 import bdk.editor.actor.BdkActorEditor;
 import bdk.editor.actor.BdkActorEditorPanel;
-import bdk.editor.util.InputStringDialog;
 import bdk.game.entities.sprites.actors.Actor;
+import bdk.util.ui.InputStringDialog;
 
 public class S1ActorSelectionPanel extends BdkActorEditorPanel {
 

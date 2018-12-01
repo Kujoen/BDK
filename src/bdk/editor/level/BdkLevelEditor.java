@@ -17,12 +17,12 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.apache.commons.io.FilenameUtils;
 
-import bdk.data.FileUtil;
 import bdk.editor.level.controlpanel.ControlPanel;
 import bdk.editor.level.previewpanel.PreviewPanel;
-import bdk.editor.util.BdkWarning;
-import bdk.editor.util.InputStringDialog;
-import bdk.game.component.Level;
+import bdk.game.component.level.Level;
+import bdk.util.BdkFileManager;
+import bdk.util.ui.InputStringDialog;
+import bdk.util.ui.WarningDialog;
 
 /**
  * 
@@ -69,11 +69,11 @@ public class BdkLevelEditor extends JPanel {
 				int result = fileChooser.showOpenDialog(BdkLevelEditor.this);
 				if (result == JFileChooser.APPROVE_OPTION) {
 					File file = fileChooser.getSelectedFile();
-					Level newLevel = (Level) FileUtil.loadSerializedObject(file.getPath());
+					Level newLevel = (Level) BdkFileManager.loadSerializedObject(file.getPath());
 					if (newLevel != null) {
 						setCurrentLevel(newLevel);
 					} else {
-						BdkWarning.showWarning("Something went wrong when opening the file");
+						WarningDialog.showWarning("Something went wrong when opening the file");
 					}
 				}
 			}
@@ -124,7 +124,7 @@ public class BdkLevelEditor extends JPanel {
 						currentLevel.setComponentName(selectedName);
 					}
 
-					FileUtil.saveSerializableObject(currentLevel, file.getPath());
+					BdkFileManager.saveSerializableObject(currentLevel, file.getPath());
 				}
 			}
 		});

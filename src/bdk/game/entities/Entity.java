@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import bdk.game.component.Level;
+import bdk.game.component.level.Level;
 
 /**
  * An entity is an instance of an entity-object which is on the level and being
