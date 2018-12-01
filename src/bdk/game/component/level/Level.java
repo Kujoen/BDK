@@ -22,8 +22,7 @@ import bdk.game.entities.sprites.actors.ActorLink;
 public class Level extends Component {
 	
 	// -------------------------------------------------------------------------------|
-	// VARIABLES
-	// -------------------------------------------------------------------------------|
+	
 	private transient int levelTick;
 	private int scrollSpeed;
 	
