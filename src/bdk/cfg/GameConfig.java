@@ -24,18 +24,29 @@ import bdk.util.BdkFileManager;
  */
 public class GameConfig implements Serializable {
 	private static final long serialVersionUID = -1308671429590296918L;
+	
+	// -------------------------------------------------------------------------------|
+	// GAMEINFO INFORMATION
+	// -------------------------------------------------------------------------------|
+	
+	private String gameName = "defaultgame";
+	private String gameCreator = "Soliture";
 
-	// GameInfo related default-strings --------------------------------|
+	// -------------------------------------------------------------------------------|
+	// GAME PATHS
+	//
+	// Except the config path, all other paths are dependent from the GameConfig
+	// -------------------------------------------------------------------------------|
 
-	// Location of the game config
-	public static final String FILEPATH = "cfg/game.cfg";
+	public static final String CONFIG_PATH = "cfg/game.cfg";
+	
+	public final String LEVEL_PATH = this.get;
 
-	// GameInfo string keys --------------------------------------------|
-	// Name of the game and game directory
+	// -------------------------------------------------------------------------------|
+	// GAMEINFO KEYS
+	// -------------------------------------------------------------------------------|
 	public static final String GAMENAME = "name";
-	// Name of the game creator
 	public static final String GAMECREATOR = "creator";
-	// -----------------------------------------------------------------|
 
 	// Contains information about the game stored in string keys
 	private Map<String, String> gameInfo;
@@ -54,7 +65,7 @@ public class GameConfig implements Serializable {
 		// Initialized with default values
 		gameInfo.put(GAMENAME, "defaultgame");
 		gameInfo.put(GAMECREATOR, "Soliture");
-		
+
 		// Initialize empty lists
 		levelInfo = new ArrayList<>();
 		menuInfo = new ArrayList<>();

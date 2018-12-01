@@ -14,28 +14,41 @@ import bdk.game.entities.sprites.actors.ActorCollection;
 import bdk.game.entities.sprites.actors.ActorLink;
 
 /**
+ * The level-component of the game package stores camera settings as well as
+ * entity informations
  * 
  * @author Andreas Farley
- *
- *         The level-component of the game package stores camera settings as
- *         well as entity informations
- *
  */
 public class Level extends Component {
 	
-	public static final String LEVEL_PATH = BdkMainWindow.getGameName() + "/levels";
-
-	// Runtime level information
+	// -------------------------------------------------------------------------------|
+	// VARIABLES
+	// -------------------------------------------------------------------------------|
 	private transient int levelTick;
+	private int scrollSpeed;
+	
+	// -------------------------------------------------------------------------------|
+	// BUFFERS
+	// -------------------------------------------------------------------------------|
+	
+	// -------------------------------------------------------------------------------|
+	// LEVEL INFORMATION
+	// -------------------------------------------------------------------------------|
+	private Grid grid;
+	
+	
+	// -----------------------------------------------------------------------------------|
+	// Runtime level information
+
 
 	// For now scrollSpeed is static, perhaps it should be modifiable in the future.
-	private int scrollSpeed;
+
 
 	// Entity information storage
 	// --------------------------------------------------------|
 
 	// --The grid contains all tiles.
-	private Grid grid;
+
 
 	// --List containing links to actors.
 	private List<ActorLink> actorLinkList;
@@ -77,7 +90,7 @@ public class Level extends Component {
 
 	public Level(String name) {
 		super(name);
-		
+
 		this.grid = new Grid();
 		this.actorLinkList = new ArrayList<ActorLink>();
 	}

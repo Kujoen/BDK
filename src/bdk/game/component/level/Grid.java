@@ -10,7 +10,6 @@ import bdk.util.graphics.Vector2D;
  * Every game component has an associated Grid. The grid saves what tiles should be displayed where
  * 
  * @author Andreas Farley
- *
  */
 public class Grid implements Serializable {
 	private static final long serialVersionUID = -5043041988399800929L;
