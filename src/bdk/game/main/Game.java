@@ -54,9 +54,9 @@ public class Game extends Canvas implements Runnable {
 	 */
 	public Game(Dimension gameDimension) {
 		try {
-			this.gameConfig = (GameConfig) BdkFileManager.loadSerializedObject(GameConfig.FILEPATH);
+			this.gameConfig = (GameConfig) BdkFileManager.loadSerializedObject(GameConfig.CONFIG_PATH);
 		} catch (FileNotFoundException e) {
-			Game.getLogger().log(Level.SEVERE, "Unable to open game config at: " + GameConfig.FILEPATH, e);
+			Game.getLogger().log(Level.SEVERE, "Unable to open game config at: " + GameConfig.CONFIG_PATH, e);
 		}
 
 		// We are packing the window around the canvas, therefore set pref. size

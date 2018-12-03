@@ -32,7 +32,7 @@ public class Window extends JFrame {
 	private static Dimension realDimension = new Dimension(512, 288);
 	private static Dimension defaultDimension = new Dimension(1280, 720);
 	private static Dimension fullScreenDimension = Toolkit.getDefaultToolkit().getScreenSize();
-	private static Vector2D scalingVector;
+	private static Vector2D scalingVector = new Vector2D();
 	// ---------------------------------------------------------------------------------|
 	private static Window window;
 	private static Game game;

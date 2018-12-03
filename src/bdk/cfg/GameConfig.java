@@ -39,70 +39,24 @@ public class GameConfig implements Serializable {
 	// -------------------------------------------------------------------------------|
 
 	public static final String CONFIG_PATH = "cfg/game.cfg";
-	
-	public final String LEVEL_PATH = this.get;
-
-	// -------------------------------------------------------------------------------|
-	// GAMEINFO KEYS
-	// -------------------------------------------------------------------------------|
-	public static final String GAMENAME = "name";
-	public static final String GAMECREATOR = "creator";
-
-	// Contains information about the game stored in string keys
-	private Map<String, String> gameInfo;
-
-	// Contains a level-charter
-	private List<String> levelInfo;
-
-	// Contains a menu-charter
-	private List<String> menuInfo;
 
 	// -----------------------------------------------------------------|
 
-	public GameConfig() {
-		gameInfo = new HashMap<>();
-
-		// Initialized with default values
-		gameInfo.put(GAMENAME, "defaultgame");
-		gameInfo.put(GAMECREATOR, "Soliture");
-
-		// Initialize empty lists
-		levelInfo = new ArrayList<>();
-		menuInfo = new ArrayList<>();
+	private GameConfig() {
 	}
 
 	// -------------------------------------------------------------------------------|
 	// GETTERS & SETTERS
 	// -------------------------------------------------------------------------------|
 
-	public Map<String, String> getGameInfo() {
-		return gameInfo;
-	}
-
-	public List<String> getLevelInfo() {
-		return levelInfo;
-	}
-
-	public void setLevelInfo(List<String> levelInfo) {
-		this.levelInfo = levelInfo;
-	}
-
-	public List<String> getMenuInfo() {
-		return menuInfo;
-	}
-
-	public void setMenuInfo(List<String> menuInfo) {
-		this.menuInfo = menuInfo;
-	}
-
 	// --------------------------------------------------------------------------------------|
 
 	// GameInfo creation, currently must be run when a new gameinfo is required.
 	public static void main(String[] args) {
 		try {
-			BdkFileManager.saveSerializableObject(new GameConfig(), FILEPATH);
+			BdkFileManager.saveSerializableObject(new GameConfig(), CONFIG_PATH);
 		} catch (FileNotFoundException e) {
-			Game.getLogger().log(Level.WARNING, "Couldn't create game info in: " + FILEPATH, e);
+			Game.getLogger().log(Level.WARNING, "Couldn't create game info in: " + CONFIG_PATH, e);
 		}
 	}
 

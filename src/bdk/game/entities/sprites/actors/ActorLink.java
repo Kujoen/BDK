@@ -15,7 +15,8 @@ import bdk.util.graphics.Vector2D;
  *
  */
 public class ActorLink extends EntityLink {
-
+	private static final long serialVersionUID = -285441568305666272L;
+	
 	String collectionName;
 	String actorType;
 
@@ -60,9 +61,6 @@ public class ActorLink extends EntityLink {
 	public void checkForEntitySpawn() {
 		// Is it time to spawn the entity ?
 		if (level.getLevelTick() == tickToSpawn) {
-			// TODO: Create a new instance of the actor by grabbing the cached actor from
-			// the levels actorCache and copying it. Initialize the new actor with
-			// initializeForLevel() and then put it in the request spawn buffer.
 		}
 	}
 
