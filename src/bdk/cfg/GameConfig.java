@@ -31,6 +31,8 @@ public class GameConfig implements Serializable {
 	
 	private String gameName = "defaultgame";
 	private String gameCreator = "Soliture";
+	
+	private ArrayList levelList;
 
 	// -------------------------------------------------------------------------------|
 	// GAME PATHS
@@ -39,15 +41,70 @@ public class GameConfig implements Serializable {
 	// -------------------------------------------------------------------------------|
 
 	public static final String CONFIG_PATH = "cfg/game.cfg";
+	
+	private String levelPath;
+	private String menuPath;
 
 	// -----------------------------------------------------------------|
 
 	private GameConfig() {
 	}
+	
+	public static GameConfig loadGameConfig() throws FileNotFoundException {
+		return (GameConfig) BdkFileManager.loadSerializedObject(CONFIG_PATH);
+	}
+	
+	public void saveGameConfig() throws FileNotFoundException {
+		BdkFileManager.saveSerializableObject(this, CONFIG_PATH);
+	}
 
 	// -------------------------------------------------------------------------------|
 	// GETTERS & SETTERS
 	// -------------------------------------------------------------------------------|
+	
+	public String getGameName() {
+		return gameName;
+	}
+
+	/**
+	 * Setting a new game name updates all other paths
+	 */
+	public void setGameName(String gameName) {
+		this.gameName = gameName;
+	}
+
+	public String getGameCreator() {
+		return gameCreator;
+	}
+
+	public void setGameCreator(String gameCreator) {
+		this.gameCreator = gameCreator;
+	}
+	
+	
+	public String getLevelPath() {
+		if(levelPath == null) {
+			levelPath = gameName + "/levels";
+		}
+		
+		return levelPath;
+	}
+
+	public String getMenuPath() {
+		if(menuPath == null) {
+			menuPath = gameName + "/menus";
+		}
+		
+		return menuPath;
+	}
+	
+	public ArrayList getLevelList() {
+		return levelList;
+	}
+
+	public void setLevelList(ArrayList levelList) {
+		this.levelList = levelList;
+	}
 
 	// --------------------------------------------------------------------------------------|
 

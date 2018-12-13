@@ -4,8 +4,6 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
-
 import bdk.game.component.Component;
 import bdk.game.entities.sprites.actors.Actor;
 import bdk.game.entities.sprites.actors.ActorLink;
@@ -45,13 +43,12 @@ public class Level extends Component {
 	// -------------------------------------------------------------------------------|
 	private Grid grid;
 	private transient Actor player;
-	// -----------------------------------------------------------------------------------|
+	// -------------------------------------------------------------------------------|
 
 	public Level(String name) {
 		super(name);
 
 		this.grid = new Grid();
-		this.scrollSpeed = 16;
 	}
 
 	// -----------------------------------------------------------------------------|

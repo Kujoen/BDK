@@ -25,7 +25,8 @@ import bdk.util.graphics.Vector2D;
  *
  */
 public class Window extends JFrame {
-
+	private static final long serialVersionUID = 4077895023401843782L;
+	
 	// ---------------------------------------------------------------------------------|
 	private WindowConfig windowConfig;
 	// ---------------------------------------------------------------------------------|
@@ -127,7 +128,7 @@ public class Window extends JFrame {
 
 	// ---------------------------------------------------------------------------------|
 
-	// Main program entrypoint
+	// Main program entry point
 	public static void main(String[] args) {
 		window = new Window();
 	}

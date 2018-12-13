@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -54,12 +55,12 @@ public class Game extends Canvas implements Runnable {
 	 */
 	public Game(Dimension gameDimension) {
 		try {
-			this.gameConfig = (GameConfig) BdkFileManager.loadSerializedObject(GameConfig.CONFIG_PATH);
+			this.gameConfig = GameConfig.loadGameConfig();
 		} catch (FileNotFoundException e) {
 			Game.getLogger().log(Level.SEVERE, "Unable to open game config at: " + GameConfig.CONFIG_PATH, e);
 		}
 
-		// We are packing the window around the canvas, therefore set pref. size
+		// We are packing the window around the canvas, therefore set preferred size
 		this.setPreferredSize(gameDimension);
 		this.setSize(gameDimension);
 
@@ -74,11 +75,15 @@ public class Game extends Canvas implements Runnable {
 	// ------------------------------------------------------------------------------|
 
 	/**
-	 * Initializes the levels/menus based on the gameinfo and previewCode. Called by
-	 * the run thread after startGame().
+	 * Loads 
 	 */
 	private void initializeGame() {
 
+		ArrayList levelList = gameConfig.getLevelList();
+		if(levelList == null) {
+			
+		}
+		
 	}
 
 	// ------------------------------------------------------------------------------|
@@ -90,6 +95,8 @@ public class Game extends Canvas implements Runnable {
 	 */
 	public void startGame() {
 		if (!isRunning) {
+			this.initializeGame();
+			
 			isRunning = true;
 			gameThread = new Thread(this);
 			gameThread.start();
@@ -162,16 +169,7 @@ public class Game extends Canvas implements Runnable {
 	 * be called on request (Therefore public).
 	 */
 	public void update() {
-		// Currently preview/non-preview update the game the same. This could change
-		// though.
-		updateGame();
-	}
-
-	/**
-	 * Update hierarchy: StateTranstion -> Components
-	 */
-	private void updateGame() {
-
+		
 	}
 
 	// -------------------------------------------------------------------------------|
