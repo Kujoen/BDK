@@ -53,7 +53,6 @@ public class EmitOnce extends Emitter {
 			}
 		});
 
-		compRow.addRow(textFieldRow1);
 		return compRow;
 	}
 

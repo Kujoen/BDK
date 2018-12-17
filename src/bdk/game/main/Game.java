@@ -6,14 +6,13 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import bdk.cfg.GameConfig;
 import bdk.game.component.Component;
+import bdk.game.component.level.*;
 import bdk.input.BdkInputListener;
-import bdk.util.BdkFileManager;
 
 /**
  * Class contains methods regarding the game screen. All game components are
@@ -32,7 +31,6 @@ public class Game extends Canvas implements Runnable {
 	// ---------------------------------------------------------------------------------|
 	private GameConfig gameConfig;
 	// ---------------------------------------------------------------------------------|
-	// Used for rendering/updating control
 	private int framesPerSecond = 0;
 	private int updatesPerSecond = 0;
 	private boolean isRunning = false;
@@ -42,7 +40,7 @@ public class Game extends Canvas implements Runnable {
 	private transient Thread gameThread;
 	// ---------------------------------------------------------------------------------|
 	// --Components
-	private Map<String, Component> componentCache;
+	private bdk.game.component.level.Level activeLevel;
 	// ---------------------------------------------------------------------------------|
 	private transient BdkInputListener inputListener;
 	// ---------------------------------------------------------------------------------|
@@ -74,14 +72,12 @@ public class Game extends Canvas implements Runnable {
 	// GENERAL METHODS
 	// ------------------------------------------------------------------------------|
 
-	/**
-	 * Loads 
-	 */
 	private void initializeGame() {
 
 		ArrayList levelList = gameConfig.getLevelList();
 		if(levelList == null) {
-			
+			// If the level list is empty, use a default empty level
+			activeLevel = new bdk.game.component.level.Level("default");
 		}
 		
 	}
@@ -156,7 +152,7 @@ public class Game extends Canvas implements Runnable {
 				render();
 			}
 		}
-		// ----------------------------------------------------------------------------------------|
+		// ---------------------------------------------------------------------------|
 	}
 
 	// -----------------------------------------------------------------------------|
@@ -214,12 +210,12 @@ public class Game extends Canvas implements Runnable {
 		return TICKRATE;
 	}
 
-	public GameConfig getGameInfo() {
+	public GameConfig getGameConfig() {
 		return gameConfig;
 	}
 
-	public void setGameInfo(GameConfig gameInfo) {
-		this.gameConfig = gameInfo;
+	public void setGameConfig(GameConfig gameConfig) {
+		this.gameConfig = gameConfig;
 	}
 
 	public static Logger getLogger() {

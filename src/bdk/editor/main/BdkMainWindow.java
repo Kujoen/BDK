@@ -56,7 +56,7 @@ public class BdkMainWindow extends JFrame {
 		gameInfo = (GameConfig) BdkFileManager.loadSerializedObject(GameConfig.FILEPATH);
 
 		// Set the global cfg values
-		setGameName(gameInfo.getGameInfo().get(GameConfig.GAMENAME));
+		setGameName(gameInfo.getGameConfig().get(GameConfig.GAMENAME));
 	}
 
 	/**

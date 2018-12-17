@@ -26,7 +26,8 @@ public class Level extends Component {
 	// BUFFERS
 	// -------------------------------------------------------------------------------|
 
-	private transient ArrayList<ActorLink> actorLinkList;
+	private ArrayList<ActorLink> actorLinkList;
+
 	private transient HashMap<String, Actor> actorCache;
 
 	private transient LinkedList<Actor> layer1Buffer;
@@ -49,6 +50,8 @@ public class Level extends Component {
 		super(name);
 
 		this.grid = new Grid();
+		this.scrollSpeed = 16;
+		this.levelTick = 0;
 	}
 
 	// -----------------------------------------------------------------------------|
@@ -67,6 +70,15 @@ public class Level extends Component {
 
 	// -------------------------------------------------------------------------------|
 	// RENDERING
+	//
+	// RENDER ORDER:
+	// -> ScrollGridLayer BASE LAYER
+	// -> Enemies
+	// -> Projectiles
+	// -> Player
+	// -> ScrollGridLayer ADDITIONAL LAYERS
+	// -> StaticTiles
+	// -> Widgets
 	// -------------------------------------------------------------------------------|
 	@Override
 	public void render(Graphics2D g) {

@@ -4,12 +4,9 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import bdk.editor.main.BdkMainWindow;
-import bdk.editor.util.BdkException;
 
 /**
  * 
@@ -43,8 +40,7 @@ public class ActorCollection implements Serializable {
 			actorList.add(actorToAdd);
 			firePropertyChange("actorList", oldValue, this.actorList);
 		} else {
-			BdkException.throwWithMessage(
-					"Tried to add an actor that was null to the actorlist of actorCollection " + collectionName);
+			
 		}
 	}
 

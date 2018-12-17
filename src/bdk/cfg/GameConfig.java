@@ -26,7 +26,7 @@ public class GameConfig implements Serializable {
 	private static final long serialVersionUID = -1308671429590296918L;
 	
 	// -------------------------------------------------------------------------------|
-	// GAMEINFO INFORMATION
+	// GAME INFORMATION
 	// -------------------------------------------------------------------------------|
 	
 	private String gameName = "defaultgame";
@@ -65,12 +65,13 @@ public class GameConfig implements Serializable {
 	public String getGameName() {
 		return gameName;
 	}
-
-	/**
-	 * Setting a new game name updates all other paths
-	 */
+	
 	public void setGameName(String gameName) {
 		this.gameName = gameName;
+		
+		// Setting the paths to null forces them to update on the next get
+		this.levelPath = null;
+		this.menuPath = null;
 	}
 
 	public String getGameCreator() {

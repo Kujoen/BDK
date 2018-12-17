@@ -6,40 +6,20 @@ import java.awt.image.BufferedImage;
 import bdk.game.entities.Entity;
 
 /**
- * Sprites are entities that are rendered on the play area. There are multiple
- * sprite types which allow different types of interaction.
+ * Sprites are entities that are additionally rendered on the gamecanvas.
  * 
  * @author Andreas Farley
  *
  */
 public abstract class Sprite extends Entity {
+	private static final long serialVersionUID = 2586067322532032810L;
 
-	// --Sprites need to keep the copy of the image they grab from the level image cache
-	// during runtime. This is because the operator/initializer might make
-	// modifications to the image exclusively for this sprite. Transient because we
-	// always load the image at runtime to reduce I/O usage.
+	// ---------------------------------------------------------------------|
 	protected transient BufferedImage spriteImage;
+	protected String spritePath;
+	// ---------------------------------------------------------------------|
 
-	protected String imagePath;
-	// --
-	protected String spriteType;
-	public static final String TYPE_ACTOR = "actor";
-	public static final String TYPE_TILE = "tile";
-	// --
-
-	/**
-	 * Default constructor
-	 * 
-	 * @param x
-	 *            x position
-	 * @param y
-	 *            y position
-	 * 
-	 */
-	public Sprite(double x, double y, String spriteType) {
-		super(x, y);
-		this.spriteType = spriteType;
-		this.imagePath = "";
+	public Sprite() {
 	}
 
 	public abstract void render(Graphics2D g);
@@ -58,13 +38,13 @@ public abstract class Sprite extends Entity {
 	}
 
 	public String getImagePath() {
-		return imagePath;
+		return spritePath;
 	}
 
-	public void setImagePath(String imagePath) {
-		String oldValue = this.imagePath;
-		this.imagePath = imagePath;
-		firePropertyChange("imagePath", oldValue, imagePath);
+	public void setImagePath(String spritePath) {
+		String oldValue = this.spritePath;
+		this.spritePath = spritePath;
+		firePropertyChange("imagePath", oldValue, spritePath);
 	}
 
 }

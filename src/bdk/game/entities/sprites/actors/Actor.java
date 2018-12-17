@@ -18,25 +18,21 @@ import bdk.game.entities.sprites.actors.components.operators.Operator;
  *
  */
 public class Actor extends Sprite {
-
-	// --Finals
-	public static final String ACTOR_ENEMY = "enemy";
-	public static final String ACTOR_PLAYER = "player";
-	public static final String ACTOR_PROJECTILE = "projectile";
-	public static final String[] ACTOR_TYPES = new String[] { ACTOR_ENEMY, ACTOR_PLAYER, ACTOR_PROJECTILE };
+	
+	// ---------------------------------------------------------------------|
 	// --Properties
-	private String actorType;
-	// An actor needs to know in what collection it is
+	private ActorType type;
 	private String collectionName;
+	
 	// --Components
 	private Emitter emitter;
 	private List<Initializer> initializerList;
 	private List<Operator> operatorList;
 	private List<Actor> childList;
 
+	// ---------------------------------------------------------------------|
+	
 	public Actor(String actorName, String collectionName) {
-		super(0, 0, Sprite.TYPE_ACTOR);
-		
 		this.entityName = actorName;
 		this.setCollectionName(collectionName);
 		
@@ -99,16 +95,6 @@ public class Actor extends Sprite {
 		List<Operator> oldValue = this.operatorList;
 		this.operatorList = operatorList;
 		firePropertyChange("setOperatorList", oldValue, operatorList);
-	}
-
-	public String getActorType() {
-		return actorType;
-	}
-
-	public void setActorType(String actorType) {
-		String oldValue = this.actorType;
-		this.actorType = actorType;
-		firePropertyChange("setActorType", oldValue, actorType);
 	}
 
 	public String getCollectionName() {

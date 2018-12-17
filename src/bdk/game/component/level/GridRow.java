@@ -1,18 +1,12 @@
 package bdk.game.component.level;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.ArrayList;
 
 public class GridRow implements Serializable{
 	
-	private Grid grid;
+	private ArrayList<GridCell> gridCellList;
 	
-	// Contains all gridcells in this row
-	private List<GridCell> cellList;
-	private int rowLength;
-	
-	public GridRow(Grid grid) {
-		this.grid = grid;
+	public GridRow() {
 	}
-
 }
