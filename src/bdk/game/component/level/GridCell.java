@@ -1,8 +1,6 @@
 package bdk.game.component.level;
 
 import java.io.Serializable;
-
-import bdk.game.entities.sprites.tiles.Tile;
 import javafx.geometry.Point2D;
 
 /**
@@ -14,14 +12,17 @@ import javafx.geometry.Point2D;
  */
 
 public class GridCell implements Serializable {
+	private static final long serialVersionUID = -6660477549276327693L;
 	
 	// -----------------------------------------------------------------------------|
 	
 	private Point2D coordinates;
 	
 	// -----------------------------------------------------------------------------|
+	
 	public GridCell() {
 	
 	}
+	
 	// -----------------------------------------------------------------------------|
 }

@@ -2,8 +2,6 @@ package bdk.game.entities.sprites.actors;
 
 import java.io.Serializable;
 
-import bdk.util.graphics.Vector2D;
-
 /**
  * 
  * @author Andreas Farley
@@ -18,7 +16,6 @@ public class ActorLink implements Serializable{
 	private String actorType;
 	// Spawn information --------------------------------------------|
 	private int tickToSpawn;
-	private Vector2D origin;
 	// --------------------------------------------------------------|
 	
 	/** 
@@ -27,9 +24,8 @@ public class ActorLink implements Serializable{
 	 * @param entityName
 	 * @param collectionName
 	 */
-	public ActorLink(int tickToSpawn, Vector2D origin, String actorName, String collectionName, String actorType) {
+	public ActorLink(int tickToSpawn, String actorName, String collectionName, String actorType) {
 		this.tickToSpawn = tickToSpawn;
-		this.origin = origin;
 		
 		this.actorName = actorName;
 		this.collectionName = collectionName;
