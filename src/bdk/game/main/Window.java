@@ -8,9 +8,8 @@ import java.util.logging.Level;
 import javax.swing.JFrame;
 
 import bdk.cfg.WindowConfig;
-import bdk.input.BdkInputListener;
 import bdk.util.BdkFileManager;
-import bdk.util.graphics.Vector2D;
+import javafx.geometry.Point2D;
 
 /**
  * The Window holding the game instance. BDK has three essential dimensions. The
@@ -33,7 +32,8 @@ public class Window extends JFrame {
 	private static Dimension realDimension = new Dimension(512, 288);
 	private static Dimension defaultDimension = new Dimension(1280, 720);
 	private static Dimension fullScreenDimension = Toolkit.getDefaultToolkit().getScreenSize();
-	private static Vector2D scalingVector = new Vector2D();
+	
+	private Point2D scalingVector;
 	// ---------------------------------------------------------------------------------|
 	private static Window window;
 	private static Game game;
@@ -54,8 +54,7 @@ public class Window extends JFrame {
 
 		// Create the game with the given dimension
 		Dimension gameDimension = (this.windowConfig.isFullScreen()) ? fullScreenDimension : defaultDimension;
-		scalingVector.setX(gameDimension.getWidth() / realDimension.getWidth());
-		scalingVector.setY(gameDimension.getHeight() / realDimension.getHeight());
+		this.scalingVector = new Point2D(gameDimension.getWidth() / realDimension.getWidth(), gameDimension.getHeight() / realDimension.getHeight());
 
 		// We don't support windowed mode or resizing
 		this.setResizable(false);
@@ -77,6 +76,14 @@ public class Window extends JFrame {
 	// -----------------------------------------------------------------------------|
 	// GETTERS AND SETTERS
 	// -----------------------------------------------------------------------------|
+	
+	public Point2D getScalingVector() {
+		return scalingVector;
+	}
+
+	public void setScalingVector(Point2D scalingVector) {
+		this.scalingVector = scalingVector;
+	}
 
 	public static Dimension getRealDimension() {
 		return realDimension;
@@ -94,13 +101,6 @@ public class Window extends JFrame {
 		Window.defaultDimension = defaultDimension;
 	}
 
-	public static Vector2D getScalingVector() {
-		return scalingVector;
-	}
-
-	public static void setScalingVector(Vector2D scalingVector) {
-		Window.scalingVector = scalingVector;
-	}
 
 	public static void setFullScreenDimension(Dimension fullScreenDimension) {
 		Window.fullScreenDimension = fullScreenDimension;

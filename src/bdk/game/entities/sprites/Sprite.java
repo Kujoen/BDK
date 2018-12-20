@@ -13,13 +13,18 @@ import bdk.game.entities.Entity;
  */
 public abstract class Sprite extends Entity {
 	private static final long serialVersionUID = 2586067322532032810L;
+	
+	private static final String MISSING_SPRITE_PATH = "src/resources/missing_textures/missing_sprite.png";
 
 	// ---------------------------------------------------------------------|
 	protected transient BufferedImage spriteImage;
 	protected String spritePath;
 	// ---------------------------------------------------------------------|
 
-	public Sprite() {
+	public Sprite(String entityName) {
+		super(entityName);
+		
+		this.spritePath = MISSING_SPRITE_PATH;
 	}
 
 	public abstract void render(Graphics2D g);

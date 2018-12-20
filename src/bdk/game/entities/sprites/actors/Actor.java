@@ -32,10 +32,10 @@ public class Actor extends Sprite {
 
 	// ---------------------------------------------------------------------|
 	
-	public Actor(String actorName, String collectionName) {
-		this.entityName = actorName;
-		this.setCollectionName(collectionName);
+	public Actor(String entityName, String collectionName) {
+		super(entityName);
 		
+		this.setCollectionName(collectionName);
 		this.initializerList = new ArrayList<>();
 		this.operatorList = new ArrayList<>();
 		this.childList = new ArrayList<>();

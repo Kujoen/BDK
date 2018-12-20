@@ -3,9 +3,6 @@ package bdk.cfg;
 import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 
 import bdk.game.main.Game;
@@ -29,10 +26,10 @@ public class GameConfig implements Serializable {
 	// GAME INFORMATION
 	// -------------------------------------------------------------------------------|
 	
-	private String gameName = "defaultgame";
-	private String gameCreator = "Soliture";
+	private String gameName;
+	private String gameCreator;
 	
-	private ArrayList levelList;
+	private ArrayList<bdk.game.component.level.Level> levelList;
 
 	// -------------------------------------------------------------------------------|
 	// GAME PATHS
@@ -47,7 +44,10 @@ public class GameConfig implements Serializable {
 
 	// -----------------------------------------------------------------|
 
-	private GameConfig() {
+	public GameConfig() {
+		this.gameName = "defaultgame";
+		this.gameCreator = "kujoen";
+		this.levelList = new ArrayList<>();
 	}
 	
 	public static GameConfig loadGameConfig() throws FileNotFoundException {
@@ -99,11 +99,11 @@ public class GameConfig implements Serializable {
 		return menuPath;
 	}
 	
-	public ArrayList getLevelList() {
+	public ArrayList<bdk.game.component.level.Level> getLevelList() {
 		return levelList;
 	}
 
-	public void setLevelList(ArrayList levelList) {
+	public void setLevelList(ArrayList<bdk.game.component.level.Level> levelList) {
 		this.levelList = levelList;
 	}
 

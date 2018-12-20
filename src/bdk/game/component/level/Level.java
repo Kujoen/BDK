@@ -27,17 +27,7 @@ public class Level extends Component {
 	// -------------------------------------------------------------------------------|
 
 	private ArrayList<ActorLink> actorLinkList;
-
 	private transient HashMap<String, Actor> actorCache;
-
-	private transient LinkedList<Actor> layer1Buffer;
-	private transient LinkedList<Actor> layer2Buffer;
-
-	private transient LinkedList<Actor> addLayer1Buffer;
-	private transient LinkedList<Actor> addLayer2Buffer;
-
-	private transient LinkedList<Actor> removeLayer1Buffer;
-	private transient LinkedList<Actor> removeLayer2Buffer;
 
 	// -------------------------------------------------------------------------------|
 	// LEVEL INFORMATION
@@ -52,6 +42,10 @@ public class Level extends Component {
 		this.grid = new Grid();
 		this.scrollSpeed = 16;
 		this.levelTick = 0;
+	}
+	
+	public void initializeLevel() {
+		
 	}
 
 	// -----------------------------------------------------------------------------|

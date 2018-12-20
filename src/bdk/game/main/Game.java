@@ -74,11 +74,12 @@ public class Game extends Canvas implements Runnable {
 
 	private void initializeGame() {
 
-		ArrayList levelList = gameConfig.getLevelList();
-		if(levelList == null) {
-			// If the level list is empty, use a default empty level
+		// If the level list is empty, use a default empty level
+		if(gameConfig.getLevelList().isEmpty()) {
 			activeLevel = new bdk.game.component.level.Level("default");
 		}
+		
+		
 		
 	}
 
@@ -159,11 +160,6 @@ public class Game extends Canvas implements Runnable {
 	// UPDATING
 	// -----------------------------------------------------------------------------|
 
-	/**
-	 * Calls the update method of all gamecomponents, which call the update method
-	 * of all their entities. Depending on the current previewcode update may only
-	 * be called on request (Therefore public).
-	 */
 	public void update() {
 		
 	}
@@ -171,9 +167,7 @@ public class Game extends Canvas implements Runnable {
 	// -------------------------------------------------------------------------------|
 	// RENDERING
 	// -------------------------------------------------------------------------------|
-	/**
-	 * Main rendering method. Call count currently not limited.
-	 */
+	
 	public void render() {
 		BufferStrategy bs = this.getBufferStrategy();
 		if (bs == null) {

@@ -11,15 +11,33 @@ import bdk.util.graphics.BdkImageEditor;
  */
 public class Tile extends Sprite {
 	private static final long serialVersionUID = 8425188223140758605L;
-
-	@Override
-	public void render(Graphics2D g) {
-
+	
+	private static final String MISSING_TILE_PATH = "src/resources/missing_textures/missing_tile.png";
+	
+	// -----------------------------------------------------------------------------|
+	
+	public Tile() {
+		super("tile");
+		
+		this.spritePath = MISSING_TILE_PATH;
 	}
 
-	@Override
+	// -----------------------------------------------------------------------------|
+	// UPDATING
+	// -----------------------------------------------------------------------------|
+
 	public void update() {
 
 	}
+
+	// -----------------------------------------------------------------------------|
+	// RENDERING
+	// -----------------------------------------------------------------------------|
+
+	public void render(Graphics2D g) {
+				
+	}
+	
+	// -----------------------------------------------------------------------------|
 
 }
