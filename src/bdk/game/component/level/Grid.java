@@ -30,7 +30,6 @@ public class Grid implements Serializable {
 		this.scrollGridRowList = new ArrayList<>();
 		this.scrollArea = new Rectangle(8, 0, 16, 18);
 		
-		
 		for (int i = 0; i < Grid.VERTICAL_TILES; i++ ) {
 			for(int k = 0; k < Grid.HORIZONTAL_TILES; k++) {
 				Point2D gridCoordinates = new Point2D(k, i);	
