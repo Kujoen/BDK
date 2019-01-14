@@ -21,8 +21,15 @@ public abstract class Entity implements Serializable {
 
 	// ---------------------------------------------------------------------|
 	protected String entityName;
+	
 	protected Point2D position;
+	
+	protected transient Entity parent;
 	// ---------------------------------------------------------------------|
+	
+	public Entity() {
+		// EMPTY
+	}
 
 	public Entity(String entityName) {
 		this.entityName = entityName;
@@ -30,9 +37,9 @@ public abstract class Entity implements Serializable {
 
 	public abstract void update();
 
-	// -------------------------------------------------------------------------------|
+	// ---------------------------------------------------------------------|
 	// GETTERS & SETTERS
-	// -------------------------------------------------------------------------------|
+	// ---------------------------------------------------------------------|
 
 	public String getEntityName() {
 		return entityName;

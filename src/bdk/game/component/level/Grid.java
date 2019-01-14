@@ -41,11 +41,7 @@ public class Grid implements Serializable {
 	}
 	
 	public void initializeGrid() {
-		
-		gridCellList.stream().parallel().forEach(gridCell -> {
-			gridCell.initializeGridCell();
-		});
-		
+		gridCellList.stream().parallel().forEach(GridCell::initializeGridCell);
 	}
 	
 	// -----------------------------------------------------------------------------|
