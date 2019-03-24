@@ -9,6 +9,12 @@ import javafx.geometry.Point2D;
 
 
 /**
+ * First row of the Grid, with coordinates: 
+ * 
+ * --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ * |0,0||1,0||2,0||3,0||4,0||5,0||6,0||7,0||8,0||9,0||10,0||11,0||12,0||13,0||14,0||15,0||16,0||17,0||18,0||19,0||20,0||21,0||22,0||23,0||24,0||25,0||26,0||27,0||28,0||29,0||30,0||31,0||32,0|
+ * --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ * 
  * @author Andreas Farley
  */
 public class Grid implements Serializable {
@@ -24,23 +30,32 @@ public class Grid implements Serializable {
 	private Rectangle scrollArea;
 	private ArrayList<GridRow> scrollGridRowList;
 	// -----------------------------------------------------------------------------|
+	// Level initialized at runtime
+	private transient Level level;
+	// -----------------------------------------------------------------------------|
 	
 	public Grid() {
-		this.gridCellList = new ArrayList<>();
-		this.scrollGridRowList = new ArrayList<>();
 		this.scrollArea = new Rectangle(8, 0, 16, 18);
-		
+		this.scrollGridRowList = new ArrayList<>();
+		this.gridCellList = new ArrayList<>();
+
+		// Create a default static grid
 		for (int i = 0; i < Grid.VERTICAL_TILES; i++ ) {
 			for(int k = 0; k < Grid.HORIZONTAL_TILES; k++) {
-				Point2D gridCoordinates = new Point2D(k, i);	
-				GridCell gridCell = new GridCell(gridCoordinates, scrollArea.contains(k, i));
+				Point2D gridCoordinates = new Point2D(k, i);
 				
-				gridCellList.add(gridCell);
+				if (!scrollArea.contains(k, i)) {
+					GridCell gridCell = new GridCell(gridCoordinates, true);
+					gridCellList.add(gridCell);
+				}
 			}
 		}
 	}
 	
-	public void initializeGrid() {
+	public void initializeGrid(Level level) {
+		this.level = level;
+		
+		// Initialize static grid
 		gridCellList.stream().parallel().forEach(GridCell::initializeGridCell);
 	}
 	

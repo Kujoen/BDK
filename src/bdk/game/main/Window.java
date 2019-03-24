@@ -24,6 +24,12 @@ import javafx.geometry.Point2D;
  *
  */
 public class Window extends JFrame {
+	
+	// Main program entry point
+	public static void main(String[] args) {
+		window = new Window();
+	}
+	
 	private static final long serialVersionUID = 4077895023401843782L;
 	
 	// ---------------------------------------------------------------------------------|
@@ -127,9 +133,4 @@ public class Window extends JFrame {
 	}
 
 	// ---------------------------------------------------------------------------------|
-
-	// Main program entry point
-	public static void main(String[] args) {
-		window = new Window();
-	}
 }

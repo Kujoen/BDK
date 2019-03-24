@@ -1,6 +1,7 @@
 package bdk.game.main;
 
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
@@ -24,10 +25,15 @@ import bdk.input.BdkInputListener;
  *
  */
 public class Game extends Canvas implements Runnable {
-
+	
+	// ---------------------------------------------------------------------------------|
+	
 	private static final Logger LOGGER = Logger.getLogger("BDKGameLogger");
+	
+	private static final String TEXTURE_MISSING_TILE = "src/resources/missing_textures/missing_tile.png";
+	private static final String TEXTURE_MISSING_SPRITE = "src/resources/missing_textures/missing_tile.png";
+	private static final String TEXTURE_MISSING_TITLE = "src/resources/missing_textures/missing_tile.png";
 
-	// 512 x 288
 	// ---------------------------------------------------------------------------------|
 	private GameConfig gameConfig;
 	// ---------------------------------------------------------------------------------|
@@ -38,9 +44,11 @@ public class Game extends Canvas implements Runnable {
 	private static final long serialVersionUID = 1L;
 	private static final double TICKRATE = 60.0;
 	private transient Thread gameThread;
+	private Dimension gameDimension;
 	// ---------------------------------------------------------------------------------|
 	// --Components
 	private bdk.game.component.level.Level activeLevel;
+	private Window window;
 	// ---------------------------------------------------------------------------------|
 	private transient BdkInputListener inputListener;
 	// ---------------------------------------------------------------------------------|
@@ -57,6 +65,8 @@ public class Game extends Canvas implements Runnable {
 		} catch (FileNotFoundException e) {
 			Game.getLogger().log(Level.SEVERE, "Unable to open game config at: " + GameConfig.CONFIG_PATH, e);
 		}
+		
+		this.gameDimension = gameDimension;
 
 		// We are packing the window around the canvas, therefore set preferred size
 		this.setPreferredSize(gameDimension);
@@ -74,12 +84,10 @@ public class Game extends Canvas implements Runnable {
 
 	private void initializeGame() {
 
-		// If the level list is empty, use a default empty level
+		// If the level list is empty, add a default empty level
 		if(gameConfig.getLevelList().isEmpty()) {
 			activeLevel = new bdk.game.component.level.Level("default");
 		}
-		
-		
 		
 	}
 
@@ -162,6 +170,9 @@ public class Game extends Canvas implements Runnable {
 
 	public void update() {
 		
+		// Level Update
+		activeLevel.update();
+		
 	}
 
 	// -------------------------------------------------------------------------------|
@@ -175,6 +186,14 @@ public class Game extends Canvas implements Runnable {
 			return;
 		}
 		Graphics2D g = (Graphics2D) bs.getDrawGraphics();
+		
+		// Clear the screen 
+		g.setColor(Color.black);
+		g.drawRect(0, 0, gameDimension.width, gameDimension.height);
+		
+		
+		// Level Render
+		activeLevel.render(g);
 
 		g.dispose();
 		bs.show();

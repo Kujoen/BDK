@@ -9,7 +9,7 @@ import javafx.geometry.Point2D;
 /**
  * A GridCell links a tile to the grid and stores display information
  * (Coordinate of the tile as well as options for the sprite like
- * fit-to-width/height)
+ * fit-to-width/height) If in scroll area it will not render.
  *
  * @author Andreas Farley
  */
@@ -19,16 +19,21 @@ public class GridCell implements Serializable {
 
 	// -----------------------------------------------------------------------------|
 
-	private Point2D coordinates;
-	private boolean isInScrollArea;
-	
 	private Tile tile;
+	private Point2D coordinates;
+	private boolean isStaticCell;
+
 
 	// -----------------------------------------------------------------------------|
 
-	public GridCell(Point2D coordinates, boolean isInScrollArea) {
+	/**
+	 * A GridCell at specific coordinates. If cell is static, cell will always draw to transposed gridcoordinate.
+	 * @param coordinates
+	 * @param isStaticCell
+	 */
+	public GridCell(Point2D coordinates, boolean isStaticCell) {
 		this.coordinates = coordinates;
-		this.isInScrollArea = isInScrollArea;
+		this.isStaticCell = isStaticCell;
 		this.tile = new Tile();
 	}
 	
@@ -42,7 +47,9 @@ public class GridCell implements Serializable {
 	// -----------------------------------------------------------------------------|
 
 	public void update() {
-
+		if(!isStaticCell) {
+			
+		}
 	}
 
 	// -----------------------------------------------------------------------------|
