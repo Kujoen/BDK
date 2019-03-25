@@ -56,7 +56,7 @@ public class Grid implements Serializable {
 		this.level = level;
 		
 		// Initialize static grid
-		gridCellList.stream().parallel().forEach(GridCell::initializeGridCell);
+		gridCellList.stream().parallel().forEach(gridCell -> gridCell.initializeGridCell(level));
 	}
 	
 	// -----------------------------------------------------------------------------|

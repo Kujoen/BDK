@@ -37,8 +37,12 @@ public class GridCell implements Serializable {
 		this.tile = new Tile();
 	}
 	
-	public void initializeGridCell() {
-		
+	/**
+	 * This method is executed in parallel
+	 * @param level
+	 */
+	public void initializeGridCell(Level level) {
+		tile.initializeTile(level);
 	}
 
 

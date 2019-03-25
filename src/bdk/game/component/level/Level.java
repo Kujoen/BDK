@@ -1,12 +1,16 @@
 package bdk.game.component.level;
 
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import javax.imageio.ImageIO;
 
 import bdk.game.component.Component;
 import bdk.game.entities.sprites.actors.Actor;
 import bdk.game.entities.sprites.actors.ActorLink;
+import bdk.game.entities.sprites.tiles.Tile;
 import bdk.game.main.Game;
 
 /**
@@ -28,8 +32,13 @@ public class Level extends Component {
 	// -------------------------------------------------------------------------------|
 
 	private ArrayList<ActorLink> actorLinkList;
-	private transient HashMap<String, Actor> actorCache;
 
+	//--Runtime Buffers--
+	private transient HashMap<String, Actor> actorCache;
+	
+	private transient HashMap<String, BufferedImage> actorSpriteCache;
+	private transient HashMap<String, BufferedImage> tileSpriteCache;
+	
 	// -------------------------------------------------------------------------------|
 	// LEVEL INFORMATION
 	// -------------------------------------------------------------------------------|
@@ -54,8 +63,23 @@ public class Level extends Component {
 	 */
 	public void initializeLevel(Game game) {
 		this.game = game;
+		this.actorCache = new HashMap();
+		this.actorSpriteCache = new HashMap();
+		this.tileSpriteCache = new HashMap();
 		
+		// Initialize 
 		grid.initializeGrid(this);
+	}
+	
+	public void loadAndCacheTileSprite(String spritePath) {
+		// Only cache it if it isn't a missing tile sprite
+		if(spritePath != Tile.MISSING_TILE_PATH) {
+			tileSpriteCache.put(spritePath, ImageIO.read(spritePath));
+		}
+	}
+	
+	public void loadAndCacheActorSprite(String spritePath) {
+		// TODO
 	}
 
 	// -----------------------------------------------------------------------------|
@@ -84,6 +108,7 @@ public class Level extends Component {
 	// -> StaticTiles
 	// -> Widgets
 	// -------------------------------------------------------------------------------|
+	
 	@Override
 	public void render(Graphics2D g) {
 

@@ -29,16 +29,14 @@ public class Game extends Canvas implements Runnable {
 	// ---------------------------------------------------------------------------------|
 	
 	private static final Logger LOGGER = Logger.getLogger("BDKGameLogger");
-	
-	private static final String TEXTURE_MISSING_TILE = "src/resources/missing_textures/missing_tile.png";
-	private static final String TEXTURE_MISSING_SPRITE = "src/resources/missing_textures/missing_tile.png";
-	private static final String TEXTURE_MISSING_TITLE = "src/resources/missing_textures/missing_tile.png";
 
 	// ---------------------------------------------------------------------------------|
 	private GameConfig gameConfig;
 	// ---------------------------------------------------------------------------------|
 	private int framesPerSecond = 0;
 	private int updatesPerSecond = 0;
+	private int frameCounter = 0;
+	private int updateCounter = 0;
 	private boolean isRunning = false;
 	private boolean isPaused = false;
 	private static final long serialVersionUID = 1L;
@@ -143,6 +141,7 @@ public class Game extends Canvas implements Runnable {
 
 		// Values for the main game loop ---------------------------|
 		long initialTime = System.nanoTime();
+		long initialTimeForDebug = System.nanoTime();
 
 		final double nanosecondsPerUpdate = 1000000000 / TICKRATE;
 		double delta = 0;
@@ -150,15 +149,27 @@ public class Game extends Canvas implements Runnable {
 		// Pack the update and rendering operations in two while loops to allow pausing
 		while (isRunning) {
 			while (!isPaused) {
-				long currenttime = System.nanoTime();
-				delta += (currenttime - initialTime) / nanosecondsPerUpdate;
-				initialTime = currenttime;
+				long currentTime = System.nanoTime();
+				delta += (currentTime - initialTime) / nanosecondsPerUpdate;
+				initialTime = currentTime;
 
 				if (delta > 1) {
 					update();
+					updateCounter++;
 					delta--;
 				}
 				render();
+				frameCounter++;
+				
+				// For Debug Telemetry, updated every second
+				if (currentTime - initialTimeForDebug > 1000000000) {
+					framesPerSecond = frameCounter;
+					updatesPerSecond = updateCounter;
+					
+					frameCounter = 0;
+					updateCounter = 0;
+					initialTimeForDebug = currentTime;
+				}
 			}
 		}
 		// ---------------------------------------------------------------------------|
@@ -189,14 +200,25 @@ public class Game extends Canvas implements Runnable {
 		
 		// Clear the screen 
 		g.setColor(Color.black);
-		g.drawRect(0, 0, gameDimension.width, gameDimension.height);
-		
+		g.fillRect(0, 0, gameDimension.width, gameDimension.height);	
 		
 		// Level Render
 		activeLevel.render(g);
+		
+		// Render Debug Information
+		renderGameDebug(g);
 
 		g.dispose();
 		bs.show();
+	}
+	
+	public void renderGameDebug(Graphics2D g) {
+		// Draw FPS
+		g.setColor(Color.RED);
+		g.drawString("FPS: " + framesPerSecond, 10, 10);
+		
+		// Draw UPS
+		g.drawString("UPS: " + updatesPerSecond, 10, 20);
 	}
 
 	// -----------------------------------------------------------------------------|
