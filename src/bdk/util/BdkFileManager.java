@@ -1,5 +1,6 @@
 package bdk.util;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -8,6 +9,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.logging.Level;
+
+import javax.imageio.ImageIO;
 
 import bdk.game.main.Game;
 
@@ -63,5 +66,14 @@ public class BdkFileManager {
 		}
 
 		return null;
+	}
+	
+	public static BufferedImage loadImage(String path) {
+		try {
+			return ImageIO.read(new File(path));
+		} catch (IOException e) {
+			Game.getLogger().log(Level.WARNING, "Couldn't load texture at: " + path, e);
+			return null;
+		}
 	}
 }

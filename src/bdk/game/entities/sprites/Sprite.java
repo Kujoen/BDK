@@ -42,11 +42,11 @@ public abstract class Sprite extends Entity {
 		firePropertyChange("spriteImage", oldValue, spriteImage);
 	}
 
-	public String getImagePath() {
+	public String getSpritePath() {
 		return spritePath;
 	}
 
-	public void setImagePath(String spritePath) {
+	public void setSpritePath(String spritePath) {
 		String oldValue = this.spritePath;
 		this.spritePath = spritePath;
 		firePropertyChange("imagePath", oldValue, spritePath);

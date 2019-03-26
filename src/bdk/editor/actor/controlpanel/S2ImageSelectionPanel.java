@@ -185,7 +185,7 @@ public class S2ImageSelectionPanel extends BdkActorEditorPanel {
 								});
 
 								// Highlight the image if its the current selected image
-								if (listOfFiles[i].getPath().equals(bdkActorEditor.getCurrentActor().getImagePath())) {
+								if (listOfFiles[i].getPath().equals(bdkActorEditor.getCurrentActor().getSpritePath())) {
 									image = BdkImageEditor.highlight(image, Color.RED);
 								}
 

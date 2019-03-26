@@ -25,7 +25,7 @@ public class Tile extends Sprite {
 	}
 	
 	public void initializeTile(Level level) {
-		level.loadAndCacheTileSprite(spritePath);
+		level.loadAndCacheTileSprite(this);
 	}
 
 	// -----------------------------------------------------------------------------|

@@ -129,9 +129,9 @@ public class S2GeneralPropertiesPanel extends BdkActorEditorPanel {
 				typeComboBox.setEnabled(true);
 
 				// Check if actor has an image
-				if (!bdkActorEditor.getCurrentActor().getImagePath().isEmpty()) {
-					imageNameLabel.setText(bdkActorEditor.getCurrentActor().getImagePath()
-							.substring(bdkActorEditor.getCurrentActor().getImagePath().lastIndexOf("\\") + 1));
+				if (!bdkActorEditor.getCurrentActor().getSpritePath().isEmpty()) {
+					imageNameLabel.setText(bdkActorEditor.getCurrentActor().getSpritePath()
+							.substring(bdkActorEditor.getCurrentActor().getSpritePath().lastIndexOf("\\") + 1));
 					imageNameLabel.setEnabled(true);
 				} else {
 					imageNameLabel.setText("No image selected");
