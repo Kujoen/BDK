@@ -3,6 +3,8 @@ package bdk.editor.main;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.KeyEvent;
+import java.io.FileNotFoundException;
+import java.util.logging.Level;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -10,8 +12,10 @@ import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 
 import bdk.cfg.GameConfig;
+import bdk.cfg.WindowConfig;
 import bdk.editor.actor.BdkActorEditor;
 import bdk.editor.level.BdkLevelEditor;
+import bdk.game.main.Game;
 import bdk.util.BdkFileManager;
 
 public class BDKEditorWindow extends JFrame {
@@ -21,8 +25,7 @@ public class BDKEditorWindow extends JFrame {
 	private BdkActorEditor actorEditor;
 	private BdkLevelEditor levelEditor;
 
-	private static GameConfig gameInfo;
-	private static String gameName;
+	public static GameConfig gameConfig;
 
 	/**
 	 * Launch the application.
@@ -43,20 +46,19 @@ public class BDKEditorWindow extends JFrame {
 				try {
 					BDKEditorWindow frame = new BDKEditorWindow();
 				} catch (Exception e) {
-					e.printStackTrace();
+					Game.getLogger().log(Level.SEVERE, "Error creating window instance", e);
 				}
 			}
 		});
 	}
 	
-	/**
-	 * Loads the Info files from their respective paths
-	 */
 	public static void initializeConfigs() {
-		gameInfo = (GameConfig) BdkFileManager.loadSerializedObject(GameConfig.FILEPATH);
-
-		// Set the global cfg values
-		setGameName(gameInfo.getGameConfig().get(GameConfig.GAMENAME));
+		
+		try {
+			gameConfig = GameConfig.loadGameConfig();
+		} catch (FileNotFoundException e) {
+			Game.getLogger().log(Level.SEVERE, "Unable to open game config at: " + GameConfig.CONFIG_PATH, e);
+		}
 	}
 
 	/**
@@ -91,14 +93,6 @@ public class BDKEditorWindow extends JFrame {
 	// ------------------------------------------------------------------------------------------------|
 	// GETTERS & SETTERS
 	// ------------------------------------------------------------------------------------------------|
-
-	public static void setGameName(String gameName) {
-		BDKEditorWindow.gameName = gameName;
-	}
-
-	public static String getGameName() {
-		return gameName;
-	}
 
 	// DO NOT DELETE THESE GETTER/SETTERS ------------------------------|
 	public BdkActorEditor getActorEditor() {

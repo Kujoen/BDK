@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileNotFoundException;
 
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -19,7 +20,9 @@ import org.apache.commons.io.FilenameUtils;
 
 import bdk.editor.level.controlpanel.ControlPanel;
 import bdk.editor.level.previewpanel.PreviewPanel;
+import bdk.editor.main.BDKEditorWindow;
 import bdk.game.component.level.Level;
+import bdk.game.main.Game;
 import bdk.util.BdkFileManager;
 import bdk.util.ui.InputStringDialog;
 import bdk.util.ui.WarningDialog;
@@ -49,7 +52,7 @@ public class BdkLevelEditor extends JPanel {
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("BDK Levels", "lvl");
 		fileChooser = new JFileChooser();
 		fileChooser.setFileFilter(filter);
-		fileChooser.setCurrentDirectory(new File(Level.LEVEL_PATH));
+		fileChooser.setCurrentDirectory(new File(BDKEditorWindow.gameConfig.getLevelPath()));
 
 		// --------------------------------------------------------------|
 		// The level-editor consists of 2 sections, one where images/layers are
@@ -69,10 +72,12 @@ public class BdkLevelEditor extends JPanel {
 				int result = fileChooser.showOpenDialog(BdkLevelEditor.this);
 				if (result == JFileChooser.APPROVE_OPTION) {
 					File file = fileChooser.getSelectedFile();
-					Level newLevel = (Level) BdkFileManager.loadSerializedObject(file.getPath());
-					if (newLevel != null) {
-						setCurrentLevel(newLevel);
-					} else {
+					
+					Level newLevel;
+					try {
+						newLevel = (Level) BdkFileManager.loadSerializedObject(file.getPath());
+					} catch (FileNotFoundException e1) {
+						Game.getLogger().log(java.util.logging.Level.WARNING, "Couldn't load level", e1);
 						WarningDialog.showWarning("Something went wrong when opening the file");
 					}
 				}
@@ -124,7 +129,12 @@ public class BdkLevelEditor extends JPanel {
 						currentLevel.setComponentName(selectedName);
 					}
 
-					BdkFileManager.saveSerializableObject(currentLevel, file.getPath());
+					try {
+						BdkFileManager.saveSerializableObject(currentLevel, file.getPath());
+					} catch (FileNotFoundException e1) {
+						Game.getLogger().log(java.util.logging.Level.WARNING, "Couldn't save level", e1);
+						WarningDialog.showWarning("Something went wrong when saving the file");
+					}
 				}
 			}
 		});

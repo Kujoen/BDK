@@ -130,12 +130,12 @@ public class S2ImageSelectionPanel extends BdkActorEditorPanel {
 		imageMap = new HashMap<Icon, String>();
 
 		// Check if currently a actor is selected
-		if (!(bdkActorEditor.getCurrentActor() == null)) {
+		if (bdkActorEditor.getCurrentActor() != null) {
 			// Check if actortype was set
-			if (!(bdkActorEditor.getCurrentActor().getActorType() == null)) {
+			if (bdkActorEditor.getCurrentActor().getActorType() != null) {
 				// Search the directory of the actortype
-				File dir = new File(BDKEditorWindow.getGameName() + "/sprites/actors/"
-						+ bdkActorEditor.getCurrentActor().getActorType());
+				File dir = new File(BDKEditorWindow.gameConfig.getGameName() + "/sprites/actors/"
+						+ bdkActorEditor.getCurrentActor().getActorType().toString());
 				File[] listOfFiles = dir.listFiles();
 
 				for (int i = 0; i < listOfFiles.length; i++) {
@@ -156,30 +156,26 @@ public class S2ImageSelectionPanel extends BdkActorEditorPanel {
 									public void mouseClicked(MouseEvent arg0) {
 										JLabel pressedLabel = (JLabel) arg0.getSource();
 										bdkActorEditor.getCurrentActor()
-												.setImagePath(imageMap.get(pressedLabel.getIcon()));
+												.setSpritePath(imageMap.get(pressedLabel.getIcon()));
 									}
 
 									@Override
 									public void mouseEntered(MouseEvent arg0) {
-										// TODO Auto-generated method stub
 
 									}
 
 									@Override
 									public void mouseExited(MouseEvent arg0) {
-										// TODO Auto-generated method stub
 
 									}
 
 									@Override
 									public void mousePressed(MouseEvent arg0) {
-										// TODO Auto-generated method stub
 
 									}
 
 									@Override
 									public void mouseReleased(MouseEvent arg0) {
-										// TODO Auto-generated method stub
 
 									}
 								});

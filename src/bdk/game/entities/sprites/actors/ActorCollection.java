@@ -17,7 +17,7 @@ public class ActorCollection implements Serializable {
 
 	// --------------------------------------------------------------------------|
 	// Used for file IO
-	public static final String COLLECTION_PATH = BDKEditorWindow.getGameName() + "/sprites/actors/collections";
+	public static final String COLLECTION_PATH = BDKEditorWindow.gameConfig.getGameName() + "/sprites/actors/collections";
 
 	// Runtime variables --------------------------------------------------------|
 	transient private List<PropertyChangeListener> listeners = new ArrayList<>();

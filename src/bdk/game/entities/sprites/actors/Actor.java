@@ -19,9 +19,11 @@ import bdk.game.entities.sprites.actors.components.operators.Operator;
  */
 public class Actor extends Sprite {
 	
+	public static String[] ACTOR_TYPES = new String[] {"enemy", "player", "projectile"};
+	
 	// ---------------------------------------------------------------------|
 	// --Properties
-	private ActorType type;
+	private String type;
 	private String collectionName;
 	
 	// --Components
@@ -103,5 +105,13 @@ public class Actor extends Sprite {
 
 	public void setCollectionName(String collectionName) {
 		this.collectionName = collectionName;
+	}
+
+	public String getActorType() {
+		return type;
+	}
+
+	public void setActorType(String type) {
+		this.type = type;
 	}
 }

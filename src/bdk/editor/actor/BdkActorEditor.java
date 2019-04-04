@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
+import java.io.FileNotFoundException;
 
 import javax.swing.JFileChooser;
 import javax.swing.JMenu;
@@ -23,6 +24,7 @@ import bdk.editor.actor.controlpanel.ControlPanel;
 import bdk.editor.actor.previewpanel.PreviewPanel;
 import bdk.game.entities.sprites.actors.Actor;
 import bdk.game.entities.sprites.actors.ActorCollection;
+import bdk.game.main.Game;
 import bdk.util.BdkFileManager;
 import bdk.util.ui.InputStringDialog;
 import bdk.util.ui.WarningDialog;
@@ -64,12 +66,15 @@ public class BdkActorEditor extends JPanel {
 			int result = fileChooser.showOpenDialog(BdkActorEditor.this);
 			if (result == JFileChooser.APPROVE_OPTION) {
 				File file = fileChooser.getSelectedFile();
-				ActorCollection newCollection = (ActorCollection) BdkFileManager.loadSerializedObject(file.getPath());
-				if (newCollection != null) {
+				
+				try {
+					ActorCollection newCollection = (ActorCollection) BdkFileManager.loadSerializedObject(file.getPath());
+					
 					setCurrentActorCollection(newCollection);
 					setCurrentActor(null);
-				} else {
-					WarningDialog.showWarning("Something went wrong when opening the file");
+				} catch (FileNotFoundException e1) {
+					Game.getLogger().log(java.util.logging.Level.WARNING, "Couldn't load collection", e1);
+					WarningDialog.showWarning("Something went wrong when opening the collection");
 				}
 			}
 		});
@@ -84,7 +89,6 @@ public class BdkActorEditor extends JPanel {
 
 				if (resultName != null) {
 					setCurrentActorCollection(new ActorCollection(resultName));
-					//setCurrentActor(null);
 				}
 			}
 
@@ -120,7 +124,12 @@ public class BdkActorEditor extends JPanel {
 						currentActorCollection.setCollectionName(selectedName);
 					}
 
-					BdkFileManager.saveSerializableObject(currentActorCollection, file.getPath());
+					try {
+						BdkFileManager.saveSerializableObject(currentActorCollection, file.getPath());
+					} catch (FileNotFoundException e1) {
+						Game.getLogger().log(java.util.logging.Level.WARNING, "Couldn't save collection", e1);
+						WarningDialog.showWarning("Something went wrong when saving the collection");
+					}
 				}
 			}
 		});
