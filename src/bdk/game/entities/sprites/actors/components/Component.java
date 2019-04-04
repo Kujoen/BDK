@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import bdk.editor.actor.componentpanel.rows.ComponentRow;
 import bdk.game.entities.sprites.actors.Actor;
 import bdk.game.entities.sprites.actors.components.emitter.EmitContinously;
 import bdk.game.entities.sprites.actors.components.emitter.EmitOnce;
@@ -17,8 +16,6 @@ import bdk.game.entities.sprites.actors.components.emitter.EmitOnce;
 public abstract class Component implements Serializable{
 
 	protected Actor parentActor;
-
-	public abstract ComponentRow getComponentRow();
 	
 	public Component(Actor parentActor) {
 		this.parentActor = parentActor;

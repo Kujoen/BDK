@@ -1,6 +1,5 @@
 package bdk.game.entities.sprites.actors.components.emitter;
 
-import bdk.editor.actor.componentpanel.rows.ComponentRow;
 import bdk.game.entities.sprites.actors.Actor;
 
 /**
@@ -23,11 +22,6 @@ public class EmitContinously extends Emitter {
 		this.hasEmissionDelay = false;
 	}
 
-	@Override
-	public ComponentRow getComponentRow() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	// --------------------------------------------------------------------------------------------|
 	// GETTERS & SETTERS

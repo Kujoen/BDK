@@ -95,8 +95,8 @@ public class BdkLevelEditor extends JPanel {
 				if (resultName != null) {
 					setCurrentLevel(new Level(resultName));
 				}
+				menuItemSave.setEnabled(true);
 			}
-
 		});
 
 		menuItemSave = new JMenuItem("Save");
@@ -117,10 +117,6 @@ public class BdkLevelEditor extends JPanel {
 						// filename is OK as-is
 					} else {
 						file = new File(file.toString() + ".lvl");
-
-						// Dont think this is needed, remove later ?
-						// file = new File(file.getParentFile(),
-						// FilenameUtils.getBaseName(file.getName()) + ".ac");
 					}
 
 					// Check if the user changed the file name

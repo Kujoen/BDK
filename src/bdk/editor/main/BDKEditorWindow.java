@@ -35,7 +35,7 @@ public class BDKEditorWindow extends JFrame {
 		try { 
 		    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception e) {
-		    e.printStackTrace();
+			Game.getLogger().log(Level.WARNING, "Couldn't set look and feel", e);
 		}
 
 		// Load the required config files
@@ -69,15 +69,12 @@ public class BDKEditorWindow extends JFrame {
 
 		levelEditor = new BdkLevelEditor();
 		mainPanel.addTab("Level-Editor", levelEditor);
-		mainPanel.setMnemonicAt(0, KeyEvent.VK_F1);
 
 		actorEditor = new BdkActorEditor();
 		mainPanel.addTab("Actor-Editor", actorEditor);
-		mainPanel.setMnemonicAt(1, KeyEvent.VK_F2);
 
 		JPanel placeholder2 = new JPanel();
 		mainPanel.addTab("-", placeholder2);
-		mainPanel.setMnemonicAt(2, KeyEvent.VK_F3);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setExtendedState(MAXIMIZED_BOTH);
