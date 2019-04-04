@@ -4,7 +4,6 @@ package bdk.game.entities.sprites.tiles;
 import java.awt.Graphics2D;
 
 import bdk.game.component.level.Grid;
-import bdk.game.component.level.Level;
 import bdk.game.entities.sprites.Sprite;
 import bdk.util.BdkCopy;
 import bdk.util.graphics.BdkImageEditor;

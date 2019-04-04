@@ -47,7 +47,7 @@ public class GridRow implements Serializable {
 		this.yPosition = yPosition;
 
 		for(int i = 0; i < grid.getScrollArea().getWidth(); i++) {
-			tileList.get(i).setPosition(new Point2D(grid.transposeXFromGridToReal(i + grid.getScrollArea().width) , yPosition));
+			tileList.get(i).setPosition(new Point2D(grid.transposeXFromGridToReal(i + grid.getScrollArea().x) , yPosition));
 		}
 	}
 

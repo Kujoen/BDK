@@ -214,7 +214,7 @@ public class Game extends Canvas implements Runnable {
 
 	public void renderGameDebug(Graphics2D g) {
 		// Draw FPS
-		g.setColor(Color.RED);
+		g.setColor(Color.black);
 		g.drawString("FPS: " + framesPerSecond, 10, 10);
 
 		// Draw UPS

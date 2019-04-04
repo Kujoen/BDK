@@ -109,9 +109,10 @@ public class Level extends Component {
 	 */
 	@Override
 	public void update() {
-
 		// Increase the levelTick
 		levelTick++;
+		
+		grid.update();
 	}
 
 	// -------------------------------------------------------------------------------|
