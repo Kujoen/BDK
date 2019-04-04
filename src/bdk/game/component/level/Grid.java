@@ -168,7 +168,7 @@ public class Grid implements Serializable {
 
 			// We initialize the new row to be exactly on top of the previous last row. This
 			// means it spawns exactly one tile above the y position of the last row.
-			newRow.initializeGridRow(this, lastRow.getyPosition() - (DEFAULT_CELL_SIZE * cellDimension.getY()));
+			newRow.initializeGridRow(this, lastRow.getyPosition() - cellDimension.getY());
 
 			activeRowList.add(newRow);
 		}
@@ -232,6 +232,14 @@ public class Grid implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public LinkedList<GridRow> getActiveRowList() {
+		return activeRowList;
+	}
+
+	public void setActiveRowList(LinkedList<GridRow> activeRowList) {
+		this.activeRowList = activeRowList;
 	}
 
 }

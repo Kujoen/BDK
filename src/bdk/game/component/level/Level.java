@@ -56,7 +56,7 @@ public class Level extends Component {
 		super(name);
 
 		this.grid = new Grid();
-		this.scrollSpeed = 16;
+		this.scrollSpeed = 1500;
 		this.levelTick = 0;
 	}
 
@@ -130,8 +130,8 @@ public class Level extends Component {
 
 	@Override
 	public void render(Graphics2D g) {
-		grid.renderScrollGrid(g);
 		grid.renderStaticGrid(g);
+		grid.renderScrollGrid(g);
 	}
 
 	// -------------------------------------------------------------------------------|
@@ -204,6 +204,14 @@ public class Level extends Component {
 
 	public void setGame(Game game) {
 		this.game = game;
+	}
+
+	public Grid getGrid() {
+		return grid;
+	}
+
+	public void setGrid(Grid grid) {
+		this.grid = grid;
 	}
 
 

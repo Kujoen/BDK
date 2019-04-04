@@ -47,7 +47,7 @@ public class Tile extends Sprite {
 	// -----------------------------------------------------------------------------|
 
 	public void update() {
-		position.add(0, grid.getUpdateRate());
+		this.position = position.add(0, grid.getUpdateRate());
 	}
 
 	// -----------------------------------------------------------------------------|

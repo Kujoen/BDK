@@ -214,7 +214,7 @@ public class Game extends Canvas implements Runnable {
 
 	public void renderGameDebug(Graphics2D g) {
 		// Draw FPS
-		g.setColor(Color.black);
+		g.setColor(Color.red);
 		g.drawString("FPS: " + framesPerSecond, 10, 10);
 
 		// Draw UPS
@@ -224,8 +224,9 @@ public class Game extends Canvas implements Runnable {
 		if (activeLevel != null) {
 			g.drawString("Active level: " + activeLevel.getComponentName(), 10, 30);
 			g.drawString("TICK: " + activeLevel.getLevelTick(), 10, 40);
-			g.drawString("--------CACHED ACTOR SPRITES: ", 10, 50);
-			g.drawString("--------CACHED TILES SPRITES: " + activeLevel.getTileSpriteCache().size(), 10, 60);
+			g.drawString("CACHED ACTOR SPRITES: ", 10, 50);
+			g.drawString("CACHED TILES SPRITES: " + activeLevel.getTileSpriteCache().size(), 10, 60);
+			g.drawString("Active Rows: " + activeLevel.getGrid().getActiveRowList().size(), 10, 70);
 		}
 	}
 
