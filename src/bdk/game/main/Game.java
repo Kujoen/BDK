@@ -25,9 +25,9 @@ import bdk.input.BdkInputListener;
  *
  */
 public class Game extends Canvas implements Runnable {
-	
+
 	// ---------------------------------------------------------------------------------|
-	
+
 	private static final Logger LOGGER = Logger.getLogger("BDKGameLogger");
 
 	// ---------------------------------------------------------------------------------|
@@ -40,13 +40,12 @@ public class Game extends Canvas implements Runnable {
 	private boolean isRunning = false;
 	private boolean isPaused = false;
 	private static final long serialVersionUID = 1L;
-	private static final double TICKRATE = 60.0;
+	public static final double TICKRATE = 60.0;
 	private transient Thread gameThread;
-	private Dimension gameDimension;
 	// ---------------------------------------------------------------------------------|
 	// --Components
 	private bdk.game.component.level.Level activeLevel;
-	private Window window;
+	private BDKGameWindow window;
 	// ---------------------------------------------------------------------------------|
 	private transient BdkInputListener inputListener;
 	// ---------------------------------------------------------------------------------|
@@ -57,18 +56,18 @@ public class Game extends Canvas implements Runnable {
 	 * 
 	 * @param gameDimension The dimension of the game canvas
 	 */
-	public Game(Dimension gameDimension) {
+	public Game(BDKGameWindow window) {
+		this.window = window;
+		
 		try {
 			this.gameConfig = GameConfig.loadGameConfig();
 		} catch (FileNotFoundException e) {
 			Game.getLogger().log(Level.SEVERE, "Unable to open game config at: " + GameConfig.CONFIG_PATH, e);
 		}
-		
-		this.gameDimension = gameDimension;
 
 		// We are packing the window around the canvas, therefore set preferred size
-		this.setPreferredSize(gameDimension);
-		this.setSize(gameDimension);
+		this.setPreferredSize(window.getGameDimension());
+		this.setSize(window.getGameDimension());
 
 		// Attach the listeners
 		this.inputListener = new BdkInputListener();
@@ -83,10 +82,13 @@ public class Game extends Canvas implements Runnable {
 	private void initializeGame() {
 
 		// If the level list is empty, add a default empty level
-		if(gameConfig.getLevelList().isEmpty()) {
-			activeLevel = new bdk.game.component.level.Level("default");
+		if (gameConfig.getLevelList().isEmpty()) {
+			gameConfig.getLevelList().add(new bdk.game.component.level.Level("default"));
 		}
-		
+
+		// Set the first level to active and initialize
+		activeLevel = gameConfig.getLevelList().get(0);
+		activeLevel.initializeLevel(this);
 	}
 
 	// ------------------------------------------------------------------------------|
@@ -99,7 +101,7 @@ public class Game extends Canvas implements Runnable {
 	public void startGame() {
 		if (!isRunning) {
 			this.initializeGame();
-			
+
 			isRunning = true;
 			gameThread = new Thread(this);
 			gameThread.start();
@@ -160,12 +162,12 @@ public class Game extends Canvas implements Runnable {
 				}
 				render();
 				frameCounter++;
-				
+
 				// For Debug Telemetry, updated every second
 				if (currentTime - initialTimeForDebug > 1000000000) {
 					framesPerSecond = frameCounter;
 					updatesPerSecond = updateCounter;
-					
+
 					frameCounter = 0;
 					updateCounter = 0;
 					initialTimeForDebug = currentTime;
@@ -180,16 +182,14 @@ public class Game extends Canvas implements Runnable {
 	// -----------------------------------------------------------------------------|
 
 	public void update() {
-		
 		// Level Update
 		activeLevel.update();
-		
 	}
 
 	// -------------------------------------------------------------------------------|
 	// RENDERING
 	// -------------------------------------------------------------------------------|
-	
+
 	public void render() {
 		BufferStrategy bs = this.getBufferStrategy();
 		if (bs == null) {
@@ -197,28 +197,36 @@ public class Game extends Canvas implements Runnable {
 			return;
 		}
 		Graphics2D g = (Graphics2D) bs.getDrawGraphics();
-		
-		// Clear the screen 
+
+		// Clear the screen
 		g.setColor(Color.black);
-		g.fillRect(0, 0, gameDimension.width, gameDimension.height);	
-		
+		g.fillRect(0, 0, window.getGameDimension().width, window.getGameDimension().height);
+
 		// Level Render
 		activeLevel.render(g);
-		
+
 		// Render Debug Information
 		renderGameDebug(g);
 
 		g.dispose();
 		bs.show();
 	}
-	
+
 	public void renderGameDebug(Graphics2D g) {
 		// Draw FPS
 		g.setColor(Color.RED);
 		g.drawString("FPS: " + framesPerSecond, 10, 10);
-		
+
 		// Draw UPS
 		g.drawString("UPS: " + updatesPerSecond, 10, 20);
+
+		// Draw Level info
+		if (activeLevel != null) {
+			g.drawString("Active level: " + activeLevel.getComponentName(), 10, 30);
+			g.drawString("TICK: " + activeLevel.getLevelTick(), 10, 40);
+			g.drawString("--------CACHED ACTOR SPRITES: ", 10, 50);
+			g.drawString("--------CACHED TILES SPRITES: " + activeLevel.getTileSpriteCache().size(), 10, 60);
+		}
 	}
 
 	// -----------------------------------------------------------------------------|
@@ -263,6 +271,14 @@ public class Game extends Canvas implements Runnable {
 
 	public void setInputListener(BdkInputListener inputListener) {
 		this.inputListener = inputListener;
+	}
+
+	public BDKGameWindow getWindow() {
+		return window;
+	}
+
+	public void setWindow(BDKGameWindow window) {
+		this.window = window;
 	}
 
 	// -----------------------------------------------------------------------------|

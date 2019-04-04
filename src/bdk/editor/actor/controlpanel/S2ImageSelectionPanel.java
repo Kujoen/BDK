@@ -24,7 +24,7 @@ import javax.swing.JScrollPane;
 
 import bdk.editor.actor.BdkActorEditor;
 import bdk.editor.actor.BdkActorEditorPanel;
-import bdk.editor.main.BdkMainWindow;
+import bdk.editor.main.BDKEditorWindow;
 import bdk.util.graphics.BdkImageEditor;
 
 /**
@@ -134,7 +134,7 @@ public class S2ImageSelectionPanel extends BdkActorEditorPanel {
 			// Check if actortype was set
 			if (!(bdkActorEditor.getCurrentActor().getActorType() == null)) {
 				// Search the directory of the actortype
-				File dir = new File(BdkMainWindow.getGameName() + "/sprites/actors/"
+				File dir = new File(BDKEditorWindow.getGameName() + "/sprites/actors/"
 						+ bdkActorEditor.getCurrentActor().getActorType());
 				File[] listOfFiles = dir.listFiles();
 

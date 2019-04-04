@@ -14,7 +14,7 @@ import bdk.editor.actor.BdkActorEditor;
 import bdk.editor.level.BdkLevelEditor;
 import bdk.util.BdkFileManager;
 
-public class BdkMainWindow extends JFrame {
+public class BDKEditorWindow extends JFrame {
 
 	// \n[\s]* , storing this here
 	private JTabbedPane mainPanel;
@@ -41,7 +41,7 @@ public class BdkMainWindow extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					BdkMainWindow frame = new BdkMainWindow();
+					BDKEditorWindow frame = new BDKEditorWindow();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -62,7 +62,7 @@ public class BdkMainWindow extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public BdkMainWindow() {
+	public BDKEditorWindow() {
 		mainPanel = new JTabbedPane();
 
 		levelEditor = new BdkLevelEditor();
@@ -93,7 +93,7 @@ public class BdkMainWindow extends JFrame {
 	// ------------------------------------------------------------------------------------------------|
 
 	public static void setGameName(String gameName) {
-		BdkMainWindow.gameName = gameName;
+		BDKEditorWindow.gameName = gameName;
 	}
 
 	public static String getGameName() {

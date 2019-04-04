@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import bdk.editor.main.BdkMainWindow;
+import bdk.editor.main.BDKEditorWindow;
 
 /**
  * 
@@ -17,7 +17,7 @@ public class ActorCollection implements Serializable {
 
 	// --------------------------------------------------------------------------|
 	// Used for file IO
-	public static final String COLLECTION_PATH = BdkMainWindow.getGameName() + "/sprites/actors/collections";
+	public static final String COLLECTION_PATH = BDKEditorWindow.getGameName() + "/sprites/actors/collections";
 
 	// Runtime variables --------------------------------------------------------|
 	transient private List<PropertyChangeListener> listeners = new ArrayList<>();

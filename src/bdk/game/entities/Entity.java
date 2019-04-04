@@ -22,7 +22,7 @@ public abstract class Entity implements Serializable {
 	// ---------------------------------------------------------------------|
 	protected String entityName;
 	
-	protected Point2D position;
+	protected transient Point2D position;
 	
 	protected transient Entity parent;
 	// ---------------------------------------------------------------------|
@@ -36,19 +36,7 @@ public abstract class Entity implements Serializable {
 	}
 
 	public abstract void update();
-
-	// ---------------------------------------------------------------------|
-	// GETTERS & SETTERS
-	// ---------------------------------------------------------------------|
-
-	public String getEntityName() {
-		return entityName;
-	}
-
-	public void setEntityName(String entityName) {
-		this.entityName = entityName;
-	}
-
+	
 	// ---------------------------------------------------------------------|
 
 	// All classes of the type entity can be listened to--------------------|
@@ -70,5 +58,28 @@ public abstract class Entity implements Serializable {
 	}
 
 	// ---------------------------------------------------------------------|
+	
+
+	// ---------------------------------------------------------------------|
+	// GETTERS & SETTERS
+	// ---------------------------------------------------------------------|
+
+	public String getEntityName() {
+		return entityName;
+	}
+
+	public void setEntityName(String entityName) {
+		this.entityName = entityName;
+	}
+
+	public Point2D getPosition() {
+		return position;
+	}
+
+	public void setPosition(Point2D position) {
+		this.position = position;
+	}
+
+
 
 }

@@ -9,7 +9,7 @@ import javax.swing.SwingUtilities;
 import bdk.editor.actor.BdkActorEditor;
 import bdk.editor.actor.componentpanel.rows.ComponentRow;
 import bdk.editor.actor.componentpanel.rows.TextFieldRow;
-import bdk.editor.main.BdkMainWindow;
+import bdk.editor.main.BDKEditorWindow;
 import bdk.game.entities.sprites.actors.Actor;
 
 /**
@@ -40,7 +40,7 @@ public class EmitOnce extends Emitter {
 					System.out.println(event.getPropertyName());
 					// No other way to update everything from this listener.... maybe find a
 					// solution later
-					BdkActorEditor bdkActorEditor = ((BdkMainWindow) SwingUtilities
+					BdkActorEditor bdkActorEditor = ((BDKEditorWindow) SwingUtilities
 							.getWindowAncestor((JTextField) event.getSource())).getActorEditor();
 
 					EmitOnce currentEmitter = (EmitOnce) bdkActorEditor.getCurrentActor().getEmitter();

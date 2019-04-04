@@ -23,11 +23,11 @@ import javafx.geometry.Point2D;
  * @author Soliture
  *
  */
-public class Window extends JFrame {
+public class BDKGameWindow extends JFrame {
 	
 	// Main program entry point
 	public static void main(String[] args) {
-		window = new Window();
+		BDKGameWindow window = new BDKGameWindow();
 	}
 	
 	private static final long serialVersionUID = 4077895023401843782L;
@@ -35,14 +35,15 @@ public class Window extends JFrame {
 	// ---------------------------------------------------------------------------------|
 	private WindowConfig windowConfig;
 	// ---------------------------------------------------------------------------------|
-	private static Dimension realDimension = new Dimension(512, 288);
-	private static Dimension defaultDimension = new Dimension(1280, 720);
-	private static Dimension fullScreenDimension = Toolkit.getDefaultToolkit().getScreenSize();
+	private Dimension realDimension = new Dimension(512, 288);
+	private Dimension defaultDimension = new Dimension(1280, 720);
+	private Dimension fullScreenDimension = Toolkit.getDefaultToolkit().getScreenSize();
 	
+	// Evaluated at runtime
+	private Dimension gameDimension;
 	private Point2D scalingVector;
 	// ---------------------------------------------------------------------------------|
-	private static Window window;
-	private static Game game;
+	private Game game;
 	// ---------------------------------------------------------------------------------|
 
 	/**
@@ -50,7 +51,7 @@ public class Window extends JFrame {
 	 * config and adds a game of that dimension to its Frame and starts the game.
 	 * Also input listeners are attached to the window.
 	 */
-	public Window() {
+	public BDKGameWindow() {
 		// Load the window config
 		try {
 			this.windowConfig = (WindowConfig) BdkFileManager.loadSerializedObject(WindowConfig.FILEPATH);
@@ -59,7 +60,7 @@ public class Window extends JFrame {
 		}
 
 		// Create the game with the given dimension
-		Dimension gameDimension = (this.windowConfig.isFullScreen()) ? fullScreenDimension : defaultDimension;
+		this.gameDimension = (this.windowConfig.isFullScreen()) ? fullScreenDimension : defaultDimension;
 		this.scalingVector = new Point2D(gameDimension.getWidth() / realDimension.getWidth(), gameDimension.getHeight() / realDimension.getHeight());
 
 		// We don't support windowed mode or resizing
@@ -67,10 +68,9 @@ public class Window extends JFrame {
 		this.setUndecorated(true);
 
 		// Add the game to the frame and pack the frame around the canvas
-		game = new Game(gameDimension);
+		game = new Game(this);
 		this.add(game);
 		this.pack();
-		window = this;
 
 		// Start the show
 		this.setLocationRelativeTo(null);
@@ -83,53 +83,20 @@ public class Window extends JFrame {
 	// GETTERS AND SETTERS
 	// -----------------------------------------------------------------------------|
 	
+	public Dimension getGameDimension() {
+		return gameDimension;
+	}
+
+	public void setGameDimension(Dimension gameDimension) {
+		this.gameDimension = gameDimension;
+	}
+
 	public Point2D getScalingVector() {
 		return scalingVector;
 	}
 
 	public void setScalingVector(Point2D scalingVector) {
 		this.scalingVector = scalingVector;
-	}
-
-	public static Dimension getRealDimension() {
-		return realDimension;
-	}
-
-	public static void setRealDimension(Dimension realDimension) {
-		Window.realDimension = realDimension;
-	}
-
-	public static Dimension getDefaultDimension() {
-		return defaultDimension;
-	}
-
-	public static void setDefaultDimension(Dimension defaultDimension) {
-		Window.defaultDimension = defaultDimension;
-	}
-
-
-	public static void setFullScreenDimension(Dimension fullScreenDimension) {
-		Window.fullScreenDimension = fullScreenDimension;
-	}
-
-	public static Dimension getFullScreenDimension() {
-		return fullScreenDimension;
-	}
-
-	public static Window getWindow() {
-		return window;
-	}
-
-	public static void setWindow(Window window) {
-		Window.window = window;
-	}
-
-	public static Game getGame() {
-		return game;
-	}
-
-	public static void setGame(Game game) {
-		Window.game = game;
 	}
 
 	// ---------------------------------------------------------------------------------|

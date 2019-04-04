@@ -9,7 +9,7 @@ import javafx.geometry.Point2D;
 /**
  * A GridCell links a tile to the grid and stores display information
  * (Coordinate of the tile as well as options for the sprite like
- * fit-to-width/height) If in scroll area it will not render.
+ * fit-to-width/height).
  *
  * @author Andreas Farley
  */
@@ -21,39 +21,35 @@ public class GridCell implements Serializable {
 
 	private Tile tile;
 	private Point2D coordinates;
-	private boolean isStaticCell;
-
 
 	// -----------------------------------------------------------------------------|
 
 	/**
-	 * A GridCell at specific coordinates. If cell is static, cell will always draw to transposed gridcoordinate.
+	 * A GridCell at specific coordinates. 
 	 * @param coordinates
-	 * @param isStaticCell
 	 */
-	public GridCell(Point2D coordinates, boolean isStaticCell) {
+	public GridCell(Point2D coordinates) {
 		this.coordinates = coordinates;
-		this.isStaticCell = isStaticCell;
 		this.tile = new Tile();
 	}
-	
-	/**
-	 * This method is executed in parallel
-	 * @param level
-	 */
-	public void initializeGridCell(Level level) {
-		tile.initializeTile(level);
-	}
 
+	/**
+	 * This method is executed in parallel. Makes tile load its sprite, scale it
+	 * then transposes the gridcells position to real coordinates.
+	 * 
+	 * @param grid
+	 */
+	public void initializeGridCell(Grid grid) {
+		tile.initializeTileSprite(grid);
+		tile.setPosition(grid.transposePositionFromGridToReal(coordinates));
+	}
 
 	// -----------------------------------------------------------------------------|
 	// UPDATING
 	// -----------------------------------------------------------------------------|
 
 	public void update() {
-		if(!isStaticCell) {
-			
-		}
+
 	}
 
 	// -----------------------------------------------------------------------------|
@@ -61,8 +57,8 @@ public class GridCell implements Serializable {
 	// -----------------------------------------------------------------------------|
 
 	public void render(Graphics2D g) {
-				
+		tile.render(g);
 	}
-	
+
 	// -----------------------------------------------------------------------------|
 }

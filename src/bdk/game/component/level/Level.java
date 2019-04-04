@@ -2,11 +2,8 @@ package bdk.game.component.level;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import javax.imageio.ImageIO;
 
 import bdk.game.component.Component;
 import bdk.game.entities.sprites.actors.Actor;
@@ -51,6 +48,10 @@ public class Level extends Component {
 	private transient Game game;
 	// -------------------------------------------------------------------------------|
 
+	/**
+	 * Level with default scroll speed 16. 
+	 * @param name
+	 */
 	public Level(String name) {
 		super(name);
 
@@ -66,9 +67,9 @@ public class Level extends Component {
 	 */
 	public void initializeLevel(Game game) {
 		this.game = game;
-		this.actorCache = new HashMap();
-		this.actorSpriteCache = new HashMap();
-		this.tileSpriteCache = new HashMap();
+		this.actorCache = new HashMap<>();
+		this.actorSpriteCache = new HashMap<>();
+		this.tileSpriteCache = new HashMap<>();
 		
 		// Load missing-sprite textures
 		BufferedImage missingTileSprite = BdkFileManager.loadImage(Tile.MISSING_TILE_PATH);
@@ -87,7 +88,7 @@ public class Level extends Component {
 	public void loadAndCacheTileSprite(Tile tile) {
 		String spritePath = tile.getSpritePath();
 		
-		if(tile.getSpritePath() != Tile.MISSING_TILE_PATH && !tileSpriteCache.containsKey(spritePath)) {
+		if((tile.getSpritePath() != Tile.MISSING_TILE_PATH) && !tileSpriteCache.containsKey(spritePath)) {
 			BufferedImage spriteImage = BdkFileManager.loadImage(spritePath);
 			
 			// Set to missing sprite if image not found. This is not saved, it's only for this runtime.
@@ -97,9 +98,6 @@ public class Level extends Component {
 				tileSpriteCache.put(spritePath, spriteImage);
 			}	
 		}
-	}
-
-	public void loadAndCacheActorSprite(String spritePath) {
 	}
 
 	// -----------------------------------------------------------------------------|
@@ -131,11 +129,81 @@ public class Level extends Component {
 
 	@Override
 	public void render(Graphics2D g) {
-
+		grid.renderScrollGrid(g);
+		grid.renderStaticGrid(g);
 	}
 
 	// -------------------------------------------------------------------------------|
 	// GETTERS & SETTERS
 	// -------------------------------------------------------------------------------|
+	
+	public int getLevelTick() {
+		return levelTick;
+	}
+
+	public void setLevelTick(int levelTick) {
+		this.levelTick = levelTick;
+	}
+
+	public int getScrollSpeed() {
+		return scrollSpeed;
+	}
+
+	/**
+	 * Max scroll speed = cell size * tickrate
+	 * @param scrollSpeed
+	 */
+	public void setScrollSpeed(int scrollSpeed) {
+		this.scrollSpeed = scrollSpeed;
+	}
+
+	public ArrayList<ActorLink> getActorLinkList() {
+		return actorLinkList;
+	}
+
+	public void setActorLinkList(ArrayList<ActorLink> actorLinkList) {
+		this.actorLinkList = actorLinkList;
+	}
+
+	public HashMap<String, Actor> getActorCache() {
+		return actorCache;
+	}
+
+	public void setActorCache(HashMap<String, Actor> actorCache) {
+		this.actorCache = actorCache;
+	}
+
+	public HashMap<String, BufferedImage> getActorSpriteCache() {
+		return actorSpriteCache;
+	}
+
+	public void setActorSpriteCache(HashMap<String, BufferedImage> actorSpriteCache) {
+		this.actorSpriteCache = actorSpriteCache;
+	}
+
+	public HashMap<String, BufferedImage> getTileSpriteCache() {
+		return tileSpriteCache;
+	}
+
+	public void setTileSpriteCache(HashMap<String, BufferedImage> tileSpriteCache) {
+		this.tileSpriteCache = tileSpriteCache;
+	}
+
+	public Actor getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(Actor player) {
+		this.player = player;
+	}
+
+	public Game getGame() {
+		return game;
+	}
+
+	public void setGame(Game game) {
+		this.game = game;
+	}
+
 
 }
