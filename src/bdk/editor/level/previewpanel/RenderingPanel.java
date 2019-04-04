@@ -20,7 +20,6 @@ public class RenderingPanel extends BdkLevelEditorPanel {
 
 	@Override
 	public void notifyDataChanged() {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
@@ -43,8 +42,6 @@ public class RenderingPanel extends BdkLevelEditorPanel {
 	
 	@Override
 	public Dimension getPreferredSize() {
-		
-		//return new Dimension(0,0);
 		return new Dimension(d);
 	}
 	

@@ -56,10 +56,8 @@ public class Grid implements Serializable {
 		// Add Static tiles
 		for (int i = 0; i < Grid.VERTICAL_TILES; i++) {
 			for (int k = 0; k < Grid.HORIZONTAL_TILES; k++) {
-				Point2D gridCoordinates = new Point2D(k, i);
-
 				if (!scrollArea.contains(k, i)) {
-					GridCell gridCell = new GridCell(gridCoordinates);
+					GridCell gridCell = new GridCell(k, i);
 					gridCellList.add(gridCell);
 				}
 			}
@@ -118,7 +116,7 @@ public class Grid implements Serializable {
 		}
 	}
 
-	public Point2D transposePositionFromGridToReal(Point2D rawPosition) {
+	public Point2D transposePositionFromGridToReal(java.awt.geom.Point2D rawPosition) {
 		Point2D realPosition;
 
 		realPosition = new Point2D(rawPosition.getX() * cellDimension.getX(),

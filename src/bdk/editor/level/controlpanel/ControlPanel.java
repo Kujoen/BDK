@@ -21,8 +21,9 @@ public class ControlPanel extends BdkLevelEditorPanel {
 
 	// holds the image/prop panel
 	private JPanel contentPane;
-	private S1ImageSelectionPanel imageSelectPanel;
-	private S2PropertiesPanel propertiesPanel;
+	
+	private S2ImageSelectionPanel imageSelectPanel;
+	private S1PropertiesPanel propertiesPanel;
 
 	private GridBagConstraints gc;
 
@@ -33,8 +34,8 @@ public class ControlPanel extends BdkLevelEditorPanel {
 		contentPane = new JPanel();
 		contentPane.setLayout(new GridBagLayout());
 
-		imageSelectPanel = new S1ImageSelectionPanel(parent);
-		propertiesPanel = new S2PropertiesPanel(parent);
+		imageSelectPanel = new S2ImageSelectionPanel(parent);
+		propertiesPanel = new S1PropertiesPanel(parent);
 
 		gc = new GridBagConstraints();
 		gc.fill = gc.BOTH;
@@ -56,31 +57,28 @@ public class ControlPanel extends BdkLevelEditorPanel {
 		contentPane.add(new JLabel(), gc);
 
 		// Add the panels
-
 		gc.gridx = 0;
 		gc.gridy = 0;
-		gc.gridheight = 2;
-		contentPane.add(imageSelectPanel, gc);
-		
-		gc.gridx = 0;
-		gc.gridy = 2;
 		gc.gridheight = 1;
 		contentPane.add(propertiesPanel, gc);
+
+		gc.gridx = 0;
+		gc.gridy = 1;
+		gc.gridheight = 2;
+		contentPane.add(imageSelectPanel, gc);
 		
 		this.setLayout(new GridLayout());
 		this.add(contentPane);
 	}
 	
 	@Override
-	public Dimension getPreferredSize() {
-		
+	public Dimension getPreferredSize() {	
 		return new Dimension(0,0);
-		
 	}
 
 	@Override
 	public void notifyDataChanged() {
-
+		imageSelectPanel.notifyDataChanged();
 	}
 
 }

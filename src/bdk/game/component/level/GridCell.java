@@ -2,7 +2,6 @@ package bdk.game.component.level;
 
 import java.awt.Graphics2D;
 import java.io.Serializable;
-
 import bdk.game.entities.sprites.tiles.Tile;
 import javafx.geometry.Point2D;
 
@@ -20,7 +19,8 @@ public class GridCell implements Serializable {
 	// -----------------------------------------------------------------------------|
 
 	private Tile tile;
-	private Point2D coordinates;
+	private int gridX;
+	private int gridY;
 
 	// -----------------------------------------------------------------------------|
 
@@ -28,8 +28,9 @@ public class GridCell implements Serializable {
 	 * A GridCell at specific coordinates. 
 	 * @param coordinates
 	 */
-	public GridCell(Point2D coordinates) {
-		this.coordinates = coordinates;
+	public GridCell(int gridX, int gridY) {
+		this.gridX = gridX;
+		this.gridY = gridY;
 		this.tile = new Tile();
 	}
 
@@ -41,7 +42,7 @@ public class GridCell implements Serializable {
 	 */
 	public void initializeGridCell(Grid grid) {
 		tile.initializeTileSprite(grid);
-		tile.setPosition(grid.transposePositionFromGridToReal(coordinates));
+		tile.setPosition(new Point2D(grid.transposeXFromGridToReal(gridX), grid.transposeYFromGridToReal(gridY)));
 	}
 
 	// -----------------------------------------------------------------------------|

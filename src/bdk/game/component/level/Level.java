@@ -18,7 +18,7 @@ import bdk.util.BdkFileManager;
  * 
  * @author Andreas Farley
  */
-public class Level extends Component {
+public class Level extends Component{
 	private static final long serialVersionUID = 5563212588932966152L;
 
 	// -------------------------------------------------------------------------------|

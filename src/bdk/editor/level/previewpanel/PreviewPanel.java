@@ -43,14 +43,11 @@ public class PreviewPanel extends BdkLevelEditorPanel{
 	}
 
 	@Override
-	public void notifyDataChanged() {
-		
+	public void notifyDataChanged() {	
 	}
 	
 	@Override
-	public Dimension getPreferredSize() {
-		
+	public Dimension getPreferredSize() {		
 		return new Dimension();
 	}
-
 }

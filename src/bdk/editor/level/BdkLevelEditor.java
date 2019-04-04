@@ -1,13 +1,16 @@
 package bdk.editor.level;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -38,6 +41,7 @@ public class BdkLevelEditor extends JPanel {
 	private JMenuBar menuBar;
 	private JMenu menuFile;
 	private JMenuItem menuItemOpen, menuItemSave, menuItemNew;
+	private JLabel menuLabelLevelName;
 	private JFileChooser fileChooser;
 	// --------------------------------------------------------------|
 	private JPanel centerPanel;
@@ -45,9 +49,11 @@ public class BdkLevelEditor extends JPanel {
 	private ControlPanel controlPanel;
 	// --------------------------------------------------------------|
 	private Level currentLevel;
+	private String currentSpriteImagePath;
 	// --------------------------------------------------------------|
 
 	public BdkLevelEditor() {
+
 		// FileChooser-----------------------------------------------------------------------------|
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("BDK Levels", "lvl");
 		fileChooser = new JFileChooser();
@@ -55,8 +61,8 @@ public class BdkLevelEditor extends JPanel {
 		fileChooser.setCurrentDirectory(new File(BDKEditorWindow.gameConfig.getLevelPath()));
 
 		// --------------------------------------------------------------|
-		// The level-editor consists of 2 sections, one where images/layers are
-		// selected, and three showing the actuall level.
+		// The level-editor consists of 2 sections, one where images/layers
+		// are selected, and three showing the actuall level.
 		// --------------------------------------------------------------|
 
 		previewPanel = new PreviewPanel(this);
@@ -64,18 +70,26 @@ public class BdkLevelEditor extends JPanel {
 
 		// MENUBAR--------------------------------------------------------------------------------|
 		menuBar = new JMenuBar();
+
 		menuFile = new JMenu("File");
+
+		menuLabelLevelName = new JLabel("No active level");
+		menuLabelLevelName.setBorder(BorderFactory.createTitledBorder(""));
+		menuLabelLevelName.setForeground(Color.red);
+
 		menuItemOpen = new JMenuItem("Open");
 		menuItemOpen.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int result = fileChooser.showOpenDialog(BdkLevelEditor.this);
 				if (result == JFileChooser.APPROVE_OPTION) {
+
 					File file = fileChooser.getSelectedFile();
-					
-					Level newLevel;
+
 					try {
-						newLevel = (Level) BdkFileManager.loadSerializedObject(file.getPath());
+						Level newLevel = (Level) BdkFileManager.loadSerializedObject(file.getPath());
+						setCurrentLevel(newLevel);
+						menuLabelLevelName.setText(currentLevel.getComponentName());
 					} catch (FileNotFoundException e1) {
 						Game.getLogger().log(java.util.logging.Level.WARNING, "Couldn't load level", e1);
 						WarningDialog.showWarning("Something went wrong when opening the file");
@@ -94,6 +108,7 @@ public class BdkLevelEditor extends JPanel {
 
 				if (resultName != null) {
 					setCurrentLevel(new Level(resultName));
+					menuLabelLevelName.setText(currentLevel.getComponentName());
 				}
 				menuItemSave.setEnabled(true);
 			}
@@ -136,6 +151,7 @@ public class BdkLevelEditor extends JPanel {
 		});
 
 		menuBar.add(menuFile);
+		menuBar.add(menuLabelLevelName);
 		menuFile.add(menuItemOpen);
 		menuFile.add(menuItemNew);
 		menuFile.add(menuItemSave);
@@ -151,7 +167,7 @@ public class BdkLevelEditor extends JPanel {
 		centerPanel.setLayout(gbLayout);
 
 		GridBagConstraints c = new GridBagConstraints();
-		c.fill = c.BOTH;
+		c.fill = GridBagConstraints.BOTH;
 		c.weightx = 1;
 		c.weighty = 1;
 
@@ -168,6 +184,11 @@ public class BdkLevelEditor extends JPanel {
 		add(menuBar, BorderLayout.NORTH);
 	}
 
+	private void notifyDataChanged() {
+		controlPanel.notifyDataChanged();
+		previewPanel.notifyDataChanged();
+	}
+
 	// --------------------------------------------------------------------------------------------|
 	// GETTERS & SETTERS
 	// --------------------------------------------------------------------------------------------|
@@ -178,6 +199,15 @@ public class BdkLevelEditor extends JPanel {
 
 	public void setCurrentLevel(Level currentLevel) {
 		this.currentLevel = currentLevel;
+		notifyDataChanged();
+	}
+
+	public String getCurrentSpriteImagePath() {
+		return currentSpriteImagePath;
+	}
+
+	public void setCurrentSpriteImagePath(String currentSpriteImagePath) {
+		this.currentSpriteImagePath = currentSpriteImagePath;
 	}
 
 }
