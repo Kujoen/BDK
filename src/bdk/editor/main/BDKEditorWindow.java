@@ -53,7 +53,6 @@ public class BDKEditorWindow extends JFrame {
 	}
 	
 	public static void initializeConfigs() {
-		
 		try {
 			gameConfig = GameConfig.loadGameConfig();
 		} catch (FileNotFoundException e) {
