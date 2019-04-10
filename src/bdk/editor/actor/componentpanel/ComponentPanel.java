@@ -7,7 +7,7 @@ import java.beans.PropertyChangeEvent;
 
 import javax.swing.JPanel;
 
-import bdk.editor.actor.BdkActorEditor;
+import bdk.editor.actor.BDKActorEditor;
 import bdk.editor.actor.BdkActorEditorPanel;
 import bdk.game.entities.sprites.actors.components.Component;
 import bdk.game.entities.sprites.actors.components.emitter.EmitOnce;
@@ -26,7 +26,7 @@ public class ComponentPanel extends BdkActorEditorPanel {
 //	TitleRow rowOperator;
 //	TitleRow rowChildren;
 
-	public ComponentPanel(BdkActorEditor parent) {
+	public ComponentPanel(BDKActorEditor parent) {
 		super(parent);
 		this.setLayout(new GridLayout(1, 1));
 	}

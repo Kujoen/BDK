@@ -61,5 +61,31 @@ public class GridCell implements Serializable {
 		tile.render(g);
 	}
 
-	// -----------------------------------------------------------------------------|
+	// -------------------------------------------------------------------------------|
+	// GETTERS & SETTERS
+	// -------------------------------------------------------------------------------|
+	
+	public Tile getTile() {
+		return tile;
+	}
+
+	public void setTile(Tile tile) {
+		this.tile = tile;
+	}
+
+	public int getGridX() {
+		return gridX;
+	}
+
+	public void setGridX(int gridX) {
+		this.gridX = gridX;
+	}
+
+	public int getGridY() {
+		return gridY;
+	}
+
+	public void setGridY(int gridY) {
+		this.gridY = gridY;
+	}
 }

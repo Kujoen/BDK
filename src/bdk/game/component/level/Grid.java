@@ -240,4 +240,20 @@ public class Grid implements Serializable {
 		this.activeRowList = activeRowList;
 	}
 
+	public ArrayList<GridCell> getGridCellList() {
+		return gridCellList;
+	}
+
+	public void setGridCellList(ArrayList<GridCell> gridCellList) {
+		this.gridCellList = gridCellList;
+	}
+
+	public ArrayList<GridRow> getGridRowList() {
+		return gridRowList;
+	}
+
+	public void setGridRowList(ArrayList<GridRow> gridRowList) {
+		this.gridRowList = gridRowList;
+	}
+
 }

@@ -23,8 +23,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import bdk.editor.actor.BdkActorEditor;
-import bdk.editor.level.BdkLevelEditor;
+import bdk.editor.actor.BDKActorEditor;
+import bdk.editor.level.BDKLevelEditor;
 import bdk.editor.level.BdkLevelEditorPanel;
 import bdk.editor.main.BDKEditorWindow;
 import bdk.util.graphics.BdkImageEditor;
@@ -57,7 +57,7 @@ public class S2ImageSelectionPanel extends BdkLevelEditorPanel {
 
 	// -------------------------------------------------------------------------------|
 
-	public S2ImageSelectionPanel(BdkLevelEditor parent) {
+	public S2ImageSelectionPanel(BDKLevelEditor parent) {
 		super(parent);
 		
 		this.setBorder(BorderFactory.createTitledBorder("Sprites"));

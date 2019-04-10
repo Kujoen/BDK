@@ -9,7 +9,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import bdk.editor.level.BdkLevelEditor;
+import bdk.editor.level.BDKLevelEditor;
 import bdk.editor.level.BdkLevelEditorPanel;
 
 /**
@@ -27,7 +27,7 @@ public class ControlPanel extends BdkLevelEditorPanel {
 
 	private GridBagConstraints gc;
 
-	public ControlPanel(BdkLevelEditor parent) {
+	public ControlPanel(BDKLevelEditor parent) {
 		super(parent);
 		this.setBorder(BorderFactory.createTitledBorder("Images & Options"));
 

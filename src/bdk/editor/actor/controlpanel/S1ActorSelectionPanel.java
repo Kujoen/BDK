@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
-import bdk.editor.actor.BdkActorEditor;
+import bdk.editor.actor.BDKActorEditor;
 import bdk.editor.actor.BdkActorEditorPanel;
 import bdk.game.entities.sprites.actors.Actor;
 import bdk.util.ui.InputStringDialog;
@@ -33,7 +33,7 @@ public class S1ActorSelectionPanel extends BdkActorEditorPanel {
 	private JList listToDisplay;
 	private Object[] actorNames;
 
-	public S1ActorSelectionPanel(BdkActorEditor parent) {
+	public S1ActorSelectionPanel(BDKActorEditor parent) {
 		super(parent);
 		init();
 	}

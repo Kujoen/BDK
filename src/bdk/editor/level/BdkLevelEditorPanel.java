@@ -5,14 +5,14 @@ import javax.swing.JPanel;
 public abstract class BdkLevelEditorPanel extends JPanel{
 
 
-	protected BdkLevelEditor bdkLevelEditor;
+	protected BDKLevelEditor bdkLevelEditor;
 
 	/**
 	 * Write stuff to do when the data has changed here
 	 */
 	public abstract void notifyDataChanged();
 	
-	public BdkLevelEditorPanel(BdkLevelEditor parent){
+	public BdkLevelEditorPanel(BDKLevelEditor parent){
 		this.bdkLevelEditor = parent;
 	}
 }

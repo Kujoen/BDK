@@ -6,7 +6,7 @@ import java.beans.PropertyChangeEvent;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
-import bdk.editor.actor.BdkActorEditor;
+import bdk.editor.actor.BDKActorEditor;
 import bdk.editor.actor.BdkActorEditorPanel;
 
 /**
@@ -22,7 +22,7 @@ public class ControlPanel extends BdkActorEditorPanel{
 	S3TypePropertiesPanel advancedPropertiesPanel;
 	JPanel s2SubPanel;
 
-	public ControlPanel(BdkActorEditor parent) {
+	public ControlPanel(BDKActorEditor parent) {
 		super(parent);
 		
 		actorSelectionPanel = new S1ActorSelectionPanel(parent);

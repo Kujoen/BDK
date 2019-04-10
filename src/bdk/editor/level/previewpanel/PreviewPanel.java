@@ -8,7 +8,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import bdk.editor.level.BdkLevelEditor;
+import bdk.editor.level.BDKLevelEditor;
 import bdk.editor.level.BdkLevelEditorPanel;
 
 
@@ -25,7 +25,7 @@ public class PreviewPanel extends BdkLevelEditorPanel{
 	// This panel will draw the grid content
 	private RenderingPanel renderingPane;
 
-	public PreviewPanel(BdkLevelEditor parent) {
+	public PreviewPanel(BDKLevelEditor parent) {
 		super(parent);
 		this.setBorder(BorderFactory.createTitledBorder("Level Preview"));
 		
@@ -43,11 +43,15 @@ public class PreviewPanel extends BdkLevelEditorPanel{
 	}
 
 	@Override
-	public void notifyDataChanged() {	
+	public void notifyDataChanged() {
+		renderingPane.notifyDataChanged();
 	}
 	
+	// --------------------------------------------------------------------------|
+	// Required to stop this panel from squeezing space away from the controlpanel
 	@Override
 	public Dimension getPreferredSize() {		
 		return new Dimension();
 	}
+	// --------------------------------------------------------------------------|
 }

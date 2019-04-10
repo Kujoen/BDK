@@ -29,7 +29,7 @@ import bdk.util.BdkFileManager;
 import bdk.util.ui.InputStringDialog;
 import bdk.util.ui.WarningDialog;
 
-public class BdkActorEditor extends JPanel {
+public class BDKActorEditor extends JPanel {
 
 	private JMenuBar menuBar;
 	private JMenu menuFile;
@@ -45,7 +45,7 @@ public class BdkActorEditor extends JPanel {
 	private ActorCollection currentActorCollection;
 	private Actor currentActor;
 
-	public BdkActorEditor() {
+	public BDKActorEditor() {
 		// FileChooser-----------------------------------------------------------------------------|
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("Actor Collections", "ac");
 		fileChooser = new JFileChooser();
@@ -63,7 +63,7 @@ public class BdkActorEditor extends JPanel {
 		menuFile = new JMenu("File");
 		menuItemOpen = new JMenuItem("Open");
 		menuItemOpen.addActionListener((e) -> {
-			int result = fileChooser.showOpenDialog(BdkActorEditor.this);
+			int result = fileChooser.showOpenDialog(BDKActorEditor.this);
 			if (result == JFileChooser.APPROVE_OPTION) {
 				File file = fileChooser.getSelectedFile();
 				
@@ -103,7 +103,7 @@ public class BdkActorEditor extends JPanel {
 				// Set the suggested name to the name of the collection.
 				fileChooser.setSelectedFile(new File(currentActorCollection.getCollectionName() + ".ac"));
 
-				int result = fileChooser.showSaveDialog(BdkActorEditor.this);
+				int result = fileChooser.showSaveDialog(BDKActorEditor.this);
 
 				if (result == JFileChooser.APPROVE_OPTION) {
 					File file = fileChooser.getSelectedFile();

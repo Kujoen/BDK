@@ -22,7 +22,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import bdk.editor.actor.BdkActorEditor;
+import bdk.editor.actor.BDKActorEditor;
 import bdk.editor.actor.BdkActorEditorPanel;
 import bdk.editor.main.BDKEditorWindow;
 import bdk.util.graphics.BdkImageEditor;
@@ -50,7 +50,7 @@ public class S2ImageSelectionPanel extends BdkActorEditorPanel {
 	// --
 	private Map<Icon, String> imageMap;
 
-	public S2ImageSelectionPanel(BdkActorEditor parent) {
+	public S2ImageSelectionPanel(BDKActorEditor parent) {
 		super(parent);
 
 		buttonRefresh = new JButton("Refresh");

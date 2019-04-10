@@ -13,8 +13,8 @@ import javax.swing.UIManager;
 
 import bdk.cfg.GameConfig;
 import bdk.cfg.WindowConfig;
-import bdk.editor.actor.BdkActorEditor;
-import bdk.editor.level.BdkLevelEditor;
+import bdk.editor.actor.BDKActorEditor;
+import bdk.editor.level.BDKLevelEditor;
 import bdk.game.main.Game;
 import bdk.util.BdkFileManager;
 
@@ -22,8 +22,8 @@ public class BDKEditorWindow extends JFrame {
 
 	// \n[\s]* , storing this here
 	private JTabbedPane mainPanel;
-	private BdkActorEditor actorEditor;
-	private BdkLevelEditor levelEditor;
+	private BDKActorEditor actorEditor;
+	private BDKLevelEditor levelEditor;
 
 	public static GameConfig gameConfig;
 
@@ -66,14 +66,14 @@ public class BDKEditorWindow extends JFrame {
 	public BDKEditorWindow() {
 		mainPanel = new JTabbedPane();
 
-		levelEditor = new BdkLevelEditor();
+		levelEditor = new BDKLevelEditor();
 		mainPanel.addTab("Level-Editor", levelEditor);
 
-		actorEditor = new BdkActorEditor();
+		actorEditor = new BDKActorEditor();
 		mainPanel.addTab("Actor-Editor", actorEditor);
 
 		JPanel placeholder2 = new JPanel();
-		mainPanel.addTab("-", placeholder2);
+		mainPanel.addTab("Game-Editor", placeholder2);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setExtendedState(MAXIMIZED_BOTH);
@@ -91,11 +91,11 @@ public class BDKEditorWindow extends JFrame {
 	// ------------------------------------------------------------------------------------------------|
 
 	// DO NOT DELETE THESE GETTER/SETTERS ------------------------------|
-	public BdkActorEditor getActorEditor() {
+	public BDKActorEditor getActorEditor() {
 		return actorEditor;
 	}
 
-	public void setActorEditor(BdkActorEditor actorEditor) {
+	public void setActorEditor(BDKActorEditor actorEditor) {
 		this.actorEditor = actorEditor;
 	}
 	// -----------------------------------------------------------------|

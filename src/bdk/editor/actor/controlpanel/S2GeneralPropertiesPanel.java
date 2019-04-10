@@ -17,7 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import bdk.editor.actor.BdkActorEditor;
+import bdk.editor.actor.BDKActorEditor;
 import bdk.editor.actor.BdkActorEditorPanel;
 import bdk.game.entities.sprites.actors.Actor;
 
@@ -34,7 +34,7 @@ public class S2GeneralPropertiesPanel extends BdkActorEditorPanel {
 	JLabel imageHintLabel;
 	JLabel imageNameLabel;
 
-	public S2GeneralPropertiesPanel(BdkActorEditor parent) {
+	public S2GeneralPropertiesPanel(BDKActorEditor parent) {
 		super(parent);
 
 		nameLabel = new JLabel("Actor name : ");

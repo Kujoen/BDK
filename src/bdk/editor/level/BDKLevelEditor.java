@@ -6,7 +6,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 
@@ -35,7 +34,7 @@ import bdk.util.ui.WarningDialog;
  * @author Andreas Farley
  *
  */
-public class BdkLevelEditor extends JPanel {
+public class BDKLevelEditor extends JPanel {
 
 	// --------------------------------------------------------------|
 	private JMenuBar menuBar;
@@ -50,9 +49,15 @@ public class BdkLevelEditor extends JPanel {
 	// --------------------------------------------------------------|
 	private Level currentLevel;
 	private String currentSpriteImagePath;
+	private int scrollGridStartIndex;
 	// --------------------------------------------------------------|
+	
+	// ------------------------------------------------------------------------------|
+	// GENERAL METHODS
+	// ------------------------------------------------------------------------------|
 
-	public BdkLevelEditor() {
+
+	public BDKLevelEditor() {
 
 		// FileChooser-----------------------------------------------------------------------------|
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("BDK Levels", "lvl");
@@ -62,7 +67,7 @@ public class BdkLevelEditor extends JPanel {
 
 		// --------------------------------------------------------------|
 		// The level-editor consists of 2 sections, one where images/layers
-		// are selected, and three showing the actuall level.
+		// are selected, and three showing the actual level.
 		// --------------------------------------------------------------|
 
 		previewPanel = new PreviewPanel(this);
@@ -81,7 +86,7 @@ public class BdkLevelEditor extends JPanel {
 		menuItemOpen.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int result = fileChooser.showOpenDialog(BdkLevelEditor.this);
+				int result = fileChooser.showOpenDialog(BDKLevelEditor.this);
 				if (result == JFileChooser.APPROVE_OPTION) {
 
 					File file = fileChooser.getSelectedFile();
@@ -123,7 +128,7 @@ public class BdkLevelEditor extends JPanel {
 				// Set the suggested name to the name of the collection.
 				fileChooser.setSelectedFile(new File(currentLevel.getComponentName() + ".lvl"));
 
-				int result = fileChooser.showSaveDialog(BdkLevelEditor.this);
+				int result = fileChooser.showSaveDialog(BDKLevelEditor.this);
 
 				if (result == JFileChooser.APPROVE_OPTION) {
 					File file = fileChooser.getSelectedFile();

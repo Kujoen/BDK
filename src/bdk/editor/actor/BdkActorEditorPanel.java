@@ -14,14 +14,14 @@ import bdk.game.entities.sprites.actors.ActorCollection;
  */
 public abstract class BdkActorEditorPanel extends JPanel{
 	
-	protected BdkActorEditor bdkActorEditor;
+	protected BDKActorEditor bdkActorEditor;
 
 	/**
 	 * Write stuff to do when the data has changed here
 	 */
 	public abstract void notifyDataChanged(PropertyChangeEvent event);
 	
-	public BdkActorEditorPanel(BdkActorEditor parent){
+	public BdkActorEditorPanel(BDKActorEditor parent){
 		this.bdkActorEditor = parent;
 	}
 }

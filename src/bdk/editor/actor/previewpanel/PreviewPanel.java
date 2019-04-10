@@ -15,7 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import bdk.editor.actor.BdkActorEditor;
+import bdk.editor.actor.BDKActorEditor;
 import bdk.editor.actor.BdkActorEditorPanel;
 
 /**
@@ -43,7 +43,7 @@ public class PreviewPanel extends BdkActorEditorPanel {
 	private JTextField setTickrateTextField;
 	// -------------------------------------|
 
-	public PreviewPanel(BdkActorEditor parent) {
+	public PreviewPanel(BDKActorEditor parent) {
 		super(parent);
 		// CONROLPANEL--------------------------------------------------------------------------|
 		startPreviewButton = new JButton("start");
@@ -166,7 +166,7 @@ public class PreviewPanel extends BdkActorEditorPanel {
 		frame.setLayout(new GridLayout(1, 1));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		PreviewPanel panel = new PreviewPanel(new BdkActorEditor());
+		PreviewPanel panel = new PreviewPanel(new BDKActorEditor());
 
 		frame.getContentPane().add(panel);
 		frame.setVisible(true);
