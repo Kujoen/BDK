@@ -23,9 +23,9 @@ public class Grid implements Serializable {
 	private static final long serialVersionUID = -5043041988399800929L;
 
 	// -----------------------------------------------------------------------------|
-	private static final int DEFAULT_CELL_SIZE = 16;
-	private static final int HORIZONTAL_TILES = 32;
-	private static final int VERTICAL_TILES = 18;
+	public static final int DEFAULT_CELL_SIZE = 16;
+	public static final int HORIZONTAL_TILES = 32;
+	public static final int VERTICAL_TILES = 18;
 	// -----------------------------------------------------------------------------|
 	private ArrayList<GridCell> gridCellList;
 	// -----------------------------------------------------------------------------|
