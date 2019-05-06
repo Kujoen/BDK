@@ -41,6 +41,8 @@ public class BDKLevelEditor extends JPanel {
 	private JMenu menuFile;
 	private JMenuItem menuItemOpen, menuItemSave, menuItemNew;
 	private JLabel menuLabelLevelName;
+	private JLabel menuLabelToolName;
+	private JLabel menuLabelSpriteName;
 	private JFileChooser fileChooser;
 	// --------------------------------------------------------------|
 	private JPanel centerPanel;
@@ -49,7 +51,6 @@ public class BDKLevelEditor extends JPanel {
 	// --------------------------------------------------------------|
 	private Level currentLevel;
 	private String currentSpriteImagePath;
-	private int scrollGridStartIndex;
 	// --------------------------------------------------------------|
 	
 	// ------------------------------------------------------------------------------|
@@ -65,14 +66,6 @@ public class BDKLevelEditor extends JPanel {
 		fileChooser.setFileFilter(filter);
 		fileChooser.setCurrentDirectory(new File(BDKEditorWindow.gameConfig.getLevelPath()));
 
-		// --------------------------------------------------------------|
-		// The level-editor consists of 2 sections, one where images/layers
-		// are selected, and three showing the actual level.
-		// --------------------------------------------------------------|
-
-		previewPanel = new PreviewPanel(this);
-		controlPanel = new ControlPanel(this);
-
 		// MENUBAR--------------------------------------------------------------------------------|
 		menuBar = new JMenuBar();
 
@@ -82,6 +75,14 @@ public class BDKLevelEditor extends JPanel {
 		menuLabelLevelName.setBorder(BorderFactory.createTitledBorder(""));
 		menuLabelLevelName.setForeground(Color.red);
 
+		menuLabelToolName = new JLabel("No active tool");
+		menuLabelToolName.setBorder(BorderFactory.createTitledBorder(""));
+		menuLabelToolName.setForeground(Color.red);	
+		
+		menuLabelSpriteName = new JLabel("No active sprite");
+		menuLabelSpriteName.setBorder(BorderFactory.createTitledBorder(""));
+		menuLabelSpriteName.setForeground(Color.red);	
+		
 		menuItemOpen = new JMenuItem("Open");
 		menuItemOpen.addActionListener(new ActionListener() {
 			@Override
@@ -94,7 +95,7 @@ public class BDKLevelEditor extends JPanel {
 					try {
 						Level newLevel = (Level) BdkFileManager.loadSerializedObject(file.getPath());
 						setCurrentLevel(newLevel);
-						menuLabelLevelName.setText(currentLevel.getComponentName());
+						menuLabelLevelName.setText("Level: " + currentLevel.getComponentName());
 					} catch (FileNotFoundException e1) {
 						Game.getLogger().log(java.util.logging.Level.WARNING, "Couldn't load level", e1);
 						WarningDialog.showWarning("Something went wrong when opening the file");
@@ -113,7 +114,7 @@ public class BDKLevelEditor extends JPanel {
 
 				if (resultName != null) {
 					setCurrentLevel(new Level(resultName));
-					menuLabelLevelName.setText(currentLevel.getComponentName());
+					menuLabelLevelName.setText("Level: " + currentLevel.getComponentName());
 				}
 				menuItemSave.setEnabled(true);
 			}
@@ -157,10 +158,21 @@ public class BDKLevelEditor extends JPanel {
 
 		menuBar.add(menuFile);
 		menuBar.add(menuLabelLevelName);
+		menuBar.add(menuLabelToolName);
+		menuBar.add(menuLabelSpriteName);
 		menuFile.add(menuItemOpen);
 		menuFile.add(menuItemNew);
 		menuFile.add(menuItemSave);
 		// MENUBAR END ------------------------------------------------------|
+		
+		// --------------------------------------------------------------|
+		// The level-editor consists of 2 sections, one where images/layers
+		// are selected, and three showing the actual level.
+		// --------------------------------------------------------------|
+
+		previewPanel = new PreviewPanel(this);
+		controlPanel = new ControlPanel(this);
+		
 		// ------------------------------------------------------------------|
 
 		// Create the layout
@@ -212,7 +224,16 @@ public class BDKLevelEditor extends JPanel {
 	}
 
 	public void setCurrentSpriteImagePath(String currentSpriteImagePath) {
+		menuLabelSpriteName.setText("Sprite: " + currentSpriteImagePath);
 		this.currentSpriteImagePath = currentSpriteImagePath;
+	}
+
+	public JLabel getMenuLabelToolName() {
+		return menuLabelToolName;
+	}
+
+	public void setMenuLabelToolName(JLabel menuLabelToolName) {
+		this.menuLabelToolName = menuLabelToolName;
 	}
 
 }

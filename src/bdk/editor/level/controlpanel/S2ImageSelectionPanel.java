@@ -226,4 +226,22 @@ public class S2ImageSelectionPanel extends BdkLevelEditorPanel {
 	public void notifyDataChanged() {
 		displayImagePreview();
 	}
+	
+	// --------------------------------------------------------------------------|
+	// These overridess make sure the panel doesn't resize when loading the images
+	@Override
+	public Dimension getPreferredSize() {
+		return new Dimension();
+	}
+
+	@Override
+	public Dimension getMinimumSize() {
+		return new Dimension();
+	}
+
+	@Override
+	public Dimension getMaximumSize() {
+		return new Dimension();
+	}
+	// --------------------------------------------------------------------------|
 }
