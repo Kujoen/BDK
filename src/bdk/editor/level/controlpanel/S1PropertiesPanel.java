@@ -2,16 +2,18 @@ package bdk.editor.level.controlpanel;
 
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.JToggleButton;
+import javax.swing.text.AbstractDocument;
 
 import bdk.editor.level.BDKLevelEditor;
 import bdk.editor.level.BdkLevelEditorPanel;
+import bdk.util.ui.BdkInputFilter;
 
 /**
  * 
@@ -28,6 +30,8 @@ public class S1PropertiesPanel extends BdkLevelEditorPanel{
 	ButtonGroup buttonGroup;
 	
 	JPanel gridPropertiesPanel;
+	JLabel labelPropertiesScrollSpeed;
+	JTextField textPropertiesScrollSpeed;
 	
 	JPanel gridControlPanel;
 	
@@ -56,9 +60,20 @@ public class S1PropertiesPanel extends BdkLevelEditorPanel{
 		toolButtonPanel.add(buttonToolPaint);
 		
 		// GRID PROPERTIES --------------------------------------------------|
+
+		
+		labelPropertiesScrollSpeed = new JLabel("Scroll speed");
+		textPropertiesScrollSpeed = new JTextField("", 4);
+		textPropertiesScrollSpeed.setEnabled(false);
+		AbstractDocument document = (AbstractDocument) textPropertiesScrollSpeed.getDocument();
+		document.setDocumentFilter(new BdkInputFilter(BdkInputFilter.ALLOW_INT, 0 , 1000));
 		
 		gridPropertiesPanel = new JPanel();
 		gridPropertiesPanel.setBorder(BorderFactory.createTitledBorder("Grid properties"));
+		gridPropertiesPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		gridPropertiesPanel.add(labelPropertiesScrollSpeed);
+		gridPropertiesPanel.add(textPropertiesScrollSpeed);
+		
 		
 		// GRID CONTROLS ----------------------------------------------------|
 		
@@ -78,6 +93,6 @@ public class S1PropertiesPanel extends BdkLevelEditorPanel{
 
 	@Override
 	public void notifyDataChanged() {
-		
+		textPropertiesScrollSpeed.setEnabled(true);
 	}
 }

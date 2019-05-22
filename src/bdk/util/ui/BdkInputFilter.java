@@ -12,9 +12,20 @@ public class BdkInputFilter extends DocumentFilter {
 	public static final int ALLOW_STRING = 2;
 
 	private int filterType;
+	private int min;
+	private int max;
+	private boolean isMinMax;
 
 	public BdkInputFilter(int filterType) {
+		this.isMinMax = false;
 		this.filterType = filterType;
+	}
+	
+	public BdkInputFilter(int filterType, int min, int max) {
+		this.isMinMax = true;
+		this.filterType = filterType;
+		this.min = min;
+		this.max = max;
 	}
 
 	/**
@@ -28,10 +39,20 @@ public class BdkInputFilter extends DocumentFilter {
 		if (filterType != ALLOW_STRING) {
 			try {
 				if (filterType == ALLOW_INT) {
-					Integer.parseInt(text);
+					int result = Integer.parseInt(text);
+					
+					if(isMinMax && !(result >= min && result <= max)) {
+						WarningDialog.showWarning("Input out of range. Min: " + min + " , Max: " + max);
+					}
+					
 					return true;
 				} else {
-					Double.parseDouble(text);
+					double result = Double.parseDouble(text);
+					
+					if(isMinMax && !(result >= min && result <= max)) {
+						WarningDialog.showWarning("Input out of range. Min: " + min + " , Max: " + max);
+					}
+					
 					return true;
 				}
 

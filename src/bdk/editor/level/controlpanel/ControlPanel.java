@@ -79,6 +79,7 @@ public class ControlPanel extends BdkLevelEditorPanel {
 	@Override
 	public void notifyDataChanged() {
 		imageSelectPanel.notifyDataChanged();
+		propertiesPanel.notifyDataChanged();
 	}
 
 }

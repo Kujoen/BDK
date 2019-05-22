@@ -39,6 +39,8 @@ public class RenderingPanel extends BdkLevelEditorPanel {
 
 	// ----------------------------------|
 
+	private BufferedImage renderingPanelBuffer;
+	private boolean redraw;
 	private JPanel indicatorPanel;
 	private Map<Rectangle, GridCell> gridCellMap;
 	private boolean isMousePressed;
@@ -52,11 +54,15 @@ public class RenderingPanel extends BdkLevelEditorPanel {
 	public RenderingPanel(BDKLevelEditor parent) {
 		super(parent);
 
+		this.mousePressedPoint = null;
+		this.mouseReleasedPoint = null;
+		this.mouseDraggedPoint = null;
 		this.gridCellMap = new HashMap<>();
 		this.indicatorPanel = createIndicatorPanel();
 		this.isMouseDragged = false;
 		this.isMousePressed = false;
-
+		this.renderingPanelBuffer = new BufferedImage(defaultDimension.width, defaultDimension.height, BufferedImage.TYPE_INT_ARGB_PRE);
+		this.redraw = true;
 		this.addMouseListeners();
 		this.add(indicatorPanel);
 	}
@@ -68,7 +74,8 @@ public class RenderingPanel extends BdkLevelEditorPanel {
 			return;
 		}
 
-		Graphics g = this.getGraphics();
+		// Draw onto the buffer
+		Graphics g = renderingPanelBuffer.getGraphics();
 
 		int cellX = previewCellWidth * gridCell.getGridX();
 		int cellY = previewCellWidth * gridCell.getGridY();
@@ -237,36 +244,57 @@ public class RenderingPanel extends BdkLevelEditorPanel {
 		newIndicatorPanel.setOpaque(false);
 		return newIndicatorPanel;
 	}
-	
+
 	/**
-	 * Returns a rectangle that represents the area the user clicked and dragged over
+	 * Returns a rectangle that represents the area the user clicked and dragged
+	 * over
+	 * 
 	 * @return
 	 */
 	public Rectangle getSelectionRectangle() {
 		Rectangle coverRectangle = new Rectangle(mousePressedPoint);
 		coverRectangle.add(mouseDraggedPoint);
-		
+
 		return coverRectangle;
 	}
 
-	// GRID RENDER PANEL
-	// ----------------------------------------------------------------|
+	// GRID RENDER PANEL --------------------------------------------------|
 
+	/**
+	 * We have a problem, since we don't cache any sprites, repainting the component does a bunch of I/O all the time.
+	 * This slows everything down. Instead, draw any operations onto a BufferedImage. Then draw this BufferedImage onto the JPanel.
+	 * The BufferedImage is only redrawn from actual disk sprites when a redraw is requested.
+	 */
 	@Override
 	protected void paintComponent(Graphics g) {
-		// Clear old
+		// Clear screen
 		g.setColor(Color.black);
 		g.fillRect(0, 0, defaultDimension.width, defaultDimension.height);
-
+		
 		Level currentLevel = bdkLevelEditor.getCurrentLevel();
-
-		if (currentLevel != null) {
-			// We need to load the level from disk on this draw call
-			loadAndDrawLevel(g, currentLevel);
+		
+		if(currentLevel != null) {
+			// No redraw requested. Just draw the contents of the BufferedImage
+			if(!redraw) {
+				g.drawImage(renderingPanelBuffer, 0, 0, null);
+			} else {
+				Graphics bufferGraphics = renderingPanelBuffer.getGraphics();
+				loadAndDrawLevel(bufferGraphics, currentLevel);
+				bufferGraphics.dispose();
+				
+				g.drawImage(renderingPanelBuffer, 0, 0, null);
+				redraw = false;
+			}
 		}
+		
+		
 	}
 
 	private void loadAndDrawLevel(Graphics g, Level level) {
+		// Clear screen
+		g.setColor(Color.black);
+		g.fillRect(0, 0, defaultDimension.width, defaultDimension.height);
+		
 		// Preload default missing image
 		BufferedImage missingSpriteImage = BdkFileManager.loadImage(Tile.MISSING_TILE_PATH);
 
@@ -361,7 +389,7 @@ public class RenderingPanel extends BdkLevelEditorPanel {
 			case BDKLevelEditor.TOOL_SELECT:
 				break;
 			case BDKLevelEditor.TOOL_PAINT:
-				getGridCellsInArea(getSelectionRectangle()).stream().forEach(this::paintGridCell);
+				getGridCellsInArea(getSelectionRectangle()).parallelStream().forEach(this::paintGridCell);
 				break;
 			default:
 				break;
