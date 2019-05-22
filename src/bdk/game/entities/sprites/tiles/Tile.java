@@ -25,6 +25,11 @@ public class Tile extends Sprite {
 		super("tile");
 		this.spritePath = MISSING_TILE_PATH;
 	}
+	
+	public Tile(String spritePath) {
+		super("tile");
+		this.spritePath = spritePath;
+	}
 
 	/**
 	 * 

@@ -43,8 +43,7 @@ public class Grid implements Serializable {
 	private transient Double updateRate;
 	private transient boolean isUpdateRateChanged;
 
-	// Used to transpose from grid to real coordinates. x is the width multiplier
-	// and y the height multiplier.
+	// Calculated as : DefaultCellSize * scalingVector. So this is the actual cell width/height
 	private transient Point2D cellDimension;
 	// -----------------------------------------------------------------------------|
 

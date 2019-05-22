@@ -51,7 +51,11 @@ public class BDKLevelEditor extends JPanel {
 	// --------------------------------------------------------------|
 	private Level currentLevel;
 	private String currentSpriteImagePath;
+	private String currentToolName;
 	// --------------------------------------------------------------|
+	
+	public static final String TOOL_SELECT = "Select";
+	public static final String TOOL_PAINT = "Paint";
 	
 	// ------------------------------------------------------------------------------|
 	// GENERAL METHODS
@@ -59,6 +63,8 @@ public class BDKLevelEditor extends JPanel {
 
 
 	public BDKLevelEditor() {
+		
+		this.currentSpriteImagePath = "";
 
 		// FileChooser-----------------------------------------------------------------------------|
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("BDK Levels", "lvl");
@@ -236,4 +242,12 @@ public class BDKLevelEditor extends JPanel {
 		this.menuLabelToolName = menuLabelToolName;
 	}
 
+	public String getCurrentToolName() {
+		return currentToolName;
+	}
+
+	public void setCurrentToolName(String currentToolName) {
+		menuLabelToolName.setText("Tool: " + currentToolName);
+		this.currentToolName = currentToolName;
+	}
 }

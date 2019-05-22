@@ -39,15 +39,11 @@ public class S1PropertiesPanel extends BdkLevelEditorPanel{
 		// TOOL BUTTONS -----------------------------------------------------|
 		
 		buttonToolSelect = new JToggleButton("Select");
-		buttonToolSelect.addActionListener( e -> {
-			bdkLevelEditor.getMenuLabelToolName().setText("Tool: Select");
-		});
+		buttonToolSelect.addActionListener( e -> bdkLevelEditor.setCurrentToolName(BDKLevelEditor.TOOL_SELECT));
 		
 		
 		buttonToolPaint = new JToggleButton("Paint");
-		buttonToolPaint.addActionListener( e -> {
-			bdkLevelEditor.getMenuLabelToolName().setText("Tool: Paint");
-		});
+		buttonToolPaint.addActionListener( e -> bdkLevelEditor.setCurrentToolName(BDKLevelEditor.TOOL_PAINT));
 		
 		buttonGroup = new ButtonGroup();
 		buttonGroup.add(buttonToolSelect);
