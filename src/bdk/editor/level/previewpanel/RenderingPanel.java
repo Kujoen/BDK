@@ -128,20 +128,39 @@ public class RenderingPanel extends BdkLevelEditorPanel {
 
 		return rec;
 	}
-	
-	private ArrayList<Rectangle> getRectanglesInArea (Rectangle area) {
+
+	private ArrayList<Rectangle> getRectanglesInArea(Rectangle area) {
 		ArrayList<Rectangle> rectangleList = new ArrayList<>();
-		
-//		if (this.topRight.getY() < other.bottomLeft.getY() 
-//			      || this.bottomLeft.getY() > other.topRight.getY()) {
-//			        return false;
-//			    }
-//			    if (this.topRight.getX() < other.bottomLeft.getX() 
-//			      || this.bottomLeft.getX() > other.topRight.getX()) {
-//			        return false;
-//			    }
-		
+
+		for (Entry<Rectangle, GridCell> entry : gridCellMap.entrySet()) {
+			Rectangle targetRectangle = entry.getKey();
+
+			// Check if rectangles are overlapping
+			if ((targetRectangle.x < area.x + area.width) && (targetRectangle.x + targetRectangle.width > area.x)
+					&& (targetRectangle.y < area.y + area.height)
+					&& (targetRectangle.y + targetRectangle.height) > area.y) {
+				rectangleList.add(targetRectangle);
+			}
+		}
+
 		return rectangleList;
+	}
+
+	private ArrayList<GridCell> getGridCellsInArea(Rectangle area) {
+		ArrayList<GridCell> gridCellList = new ArrayList<>();
+
+		for (Entry<Rectangle, GridCell> entry : gridCellMap.entrySet()) {
+			Rectangle targetRectangle = entry.getKey();
+
+			// Check if rectangles are overlapping
+			if ((targetRectangle.x < area.x + area.width) && (targetRectangle.x + targetRectangle.width > area.x)
+					&& (targetRectangle.y < area.y + area.height)
+					&& (targetRectangle.y + targetRectangle.height) > area.y) {
+				gridCellList.add(entry.getValue());
+			}
+		}
+
+		return gridCellList;
 	}
 
 	// INDICATOR PANEL --------------------------------------------------------|
@@ -172,47 +191,62 @@ public class RenderingPanel extends BdkLevelEditorPanel {
 			protected void paintComponent(Graphics g) {
 				// we need g2d for stroke thickness
 				Graphics2D g2D = (Graphics2D) g;
-				
+
 				// make sure its overlapping
 				indicatorPanel.setLocation(new Point(0, 0));
 
 				// Clear panel
 				g2D.setColor(new Color(0, 0, 0, 0));
 				g2D.fillRect(0, 0, defaultDimension.width, defaultDimension.height);
-				
+
 				// Set indicator colour (RED)
 				g2D.setColor(Color.red);
 				g2D.setStroke(new BasicStroke(2));
-				
+
 				// Check if we have to paint selection indicators
-				if(isMousePressed && !isMouseDragged) {
+				if (isMousePressed && !isMouseDragged) {
 					Rectangle targetRectangle = getRectangleInCoordinate(mousePressedPoint);
-					
-					if(targetRectangle != null) {
-						g2D.drawRect(targetRectangle.x , targetRectangle.y, targetRectangle.width, targetRectangle.height);
+
+					if (targetRectangle != null) {
+						g2D.drawRect(targetRectangle.x, targetRectangle.y, targetRectangle.width,
+								targetRectangle.height);
 					}
-				} else if(isMouseDragged) {
+				} else if (isMouseDragged) {
 					// First check the case that we are still inside of the same rectangle
 					Rectangle sourceRectangle = getRectangleInCoordinate(mousePressedPoint);
 					Rectangle destinationRectangle = getRectangleInCoordinate(mouseDraggedPoint);
-					
-					if(sourceRectangle == destinationRectangle) {
-						g2D.drawRect(sourceRectangle.x , sourceRectangle.y, sourceRectangle.width, sourceRectangle.height);
-					} else {
-						// This rectangle covers the entire dragged area
-						Rectangle coverRectangle = new Rectangle(mousePressedPoint);
-						coverRectangle.add(mouseDraggedPoint);
-						
-						
+
+					if (sourceRectangle == null || destinationRectangle == null) {
+						return;
 					}
-					
-					
+
+					if (sourceRectangle == destinationRectangle) {
+						g2D.drawRect(sourceRectangle.x, sourceRectangle.y, sourceRectangle.width,
+								sourceRectangle.height);
+					} else {
+						// Draw every selected rectangle
+						for (Rectangle rec : getRectanglesInArea(getSelectionRectangle())) {
+							g2D.drawRect(rec.x, rec.y, rec.width, rec.height);
+						}
+					}
+
 				}
 			}
 		};
 
 		newIndicatorPanel.setOpaque(false);
 		return newIndicatorPanel;
+	}
+	
+	/**
+	 * Returns a rectangle that represents the area the user clicked and dragged over
+	 * @return
+	 */
+	public Rectangle getSelectionRectangle() {
+		Rectangle coverRectangle = new Rectangle(mousePressedPoint);
+		coverRectangle.add(mouseDraggedPoint);
+		
+		return coverRectangle;
 	}
 
 	// GRID RENDER PANEL
@@ -268,7 +302,7 @@ public class RenderingPanel extends BdkLevelEditorPanel {
 		this.addMouseListener(new MouseListener() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				isMousePressed =true;
+				isMousePressed = true;
 				mousePressedPoint = e.getPoint();
 				indicatorPanel.repaint();
 			}
@@ -323,13 +357,21 @@ public class RenderingPanel extends BdkLevelEditorPanel {
 				break;
 			}
 		} else {
-			
+			switch (bdkLevelEditor.getCurrentToolName()) {
+			case BDKLevelEditor.TOOL_SELECT:
+				break;
+			case BDKLevelEditor.TOOL_PAINT:
+				getGridCellsInArea(getSelectionRectangle()).stream().forEach(this::paintGridCell);
+				break;
+			default:
+				break;
+			}
 		}
 
 		// reset booleans
 		isMouseDragged = false;
 		isMousePressed = false;
-		
+
 		indicatorPanel.repaint();
 	}
 
