@@ -7,26 +7,38 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 
 import bdk.editor.level.BDKLevelEditor;
 import bdk.editor.level.BdkLevelEditorPanel;
 import bdk.game.component.level.Grid;
 import bdk.game.component.level.GridCell;
+import bdk.game.component.level.GridRow;
 import bdk.game.component.level.Level;
 import bdk.game.entities.sprites.tiles.Tile;
 import bdk.game.main.Game;
 import bdk.util.BdkFileManager;
 import bdk.util.graphics.BdkImageEditor;
+import javafx.geometry.Point2D;
 
 public class RenderingPanel extends BdkLevelEditorPanel {
 
@@ -43,25 +55,30 @@ public class RenderingPanel extends BdkLevelEditorPanel {
 	private boolean redraw;
 	private JPanel indicatorPanel;
 	private Map<Rectangle, GridCell> gridCellMap;
+	private Map<Rectangle, Tile> gridRowTileMap;
 	private boolean isMousePressed;
 	private boolean isMouseDragged;
 	private Point mousePressedPoint;
 	private Point mouseReleasedPoint;
 	private Point mouseDraggedPoint;
+	private int gridRowStartIndex;
 
 	// --------------------------------------------------------------------------|
 
 	public RenderingPanel(BDKLevelEditor parent) {
 		super(parent);
 
+		this.gridRowStartIndex = 0;
 		this.mousePressedPoint = null;
 		this.mouseReleasedPoint = null;
 		this.mouseDraggedPoint = null;
 		this.gridCellMap = new HashMap<>();
+		this.gridRowTileMap = new HashMap<>();
 		this.indicatorPanel = createIndicatorPanel();
 		this.isMouseDragged = false;
 		this.isMousePressed = false;
-		this.renderingPanelBuffer = new BufferedImage(defaultDimension.width, defaultDimension.height, BufferedImage.TYPE_INT_ARGB_PRE);
+		this.renderingPanelBuffer = new BufferedImage(defaultDimension.width, defaultDimension.height,
+				BufferedImage.TYPE_INT_ARGB_PRE);
 		this.redraw = true;
 		this.addMouseListeners();
 		this.add(indicatorPanel);
@@ -98,6 +115,35 @@ public class RenderingPanel extends BdkLevelEditorPanel {
 		gridCell.setTile(new Tile(bdkLevelEditor.getCurrentSpriteImagePath()));
 	}
 
+	private void paintTile(Tile tile) {
+		if (tile == null || bdkLevelEditor.getCurrentSpriteImagePath().isEmpty()) {
+			return;
+		}
+
+		// Draw onto the buffer
+		Graphics g = renderingPanelBuffer.getGraphics();
+
+		int tileX = (int) tile.getPosition().getX();
+		int tileY = (int) tile.getPosition().getY();
+
+		BufferedImage cellTileSprite = BdkImageEditor.scale(
+				BdkFileManager.loadImage(bdkLevelEditor.getCurrentSpriteImagePath()), previewCellWidth,
+				previewCellWidth);
+
+		if (cellTileSprite == null) {
+			Game.getLogger().log(java.util.logging.Level.WARNING,
+					"Couldn't load currently selected sprite image. Refresh the image selection panel");
+			return;
+		}
+
+		g.setColor(Color.black);
+		g.fillRect(tileX, tileY, previewCellWidth, previewCellWidth);
+		g.drawImage(cellTileSprite, tileX, tileY, null);
+		g.dispose();
+
+		tile.setSpritePath(bdkLevelEditor.getCurrentSpriteImagePath());
+	}
+
 	/**
 	 * Returns the gridCell, in which the coordinate lies
 	 * 
@@ -118,6 +164,25 @@ public class RenderingPanel extends BdkLevelEditorPanel {
 	}
 
 	/**
+	 * Returns the Tile, in which the coordinate lies
+	 * 
+	 * @param coordinate
+	 * @return
+	 */
+	private Tile getTileInCoordinate(Point coordinate) {
+		Tile tile = null;
+
+		for (Entry<Rectangle, Tile> entry : gridRowTileMap.entrySet()) {
+			// Check if its the cell we are looking for
+			if (entry.getKey().contains(coordinate)) {
+				tile = entry.getValue();
+			}
+		}
+
+		return tile;
+	}
+
+	/**
 	 * Returns the rectangle, in which the coordinate lies
 	 * 
 	 * @param coordinate
@@ -133,6 +198,15 @@ public class RenderingPanel extends BdkLevelEditorPanel {
 			}
 		}
 
+		if (rec == null) {
+			for (Entry<Rectangle, Tile> entry : gridRowTileMap.entrySet()) {
+				// Check if its the cell we are looking for
+				if (entry.getKey().contains(coordinate)) {
+					rec = entry.getKey();
+				}
+			}
+		}
+
 		return rec;
 	}
 
@@ -140,6 +214,17 @@ public class RenderingPanel extends BdkLevelEditorPanel {
 		ArrayList<Rectangle> rectangleList = new ArrayList<>();
 
 		for (Entry<Rectangle, GridCell> entry : gridCellMap.entrySet()) {
+			Rectangle targetRectangle = entry.getKey();
+
+			// Check if rectangles are overlapping
+			if ((targetRectangle.x < area.x + area.width) && (targetRectangle.x + targetRectangle.width > area.x)
+					&& (targetRectangle.y < area.y + area.height)
+					&& (targetRectangle.y + targetRectangle.height) > area.y) {
+				rectangleList.add(targetRectangle);
+			}
+		}
+
+		for (Entry<Rectangle, Tile> entry : gridRowTileMap.entrySet()) {
 			Rectangle targetRectangle = entry.getKey();
 
 			// Check if rectangles are overlapping
@@ -168,6 +253,23 @@ public class RenderingPanel extends BdkLevelEditorPanel {
 		}
 
 		return gridCellList;
+	}
+
+	private ArrayList<Tile> getTilesInArea(Rectangle area) {
+		ArrayList<Tile> tileList = new ArrayList<>();
+
+		for (Entry<Rectangle, Tile> entry : gridRowTileMap.entrySet()) {
+			Rectangle targetRectangle = entry.getKey();
+
+			// Check if rectangles are overlapping
+			if ((targetRectangle.x < area.x + area.width) && (targetRectangle.x + targetRectangle.width > area.x)
+					&& (targetRectangle.y < area.y + area.height)
+					&& (targetRectangle.y + targetRectangle.height) > area.y) {
+				tileList.add(entry.getValue());
+			}
+		}
+
+		return tileList;
 	}
 
 	// INDICATOR PANEL --------------------------------------------------------|
@@ -261,40 +363,44 @@ public class RenderingPanel extends BdkLevelEditorPanel {
 	// GRID RENDER PANEL --------------------------------------------------|
 
 	/**
-	 * We have a problem, since we don't cache any sprites, repainting the component does a bunch of I/O all the time.
-	 * This slows everything down. Instead, draw any operations onto a BufferedImage. Then draw this BufferedImage onto the JPanel.
-	 * The BufferedImage is only redrawn from actual disk sprites when a redraw is requested.
+	 * We have a problem, since we don't cache any sprites, repainting the component
+	 * does a bunch of I/O all the time. This slows everything down. Instead, draw
+	 * any operations onto a BufferedImage. Then draw this BufferedImage onto the
+	 * JPanel. The BufferedImage is only redrawn from actual disk sprites when a
+	 * redraw is requested.
 	 */
 	@Override
 	protected void paintComponent(Graphics g) {
 		// Clear screen
 		g.setColor(Color.black);
 		g.fillRect(0, 0, defaultDimension.width, defaultDimension.height);
-		
+
 		Level currentLevel = bdkLevelEditor.getCurrentLevel();
-		
-		if(currentLevel != null) {
+
+		if (currentLevel != null) {
 			// No redraw requested. Just draw the contents of the BufferedImage
-			if(!redraw) {
+			if (!redraw) {
 				g.drawImage(renderingPanelBuffer, 0, 0, null);
 			} else {
 				Graphics bufferGraphics = renderingPanelBuffer.getGraphics();
 				loadAndDrawLevel(bufferGraphics, currentLevel);
 				bufferGraphics.dispose();
-				
+
 				g.drawImage(renderingPanelBuffer, 0, 0, null);
 				redraw = false;
 			}
 		}
-		
-		
+
 	}
 
 	private void loadAndDrawLevel(Graphics g, Level level) {
+		// Since the gridRows initialize method uses this vector, initialize it here
+		level.getGrid().setCellDimension(new Point2D(previewCellWidth, previewCellWidth));
+
 		// Clear screen
 		g.setColor(Color.black);
 		g.fillRect(0, 0, defaultDimension.width, defaultDimension.height);
-		
+
 		// Preload default missing image
 		BufferedImage missingSpriteImage = BdkFileManager.loadImage(Tile.MISSING_TILE_PATH);
 
@@ -320,7 +426,34 @@ public class RenderingPanel extends BdkLevelEditorPanel {
 
 		// SCROLL GRID ---------------------------------------------------|
 
-		// ...
+		// You can only increase the gridRowStartIndex, if the requested rows actually
+		// exist. So we don't have to check if the row exists here.
+		int gridRowOffset = (int) level.getGrid().getScrollArea().getHeight();
+
+		// Add gridrows. k is the gridY position.
+		int k = gridRowOffset - 1;
+		for (int i = 0; i < gridRowOffset; i++) {
+			GridRow gridRow = level.getGrid().getGridRowList().get(i + gridRowStartIndex);
+			gridRow.initializeGridRow(level.getGrid(), (double) k * previewCellWidth);
+
+			for (Tile gridRowTile : gridRow.getTileList()) {
+				BufferedImage tileSprite = BdkImageEditor.scale(BdkFileManager.loadImage(gridRowTile.getSpritePath()),
+						previewCellWidth, previewCellWidth);
+
+				if (tileSprite == null) {
+					tileSprite = missingSpriteImage;
+				}
+
+				// Create the bounding box for cell identification
+				Rectangle boundingBox = new Rectangle((int) gridRowTile.getPosition().getX(),
+						(int) gridRowTile.getPosition().getY(), previewCellWidth, previewCellWidth);
+				gridRowTileMap.put(boundingBox, gridRowTile);
+				g.drawImage(tileSprite, (int) gridRowTile.getPosition().getX(), (int) gridRowTile.getPosition().getY(),
+						null);
+			}
+
+			k--;
+		}
 
 		// ---------------------------------------------------------------|
 
@@ -371,6 +504,28 @@ public class RenderingPanel extends BdkLevelEditorPanel {
 				indicatorPanel.repaint();
 			}
 		});
+
+		this.addMouseWheelListener(new MouseWheelListener() {
+			@Override
+			public void mouseWheelMoved(MouseWheelEvent e) {
+				if (bdkLevelEditor.getCurrentLevel() != null) {
+					int gridRowOffset = (int) bdkLevelEditor.getCurrentLevel().getGrid().getScrollArea().getHeight();
+					int scrollAmount = e.getWheelRotation();
+					int newIndex = gridRowStartIndex + scrollAmount;
+
+					// Is the scroll valid ?
+					if (newIndex >= 0 && newIndex + gridRowOffset - 1 < bdkLevelEditor.getCurrentLevel().getGrid()
+							.getGridRowList().size()) {
+							gridRowStartIndex = newIndex;
+							redraw = true;
+							repaint();
+					}
+				}
+			}
+		});
+		
+		// needed so the keyListener works
+		this.grabFocus();
 	}
 
 	private void triggerMouseEvent() {
@@ -379,7 +534,9 @@ public class RenderingPanel extends BdkLevelEditorPanel {
 			case BDKLevelEditor.TOOL_SELECT:
 				break;
 			case BDKLevelEditor.TOOL_PAINT:
+				// Draw call both, even though only one will actually call
 				paintGridCell(getGridCellInCoordinate(mousePressedPoint));
+				paintTile(getTileInCoordinate(mousePressedPoint));
 				break;
 			default:
 				break;
@@ -390,6 +547,7 @@ public class RenderingPanel extends BdkLevelEditorPanel {
 				break;
 			case BDKLevelEditor.TOOL_PAINT:
 				getGridCellsInArea(getSelectionRectangle()).parallelStream().forEach(this::paintGridCell);
+				getTilesInArea(getSelectionRectangle()).parallelStream().forEach(this::paintTile);
 				break;
 			default:
 				break;
@@ -405,6 +563,8 @@ public class RenderingPanel extends BdkLevelEditorPanel {
 
 	@Override
 	public void notifyDataChanged() {
+		gridRowStartIndex = 0;
+		redraw = true;
 		repaint();
 	}
 

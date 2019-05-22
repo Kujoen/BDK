@@ -48,6 +48,10 @@ public abstract class Entity implements Serializable {
 	}
 
 	protected void firePropertyChange(String property, Object oldValue, Object newValue) {
+		if(listeners == null) {
+			listeners = new ArrayList<>();
+		}
+		
 		for (PropertyChangeListener l : listeners) {
 			l.propertyChange(new PropertyChangeEvent(this, property, oldValue, newValue));
 		}

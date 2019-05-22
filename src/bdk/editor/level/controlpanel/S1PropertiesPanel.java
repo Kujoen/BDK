@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -34,6 +35,7 @@ public class S1PropertiesPanel extends BdkLevelEditorPanel{
 	JTextField textPropertiesScrollSpeed;
 	
 	JPanel gridControlPanel;
+	JButton buttonAddPage;
 	
 	// ------------------------------------------------------------------|
 
@@ -77,8 +79,18 @@ public class S1PropertiesPanel extends BdkLevelEditorPanel{
 		
 		// GRID CONTROLS ----------------------------------------------------|
 		
+		buttonAddPage = new JButton("Add page");
+		buttonAddPage.setEnabled(false);
+		buttonAddPage.addActionListener(e -> {
+			if(bdkLevelEditor.getCurrentLevel() != null) {
+				bdkLevelEditor.getCurrentLevel().getGrid().addNewPage();
+			}
+		});
+		
 		gridControlPanel = new JPanel();
 		gridControlPanel.setBorder(BorderFactory.createTitledBorder("Grid controls"));
+		gridControlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		gridControlPanel.add(buttonAddPage);
 		
 		// ------------------------------------------------------------------|
 		
@@ -94,5 +106,6 @@ public class S1PropertiesPanel extends BdkLevelEditorPanel{
 	@Override
 	public void notifyDataChanged() {
 		textPropertiesScrollSpeed.setEnabled(true);
+		buttonAddPage.setEnabled(true);
 	}
 }

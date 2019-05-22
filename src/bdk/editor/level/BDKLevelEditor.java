@@ -6,9 +6,12 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 
+import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -16,6 +19,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.apache.commons.io.FilenameUtils;
@@ -102,6 +106,7 @@ public class BDKLevelEditor extends JPanel {
 						Level newLevel = (Level) BdkFileManager.loadSerializedObject(file.getPath());
 						setCurrentLevel(newLevel);
 						menuLabelLevelName.setText("Level: " + currentLevel.getComponentName());
+						menuItemSave.setEnabled(true);
 					} catch (FileNotFoundException e1) {
 						Game.getLogger().log(java.util.logging.Level.WARNING, "Couldn't load level", e1);
 						WarningDialog.showWarning("Something went wrong when opening the file");
@@ -121,8 +126,8 @@ public class BDKLevelEditor extends JPanel {
 				if (resultName != null) {
 					setCurrentLevel(new Level(resultName));
 					menuLabelLevelName.setText("Level: " + currentLevel.getComponentName());
+					menuItemSave.setEnabled(true);
 				}
-				menuItemSave.setEnabled(true);
 			}
 		});
 

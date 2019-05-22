@@ -42,6 +42,11 @@ public class GridRow implements Serializable {
 		tileList.parallelStream().forEach(tile -> tile.initializeTileSprite(grid));
 	}
 
+	/**
+	 * Transposes all tile coordinates from grid to real space
+	 * @param grid
+	 * @param yPosition
+	 */
 	public void initializeGridRow(Grid grid, double yPosition) {
 		this.grid = grid;
 		this.yPosition = yPosition;
@@ -77,7 +82,15 @@ public class GridRow implements Serializable {
 		this.yPosition = yPosition;
 	}
 
-	// -----------------------------------------------------------------------------|
+	// GETTERS & SETTERS -----------------------------------------------------------|
+	
+	public ArrayList<Tile> getTileList() {
+		return tileList;
+	}
+
+	public void setTileList(ArrayList<Tile> tileList) {
+		this.tileList = tileList;
+	}
 
 	// -----------------------------------------------------------------------------|
 }

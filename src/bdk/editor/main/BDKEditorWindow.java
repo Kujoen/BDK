@@ -2,6 +2,8 @@ package bdk.editor.main;
 
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.FileNotFoundException;
 import java.util.logging.Level;
 

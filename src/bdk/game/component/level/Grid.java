@@ -69,6 +69,16 @@ public class Grid implements Serializable {
 			gridRowList.add(gridRow);
 		}
 	}
+	
+	/**
+	 * Fills one page worth of rows into the rowList
+	 */
+	public void addNewPage() {
+		for (int i = 0; i < scrollArea.height; i++) {
+			GridRow gridRow = new GridRow(this);
+			gridRowList.add(gridRow);
+		}
+	}
 
 	/**
 	 * Initialize grid runtime variables and initialize gridcells
