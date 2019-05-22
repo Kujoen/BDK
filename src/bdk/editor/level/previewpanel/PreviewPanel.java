@@ -22,9 +22,14 @@ public class PreviewPanel extends BdkLevelEditorPanel{
 	// This Scrollpane holds the rendering pane 
 	private JScrollPane scrollPane;
 	private JPanel scrollPaneView;
+	
+	// --------------------------------------------------------------------------|
+	
 	// This panel will draw the grid content
 	private RenderingPanel renderingPane;
 
+	// --------------------------------------------------------------------------|
+	
 	public PreviewPanel(BDKLevelEditor parent) {
 		super(parent);
 		this.setBorder(BorderFactory.createTitledBorder("Level Preview"));
