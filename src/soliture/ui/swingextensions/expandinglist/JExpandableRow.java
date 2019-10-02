@@ -29,6 +29,10 @@ public class JExpandableRow extends JPanel {
 
 	// How many columns do we have for components
 	private int columnsInRow;
+	
+	private int displayIndex;
+	
+	private Object dataObject;
 
 	private GridBagConstraints gridBagConstraints;
 	private GridBagLayout gridBagLayout;
@@ -238,6 +242,22 @@ public class JExpandableRow extends JPanel {
 
 	protected void setListParent(Object listParent) {
 		this.listParent = listParent;
+	}
+
+	public int getDisplayIndex() {
+		return displayIndex;
+	}
+
+	public void setDisplayIndex(int displayIndex) {
+		this.displayIndex = displayIndex;
+	}
+
+	public Object getDataObject() {
+		return dataObject;
+	}
+
+	public void setDataObject(Object dataObject) {
+		this.dataObject = dataObject;
 	}
 
 }

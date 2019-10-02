@@ -2,8 +2,6 @@ package bdk.editor.main;
 
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.FileNotFoundException;
 import java.util.logging.Level;
 
@@ -14,6 +12,7 @@ import javax.swing.UIManager;
 
 import bdk.cfg.GameConfig;
 import bdk.editor.actor.BDKActorEditor;
+import bdk.editor.game.BDKGameEditor;
 import bdk.editor.level.BDKLevelEditor;
 import bdk.game.main.Game;
 
@@ -23,6 +22,7 @@ public class BDKEditorWindow extends JFrame {
 	private JTabbedPane mainPanel;
 	private BDKActorEditor actorEditor;
 	private BDKLevelEditor levelEditor;
+	private BDKGameEditor gameEditor;
 
 	public static GameConfig gameConfig;
 
@@ -71,8 +71,8 @@ public class BDKEditorWindow extends JFrame {
 		actorEditor = new BDKActorEditor();
 		mainPanel.addTab("Actor-Editor", actorEditor);
 
-		JPanel placeholder2 = new JPanel();
-		mainPanel.addTab("Game-Editor", placeholder2);
+		gameEditor = new BDKGameEditor();
+		mainPanel.addTab("Game-Editor", gameEditor);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setExtendedState(MAXIMIZED_BOTH);

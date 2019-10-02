@@ -68,7 +68,7 @@ public class S1PropertiesPanel extends BdkLevelEditorPanel{
 		textPropertiesScrollSpeed = new JTextField("", 4);
 		textPropertiesScrollSpeed.setEnabled(false);
 		AbstractDocument document = (AbstractDocument) textPropertiesScrollSpeed.getDocument();
-		document.setDocumentFilter(new BdkInputFilter(BdkInputFilter.ALLOW_INT, 0 , 1000));
+		document.setDocumentFilter(new BdkInputFilter(BdkInputFilter.ALLOW_INT, 1 , 1000));
 		
 		gridPropertiesPanel = new JPanel();
 		gridPropertiesPanel.setBorder(BorderFactory.createTitledBorder("Grid properties"));

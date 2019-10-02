@@ -17,7 +17,11 @@ import javafx.geometry.Point2D;
  *
  */
 public abstract class Entity implements Serializable {
-	private static final long serialVersionUID = -4302764479516437594L;
+	
+	private static final long serialVersionUID = -4302764479516437594L;	
+	private static final String CHANGE_ENTITY_NAME = "CHANGE_ENTITY_NAME";
+	private static final String CHANGE_ENTITY_POSITION = "CHANGE_ENTITY_POSITION";
+	private static final String CHANGE_ENTITY_PARENT = "CHANGE_ENTITY_PARENT";
 
 	// ---------------------------------------------------------------------|
 	protected String entityName;
@@ -62,9 +66,6 @@ public abstract class Entity implements Serializable {
 	}
 
 	// ---------------------------------------------------------------------|
-	
-
-	// ---------------------------------------------------------------------|
 	// GETTERS & SETTERS
 	// ---------------------------------------------------------------------|
 
@@ -73,7 +74,9 @@ public abstract class Entity implements Serializable {
 	}
 
 	public void setEntityName(String entityName) {
+		String oldValue = this.getEntityName();
 		this.entityName = entityName;
+		firePropertyChange(Entity.CHANGE_ENTITY_NAME, oldValue, entityName);
 	}
 
 	public Point2D getPosition() {
@@ -81,7 +84,19 @@ public abstract class Entity implements Serializable {
 	}
 
 	public void setPosition(Point2D position) {
+		Point2D oldValue = this.getPosition();
 		this.position = position;
+		firePropertyChange(Entity.CHANGE_ENTITY_POSITION, oldValue, position);
+	}
+
+	public Entity getParent() {
+		return parent;
+	}
+
+	public void setParent(Entity parent) {
+		Entity oldValue = this.getParent();
+		this.parent = parent;
+		firePropertyChange(Entity.CHANGE_ENTITY_PARENT, oldValue, parent);
 	}
 
 

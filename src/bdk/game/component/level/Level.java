@@ -56,7 +56,7 @@ public class Level extends Component{
 		super(name);
 
 		this.grid = new Grid();
-		this.scrollSpeed = 180;
+		this.scrollSpeed = 120;
 		this.levelTick = 0;
 	}
 

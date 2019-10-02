@@ -174,6 +174,7 @@ public class JExpandingListPanel extends JPanel implements ComponentListener {
 		// at the current index
 		gridBagConstraints.gridy = currentRowIndex + currentRowOffset;
 		listPanel.add(rowToAdd, gridBagConstraints);
+		rowToAdd.setDisplayIndex(currentRowIndex + currentRowOffset); 
 
 		// If the row has children and is expanded we have to add its children
 		ArrayList<JExpandableRow> currentRowChildList = (ArrayList<JExpandableRow>) rowToAdd.getRowList();

@@ -14,6 +14,9 @@ import bdk.game.entities.Entity;
 public abstract class Sprite extends Entity {
 	private static final long serialVersionUID = 2586067322532032810L;
 	
+	private static final String CHANGE_SPRITE_IMAGE = "CHANGE_SPRITE_IMAGE";
+	private static final String CHANGE_SPRITE_IMAGE_PATH = "CHANGE_SPRITE_IMAGE_PATH";
+	
 	private static final String MISSING_SPRITE_PATH = "src/resources/missing_textures/missing_sprite.png";
 
 	// ---------------------------------------------------------------------|
@@ -39,7 +42,7 @@ public abstract class Sprite extends Entity {
 	public void setSpriteImage(BufferedImage spriteImage) {
 		BufferedImage oldValue = this.spriteImage;
 		this.spriteImage = spriteImage;
-		firePropertyChange("spriteImage", oldValue, spriteImage);
+		firePropertyChange(Sprite.CHANGE_SPRITE_IMAGE, oldValue, spriteImage);
 	}
 
 	public String getSpritePath() {
@@ -49,7 +52,7 @@ public abstract class Sprite extends Entity {
 	public void setSpritePath(String spritePath) {
 		String oldValue = this.spritePath;
 		this.spritePath = spritePath;
-		firePropertyChange("imagePath", oldValue, spritePath);
+		firePropertyChange(Sprite.CHANGE_SPRITE_IMAGE_PATH, oldValue, spritePath);
 	}
 
 }
