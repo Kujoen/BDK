@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.beans.PropertyChangeEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 
@@ -60,6 +61,8 @@ public class BDKLevelEditor extends JPanel {
 	
 	public static final String TOOL_SELECT = "Select";
 	public static final String TOOL_PAINT = "Paint";
+	
+	public static final String CHANGE_LEVEL = "CHANGE_LEVEL";
 	
 	// ------------------------------------------------------------------------------|
 	// GENERAL METHODS
@@ -212,9 +215,9 @@ public class BDKLevelEditor extends JPanel {
 		add(menuBar, BorderLayout.NORTH);
 	}
 
-	private void notifyDataChanged() {
-		controlPanel.notifyDataChanged();
-		previewPanel.notifyDataChanged();
+	private void notifyDataChanged(PropertyChangeEvent event) {
+		controlPanel.notifyDataChanged(event);
+		previewPanel.notifyDataChanged(event);
 	}
 
 	// --------------------------------------------------------------------------------------------|
@@ -225,9 +228,10 @@ public class BDKLevelEditor extends JPanel {
 		return currentLevel;
 	}
 
-	public void setCurrentLevel(Level currentLevel) {
-		this.currentLevel = currentLevel;
-		notifyDataChanged();
+	public void setCurrentLevel(Level newLevel) {
+		Level oldLevel = this.currentLevel;
+		this.currentLevel = newLevel;
+		notifyDataChanged(new PropertyChangeEvent(null, CHANGE_LEVEL, oldLevel, newLevel));
 	}
 
 	public String getCurrentSpriteImagePath() {

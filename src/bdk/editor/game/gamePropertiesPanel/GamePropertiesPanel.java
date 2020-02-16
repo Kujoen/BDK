@@ -38,8 +38,8 @@ public class GamePropertiesPanel extends BdkGameEditorPanel {
 		contentPane.setLayout(new GridBagLayout());
 
 		gc = new GridBagConstraints();
-		gc.fill = gc.HORIZONTAL;
-		gc.anchor = gc.NORTHWEST;
+		gc.fill = GridBagConstraints.HORIZONTAL;
+		gc.anchor = GridBagConstraints.NORTHWEST;
 		gc.ipady = 10;
 		gc.insets = new Insets(5, 0, 5, 0);
 		

@@ -39,8 +39,8 @@ public class BDKGameEditor extends JPanel {
 	}
 	
 	public void notifyDataChanged(PropertyChangeEvent event) {
-		gamePropertiesPanel.notifyDataChanged(null);
-		levelControlPanel.notifyDataChanged(null);
+		gamePropertiesPanel.notifyDataChanged(event);
+		levelControlPanel.notifyDataChanged(event);
 	}
 	
 	// --------------------------------------------------------------------------------------------|

@@ -144,13 +144,10 @@ public class Grid implements Serializable {
 	}
 
 	/**
-	 * Calculates how many pixels we need to move a tile per update call, so that in
-	 * one second it moves the distanced specified by the scrollspeed. The amount of
-	 * update calls is specified by the games tickrate. (for 60 tick max 960, aka 16
-	 * per tick)
+	 * UpdateRate has been changed to pixels per tick, so just take the level scroll speed.
 	 */
 	private void calculateUpdateRate() {
-		updateRate = level.getScrollSpeed() / Game.TICKRATE;
+		updateRate = (double) level.getScrollSpeed();
 	}
 
 	private void calculateCellSize() {

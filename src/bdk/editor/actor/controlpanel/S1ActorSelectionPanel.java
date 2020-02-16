@@ -54,7 +54,7 @@ public class S1ActorSelectionPanel extends BdkActorEditorPanel {
 			public void actionPerformed(ActionEvent e) {
 				InputStringDialog dialog = new InputStringDialog();
 				String result = dialog.showDialog("Actor creation", "Name of new Actor: ");
-				if (!(result == null)) {
+				if (result != null) {
 					Actor newActor = new Actor(result, bdkActorEditor.getCurrentActorCollection().getCollectionName());
 					bdkActorEditor.getCurrentActorCollection().addActor(newActor);
 					bdkActorEditor.setCurrentActor(newActor);
@@ -83,7 +83,7 @@ public class S1ActorSelectionPanel extends BdkActorEditorPanel {
 				if (!listToDisplay.isSelectionEmpty()) {
 					InputStringDialog dialog = new InputStringDialog();
 					String result = dialog.showDialog("copy particle", "Name of the copy : ");
-					if (!(result == null)) {
+					if (result != null) {
 						// TODO: cloning
 					}
 				}

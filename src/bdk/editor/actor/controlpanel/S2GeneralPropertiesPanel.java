@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
@@ -29,16 +30,19 @@ public class S2GeneralPropertiesPanel extends BdkActorEditorPanel {
 	JTextField nameTextField;
 	// --Type
 	JLabel typeLabel;
-	JComboBox typeComboBox;
+	JComboBox<String> typeComboBox;
 	// --Image
 	JLabel imageHintLabel;
 	JLabel imageNameLabel;
 
 	public S2GeneralPropertiesPanel(BDKActorEditor parent) {
-		super(parent);
+		super(parent);	
+
+		this.setBorder(BorderFactory.createTitledBorder("General Properties"));
 
 		nameLabel = new JLabel("Actor name : ");
 		nameTextField = new JTextField();
+		nameTextField.setPreferredSize(null);
 		nameTextField.setEnabled(false);
 		nameTextField.getDocument().addDocumentListener(new DocumentListener() {
 			@Override
@@ -48,17 +52,17 @@ public class S2GeneralPropertiesPanel extends BdkActorEditorPanel {
 
 			@Override
 			public void insertUpdate(DocumentEvent e) {
-
+				// NAN
 			}
 
 			@Override
 			public void removeUpdate(DocumentEvent e) {
-
+				// NAN
 			}
 		});
 
 		typeLabel = new JLabel("Actor type : ");
-		typeComboBox = new JComboBox(Actor.ACTOR_TYPES);
+		typeComboBox = new JComboBox<>(Actor.ACTOR_TYPES);
 		typeComboBox.setEnabled(false);
 		typeComboBox.addItemListener(new ItemListener() {
 			@Override
@@ -69,7 +73,7 @@ public class S2GeneralPropertiesPanel extends BdkActorEditorPanel {
 			}
 		});
 
-		imageHintLabel = new JLabel("Current image : ");
+		imageHintLabel = new JLabel("Sprite: ");
 		imageNameLabel = new JLabel("");
 		imageNameLabel.setBackground(Color.GRAY);
 		imageNameLabel.setForeground(Color.RED);
@@ -78,44 +82,52 @@ public class S2GeneralPropertiesPanel extends BdkActorEditorPanel {
 		// ------------------------------------------------|
 		contentPane = new JPanel();
 		contentPane.setLayout(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
-		c.weightx = 1.0;
-		c.weighty = 1.0;
-		c.gridwidth = 1;
-		c.fill = c.HORIZONTAL;
+		
+		GridBagConstraints gc = new GridBagConstraints();
+		gc.fill = GridBagConstraints.HORIZONTAL;
+		gc.anchor = GridBagConstraints.NORTHWEST;
+		gc.ipady = 10;
+		gc.insets = new Insets(5, 0, 5, 0);
+		
+		// Add the Labels ------------------|
+		gc.weightx = 0.1;
+		gc.weighty = 0.0;
+		
+		gc.gridx = 0;
+		gc.gridy = 0;
+		contentPane.add(nameLabel, gc);
 
-		// --Name
-		c.gridx = 0;
-		c.gridy = 0;
-		contentPane.add(nameLabel, c);
+		gc.gridx = 0;
+		gc.gridy = 1;
+		contentPane.add(typeLabel, gc);
 
-		c.gridx = 1;
-		c.gridy = 0;
-		contentPane.add(nameTextField, c);
+		gc.gridx = 0;
+		gc.gridy = 2;
+		contentPane.add(imageHintLabel, gc);
 
-		// --Type
-		c.gridx = 0;
-		c.gridy = 1;
-		contentPane.add(typeLabel, c);
+		// Add the Input Fields ------------|
+		gc.weightx = 1.0;
+		gc.weighty = 0.0;
+				
+		
+		gc.gridx = 1;
+		gc.gridy = 0;
+		contentPane.add(nameTextField, gc);
 
-		c.gridx = 1;
-		c.gridy = 1;
-		contentPane.add(typeComboBox, c);
 
-		// --Image
-		c.gridx = 0;
-		c.gridy = 2;
-		contentPane.add(imageHintLabel, c);
+		gc.gridx = 1;
+		gc.gridy = 1;
+		contentPane.add(typeComboBox, gc);
 
-		c.gridx = 1;
-		c.gridy = 2;
-		contentPane.add(imageNameLabel, c);
+
+		gc.gridx = 1;
+		gc.gridy = 2;
+		contentPane.add(imageNameLabel, gc);
 
 		// -----------------------------------------------------------------|
 
-		setLayout(new GridLayout(1, 1));
-		setBorder(BorderFactory.createTitledBorder("General Properties"));
-		add(contentPane);
+		this.setLayout(new GridLayout());
+		this.add(contentPane);
 	}
 
 	private void displayGeneralProperties() {
@@ -125,7 +137,10 @@ public class S2GeneralPropertiesPanel extends BdkActorEditorPanel {
 				nameTextField.setText(bdkActorEditor.getCurrentActor().getEntityName());
 				nameTextField.setEnabled(true);
 
-				typeComboBox.setSelectedItem(bdkActorEditor.getCurrentActor().getActorType());
+				if(bdkActorEditor.getCurrentActor().getActorType() != null) {
+					typeComboBox.setSelectedItem(bdkActorEditor.getCurrentActor().getActorType());
+				}
+				
 				typeComboBox.setEnabled(true);
 
 				// Check if actor has an image
@@ -154,7 +169,9 @@ public class S2GeneralPropertiesPanel extends BdkActorEditorPanel {
 
 	@Override
 	public void notifyDataChanged(PropertyChangeEvent event) {
-		displayGeneralProperties();
+		if(event.getPropertyName().equals(BDKActorEditor.CHANGE_ACTOR)) {
+			displayGeneralProperties();
+		}
 	}
 
 }

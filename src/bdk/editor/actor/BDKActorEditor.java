@@ -44,7 +44,12 @@ public class BDKActorEditor extends JPanel {
 	// --------------------------------------------------------------|
 	private ActorCollection currentActorCollection;
 	private Actor currentActor;
-
+	// --------------------------------------------------------------|
+	public static final String CHANGE_ACTOR = "CHANGE_ACTOR";
+	public static final String CHANGE_ACTOR_COLLECTION = "CHANGE_ACTOR_COLLECTION";
+	// --------------------------------------------------------------|
+	
+	
 	public BDKActorEditor() {
 		// FileChooser-----------------------------------------------------------------------------|
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("Actor Collections", "ac");
@@ -80,56 +85,43 @@ public class BDKActorEditor extends JPanel {
 		});
 
 		menuItemNew = new JMenuItem("New");
-		menuItemNew.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
+		menuItemNew.addActionListener((e) -> {
 				InputStringDialog inputDialog = new InputStringDialog();
 				String resultName = inputDialog.showDialog("Collection Name", "Please enter the collection name : ");
 
 				if (resultName != null) {
 					setCurrentActorCollection(new ActorCollection(resultName));
-				}
 			}
-
 		});
 
 		menuItemSave = new JMenuItem("Save");
 		menuItemSave.setEnabled(false);
-		menuItemSave.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
+		menuItemSave.addActionListener((e) -> {
+			// Set the suggested name to the name of the collection.
+			fileChooser.setSelectedFile(new File(currentActorCollection.getCollectionName() + ".ac"));
 
-				// Set the suggested name to the name of the collection.
-				fileChooser.setSelectedFile(new File(currentActorCollection.getCollectionName() + ".ac"));
+			int result = fileChooser.showSaveDialog(BDKActorEditor.this);
 
-				int result = fileChooser.showSaveDialog(BDKActorEditor.this);
+			if (result == JFileChooser.APPROVE_OPTION) {
+				File file = fileChooser.getSelectedFile();
+				// Check if file has correct extension
+				if (FilenameUtils.getExtension(file.getName()).equalsIgnoreCase("ac")) {
+					// filename is OK as-is
+				} else {
+					file = new File(file.toString() + ".ac");
+				}
 
-				if (result == JFileChooser.APPROVE_OPTION) {
-					File file = fileChooser.getSelectedFile();
-					// Check if file has correct extension
-					if (FilenameUtils.getExtension(file.getName()).equalsIgnoreCase("ac")) {
-						// filename is OK as-is
-					} else {
-						file = new File(file.toString() + ".ac");
+				// Check if the user changed the file name
+				String selectedName = FilenameUtils.getBaseName(file.getName());
+				if (currentActorCollection.getCollectionName() != selectedName) {
+					currentActorCollection.setCollectionName(selectedName);
+				}
 
-						// Dont think this is needed, remove later ?
-						// file = new File(file.getParentFile(),
-						// FilenameUtils.getBaseName(file.getName()) + ".ac");
-					}
-
-					// Check if the user changed the file name
-					String selectedName = FilenameUtils.getBaseName(file.getName());
-					if (currentActorCollection.getCollectionName() != selectedName) {
-						currentActorCollection.setCollectionName(selectedName);
-					}
-
-					try {
-						BdkFileManager.saveSerializableObject(currentActorCollection, file.getPath());
-					} catch (FileNotFoundException e1) {
-						Game.getLogger().log(java.util.logging.Level.WARNING, "Couldn't save collection", e1);
-						WarningDialog.showWarning("Something went wrong when saving the collection");
-					}
+				try {
+					BdkFileManager.saveSerializableObject(currentActorCollection, file.getPath());
+				} catch (FileNotFoundException e1) {
+					Game.getLogger().log(java.util.logging.Level.WARNING, "Couldn't save collection", e1);
+					WarningDialog.showWarning("Something went wrong when saving the collection");
 				}
 			}
 		});
@@ -138,8 +130,7 @@ public class BDKActorEditor extends JPanel {
 		menuFile.add(menuItemOpen);
 		menuFile.add(menuItemNew);
 		menuFile.add(menuItemSave);
-		// MENUBAR
-		// END-----------------------------------------------------------------------------|
+		// MENUBAR END ----------------------------------------------------------------------------|
 		// ----------------------------------------------------------------------------------------|
 
 		centerPanel = new JPanel();
@@ -154,15 +145,11 @@ public class BDKActorEditor extends JPanel {
 	}
 
 	private void displayMenuButtons() {
-		if (currentActorCollection != null) {
-			menuItemSave.setEnabled(true);
-		} else {
-			menuItemSave.setEnabled(false);
-		}
+		menuItemSave.setEnabled(currentActorCollection != null);
 	}
 
 	/**
-	 * Is called by listeners whenever an actor/actorcollection attribute changes.
+	 * Is called by listeners whenever an actor/actorCollection attribute changes.
 	 */
 	private void notifyDataChanged(PropertyChangeEvent event) {
 		// -Do something
@@ -200,7 +187,7 @@ public class BDKActorEditor extends JPanel {
 				}
 			});
 		}
-		notifyDataChanged(new PropertyChangeEvent(newActorCollection, "setCurrentActorCollection", null, null));
+		notifyDataChanged(new PropertyChangeEvent(newActorCollection, CHANGE_ACTOR_COLLECTION, null, null));
 	}
 
 	public Actor getCurrentActor() {
@@ -224,7 +211,7 @@ public class BDKActorEditor extends JPanel {
 				}
 			});
 		}
-		notifyDataChanged(new PropertyChangeEvent(newActor, "setCurrentActor", null, null));
+		notifyDataChanged(new PropertyChangeEvent(newActor, CHANGE_ACTOR, null, null));
 	}
 
 }

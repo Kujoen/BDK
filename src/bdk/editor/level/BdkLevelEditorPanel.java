@@ -1,5 +1,7 @@
 package bdk.editor.level;
 
+import java.beans.PropertyChangeEvent;
+
 import javax.swing.JPanel;
 
 public abstract class BdkLevelEditorPanel extends JPanel{
@@ -10,7 +12,7 @@ public abstract class BdkLevelEditorPanel extends JPanel{
 	/**
 	 * Write stuff to do when the data has changed here
 	 */
-	public abstract void notifyDataChanged();
+	public abstract void notifyDataChanged(PropertyChangeEvent event);
 	
 	public BdkLevelEditorPanel(BDKLevelEditor parent){
 		this.bdkLevelEditor = parent;

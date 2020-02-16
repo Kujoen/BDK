@@ -20,7 +20,7 @@ public class ActorCollection implements Serializable {
 	public static final String COLLECTION_PATH = BDKEditorWindow.gameConfig.getGameName() + "/sprites/actors/collections";
 
 	// Runtime variables --------------------------------------------------------|
-	transient private List<PropertyChangeListener> listeners = new ArrayList<>();
+	private transient List<PropertyChangeListener> listeners = new ArrayList<>();
 	// --------------------------------------------------------------------------|
 	// An ActorCollection has a list of actors and a name
 	private List<Actor> actorList;
@@ -29,7 +29,7 @@ public class ActorCollection implements Serializable {
 
 	public ActorCollection(String name) {
 		this.collectionName = name;
-		this.actorList = new ArrayList<Actor>();
+		this.actorList = new ArrayList<>();
 	}
 
 	// Adding/Removing actors-----------------------------------------------------|
@@ -39,8 +39,6 @@ public class ActorCollection implements Serializable {
 			List<Actor> oldValue = this.actorList;
 			actorList.add(actorToAdd);
 			firePropertyChange("actorList", oldValue, this.actorList);
-		} else {
-			
 		}
 	}
 

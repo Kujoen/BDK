@@ -21,6 +21,13 @@ public class Actor extends Sprite {
 	
 	public static String[] ACTOR_TYPES = new String[] {"enemy", "player", "projectile"};
 	
+	public static String CHANGE_ACTOR_EMITTER = "CHANGE_ACTOR_EMITTER";
+	public static String CHANGE_ACTOR_TYPE = "CHANGE_ACTOR_TYPE";
+	public static String CHANGE_ACTOR_COLLECTION = "CHANGE_ACTOR_COLLECTION";
+	public static String CHANGE_ACTOR_INITIALIZER = "CHANGE_ACTOR_INITIALIZER";
+	public static String CHANGE_ACTOR_OPERATOR = "CHANGE_ACTOR_OPERATOR";
+	public static String CHANGE_ACTOR_CHILD = "CHANGE_ACTOR_CHILD";
+	
 	// ---------------------------------------------------------------------|
 	// --Properties
 	private String type;
@@ -66,37 +73,43 @@ public class Actor extends Sprite {
 	public void setEmitter(Emitter emitter) {
 		Emitter oldValue = this.emitter;
 		this.emitter = emitter;
-		firePropertyChange("setEmitter", oldValue, emitter);
+		firePropertyChange(CHANGE_ACTOR_EMITTER, oldValue, emitter);
 	}
 
 	public List<Initializer> getInitializerList() {
 		return initializerList;
 	}
-
-	public void setInitializerList(List<Initializer> initializerList) {
-		List<Initializer> oldValue = this.initializerList;
-		this.initializerList = initializerList;
-		firePropertyChange("setInitializerList", oldValue, initializerList);
+	
+	public void addInitializer(Initializer newInitializer) {
+		firePropertyChange(CHANGE_ACTOR_INITIALIZER, null, newInitializer);
+	}
+	
+	public void removeInitializer(Initializer initializerToRemove) {
+		firePropertyChange(CHANGE_ACTOR_INITIALIZER, initializerToRemove, null);
 	}
 
 	public List<Actor> getChildList() {
 		return childList;
 	}
-
-	public void setChildList(List<Actor> childList) {
-		List<Actor> oldValue = this.childList;
-		this.childList = childList;
-		firePropertyChange("setChildList", oldValue, childList);
+	
+	public void addChild(Actor newChild) {
+		firePropertyChange(CHANGE_ACTOR_CHILD, null, newChild);
+	}
+	
+	public void removeChild(Actor childToRemove) {
+		firePropertyChange(CHANGE_ACTOR_CHILD, childToRemove, null);
 	}
 
 	public List<Operator> getOperatorList() {
 		return operatorList;
 	}
-
-	public void setOperatorList(ArrayList<Operator> operatorList) {
-		List<Operator> oldValue = this.operatorList;
-		this.operatorList = operatorList;
-		firePropertyChange("setOperatorList", oldValue, operatorList);
+	
+	public void addOperator(Operator newOperator) {
+		firePropertyChange(CHANGE_ACTOR_OPERATOR, null, newOperator);
+	}
+	
+	public void removeOperator(Operator operatorToRemove ) {
+		firePropertyChange(CHANGE_ACTOR_OPERATOR, operatorToRemove, null);
 	}
 
 	public String getCollectionName() {
@@ -104,7 +117,9 @@ public class Actor extends Sprite {
 	}
 
 	public void setCollectionName(String collectionName) {
+		String oldValue = this.getCollectionName();
 		this.collectionName = collectionName;
+		firePropertyChange(CHANGE_ACTOR_COLLECTION, oldValue, collectionName);
 	}
 
 	public String getActorType() {
@@ -112,6 +127,8 @@ public class Actor extends Sprite {
 	}
 
 	public void setActorType(String type) {
+		String oldValue = this.getActorType();
 		this.type = type;
+		firePropertyChange(CHANGE_ACTOR_TYPE, oldValue, type);
 	}
 }
