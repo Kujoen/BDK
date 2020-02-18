@@ -16,6 +16,7 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,8 +37,8 @@ import bdk.game.component.level.GridRow;
 import bdk.game.component.level.Level;
 import bdk.game.entities.sprites.tiles.Tile;
 import bdk.game.main.Game;
-import bdk.util.BdkFileManager;
-import bdk.util.graphics.BdkImageEditor;
+import bdk.util.BDKFileManager;
+import bdk.util.graphics.BDKImageEditor;
 import javafx.geometry.Point2D;
 
 public class RenderingPanel extends BdkLevelEditorPanel {
@@ -97,8 +98,8 @@ public class RenderingPanel extends BdkLevelEditorPanel {
 		int cellX = previewCellWidth * gridCell.getGridX();
 		int cellY = previewCellWidth * gridCell.getGridY();
 
-		BufferedImage cellTileSprite = BdkImageEditor.scale(
-				BdkFileManager.loadImage(bdkLevelEditor.getCurrentSpriteImagePath()), previewCellWidth,
+		BufferedImage cellTileSprite = BDKImageEditor.scale(
+				BDKFileManager.loadImage(bdkLevelEditor.getCurrentSpriteImagePath()), previewCellWidth,
 				previewCellWidth);
 
 		if (cellTileSprite == null) {
@@ -126,8 +127,8 @@ public class RenderingPanel extends BdkLevelEditorPanel {
 		int tileX = (int) tile.getPosition().getX();
 		int tileY = (int) tile.getPosition().getY();
 
-		BufferedImage cellTileSprite = BdkImageEditor.scale(
-				BdkFileManager.loadImage(bdkLevelEditor.getCurrentSpriteImagePath()), previewCellWidth,
+		BufferedImage cellTileSprite = BDKImageEditor.scale(
+				BDKFileManager.loadImage(bdkLevelEditor.getCurrentSpriteImagePath()), previewCellWidth,
 				previewCellWidth);
 
 		if (cellTileSprite == null) {
@@ -402,7 +403,7 @@ public class RenderingPanel extends BdkLevelEditorPanel {
 		g.fillRect(0, 0, defaultDimension.width, defaultDimension.height);
 
 		// Preload default missing image
-		BufferedImage missingSpriteImage = BdkFileManager.loadImage(Tile.MISSING_TILE_PATH);
+		BufferedImage missingSpriteImage = BDKFileManager.loadImage(Tile.MISSING_TILE_PATH);
 
 		// STATIC GRID ---------------------------------------------------|
 
@@ -411,8 +412,8 @@ public class RenderingPanel extends BdkLevelEditorPanel {
 			int cellX = previewCellWidth * cell.getGridX();
 			int cellY = previewCellWidth * cell.getGridY();
 
-			BufferedImage cellTileSprite = BdkImageEditor.scale(
-					BdkFileManager.loadImage(cell.getTile().getSpritePath()), previewCellWidth, previewCellWidth);
+			BufferedImage cellTileSprite = BDKImageEditor.scale(
+					BDKFileManager.loadImage(cell.getTile().getSpritePath()), previewCellWidth, previewCellWidth);
 
 			if (cellTileSprite == null) {
 				cellTileSprite = missingSpriteImage;
@@ -437,7 +438,7 @@ public class RenderingPanel extends BdkLevelEditorPanel {
 			gridRow.initializeGridRow(level.getGrid(), (double) k * previewCellWidth);
 
 			for (Tile gridRowTile : gridRow.getTileList()) {
-				BufferedImage tileSprite = BdkImageEditor.scale(BdkFileManager.loadImage(gridRowTile.getSpritePath()),
+				BufferedImage tileSprite = BDKImageEditor.scale(BDKFileManager.loadImage(gridRowTile.getSpritePath()),
 						previewCellWidth, previewCellWidth);
 
 				if (tileSprite == null) {
@@ -562,7 +563,7 @@ public class RenderingPanel extends BdkLevelEditorPanel {
 	}
 
 	@Override
-	public void notifyDataChanged() {
+	public void notifyDataChanged(PropertyChangeEvent event) {
 		gridRowStartIndex = 0;
 		redraw = true;
 		repaint();

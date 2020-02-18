@@ -20,14 +20,14 @@ import bdk.game.main.Game;
  * @author Andreas Farley
  *
  */
-public class BdkFileManager {
+public class BDKFileManager {
 
 	// ----------------------------------------------------------------------------------|
 	
 	/**
 	 * FileUtil contains helper methods to load/save serialized objects.
 	 */
-	private BdkFileManager() {
+	private BDKFileManager() {
 	}
 	
 	// ----------------------------------------------------------------------------------|

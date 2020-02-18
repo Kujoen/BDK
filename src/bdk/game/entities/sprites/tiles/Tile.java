@@ -5,8 +5,8 @@ import java.awt.Graphics2D;
 
 import bdk.game.component.level.Grid;
 import bdk.game.entities.sprites.Sprite;
-import bdk.util.BdkCopy;
-import bdk.util.graphics.BdkImageEditor;
+import bdk.util.BDKCopy;
+import bdk.util.graphics.BDKImageEditor;
 
 /**
  * @author Andreas Farley
@@ -43,8 +43,8 @@ public class Tile extends Sprite {
 		
 		grid.getLevel().loadAndCacheTileSprite(this);
 		
-		spriteImage = BdkCopy.deepCopyBufferedImage(grid.getLevel().getTileSpriteCache().get(this.spritePath));
-		spriteImage = BdkImageEditor.scale(spriteImage, (int) grid.getCellDimension().getX(), (int) grid.getCellDimension().getY());
+		spriteImage = BDKCopy.deepCopyBufferedImage(grid.getLevel().getTileSpriteCache().get(this.spritePath));
+		spriteImage = BDKImageEditor.scale(spriteImage, (int) grid.getCellDimension().getX(), (int) grid.getCellDimension().getY());
 	}
 
 	// -----------------------------------------------------------------------------|

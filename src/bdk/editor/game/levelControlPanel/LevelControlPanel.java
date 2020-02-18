@@ -14,16 +14,16 @@ import javax.swing.JLabel;
 
 import bdk.cfg.GameConfig;
 import bdk.editor.game.BDKGameEditor;
-import bdk.editor.game.BdkGameEditorPanel;
+import bdk.editor.game.BDKGameEditorPanel;
 import bdk.game.component.level.Level;
 import bdk.game.main.Game;
-import bdk.util.BdkFileManager;
-import bdk.util.ui.Icons;
+import bdk.util.BDKFileManager;
+import bdk.util.ui.BDKIcons;
 import soliture.ui.swingextensions.expandinglist.JExpandableRow;
 import soliture.ui.swingextensions.expandinglist.JExpandableRowComponent;
 import soliture.ui.swingextensions.expandinglist.JExpandingListPanel;
 
-public class LevelControlPanel extends BdkGameEditorPanel {
+public class LevelControlPanel extends BDKGameEditorPanel {
 
 	private JExpandingListPanel activeLevelListPanel;
 	private JExpandingListPanel levelFileListPanel;
@@ -80,7 +80,7 @@ public class LevelControlPanel extends BdkGameEditorPanel {
 		
 		JLabel levelNameLabel = new JLabel(level.getComponentName());
 		
-		JButton addToActiveLevelsButton = new JButton(new ImageIcon(BdkFileManager.loadImage(Icons.ICON_ADD_CIRCLE)));
+		JButton addToActiveLevelsButton = new JButton(new ImageIcon(BDKFileManager.loadImage(BDKIcons.ICON_ADD_CIRCLE)));
 		addToActiveLevelsButton.setBorderPainted(false);
 		addToActiveLevelsButton.setFocusPainted(false);
 		addToActiveLevelsButton.setContentAreaFilled(false);
@@ -90,7 +90,7 @@ public class LevelControlPanel extends BdkGameEditorPanel {
 			addNewLevelToGameConfig((Level) levelFileRow.getDataObject());
 		});
 		
-		JButton deleteLevelButton = new JButton(new ImageIcon(BdkFileManager.loadImage(Icons.ICON_DELETE)));
+		JButton deleteLevelButton = new JButton(new ImageIcon(BDKFileManager.loadImage(BDKIcons.ICON_DELETE)));
 		deleteLevelButton.setBorderPainted(false);
 		deleteLevelButton.setFocusPainted(false);
 		deleteLevelButton.setContentAreaFilled(false);
@@ -112,7 +112,7 @@ public class LevelControlPanel extends BdkGameEditorPanel {
 		
 		JLabel levelNameLabel = new JLabel(level.getComponentName());
 		
-		JButton moveUpButton = new JButton(new ImageIcon(BdkFileManager.loadImage(Icons.ICON_EXPAND_MORE)));
+		JButton moveUpButton = new JButton(new ImageIcon(BDKFileManager.loadImage(BDKIcons.ICON_EXPAND_MORE)));
 		moveUpButton.setBorderPainted(false);
 		moveUpButton.setFocusPainted(false);
 		moveUpButton.setContentAreaFilled(false);
@@ -120,7 +120,7 @@ public class LevelControlPanel extends BdkGameEditorPanel {
 			
 		});
 		
-		JButton moveDownButton = new JButton(new ImageIcon(BdkFileManager.loadImage(Icons.ICON_EXPAND_LESS)));
+		JButton moveDownButton = new JButton(new ImageIcon(BDKFileManager.loadImage(BDKIcons.ICON_EXPAND_LESS)));
 		moveDownButton.setBorderPainted(false);
 		moveDownButton.setFocusPainted(false);
 		moveDownButton.setContentAreaFilled(false);
@@ -128,7 +128,7 @@ public class LevelControlPanel extends BdkGameEditorPanel {
 			
 		});
 		
-		JButton openButton = new JButton(new ImageIcon(BdkFileManager.loadImage(Icons.ICON_OPEN)));
+		JButton openButton = new JButton(new ImageIcon(BDKFileManager.loadImage(BDKIcons.ICON_OPEN)));
 		openButton.setBorderPainted(false);
 		openButton.setFocusPainted(false);
 		openButton.setContentAreaFilled(false);
@@ -136,7 +136,7 @@ public class LevelControlPanel extends BdkGameEditorPanel {
 			
 		});
 		
-		JButton removeFromActiveLevelsButton = new JButton(new ImageIcon(BdkFileManager.loadImage(Icons.ICON_REMOVE_CIRCLE)));
+		JButton removeFromActiveLevelsButton = new JButton(new ImageIcon(BDKFileManager.loadImage(BDKIcons.ICON_REMOVE_CIRCLE)));
 		removeFromActiveLevelsButton.setBorderPainted(false);
 		removeFromActiveLevelsButton.setFocusPainted(false);
 		removeFromActiveLevelsButton.setContentAreaFilled(false);
@@ -186,7 +186,7 @@ public class LevelControlPanel extends BdkGameEditorPanel {
 		for (int i = 0; i < listOfFiles.length; i++) {
 			if (listOfFiles[i].isFile() && listOfFiles[i].getName().contains(".lvl")) {
 				try {
-					levelList.add((Level) BdkFileManager.loadSerializedObject(listOfFiles[i].getPath()));
+					levelList.add((Level) BDKFileManager.loadSerializedObject(listOfFiles[i].getPath()));
 				} catch (FileNotFoundException e) {
 					Game.getLogger().log(java.util.logging.Level.WARNING, "A .lvl file in the level directory couldn't be deserialized");
 				} 

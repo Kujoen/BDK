@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 
 import bdk.game.main.Game;
-import bdk.util.BdkFileManager;
+import bdk.util.BDKFileManager;
 
 /**
  * 
@@ -51,11 +51,11 @@ public class GameConfig implements Serializable {
 	}
 	
 	public static GameConfig loadGameConfig() throws FileNotFoundException {
-		return (GameConfig) BdkFileManager.loadSerializedObject(CONFIG_PATH);
+		return (GameConfig) BDKFileManager.loadSerializedObject(CONFIG_PATH);
 	}
 	
 	public void saveGameConfig() throws FileNotFoundException {
-		BdkFileManager.saveSerializableObject(this, CONFIG_PATH);
+		BDKFileManager.saveSerializableObject(this, CONFIG_PATH);
 	}
 
 	// -------------------------------------------------------------------------------|
@@ -112,7 +112,7 @@ public class GameConfig implements Serializable {
 	// GameInfo creation, currently must be run when a new gameinfo is required.
 	public static void main(String[] args) {
 		try {
-			BdkFileManager.saveSerializableObject(new GameConfig(), CONFIG_PATH);
+			BDKFileManager.saveSerializableObject(new GameConfig(), CONFIG_PATH);
 		} catch (FileNotFoundException e) {
 			Game.getLogger().log(Level.WARNING, "Couldn't create game info in: " + CONFIG_PATH, e);
 		}

@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.beans.PropertyChangeEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -77,9 +78,9 @@ public class ControlPanel extends BdkLevelEditorPanel {
 	}
 
 	@Override
-	public void notifyDataChanged() {
-		imageSelectPanel.notifyDataChanged();
-		propertiesPanel.notifyDataChanged();
+	public void notifyDataChanged(PropertyChangeEvent event) {
+		imageSelectPanel.notifyDataChanged(event);
+		propertiesPanel.notifyDataChanged(event);
 	}
 
 }

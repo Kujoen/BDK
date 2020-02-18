@@ -12,7 +12,7 @@ import bdk.game.entities.sprites.actors.ActorCollection;
  * @author Kuj
  *
  */
-public abstract class BdkActorEditorPanel extends JPanel{
+public abstract class BDKActorEditorPanel extends JPanel{
 	
 	protected BDKActorEditor bdkActorEditor;
 
@@ -21,7 +21,7 @@ public abstract class BdkActorEditorPanel extends JPanel{
 	 */
 	public abstract void notifyDataChanged(PropertyChangeEvent event);
 	
-	public BdkActorEditorPanel(BDKActorEditor parent){
+	public BDKActorEditorPanel(BDKActorEditor parent){
 		this.bdkActorEditor = parent;
 	}
 }

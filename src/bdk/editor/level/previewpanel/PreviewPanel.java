@@ -3,6 +3,7 @@ package bdk.editor.level.previewpanel;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.beans.PropertyChangeEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -48,8 +49,8 @@ public class PreviewPanel extends BdkLevelEditorPanel{
 	}
 
 	@Override
-	public void notifyDataChanged() {
-		renderingPane.notifyDataChanged();
+	public void notifyDataChanged(PropertyChangeEvent event) {
+		renderingPane.notifyDataChanged(event);
 	}
 	
 	// --------------------------------------------------------------------------|

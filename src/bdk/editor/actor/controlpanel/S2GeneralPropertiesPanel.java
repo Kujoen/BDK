@@ -19,10 +19,11 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import bdk.editor.actor.BDKActorEditor;
-import bdk.editor.actor.BdkActorEditorPanel;
+import bdk.editor.actor.BDKActorEditorPanel;
 import bdk.game.entities.sprites.actors.Actor;
+import bdk.game.entities.sprites.actors.ActorType;
 
-public class S2GeneralPropertiesPanel extends BdkActorEditorPanel {
+public class S2GeneralPropertiesPanel extends BDKActorEditorPanel {
 
 	JPanel contentPane;
 	// --Name
@@ -36,9 +37,20 @@ public class S2GeneralPropertiesPanel extends BdkActorEditorPanel {
 	JLabel imageNameLabel;
 
 	public S2GeneralPropertiesPanel(BDKActorEditor parent) {
-		super(parent);	
+		super(parent);
 
+		// Panel UI Settings
 		this.setBorder(BorderFactory.createTitledBorder("General Properties"));
+		contentPane = new JPanel();
+		contentPane.setLayout(new GridBagLayout());
+		
+		GridBagConstraints gc = new GridBagConstraints();
+		gc.fill = GridBagConstraints.HORIZONTAL;
+		gc.anchor = GridBagConstraints.NORTHWEST;
+		gc.ipady = 10;
+		gc.insets = new Insets(5, 0, 5, 0);
+
+		// Labels and Listeners
 
 		nameLabel = new JLabel("Actor name : ");
 		nameTextField = new JTextField();
@@ -47,7 +59,10 @@ public class S2GeneralPropertiesPanel extends BdkActorEditorPanel {
 		nameTextField.getDocument().addDocumentListener(new DocumentListener() {
 			@Override
 			public void changedUpdate(DocumentEvent e) {
-				bdkActorEditor.getCurrentActor().setEntityName(bdkActorEditor.getCurrentActor().getEntityName());
+				String newName = nameTextField.getText();
+				String oldName = bdkActorEditor.getCurrentActor().getEntityName();
+				bdkActorEditor.getCurrentActor().setEntityName(newName);
+				bdkActorEditor.notifyDataChanged(new PropertyChangeEvent(this, BDKActorEditor.CHANGE_ACTOR_NAME, oldName, newName));
 			}
 
 			@Override
@@ -68,7 +83,23 @@ public class S2GeneralPropertiesPanel extends BdkActorEditorPanel {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
-					bdkActorEditor.getCurrentActor().setActorType(e.getItem().toString());
+					ActorType oldType = bdkActorEditor.getCurrentActor().getActorType();
+					ActorType newType = null;
+					
+					switch((String) e.getItem()) {
+					case "enemy":
+						newType = ActorType.ENEMY;
+						break;
+					case "projectile":
+						newType = ActorType.PROJECTILE;
+						break;
+					case "player":
+						newType = ActorType.PLAYER;
+						break;
+					}
+					
+					bdkActorEditor.getCurrentActor().setActorType(newType);
+					bdkActorEditor.notifyDataChanged(new PropertyChangeEvent(this, BDKActorEditor.CHANGE_ACTOR_TYPE, oldType, newType));
 				}
 			}
 		});
@@ -78,21 +109,12 @@ public class S2GeneralPropertiesPanel extends BdkActorEditorPanel {
 		imageNameLabel.setBackground(Color.GRAY);
 		imageNameLabel.setForeground(Color.RED);
 
-		// Adding to the layout
-		// ------------------------------------------------|
-		contentPane = new JPanel();
-		contentPane.setLayout(new GridBagLayout());
-		
-		GridBagConstraints gc = new GridBagConstraints();
-		gc.fill = GridBagConstraints.HORIZONTAL;
-		gc.anchor = GridBagConstraints.NORTHWEST;
-		gc.ipady = 10;
-		gc.insets = new Insets(5, 0, 5, 0);
-		
+		// Adding to the layout ------------------------------------------------|
+
 		// Add the Labels ------------------|
 		gc.weightx = 0.1;
 		gc.weighty = 0.0;
-		
+
 		gc.gridx = 0;
 		gc.gridy = 0;
 		contentPane.add(nameLabel, gc);
@@ -108,21 +130,26 @@ public class S2GeneralPropertiesPanel extends BdkActorEditorPanel {
 		// Add the Input Fields ------------|
 		gc.weightx = 1.0;
 		gc.weighty = 0.0;
-				
-		
+
 		gc.gridx = 1;
 		gc.gridy = 0;
 		contentPane.add(nameTextField, gc);
-
 
 		gc.gridx = 1;
 		gc.gridy = 1;
 		contentPane.add(typeComboBox, gc);
 
-
 		gc.gridx = 1;
 		gc.gridy = 2;
 		contentPane.add(imageNameLabel, gc);
+
+		// Fill excess vertical space ------|
+		gc.weightx = 0.0;
+		gc.weighty = 1.0;
+
+		gc.gridx = 0;
+		gc.gridy = 3;
+		contentPane.add(new JLabel(), gc);
 
 		// -----------------------------------------------------------------|
 
@@ -137,10 +164,10 @@ public class S2GeneralPropertiesPanel extends BdkActorEditorPanel {
 				nameTextField.setText(bdkActorEditor.getCurrentActor().getEntityName());
 				nameTextField.setEnabled(true);
 
-				if(bdkActorEditor.getCurrentActor().getActorType() != null) {
+				if (bdkActorEditor.getCurrentActor().getActorType() != null) {
 					typeComboBox.setSelectedItem(bdkActorEditor.getCurrentActor().getActorType());
 				}
-				
+
 				typeComboBox.setEnabled(true);
 
 				// Check if actor has an image
@@ -169,7 +196,7 @@ public class S2GeneralPropertiesPanel extends BdkActorEditorPanel {
 
 	@Override
 	public void notifyDataChanged(PropertyChangeEvent event) {
-		if(event.getPropertyName().equals(BDKActorEditor.CHANGE_ACTOR)) {
+		if (event.getPropertyName().equals(BDKActorEditor.CHANGE_ACTOR)) {
 			displayGeneralProperties();
 		}
 	}

@@ -16,11 +16,11 @@ import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
 import bdk.editor.actor.BDKActorEditor;
-import bdk.editor.actor.BdkActorEditorPanel;
+import bdk.editor.actor.BDKActorEditorPanel;
 import bdk.game.entities.sprites.actors.Actor;
-import bdk.util.ui.InputStringDialog;
+import bdk.util.ui.BDKInputStringDialog;
 
-public class S1ActorSelectionPanel extends BdkActorEditorPanel {
+public class S1ActorSelectionPanel extends BDKActorEditorPanel {
 
 	// Column Viewport of the scrollpane--------------|
 	private JPanel buttonPane;
@@ -52,7 +52,7 @@ public class S1ActorSelectionPanel extends BdkActorEditorPanel {
 		buttonCreateActor.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				InputStringDialog dialog = new InputStringDialog();
+				BDKInputStringDialog dialog = new BDKInputStringDialog();
 				String result = dialog.showDialog("Actor creation", "Name of new Actor: ");
 				if (result != null) {
 					Actor newActor = new Actor(result, bdkActorEditor.getCurrentActorCollection().getCollectionName());
@@ -81,7 +81,7 @@ public class S1ActorSelectionPanel extends BdkActorEditorPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (!listToDisplay.isSelectionEmpty()) {
-					InputStringDialog dialog = new InputStringDialog();
+					BDKInputStringDialog dialog = new BDKInputStringDialog();
 					String result = dialog.showDialog("copy particle", "Name of the copy : ");
 					if (result != null) {
 						// TODO: cloning

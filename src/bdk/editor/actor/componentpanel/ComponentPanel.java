@@ -8,12 +8,12 @@ import java.beans.PropertyChangeEvent;
 import javax.swing.JPanel;
 
 import bdk.editor.actor.BDKActorEditor;
-import bdk.editor.actor.BdkActorEditorPanel;
+import bdk.editor.actor.BDKActorEditorPanel;
 import bdk.game.entities.sprites.actors.components.Component;
 import bdk.game.entities.sprites.actors.components.emitter.EmitOnce;
 import bdk.game.entities.sprites.actors.components.emitter.Emitter;
 
-public class ComponentPanel extends BdkActorEditorPanel {
+public class ComponentPanel extends BDKActorEditorPanel {
 
 	JPanel contentPane;
 

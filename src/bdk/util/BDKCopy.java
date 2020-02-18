@@ -17,10 +17,10 @@ import bdk.game.main.Game;
  * @author Andreas Farley
  *
  */
-public class BdkCopy {
+public class BDKCopy {
 	// --------------------------------------------------------------|
 
-	private BdkCopy() {
+	private BDKCopy() {
 	}
 
 	// --------------------------------------------------------------|

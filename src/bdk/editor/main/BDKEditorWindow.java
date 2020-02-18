@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import java.io.FileNotFoundException;
 import java.util.logging.Level;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
@@ -15,6 +16,8 @@ import bdk.editor.actor.BDKActorEditor;
 import bdk.editor.game.BDKGameEditor;
 import bdk.editor.level.BDKLevelEditor;
 import bdk.game.main.Game;
+import bdk.util.BDKFileManager;
+import bdk.util.ui.BDKIcons;
 
 public class BDKEditorWindow extends JFrame {
 
@@ -44,6 +47,7 @@ public class BDKEditorWindow extends JFrame {
 			public void run() {
 				try {
 					BDKEditorWindow frame = new BDKEditorWindow();
+					frame.setIconImage(BDKFileManager.loadImage(BDKIcons.ICON_LOGO_STRETCHED));
 				} catch (Exception e) {
 					Game.getLogger().log(Level.SEVERE, "Error creating window instance", e);
 				}

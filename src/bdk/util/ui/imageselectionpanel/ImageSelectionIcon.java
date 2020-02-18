@@ -4,8 +4,8 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 
-import bdk.util.BdkCopy;
-import bdk.util.graphics.BdkImageEditor;
+import bdk.util.BDKCopy;
+import bdk.util.graphics.BDKImageEditor;
 
 public class ImageSelectionIcon extends ImageIcon {
 
@@ -45,7 +45,7 @@ public class ImageSelectionIcon extends ImageIcon {
 	 * already be scaled
 	 */
 	public void highlight() {
-		this.setImage(BdkImageEditor.highlight((BufferedImage) this.getImage(), Color.red));
+		this.setImage(BDKImageEditor.highlight((BufferedImage) this.getImage(), Color.red));
 	}
 	
 	public void removeHighlight() {
@@ -59,7 +59,7 @@ public class ImageSelectionIcon extends ImageIcon {
 		int imageWidth = parentPanel.getImageWidth();
 		
 		if (imageSource.getWidth() < imageWidth || imageSource.getWidth() > imageWidth) {
-			this.setImage(BdkImageEditor.scale(BdkCopy.deepCopyBufferedImage(imageSource), parentPanel.getImageWidth(),
+			this.setImage(BDKImageEditor.scale(BDKCopy.deepCopyBufferedImage(imageSource), parentPanel.getImageWidth(),
 					parentPanel.getImageWidth() * (imageSource.getHeight() / imageSource.getWidth())));
 		}
 	}

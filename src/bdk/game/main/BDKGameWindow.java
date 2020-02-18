@@ -8,7 +8,7 @@ import java.util.logging.Level;
 import javax.swing.JFrame;
 
 import bdk.cfg.WindowConfig;
-import bdk.util.BdkFileManager;
+import bdk.util.BDKFileManager;
 import javafx.geometry.Point2D;
 
 /**
@@ -54,7 +54,7 @@ public class BDKGameWindow extends JFrame {
 	public BDKGameWindow() {
 		// Load the window config
 		try {
-			this.windowConfig = (WindowConfig) BdkFileManager.loadSerializedObject(WindowConfig.FILEPATH);
+			this.windowConfig = (WindowConfig) BDKFileManager.loadSerializedObject(WindowConfig.FILEPATH);
 		} catch (FileNotFoundException e) {
 			Game.getLogger().log(Level.SEVERE, "Cannot find window-config in path: " + WindowConfig.FILEPATH, e);
 		}

@@ -25,9 +25,9 @@ import bdk.editor.actor.previewpanel.PreviewPanel;
 import bdk.game.entities.sprites.actors.Actor;
 import bdk.game.entities.sprites.actors.ActorCollection;
 import bdk.game.main.Game;
-import bdk.util.BdkFileManager;
-import bdk.util.ui.InputStringDialog;
-import bdk.util.ui.WarningDialog;
+import bdk.util.BDKFileManager;
+import bdk.util.ui.BDKInputStringDialog;
+import bdk.util.ui.BDKWarningDialog;
 
 public class BDKActorEditor extends JPanel {
 
@@ -45,8 +45,12 @@ public class BDKActorEditor extends JPanel {
 	private ActorCollection currentActorCollection;
 	private Actor currentActor;
 	// --------------------------------------------------------------|
+	// Change Events
 	public static final String CHANGE_ACTOR = "CHANGE_ACTOR";
 	public static final String CHANGE_ACTOR_COLLECTION = "CHANGE_ACTOR_COLLECTION";
+	public static final String CHANGE_ACTOR_NAME = "CHANGE_ACTOR_NAME";
+	public static final String CHANGE_ACTOR_TYPE = "CHANGE_ACTOR_TYPE";
+	public static final String CHANGE_ACTOR_SPRITE = "CHANGE_ACTOR_SPRITE";
 	// --------------------------------------------------------------|
 	
 	
@@ -73,20 +77,20 @@ public class BDKActorEditor extends JPanel {
 				File file = fileChooser.getSelectedFile();
 				
 				try {
-					ActorCollection newCollection = (ActorCollection) BdkFileManager.loadSerializedObject(file.getPath());
+					ActorCollection newCollection = (ActorCollection) BDKFileManager.loadSerializedObject(file.getPath());
 					
 					setCurrentActorCollection(newCollection);
 					setCurrentActor(null);
 				} catch (FileNotFoundException e1) {
 					Game.getLogger().log(java.util.logging.Level.WARNING, "Couldn't load collection", e1);
-					WarningDialog.showWarning("Something went wrong when opening the collection");
+					BDKWarningDialog.showWarning("Something went wrong when opening the collection");
 				}
 			}
 		});
 
 		menuItemNew = new JMenuItem("New");
 		menuItemNew.addActionListener((e) -> {
-				InputStringDialog inputDialog = new InputStringDialog();
+				BDKInputStringDialog inputDialog = new BDKInputStringDialog();
 				String resultName = inputDialog.showDialog("Collection Name", "Please enter the collection name : ");
 
 				if (resultName != null) {
@@ -118,10 +122,10 @@ public class BDKActorEditor extends JPanel {
 				}
 
 				try {
-					BdkFileManager.saveSerializableObject(currentActorCollection, file.getPath());
+					BDKFileManager.saveSerializableObject(currentActorCollection, file.getPath());
 				} catch (FileNotFoundException e1) {
 					Game.getLogger().log(java.util.logging.Level.WARNING, "Couldn't save collection", e1);
-					WarningDialog.showWarning("Something went wrong when saving the collection");
+					BDKWarningDialog.showWarning("Something went wrong when saving the collection");
 				}
 			}
 		});
@@ -151,14 +155,14 @@ public class BDKActorEditor extends JPanel {
 	/**
 	 * Is called by listeners whenever an actor/actorCollection attribute changes.
 	 */
-	private void notifyDataChanged(PropertyChangeEvent event) {
+	public void notifyDataChanged(PropertyChangeEvent event) {
 		// -Do something
 		displayMenuButtons();
 
 		// -Pass the notification on
+		componentPanel.notifyDataChanged(event);
 		controlPanel.notifyDataChanged(event);
 		previewPanel.notifyDataChanged(event);
-		componentPanel.notifyDataChanged(event);
 	}
 
 	// --------------------------------------------------------------------------------------------|
@@ -176,18 +180,10 @@ public class BDKActorEditor extends JPanel {
 	 * @param newActorCollection
 	 */
 	public void setCurrentActorCollection(ActorCollection newActorCollection) {
+		ActorCollection oldCollection = currentActorCollection;
 		currentActorCollection = newActorCollection;
-		// Add a listener
-		if (currentActorCollection != null) {
-			currentActorCollection.refreshListenerList();
-			currentActorCollection.addPropertyChangeListener(new PropertyChangeListener() {
-				@Override
-				public void propertyChange(PropertyChangeEvent event) {
-					notifyDataChanged(event);
-				}
-			});
-		}
-		notifyDataChanged(new PropertyChangeEvent(newActorCollection, CHANGE_ACTOR_COLLECTION, null, null));
+		
+		notifyDataChanged(new PropertyChangeEvent(this, CHANGE_ACTOR_COLLECTION, oldCollection, newActorCollection));
 	}
 
 	public Actor getCurrentActor() {
@@ -201,17 +197,10 @@ public class BDKActorEditor extends JPanel {
 	 * @param newActor
 	 */
 	public void setCurrentActor(Actor newActor) {
+		Actor oldActor = currentActor;
 		currentActor = newActor;
-		if (currentActor != null) {
-			currentActor.refreshListenerList();
-			currentActor.addPropertyChangeListener(new PropertyChangeListener() {
-				@Override
-				public void propertyChange(PropertyChangeEvent event) {
-					notifyDataChanged(event);
-				}
-			});
-		}
-		notifyDataChanged(new PropertyChangeEvent(newActor, CHANGE_ACTOR, null, null));
+		
+		notifyDataChanged(new PropertyChangeEvent(this, CHANGE_ACTOR, oldActor, currentActor));
 	}
 
 }

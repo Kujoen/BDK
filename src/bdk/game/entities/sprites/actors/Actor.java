@@ -30,7 +30,7 @@ public class Actor extends Sprite {
 	
 	// ---------------------------------------------------------------------|
 	// --Properties
-	private String type;
+	private ActorType type;
 	private String collectionName;
 	
 	// --Components
@@ -122,12 +122,12 @@ public class Actor extends Sprite {
 		firePropertyChange(CHANGE_ACTOR_COLLECTION, oldValue, collectionName);
 	}
 
-	public String getActorType() {
+	public ActorType getActorType() {
 		return type;
 	}
 
-	public void setActorType(String type) {
-		String oldValue = this.getActorType();
+	public void setActorType(ActorType type) {
+		ActorType oldValue = this.getActorType();
 		this.type = type;
 		firePropertyChange(CHANGE_ACTOR_TYPE, oldValue, type);
 	}

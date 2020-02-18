@@ -10,7 +10,7 @@ import bdk.game.entities.sprites.actors.Actor;
 import bdk.game.entities.sprites.actors.ActorLink;
 import bdk.game.entities.sprites.tiles.Tile;
 import bdk.game.main.Game;
-import bdk.util.BdkFileManager;
+import bdk.util.BDKFileManager;
 
 /**
  * The level-component of the game package stores camera settings as well as
@@ -72,7 +72,7 @@ public class Level extends Component{
 		this.tileSpriteCache = new HashMap<>();
 		
 		// Load missing-sprite textures
-		BufferedImage missingTileSprite = BdkFileManager.loadImage(Tile.MISSING_TILE_PATH);
+		BufferedImage missingTileSprite = BDKFileManager.loadImage(Tile.MISSING_TILE_PATH);
 
 		tileSpriteCache.put(Tile.MISSING_TILE_PATH, missingTileSprite);
 		
@@ -89,7 +89,7 @@ public class Level extends Component{
 		String spritePath = tile.getSpritePath();
 		
 		if((tile.getSpritePath() != Tile.MISSING_TILE_PATH) && !tileSpriteCache.containsKey(spritePath)) {
-			BufferedImage spriteImage = BdkFileManager.loadImage(spritePath);
+			BufferedImage spriteImage = BDKFileManager.loadImage(spritePath);
 			
 			// Set to missing sprite if image not found. This is not saved, it's only for this runtime.
 			if(spriteImage == null) {

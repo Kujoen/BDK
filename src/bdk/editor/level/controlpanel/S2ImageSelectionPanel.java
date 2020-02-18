@@ -1,6 +1,7 @@
 package bdk.editor.level.controlpanel;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.beans.PropertyChangeEvent;
 
 import bdk.editor.level.BDKLevelEditor;
 import bdk.editor.level.BdkLevelEditorPanel;
@@ -34,7 +35,7 @@ public class S2ImageSelectionPanel extends BdkLevelEditorPanel {
 	}
 
 	@Override
-	public void notifyDataChanged() {
+	public void notifyDataChanged(PropertyChangeEvent event) {
 		imageSelectionPanel.loadSpritesAndFillPanel();
 	}
 

@@ -30,9 +30,9 @@ import bdk.editor.level.previewpanel.PreviewPanel;
 import bdk.editor.main.BDKEditorWindow;
 import bdk.game.component.level.Level;
 import bdk.game.main.Game;
-import bdk.util.BdkFileManager;
-import bdk.util.ui.InputStringDialog;
-import bdk.util.ui.WarningDialog;
+import bdk.util.BDKFileManager;
+import bdk.util.ui.BDKInputStringDialog;
+import bdk.util.ui.BDKWarningDialog;
 
 /**
  * 
@@ -106,13 +106,13 @@ public class BDKLevelEditor extends JPanel {
 					File file = fileChooser.getSelectedFile();
 
 					try {
-						Level newLevel = (Level) BdkFileManager.loadSerializedObject(file.getPath());
+						Level newLevel = (Level) BDKFileManager.loadSerializedObject(file.getPath());
 						setCurrentLevel(newLevel);
 						menuLabelLevelName.setText("Level: " + currentLevel.getComponentName());
 						menuItemSave.setEnabled(true);
 					} catch (FileNotFoundException e1) {
 						Game.getLogger().log(java.util.logging.Level.WARNING, "Couldn't load level", e1);
-						WarningDialog.showWarning("Something went wrong when opening the file");
+						BDKWarningDialog.showWarning("Something went wrong when opening the file");
 					}
 				}
 			}
@@ -123,7 +123,7 @@ public class BDKLevelEditor extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				InputStringDialog inputDialog = new InputStringDialog();
+				BDKInputStringDialog inputDialog = new BDKInputStringDialog();
 				String resultName = inputDialog.showDialog("Level Name", "Please enter the level name : ");
 
 				if (resultName != null) {
@@ -161,10 +161,10 @@ public class BDKLevelEditor extends JPanel {
 					}
 
 					try {
-						BdkFileManager.saveSerializableObject(currentLevel, file.getPath());
+						BDKFileManager.saveSerializableObject(currentLevel, file.getPath());
 					} catch (FileNotFoundException e1) {
 						Game.getLogger().log(java.util.logging.Level.WARNING, "Couldn't save level", e1);
-						WarningDialog.showWarning("Something went wrong when saving the file");
+						BDKWarningDialog.showWarning("Something went wrong when saving the file");
 					}
 				}
 			}
@@ -231,7 +231,7 @@ public class BDKLevelEditor extends JPanel {
 	public void setCurrentLevel(Level newLevel) {
 		Level oldLevel = this.currentLevel;
 		this.currentLevel = newLevel;
-		notifyDataChanged(new PropertyChangeEvent(null, CHANGE_LEVEL, oldLevel, newLevel));
+		notifyDataChanged(new PropertyChangeEvent(this, CHANGE_LEVEL, oldLevel, newLevel));
 	}
 
 	public String getCurrentSpriteImagePath() {

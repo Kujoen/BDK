@@ -12,9 +12,9 @@ import java.awt.image.BufferedImage;
  * @author Andreas Farley
  *
  */
-public class BdkImageEditor {
+public class BDKImageEditor {
 
-	private BdkImageEditor() {
+	private BDKImageEditor() {
 	}
 
 	public static BufferedImage scale(BufferedImage imagetoscale, int nWidth, int nHeight) {

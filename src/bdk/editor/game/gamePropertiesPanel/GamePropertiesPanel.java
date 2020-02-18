@@ -16,11 +16,11 @@ import javax.swing.text.AbstractDocument;
 
 import bdk.cfg.GameConfig;
 import bdk.editor.game.BDKGameEditor;
-import bdk.editor.game.BdkGameEditorPanel;
+import bdk.editor.game.BDKGameEditorPanel;
 import bdk.game.main.Game;
-import bdk.util.ui.BdkInputFilter;
+import bdk.util.ui.BDKInputFilter;
 
-public class GamePropertiesPanel extends BdkGameEditorPanel {
+public class GamePropertiesPanel extends BDKGameEditorPanel {
 
 	private JPanel contentPane;
 	private GameConfig gameConfig;
@@ -64,7 +64,7 @@ public class GamePropertiesPanel extends BdkGameEditorPanel {
 		
 		gameNameTextField = new JTextField();
 		AbstractDocument gameNameDocument = (AbstractDocument) gameNameTextField.getDocument();
-		gameNameDocument.setDocumentFilter(new BdkInputFilter(BdkInputFilter.ALLOW_STRING, 0, 0));
+		gameNameDocument.setDocumentFilter(new BDKInputFilter(BDKInputFilter.ALLOW_STRING, 0, 0));
 		contentPane.add(gameNameTextField, gc);
 		
 		gc.gridx = 1;
@@ -72,7 +72,7 @@ public class GamePropertiesPanel extends BdkGameEditorPanel {
 		
 		gameCreatorTextField = new JTextField();
 		AbstractDocument gameCreatorDocument = (AbstractDocument) gameCreatorTextField.getDocument();
-		gameCreatorDocument.setDocumentFilter(new BdkInputFilter(BdkInputFilter.ALLOW_STRING, 0, 0));
+		gameCreatorDocument.setDocumentFilter(new BDKInputFilter(BDKInputFilter.ALLOW_STRING, 0, 0));
 		contentPane.add(gameCreatorTextField, gc);
 		
 		// Fill excess vertical space ------|

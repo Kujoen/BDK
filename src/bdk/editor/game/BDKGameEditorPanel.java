@@ -4,7 +4,7 @@ import java.beans.PropertyChangeEvent;
 
 import javax.swing.JPanel;
 
-public abstract class BdkGameEditorPanel extends JPanel{
+public abstract class BDKGameEditorPanel extends JPanel{
 
 	protected BDKGameEditor bdkGameEditor;
 
@@ -13,7 +13,7 @@ public abstract class BdkGameEditorPanel extends JPanel{
 	 */
 	public abstract void notifyDataChanged(PropertyChangeEvent event);
 	
-	public BdkGameEditorPanel(BDKGameEditor parent){
+	public BDKGameEditorPanel(BDKGameEditor parent){
 		this.bdkGameEditor = parent;
 	}
 	

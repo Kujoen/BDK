@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.logging.Level;
 
 import bdk.game.main.Game;
-import bdk.util.BdkFileManager;
+import bdk.util.BDKFileManager;
 
 /**
  * 
@@ -36,7 +36,7 @@ public class WindowConfig implements Serializable {
 	 */
 	private void save() {
 		try {
-			BdkFileManager.saveSerializableObject(this, FILEPATH);
+			BDKFileManager.saveSerializableObject(this, FILEPATH);
 		} catch (FileNotFoundException e) {
 			Game.getLogger().log(Level.WARNING, "Failed saving window config to: " + FILEPATH, e);
 		}

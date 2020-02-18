@@ -2,6 +2,7 @@ package bdk.editor.level.controlpanel;
 
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.beans.PropertyChangeEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -14,7 +15,7 @@ import javax.swing.text.AbstractDocument;
 
 import bdk.editor.level.BDKLevelEditor;
 import bdk.editor.level.BdkLevelEditorPanel;
-import bdk.util.ui.BdkInputFilter;
+import bdk.util.ui.BDKInputFilter;
 
 /**
  * 
@@ -68,7 +69,7 @@ public class S1PropertiesPanel extends BdkLevelEditorPanel{
 		textPropertiesScrollSpeed = new JTextField("", 4);
 		textPropertiesScrollSpeed.setEnabled(false);
 		AbstractDocument document = (AbstractDocument) textPropertiesScrollSpeed.getDocument();
-		document.setDocumentFilter(new BdkInputFilter(BdkInputFilter.ALLOW_INT, 1 , 1000));
+		document.setDocumentFilter(new BDKInputFilter(BDKInputFilter.ALLOW_INT, 1 , 1000));
 		
 		gridPropertiesPanel = new JPanel();
 		gridPropertiesPanel.setBorder(BorderFactory.createTitledBorder("Grid properties"));
@@ -104,7 +105,7 @@ public class S1PropertiesPanel extends BdkLevelEditorPanel{
 	}
 
 	@Override
-	public void notifyDataChanged() {
+	public void notifyDataChanged(PropertyChangeEvent event) {
 		textPropertiesScrollSpeed.setEnabled(true);
 		buttonAddPage.setEnabled(true);
 	}

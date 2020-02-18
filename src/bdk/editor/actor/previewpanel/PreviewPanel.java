@@ -16,14 +16,14 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import bdk.editor.actor.BDKActorEditor;
-import bdk.editor.actor.BdkActorEditorPanel;
+import bdk.editor.actor.BDKActorEditorPanel;
 
 /**
  * 
  * @author Andreas Farley
  *
  */
-public class PreviewPanel extends BdkActorEditorPanel {
+public class PreviewPanel extends BDKActorEditorPanel {
 	// -------------------------------------|
 	private PreviewGame previewGame;
 

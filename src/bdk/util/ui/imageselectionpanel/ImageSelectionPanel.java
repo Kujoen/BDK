@@ -24,9 +24,9 @@ import javax.swing.JScrollPane;
 
 import bdk.editor.main.BDKEditorWindow;
 import bdk.game.main.Game;
+import bdk.util.listeners.BDKMouseListener;
 
 /**
- * 
  * 
  * @author Andreas Farley
  *
@@ -34,6 +34,8 @@ import bdk.game.main.Game;
 public class ImageSelectionPanel extends JPanel {
 
 	private static final long serialVersionUID = -3853592189490691845L;
+	
+	private static final String CHANGE_IMAGE = "CHANGE_IMAGE";
 
 	// -------------------------------------------------------------------------------|
 
@@ -186,7 +188,7 @@ public class ImageSelectionPanel extends JPanel {
 			imageSelectionIcon.prepareIcon();
 
 			imageLabel = new JLabel("");
-			imageLabel.addMouseListener(new MouseListener() {
+			imageLabel.addMouseListener(new BDKMouseListener() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					JLabel pressedLabel = (JLabel) e.getSource();
@@ -202,31 +204,11 @@ public class ImageSelectionPanel extends JPanel {
 						pressedIcon.highlight();
 						pressedLabel.repaint();
 						
-						fireImagePropertyChange("Image source", null, pressedIcon.getImagePath());
+						fireImagePropertyChange(CHANGE_IMAGE, null, pressedIcon.getImagePath());
 
 						currentSelectedIcon = pressedIcon;
 						currentSelectedLabel = pressedLabel;
 					}
-				}
-
-				@Override
-				public void mouseEntered(MouseEvent e) {
-					// Not used
-				}
-
-				@Override
-				public void mouseExited(MouseEvent e) {
-					// Not used
-				}
-
-				@Override
-				public void mousePressed(MouseEvent e) {
-					// Not used
-				}
-
-				@Override
-				public void mouseReleased(MouseEvent e) {
-					// Not used
 				}
 			});
 
@@ -295,7 +277,6 @@ public class ImageSelectionPanel extends JPanel {
 		imageListeners.add(listener);
 	}
 
-
 	// GETTERS & SETTERS
 	// -------------------------------------------------------------|
 
@@ -313,6 +294,19 @@ public class ImageSelectionPanel extends JPanel {
 
 	public void setCurrentSelectedIcon(ImageSelectionIcon currentSelectedIcon) {
 		this.currentSelectedIcon = currentSelectedIcon;
+	}
+
+	public String getSpriteSource() {
+		return spriteSource;
+	}
+
+	/**
+	 * Set a new source for sprites. Automatically reloads the panel.
+	 * @param spriteSource
+	 */
+	public void setSpriteSource(String spriteSource) {
+		this.spriteSource = spriteSource;
+		loadSpritesAndFillPanel();
 	}
 
 	// -------------------------------------------------------------------------------|

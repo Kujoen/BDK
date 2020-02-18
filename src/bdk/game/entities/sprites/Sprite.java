@@ -14,10 +14,14 @@ import bdk.game.entities.Entity;
 public abstract class Sprite extends Entity {
 	private static final long serialVersionUID = 2586067322532032810L;
 	
-	private static final String CHANGE_SPRITE_IMAGE = "CHANGE_SPRITE_IMAGE";
-	private static final String CHANGE_SPRITE_IMAGE_PATH = "CHANGE_SPRITE_IMAGE_PATH";
+	public static final String CHANGE_SPRITE_IMAGE = "CHANGE_SPRITE_IMAGE";
+	public static final String CHANGE_SPRITE_IMAGE_PATH = "CHANGE_SPRITE_IMAGE_PATH";
+
+	public static final String MISSING_SPRITE_PATH = "src/resources/missing_textures/missing_sprite.png";
+	public static final String ENEMY_SPRITE_PATH = "/sprites/materials/actors/enemy";
+	public static final String PROJECTILE_SPRITE_PATH = "/sprites/materials/actors/projectile";
+	public static final String PLAYER_SPRITE_PATH = "/sprites/materials/actors/player";
 	
-	private static final String MISSING_SPRITE_PATH = "src/resources/missing_textures/missing_sprite.png";
 
 	// ---------------------------------------------------------------------|
 	protected transient BufferedImage spriteImage;
