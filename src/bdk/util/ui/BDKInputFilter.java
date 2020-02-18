@@ -43,6 +43,7 @@ public class BDKInputFilter extends DocumentFilter {
 					
 					if(isMinMax && !(result >= min && result <= max)) {
 						BDKWarningDialog.showWarning("Input out of range. Min: " + min + " , Max: " + max);
+						throw new NumberFormatException();
 					}
 					
 					return true;
@@ -51,6 +52,7 @@ public class BDKInputFilter extends DocumentFilter {
 					
 					if(isMinMax && !(result >= min && result <= max)) {
 						BDKWarningDialog.showWarning("Input out of range. Min: " + min + " , Max: " + max);
+						throw new NumberFormatException();
 					}
 					
 					return true;
@@ -76,7 +78,7 @@ public class BDKInputFilter extends DocumentFilter {
 		if (test(sb.toString())) {
 			super.insertString(fb, offset, string, attr);
 		} else {
-			BDKWarningDialog.showWarning("Invalid input");
+			BDKWarningDialog.showWarning("Invalid Input");
 		}
 	}
 

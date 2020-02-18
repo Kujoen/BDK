@@ -39,6 +39,7 @@ import bdk.game.entities.sprites.tiles.Tile;
 import bdk.game.main.Game;
 import bdk.util.BDKFileManager;
 import bdk.util.graphics.BDKImageEditor;
+import bdk.util.listeners.BDKMouseListener;
 import javafx.geometry.Point2D;
 
 public class RenderingPanel extends BdkLevelEditorPanel {
@@ -461,7 +462,7 @@ public class RenderingPanel extends BdkLevelEditorPanel {
 	}
 
 	private void addMouseListeners() {
-		this.addMouseListener(new MouseListener() {
+		this.addMouseListener(new BDKMouseListener() {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				isMousePressed = true;
@@ -473,21 +474,6 @@ public class RenderingPanel extends BdkLevelEditorPanel {
 			public void mouseReleased(MouseEvent e) {
 				mouseReleasedPoint = e.getPoint();
 				triggerMouseEvent();
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// not used
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// not used
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// not used
 			}
 		});
 

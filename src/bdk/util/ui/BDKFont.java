@@ -18,6 +18,6 @@ public class BDKFont extends Font {
 	 * @param size Size of the font
 	 */
 	public BDKFont(int type, int size) {
-		super("Terminal", type, size);
+		super("Agency FB", type, size);
 	}
 }

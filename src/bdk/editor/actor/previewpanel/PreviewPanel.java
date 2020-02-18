@@ -25,7 +25,7 @@ import bdk.editor.actor.BDKActorEditorPanel;
  */
 public class PreviewPanel extends BDKActorEditorPanel {
 	// -------------------------------------|
-	private PreviewGame previewGame;
+	private RenderingPanel previewGame;
 
 	private JPanel previewGamePanel;
 	private JPanel previewControlPanel;
@@ -47,49 +47,30 @@ public class PreviewPanel extends BDKActorEditorPanel {
 		super(parent);
 		// CONROLPANEL--------------------------------------------------------------------------|
 		startPreviewButton = new JButton("start");
-		startPreviewButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-			}
+		startPreviewButton.addActionListener((e) -> {
+			
 		});
 
 		stopPreviewButton = new JButton("stop");
-		stopPreviewButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-			}
+		stopPreviewButton.addActionListener((e) -> {
+			
 		});
 
 		pausePreviewButton = new JButton("pause");
-		pausePreviewButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-			}
+		pausePreviewButton.addActionListener((e) -> {
+			
 		});
 
 		atMouseLabel = new JLabel("Set origin at mouse click");
 		atMouseCheckBox = new JCheckBox();
-		atMouseCheckBox.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (atMouseCheckBox.isSelected()) {
-					// TODO
-				} else {
-					// TODO
-				}
-			}
+		atMouseCheckBox.addActionListener((e) -> {
+			
 		});
 
 		setTickrateLabel = new JLabel("Set tickrate");
 		setTickrateTextField = new JTextField("60.0");
-		setTickrateTextField.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-			}
+		setTickrateTextField.addActionListener((e) -> {
+			
 		});
 
 		previewControlPanel = new JPanel();
@@ -107,7 +88,7 @@ public class PreviewPanel extends BDKActorEditorPanel {
 		// PREVIEWPANEL-------------------------------------------------------------------------|
 		// PreviewGame requires a preferred size, but the rest will still scale
 		// with the editor
-		previewGame = new PreviewGame();
+		previewGame = new RenderingPanel(bdkActorEditor);
 		previewGamePanel = new JPanel();
 		previewGamePanel.setLayout(new GridLayout(1, 1));
 		previewGamePanel.add(previewGame);

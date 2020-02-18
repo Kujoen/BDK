@@ -1,6 +1,11 @@
 package bdk.game.entities.sprites.actors.components.emitter;
 
+import java.util.List;
+
+import bdk.editor.actor.BDKActorEditor;
+import bdk.game.entities.sprites.Sprite;
 import bdk.game.entities.sprites.actors.Actor;
+import soliture.ui.swingextensions.expandinglist.JExpandableRow;
 
 /**
  * 
@@ -20,6 +25,16 @@ public class EmitContinously extends Emitter {
 		this.emissionRate = 0;
 		this.emissionDelay = 0;
 		this.hasEmissionDelay = false;
+	}
+	
+	@Override
+	public JExpandableRow getComponentRow(BDKActorEditor bdkActorEditor) {
+		
+		return null;
+	}
+	
+	public void emit() {
+		
 	}
 
 

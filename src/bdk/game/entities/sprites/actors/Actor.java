@@ -6,6 +6,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import bdk.game.entities.sprites.BasicSprite;
 import bdk.game.entities.sprites.Sprite;
 import bdk.game.entities.sprites.actors.components.emitter.EmitOnce;
 import bdk.game.entities.sprites.actors.components.emitter.Emitter;
@@ -38,6 +39,9 @@ public class Actor extends Sprite {
 	private List<Initializer> initializerList;
 	private List<Operator> operatorList;
 	private List<Actor> childList;
+	
+	// --Sprites
+	private List<BasicSprite> spriteList;
 
 	// ---------------------------------------------------------------------|
 	
@@ -48,6 +52,8 @@ public class Actor extends Sprite {
 		this.initializerList = new ArrayList<>();
 		this.operatorList = new ArrayList<>();
 		this.childList = new ArrayList<>();
+		
+		this.type = ActorType.ENEMY;
 	}
 
 	// ---------------------------------------------------------------------|
@@ -55,11 +61,19 @@ public class Actor extends Sprite {
 	@Override
 	public void update() {
 		
+		// UPDATE ORDER ->
+		// 1. Emitter
+		// 2. Operators
+		// 3. Children
+		
+		emitter.emit();
+		operatorList.stream().forEach(operator -> operator.update());
+		childList.stream().forEach(child -> child.update());
 	}
 
 	@Override
 	public void render(Graphics2D g) {
-		
+		g.drawImage(spriteImage, (int) position.getX(), (int) position.getY(), null);
 	}
 
 	// ---------------------------------------------------------------------|

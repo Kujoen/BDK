@@ -4,9 +4,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import bdk.editor.actor.BDKActorEditor;
 import bdk.game.entities.sprites.actors.Actor;
 import bdk.game.entities.sprites.actors.components.emitter.EmitContinously;
 import bdk.game.entities.sprites.actors.components.emitter.EmitOnce;
+import soliture.ui.swingextensions.expandinglist.JExpandableRow;
 
 /**
  * 
@@ -20,6 +22,8 @@ public abstract class Component implements Serializable{
 	public Component(Actor parentActor) {
 		this.parentActor = parentActor;
 	}
+	
+	public abstract JExpandableRow getComponentRow(BDKActorEditor bdkActorEditor);
 
 	public String toString() {
 		return this.getClass().getSimpleName();

@@ -22,6 +22,7 @@ import bdk.editor.actor.BDKActorEditor;
 import bdk.editor.actor.BDKActorEditorPanel;
 import bdk.game.entities.sprites.actors.Actor;
 import bdk.game.entities.sprites.actors.ActorType;
+import bdk.util.listeners.BDKDocumentListener;
 
 public class S2GeneralPropertiesPanel extends BDKActorEditorPanel {
 
@@ -56,23 +57,13 @@ public class S2GeneralPropertiesPanel extends BDKActorEditorPanel {
 		nameTextField = new JTextField();
 		nameTextField.setPreferredSize(null);
 		nameTextField.setEnabled(false);
-		nameTextField.getDocument().addDocumentListener(new DocumentListener() {
+		nameTextField.getDocument().addDocumentListener(new BDKDocumentListener() {
 			@Override
 			public void changedUpdate(DocumentEvent e) {
 				String newName = nameTextField.getText();
 				String oldName = bdkActorEditor.getCurrentActor().getEntityName();
 				bdkActorEditor.getCurrentActor().setEntityName(newName);
 				bdkActorEditor.notifyDataChanged(new PropertyChangeEvent(this, BDKActorEditor.CHANGE_ACTOR_NAME, oldName, newName));
-			}
-
-			@Override
-			public void insertUpdate(DocumentEvent e) {
-				// NAN
-			}
-
-			@Override
-			public void removeUpdate(DocumentEvent e) {
-				// NAN
 			}
 		});
 

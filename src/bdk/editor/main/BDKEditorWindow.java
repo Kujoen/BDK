@@ -2,12 +2,11 @@ package bdk.editor.main;
 
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.io.FileNotFoundException;
 import java.util.logging.Level;
 
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 
@@ -17,6 +16,7 @@ import bdk.editor.game.BDKGameEditor;
 import bdk.editor.level.BDKLevelEditor;
 import bdk.game.main.Game;
 import bdk.util.BDKFileManager;
+import bdk.util.ui.BDKFont;
 import bdk.util.ui.BDKIcons;
 
 public class BDKEditorWindow extends JFrame {
