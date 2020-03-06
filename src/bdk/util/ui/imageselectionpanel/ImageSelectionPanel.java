@@ -35,7 +35,7 @@ public class ImageSelectionPanel extends JPanel {
 
 	private static final long serialVersionUID = -3853592189490691845L;
 	
-	private static final String CHANGE_IMAGE = "CHANGE_IMAGE";
+	public static final String CHANGE_IMAGE = "CHANGE_IMAGE";
 
 	// -------------------------------------------------------------------------------|
 

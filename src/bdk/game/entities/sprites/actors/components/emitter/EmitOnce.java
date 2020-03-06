@@ -2,6 +2,7 @@ package bdk.game.entities.sprites.actors.components.emitter;
 
 import java.awt.Font;
 import java.beans.PropertyChangeEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -11,11 +12,13 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.text.AbstractDocument;
 
+import com.sun.javafx.scene.ParentHelper.ParentAccessor;
+
 import bdk.editor.actor.BDKActorEditor;
 import bdk.editor.actor.componentpanel.SelectComponentDialog;
-import bdk.game.entities.sprites.BasicSprite;
 import bdk.game.entities.sprites.Sprite;
 import bdk.game.entities.sprites.actors.Actor;
+import bdk.game.entities.sprites.actors.ActorSprite;
 import bdk.util.BDKFileManager;
 import bdk.util.listeners.BDKDocumentListener;
 import bdk.util.ui.BDKFont;
@@ -26,7 +29,7 @@ import soliture.ui.swingextensions.expandinglist.JExpandableRowComponent;
 
 /**
  * 
- * @author Andreas Farley An emitter that will only emit once
+ * @author Andreas Farley
  */
 public class EmitOnce extends Emitter {
 
@@ -40,12 +43,31 @@ public class EmitOnce extends Emitter {
 	
 	public EmitOnce(Actor parentActor) {
 		super(parentActor);
-		this.emissionAmount = 0;
+		this.emissionAmount = 1;
 	}
 	
+	public void reset() {
+		this.isFirstEmission = true;
+	}
+	
+	/**
+	 * Emit Sprites by creating them and calling the parentActor 
+	 * initializers on them.
+	 */
 	public void emit() {
 		if(isFirstEmission) {
+			ArrayList<ActorSprite> newActorSpriteList = new ArrayList<ActorSprite>();
+			for (int i = 0; i < emissionAmount; i++) {
+				ActorSprite newSprite = new ActorSprite(parentActor);
+				newSprite.initialize();
+				newActorSpriteList.add(newSprite);
+			}
 			
+			parentActor.getInitializerList().forEach( initializer -> {
+				initializer.initializeActorSprites(newActorSpriteList);
+			});
+			
+			parentActor.getSpriteList().addAll(newActorSpriteList);
 			
 			isFirstEmission = false;
 		} else {
@@ -54,7 +76,7 @@ public class EmitOnce extends Emitter {
 	}
 	
 	@Override
-	public JExpandableRow getComponentRow(BDKActorEditor bdkActorEditor) {	
+	public JExpandableRow getComponentRow(BDKActorEditor bdkActorEditor) {
 		// Title Row --------------------------------------------------|
 		JExpandableRow componentRow = new JExpandableRow(6);
 		componentRow.setDataObject(this);
@@ -94,13 +116,16 @@ public class EmitOnce extends Emitter {
 		emissionAmountLabel.setFont(new BDKFont(Font.PLAIN, 20));
 		
 		JTextField emissionAmountTextField = new JTextField();
+		emissionAmountTextField.setText(Integer.toString(this.getEmissionAmount()));
 		AbstractDocument emissionAmountDocument = (AbstractDocument) emissionAmountTextField.getDocument();
 		emissionAmountDocument.setDocumentFilter(new BDKInputFilter(BDKInputFilter.ALLOW_INT, 1, 10000));
-		emissionAmountDocument.addDocumentListener(new BDKDocumentListener() {
+		emissionAmountTextField.getDocument().addDocumentListener(new BDKDocumentListener() {
 			@Override
-			public void changedUpdate(DocumentEvent e) {
+			public void changedUpdate(DocumentEvent e) {			
 				int oldValue = ((EmitOnce) componentRow.getDataObject()).getEmissionAmount();
 				int newValue =  Integer.parseInt(emissionAmountTextField.getText());
+				
+				setEmissionAmount(newValue);
 				
 				bdkActorEditor.notifyDataChanged(new PropertyChangeEvent(this, CHANGE_EMISSION_AMOUNT, oldValue, newValue ));
 			}

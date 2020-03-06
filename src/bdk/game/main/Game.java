@@ -2,17 +2,13 @@ package bdk.game.main;
 
 import java.awt.Canvas;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import bdk.cfg.GameConfig;
-import bdk.game.component.Component;
-import bdk.game.component.level.*;
 import bdk.input.BdkInputListener;
 
 /**

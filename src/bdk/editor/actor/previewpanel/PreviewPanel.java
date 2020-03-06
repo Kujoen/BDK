@@ -25,7 +25,7 @@ import bdk.editor.actor.BDKActorEditorPanel;
  */
 public class PreviewPanel extends BDKActorEditorPanel {
 	// -------------------------------------|
-	private RenderingPanel previewGame;
+	private RenderingPanel renderingPanel;
 
 	private JPanel previewGamePanel;
 	private JPanel previewControlPanel;
@@ -48,12 +48,12 @@ public class PreviewPanel extends BDKActorEditorPanel {
 		// CONROLPANEL--------------------------------------------------------------------------|
 		startPreviewButton = new JButton("start");
 		startPreviewButton.addActionListener((e) -> {
-			
+			renderingPanel.startGame();
 		});
 
 		stopPreviewButton = new JButton("stop");
 		stopPreviewButton.addActionListener((e) -> {
-			
+			renderingPanel.stopGame();
 		});
 
 		pausePreviewButton = new JButton("pause");
@@ -88,10 +88,10 @@ public class PreviewPanel extends BDKActorEditorPanel {
 		// PREVIEWPANEL-------------------------------------------------------------------------|
 		// PreviewGame requires a preferred size, but the rest will still scale
 		// with the editor
-		previewGame = new RenderingPanel(bdkActorEditor);
+		renderingPanel = new RenderingPanel(bdkActorEditor);
 		previewGamePanel = new JPanel();
 		previewGamePanel.setLayout(new GridLayout(1, 1));
-		previewGamePanel.add(previewGame);
+		previewGamePanel.add(renderingPanel);
 		previewGamePanel.setBorder(BorderFactory.createTitledBorder(""));
 		// -------------------------------------------------------------------------------------|
 
@@ -131,29 +131,8 @@ public class PreviewPanel extends BDKActorEditorPanel {
 		setBorder(BorderFactory.createTitledBorder("Preview"));
 	}
 
-	public void startPreview() {
-		previewGame.startGame();
-	}
-
 	@Override
 	public void notifyDataChanged(PropertyChangeEvent event) {
 
 	}
-
-	// TESTER---------------------------------------------------------------|
-	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		frame.setSize(500, 900);
-		frame.setLayout(new GridLayout(1, 1));
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		PreviewPanel panel = new PreviewPanel(new BDKActorEditor());
-
-		frame.getContentPane().add(panel);
-		frame.setVisible(true);
-
-		panel.startPreview();
-	}
-	// ---------------------------------------------------------------------|
-
 }

@@ -15,7 +15,7 @@ public class BDKDocumentListener implements DocumentListener {
 
 	@Override
 	public void insertUpdate(DocumentEvent e) {
-		// NaN
+		changedUpdate(e);
 	}
 
 	@Override

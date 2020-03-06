@@ -6,7 +6,6 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import bdk.game.entities.sprites.BasicSprite;
 import bdk.game.entities.sprites.Sprite;
 import bdk.game.entities.sprites.actors.components.emitter.EmitOnce;
 import bdk.game.entities.sprites.actors.components.emitter.Emitter;
@@ -41,7 +40,7 @@ public class Actor extends Sprite {
 	private List<Actor> childList;
 	
 	// --Sprites
-	private List<BasicSprite> spriteList;
+	private List<ActorSprite> spriteList;
 
 	// ---------------------------------------------------------------------|
 	
@@ -52,11 +51,23 @@ public class Actor extends Sprite {
 		this.initializerList = new ArrayList<>();
 		this.operatorList = new ArrayList<>();
 		this.childList = new ArrayList<>();
+		this.spriteList = new ArrayList<>();
 		
 		this.type = ActorType.ENEMY;
 	}
+	
+	public void reset() {
+		// Reset self
+		spriteList.clear();
+		
+		
+		// Reset components
+		if(emitter != null) {
+			emitter.reset();	
+		}
+	}
 
-	// ---------------------------------------------------------------------|
+	// RENDER & UPDATE -----------------------------------------------------|
 
 	@Override
 	public void update() {
@@ -66,14 +77,19 @@ public class Actor extends Sprite {
 		// 2. Operators
 		// 3. Children
 		
-		emitter.emit();
+		if(emitter != null) {
+			emitter.emit();	
+		}
+		
 		operatorList.stream().forEach(operator -> operator.update());
 		childList.stream().forEach(child -> child.update());
 	}
 
 	@Override
 	public void render(Graphics2D g) {
-		g.drawImage(spriteImage, (int) position.getX(), (int) position.getY(), null);
+		spriteList.parallelStream().forEach(actorSprite -> {
+			actorSprite.render(g);
+		});
 	}
 
 	// ---------------------------------------------------------------------|
@@ -144,5 +160,13 @@ public class Actor extends Sprite {
 		ActorType oldValue = this.getActorType();
 		this.type = type;
 		firePropertyChange(CHANGE_ACTOR_TYPE, oldValue, type);
+	}
+
+	public List<ActorSprite> getSpriteList() {
+		return spriteList;
+	}
+
+	public void setSpriteList(List<ActorSprite> spriteList) {
+		this.spriteList = spriteList;
 	}
 }

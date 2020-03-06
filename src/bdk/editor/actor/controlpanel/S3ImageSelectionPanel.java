@@ -30,7 +30,12 @@ public class S3ImageSelectionPanel extends BDKActorEditorPanel {
 
 		this.imageSelectionPanel = new ImageSelectionPanel("");
 
-		imageSelectionPanel.addImagePropertyChangeListener(e -> bdkActorEditor.notifyDataChanged(e));
+		imageSelectionPanel.addImagePropertyChangeListener(e -> {
+			if(bdkActorEditor.getCurrentActor() != null) {
+				bdkActorEditor.getCurrentActor().setSpritePath((String) e.getNewValue());
+				bdkActorEditor.notifyDataChanged(e);
+			}
+		});
 
 		this.setLayout(new GridLayout());
 		this.add(imageSelectionPanel);

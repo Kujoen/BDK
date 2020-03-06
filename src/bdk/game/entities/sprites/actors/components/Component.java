@@ -24,6 +24,8 @@ public abstract class Component implements Serializable{
 	}
 	
 	public abstract JExpandableRow getComponentRow(BDKActorEditor bdkActorEditor);
+	
+	public abstract void reset();
 
 	public String toString() {
 		return this.getClass().getSimpleName();

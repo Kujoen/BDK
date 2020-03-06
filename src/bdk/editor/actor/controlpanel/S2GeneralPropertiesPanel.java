@@ -23,6 +23,8 @@ import bdk.editor.actor.BDKActorEditorPanel;
 import bdk.game.entities.sprites.actors.Actor;
 import bdk.game.entities.sprites.actors.ActorType;
 import bdk.util.listeners.BDKDocumentListener;
+import bdk.util.ui.imageselectionpanel.ImageSelectionIcon;
+import bdk.util.ui.imageselectionpanel.ImageSelectionPanel;
 
 public class S2GeneralPropertiesPanel extends BDKActorEditorPanel {
 
@@ -189,6 +191,10 @@ public class S2GeneralPropertiesPanel extends BDKActorEditorPanel {
 	public void notifyDataChanged(PropertyChangeEvent event) {
 		if (event.getPropertyName().equals(BDKActorEditor.CHANGE_ACTOR)) {
 			displayGeneralProperties();
+		}
+		
+		if (event.getPropertyName().equals(ImageSelectionPanel.CHANGE_IMAGE)) {
+			imageNameLabel.setText((String) event.getNewValue());
 		}
 	}
 

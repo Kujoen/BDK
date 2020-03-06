@@ -2,6 +2,7 @@ package bdk.editor.actor.previewpanel;
 
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -15,12 +16,12 @@ import javafx.geometry.Point2D;
 
 /**
  * Class contains methods regarding the game screen. All game components are
- * drawn on a Canvas wich is displayed on a JFrame
+ * drawn on a Canvas which is displayed on a JFrame
  * 
  * @author Soliture
  *
  */
-public class RenderingPanel extends Canvas implements Runnable{
+public class RenderingPanel extends Canvas implements Runnable {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -59,11 +60,19 @@ public class RenderingPanel extends Canvas implements Runnable{
 			Actor targetActor = bdkActorEditor.getCurrentActor();
 			BufferedImage targetImage = BDKFileManager.loadImage(targetActor.getSpritePath());
 			
+			targetActor.reset();
 			targetActor.setSpriteImage(BDKImageEditor.scale(targetImage, (int)( targetImage.getWidth() * 2.5), (int) (targetImage.getHeight() * 2.5)));
-			targetActor.setPosition(new Point2D(this.getWidth() / 2, this.getHeight() / 2 ));
+			targetActor.setPosition(new Point2D((this.getWidth() / 2) -  (targetActor.getSpriteImage().getWidth() / 2), (this.getHeight() / 2) - (targetActor.getSpriteImage().getHeight() / 2) ));
 		} else {
 			return;
 		}
+	}
+	
+	private void clear() {
+		Graphics g = this.getGraphics();
+		g.setColor(Color.WHITE);
+		g.fillRect(0, 0, this.getWidth(), this.getHeight());
+		g.dispose();
 	}
 
 	// ------------------------------------------------------------------------------|
@@ -90,6 +99,9 @@ public class RenderingPanel extends Canvas implements Runnable{
 	 */
 	public void stopGame() {
 		isRunning = false;
+		frameCounter = 0;
+		updateCounter = 0;
+		clear();
 	}
 
 	@Override
@@ -135,6 +147,10 @@ public class RenderingPanel extends Canvas implements Runnable{
 	public void update() {
 		bdkActorEditor.getCurrentActor().update();
 	}
+	
+	@Override
+	public void paint(Graphics g) {
+	}
 
 	// -------------------------------------------------------------------------------|
 	// RENDERING
@@ -145,15 +161,15 @@ public class RenderingPanel extends Canvas implements Runnable{
 	public void render() {
 		BufferStrategy bs = this.getBufferStrategy();
 		if (bs == null) {
-			this.createBufferStrategy(3);
+			this.createBufferStrategy(2);
 			return;
 		}
 		
 		Graphics2D g = (Graphics2D) bs.getDrawGraphics();
 
 		// CLEAR ------------------|
-		g.setColor(Color.BLACK);
-		g.drawRect(0, 0, this.getSize().width, this.getSize().height);
+		g.setColor(Color.WHITE);
+		g.fillRect(0, 0, this.getSize().width, this.getSize().height);
 		// ------------------------|
 		
 		// MAIN DRAW --------------|
@@ -162,8 +178,8 @@ public class RenderingPanel extends Canvas implements Runnable{
 		
 		// DEBUG DRAW -------------|
 		g.setColor(Color.RED);
-		g.drawString("UPS: " + Integer.toString(updatesPerSecond), 0, 0);
-		g.drawString("FPS: " + Integer.toString(framesPerSecond), 0, 20);
+		g.drawString("UPS: " + Integer.toString(updatesPerSecond), 10, 20);
+		g.drawString("FPS: " + Integer.toString(framesPerSecond), 10, 40);
 		// ------------------------|
 		
 		g.dispose();
