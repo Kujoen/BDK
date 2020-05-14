@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.beans.PropertyChangeEvent;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -28,12 +29,35 @@ public class ComponentPanel extends BDKActorEditorPanel {
 	public ComponentPanel(BDKActorEditor parent) {
 		super(parent);
 		this.setLayout(new GridLayout(1, 1));
-		
-		expListPanel = new JExpandingListPanel(15);
-		
-		// EMITTER TITLE ROW --------------------------------------|
+		this.expListPanel = new JExpandingListPanel(15);
+		this.add(expListPanel);
+		setBorder(BorderFactory.createTitledBorder("Components"));
+	}
+	
+	/**
+	 * Adds the component rows.
+	 */
+	private void addComponentRows() {
 		JExpandableRow emitterTitleRow = new JExpandableRow(6);
+		addEmitterRows(emitterTitleRow);
+
+		JExpandableRow initializerTitleRow = new JExpandableRow(6);
+		addInitializerRows(initializerTitleRow);
 		
+		JExpandableRow operatorTitleRow = new JExpandableRow(6);
+		addOperatorRows(operatorTitleRow);
+		
+		JExpandableRow childTitleRow = new JExpandableRow(6);
+		addChildRows(childTitleRow);
+		
+		expListPanel.addRow(emitterTitleRow);
+		expListPanel.addRow(initializerTitleRow);
+		expListPanel.addRow(operatorTitleRow);
+		expListPanel.addRow(childTitleRow);
+	}
+		
+	private void addEmitterRows(JExpandableRow emitterTitleRow) {
+		// TITLE ROW ---------------------------------------------|
 		JLabel emitterTitleRowLabel = new JLabel("Emitter");
 		emitterTitleRowLabel.setFont(new BDKFont(Font.PLAIN, 30));
 		
@@ -48,6 +72,7 @@ public class ComponentPanel extends BDKActorEditorPanel {
 				if(newEmitter != null) {
 					bdkActorEditor.getCurrentActor().setEmitter(newEmitter);
 					emitterTitleRow.addRow(newEmitter.getComponentRow(bdkActorEditor));
+					emitterTitleRow.setExpanded(true);
 				}
 			}
 		});
@@ -72,9 +97,14 @@ public class ComponentPanel extends BDKActorEditorPanel {
 		emitterTitleRow.addComponent(new JExpandableRowComponent(addEmitterButton, 4, 1));
 		emitterTitleRow.addComponent(new JExpandableRowComponent(expandEmitterButton, 5, 1));
 		
-		// INITIALIZER TITLE ROW ----------------------------------|
-		JExpandableRow initializerTitleRow = new JExpandableRow(6);
-		
+		// ACTOR SPECIFIC EMITTER ROWS -------------------------|
+		if(bdkActorEditor.getCurrentActor() != null && bdkActorEditor.getCurrentActor().getEmitter() != null) {
+			emitterTitleRow.addRow(bdkActorEditor.getCurrentActor().getEmitter().getComponentRow(bdkActorEditor));
+		}
+	}
+	
+	private void addInitializerRows(JExpandableRow initializerTitleRow) {
+		// TITLE ROW ---------------------------------------------|
 		JLabel initializerTitleRowLabel = new JLabel("Initializers");
 		initializerTitleRowLabel.setFont(new BDKFont(Font.PLAIN, 30));
 		
@@ -98,9 +128,11 @@ public class ComponentPanel extends BDKActorEditorPanel {
 		initializerTitleRow.addComponent(new JExpandableRowComponent(addInitializerButton, 4, 1));
 		initializerTitleRow.addComponent(new JExpandableRowComponent(expandInitializerButton, 5, 1));
 		
-		// OPERATOR TITLE ROW -------------------------------------|
-		JExpandableRow operatorTitleRow = new JExpandableRow(6);
-		
+		// ACTOR SPECIFIC INITIALIZER ROWS -----------------------|
+	}
+	
+	private void addOperatorRows(JExpandableRow operatorTitleRow) {
+		// TITLE ROW ---------------------------------------------|
 		JLabel operatorTitleRowLabel = new JLabel("Operators");
 		operatorTitleRowLabel.setFont(new BDKFont(Font.PLAIN, 30));
 		
@@ -130,9 +162,12 @@ public class ComponentPanel extends BDKActorEditorPanel {
 		operatorTitleRow.addComponent(new JExpandableRowComponent(addOperatorButton, 4, 1));
 		operatorTitleRow.addComponent(new JExpandableRowComponent(expandOperatorButton, 5, 1));
 		
-		// CHILD TITLE ROW ----------------------------------------|
-		JExpandableRow childTitleRow = new JExpandableRow(6);
+		// ACTOR SPECIFIC OPERATOR ROWS ---------------------------|
 		
+	}
+	
+	private void addChildRows(JExpandableRow childTitleRow) {
+		// TITLE ROW ---------------------------------------------|
 		JLabel childTitleRowLabel = new JLabel("Children");
 		childTitleRowLabel.setFont(new BDKFont(Font.PLAIN, 30));
 		
@@ -156,14 +191,7 @@ public class ComponentPanel extends BDKActorEditorPanel {
 		childTitleRow.addComponent(new JExpandableRowComponent(addChildButton, 4, 1));
 		childTitleRow.addComponent(new JExpandableRowComponent(expandChildButton, 5, 1));
 		
-		// --------------------------------------------------------|
-		
-		expListPanel.addRow(emitterTitleRow);
-		expListPanel.addRow(initializerTitleRow);
-		expListPanel.addRow(operatorTitleRow);
-		expListPanel.addRow(childTitleRow);
-		
-		this.add(expListPanel);
+		// ACTOR SPECIFIC CHILD ROWS -----------------------------|
 	}
 
 	/**
@@ -171,6 +199,9 @@ public class ComponentPanel extends BDKActorEditorPanel {
 	 */
 	@Override
 	public void notifyDataChanged(PropertyChangeEvent event) {		
-		
+		if(event.getPropertyName().equals(BDKActorEditor.CHANGE_ACTOR) && event.getNewValue() != null && event.getNewValue() != event.getOldValue()) {
+			expListPanel.removeRows();
+			addComponentRows();
+		}
 	}
 }

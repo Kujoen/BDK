@@ -131,8 +131,8 @@ public class EmitOnce extends Emitter {
 			}
 		});
 		
-		emissionAmountRow.addComponent(new JExpandableRowComponent(emissionAmountLabel, 1, 1));
-		emissionAmountRow.addComponent(new JExpandableRowComponent(emissionAmountTextField, 3, 3));
+		emissionAmountRow.addComponent(new JExpandableRowComponent(emissionAmountLabel, 1, 3));
+		emissionAmountRow.addComponent(new JExpandableRowComponent(emissionAmountTextField, 4, 2));
 		
 		componentRow.addRow(emissionAmountRow);
 		return componentRow;

@@ -226,6 +226,15 @@ public class JExpandingListPanel extends JPanel implements ComponentListener {
 		}
 		rowsToDisplay++;
 	}
+	
+	
+	/**
+	 * Removes all rows from the listPanel, then rebuilds an empty list
+	 */
+	public void removeRows() {
+		this.rowList = new ArrayList<JExpandableRow>();
+		buildList();
+	}
 
 	// --------------------------------------------------------------------------------------------|
 	// COMPONENT LISTENER METHODS
