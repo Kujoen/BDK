@@ -14,6 +14,7 @@ import bdk.editor.actor.BDKActorEditor;
 import bdk.editor.actor.BDKActorEditorPanel;
 import bdk.game.entities.sprites.actors.components.Component;
 import bdk.game.entities.sprites.actors.components.emitter.Emitter;
+import bdk.game.entities.sprites.actors.components.operators.Operator;
 import bdk.util.BDKFileManager;
 import bdk.util.ui.BDKFont;
 import bdk.util.ui.BDKIcons;
@@ -55,7 +56,11 @@ public class ComponentPanel extends BDKActorEditorPanel {
 		expListPanel.addRow(operatorTitleRow);
 		expListPanel.addRow(childTitleRow);
 	}
-		
+	
+	// --------------------------------------------------------------------------------------------------------------------------------------------------------|
+	// EMITTER
+	// --------------------------------------------------------------------------------------------------------------------------------------------------------|
+	
 	private void addEmitterRows(JExpandableRow emitterTitleRow) {
 		// TITLE ROW ---------------------------------------------|
 		JLabel emitterTitleRowLabel = new JLabel("Emitter");
@@ -103,6 +108,10 @@ public class ComponentPanel extends BDKActorEditorPanel {
 		}
 	}
 	
+	// --------------------------------------------------------------------------------------------------------------------------------------------------------|
+	// INITIALIZERS
+	// --------------------------------------------------------------------------------------------------------------------------------------------------------|
+	
 	private void addInitializerRows(JExpandableRow initializerTitleRow) {
 		// TITLE ROW ---------------------------------------------|
 		JLabel initializerTitleRowLabel = new JLabel("Initializers");
@@ -131,6 +140,10 @@ public class ComponentPanel extends BDKActorEditorPanel {
 		// ACTOR SPECIFIC INITIALIZER ROWS -----------------------|
 	}
 	
+	// --------------------------------------------------------------------------------------------------------------------------------------------------------|
+	// OPERATORS
+	// --------------------------------------------------------------------------------------------------------------------------------------------------------|
+	
 	private void addOperatorRows(JExpandableRow operatorTitleRow) {
 		// TITLE ROW ---------------------------------------------|
 		JLabel operatorTitleRowLabel = new JLabel("Operators");
@@ -141,7 +154,15 @@ public class ComponentPanel extends BDKActorEditorPanel {
 		addOperatorButton.setFocusPainted(false);
 		addOperatorButton.setContentAreaFilled(false);
 		addOperatorButton.addActionListener( (e) -> {
-			
+			if(bdkActorEditor.getCurrentActor() != null) {
+				Operator newOperator = (Operator) SelectComponentDialog.showSelectionDialog(Component.getSelectableOperatorsFor(bdkActorEditor.getCurrentActor()).toArray(), "Select an Emitter");
+				
+				if(newOperator  != null) {
+					bdkActorEditor.getCurrentActor().addOperator(newOperator);
+					operatorTitleRow.addRow(newOperator.getComponentRow(bdkActorEditor));
+					operatorTitleRow.setExpanded(true);
+				}
+			}
 		});
 		
 		JButton expandOperatorButton = new JButton(new ImageIcon(BDKFileManager.loadImage(BDKIcons.ICON_EXPAND_MORE)));
@@ -163,8 +184,14 @@ public class ComponentPanel extends BDKActorEditorPanel {
 		operatorTitleRow.addComponent(new JExpandableRowComponent(expandOperatorButton, 5, 1));
 		
 		// ACTOR SPECIFIC OPERATOR ROWS ---------------------------|
-		
+		if(bdkActorEditor.getCurrentActor() != null && bdkActorEditor.getCurrentActor().getOperatorList().isEmpty() == false) {
+			bdkActorEditor.getCurrentActor().getOperatorList().stream().forEach( operator -> operatorTitleRow.addRow(operator.getComponentRow(bdkActorEditor)));
+		}
 	}
+	
+	// --------------------------------------------------------------------------------------------------------------------------------------------------------|
+	// CHILD
+	// --------------------------------------------------------------------------------------------------------------------------------------------------------|
 	
 	private void addChildRows(JExpandableRow childTitleRow) {
 		// TITLE ROW ---------------------------------------------|
@@ -194,6 +221,10 @@ public class ComponentPanel extends BDKActorEditorPanel {
 		// ACTOR SPECIFIC CHILD ROWS -----------------------------|
 	}
 
+	// --------------------------------------------------------------------------------------------------------------------------------------------------------|
+	// NOTIFY METHOD
+	// --------------------------------------------------------------------------------------------------------------------------------------------------------|
+	
 	/**
 	 * We only want to buildList when the actor changed
 	 */

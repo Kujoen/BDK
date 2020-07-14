@@ -1,6 +1,7 @@
 package bdk.game.entities.sprites.actors.components.operators;
 
 import bdk.game.entities.sprites.actors.Actor;
+import bdk.game.entities.sprites.actors.ActorSprite;
 import bdk.game.entities.sprites.actors.components.Component;
 
 /**
@@ -9,31 +10,22 @@ import bdk.game.entities.sprites.actors.components.Component;
  *
  */
 public abstract class Operator extends Component{
-
-	protected int operatorTick = 0;
+	private static final long serialVersionUID = -2248102734337074687L;
 	
 	public Operator(Actor parentActor) {
 		super(parentActor);
 	}
 	
 	public void update(){
-		updateActor();
-		operatorTick++;
+		updateActorSprite();
+		componentTick++;
 	}
 	
-	protected abstract void updateActor();
+	protected abstract void updateActorSprite();
+	public abstract Operator copyForActorSprite(ActorSprite actorSprite);
 	
 	// --------------------------------------------------------------------------------------------|
 	// GETTERS & SETTERS
 	// --------------------------------------------------------------------------------------------|
 
-	public int getOperatorTick() {
-		return operatorTick;
-	}
-
-	public void setOperatorTick(int operatorTick) {
-		this.operatorTick = operatorTick;
-	}
-
-	
 }

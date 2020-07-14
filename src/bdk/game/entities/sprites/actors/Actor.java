@@ -40,7 +40,8 @@ public class Actor extends Sprite {
 	private List<Actor> childList;
 	
 	// --Sprites
-	private List<ActorSprite> spriteList;
+	private transient List<ActorSprite> spriteList;
+	private transient List<ActorSprite> spriteRemoveRequestList;
 
 	// ---------------------------------------------------------------------|
 	
@@ -52,42 +53,46 @@ public class Actor extends Sprite {
 		this.operatorList = new ArrayList<>();
 		this.childList = new ArrayList<>();
 		this.spriteList = new ArrayList<>();
+		this.spriteRemoveRequestList = new ArrayList<>();
 		
 		this.type = ActorType.ENEMY;
 	}
 	
 	public void reset() {
 		// Reset self
-		spriteList.clear();
-		
+		spriteList = new ArrayList<>();
+		this.spriteRemoveRequestList = new ArrayList<>();
 		
 		// Reset components
 		if(emitter != null) {
 			emitter.reset();	
 		}
+		
+		initializerList.stream().forEach(initializer -> initializer.reset());
+		operatorList.stream().forEach(operator -> operator.reset());
+		childList.stream().forEach(child -> child.reset());
 	}
 
 	// RENDER & UPDATE -----------------------------------------------------|
 
 	@Override
 	public void update() {
-		
-		// UPDATE ORDER ->
-		// 1. Emitter
-		// 2. Operators
-		// 3. Children
-		
 		if(emitter != null) {
-			emitter.emit();	
+			emitter.emit();
 		}
 		
-		operatorList.stream().forEach(operator -> operator.update());
-		childList.stream().forEach(child -> child.update());
+		spriteList.parallelStream().forEach(actorSprite -> actorSprite.update());
+		
+		// Remove dead ActorSprites
+		if(!spriteRemoveRequestList.isEmpty()) {
+			spriteList.removeAll(spriteRemoveRequestList);
+			spriteRemoveRequestList.clear();
+		}
 	}
 
 	@Override
 	public void render(Graphics2D g) {
-		spriteList.parallelStream().forEach(actorSprite -> {
+		spriteList.stream().forEach(actorSprite -> {
 			actorSprite.render(g);
 		});
 	}
@@ -111,10 +116,12 @@ public class Actor extends Sprite {
 	}
 	
 	public void addInitializer(Initializer newInitializer) {
+		this.getInitializerList().add(newInitializer);
 		firePropertyChange(CHANGE_ACTOR_INITIALIZER, null, newInitializer);
 	}
 	
 	public void removeInitializer(Initializer initializerToRemove) {
+		this.getInitializerList().remove(initializerToRemove);
 		firePropertyChange(CHANGE_ACTOR_INITIALIZER, initializerToRemove, null);
 	}
 
@@ -123,10 +130,12 @@ public class Actor extends Sprite {
 	}
 	
 	public void addChild(Actor newChild) {
+		this.getChildList().add(newChild);
 		firePropertyChange(CHANGE_ACTOR_CHILD, null, newChild);
 	}
 	
 	public void removeChild(Actor childToRemove) {
+		this.getChildList().remove(childToRemove);
 		firePropertyChange(CHANGE_ACTOR_CHILD, childToRemove, null);
 	}
 
@@ -135,10 +144,12 @@ public class Actor extends Sprite {
 	}
 	
 	public void addOperator(Operator newOperator) {
+		this.getOperatorList().add(newOperator);
 		firePropertyChange(CHANGE_ACTOR_OPERATOR, null, newOperator);
 	}
 	
 	public void removeOperator(Operator operatorToRemove ) {
+		this.getOperatorList().remove(operatorToRemove);
 		firePropertyChange(CHANGE_ACTOR_OPERATOR, operatorToRemove, null);
 	}
 
@@ -168,5 +179,25 @@ public class Actor extends Sprite {
 
 	public void setSpriteList(List<ActorSprite> spriteList) {
 		this.spriteList = spriteList;
+	}
+
+	public List<ActorSprite> getSpriteRemoveRequestList() {
+		return spriteRemoveRequestList;
+	}
+
+	public void setSpriteRemoveRequestList(List<ActorSprite> spriteRemoveRequestList) {
+		this.spriteRemoveRequestList = spriteRemoveRequestList;
+	}
+
+	public void setInitializerList(List<Initializer> initializerList) {
+		this.initializerList = initializerList;
+	}
+
+	public void setOperatorList(List<Operator> operatorList) {
+		this.operatorList = operatorList;
+	}
+
+	public void setChildList(List<Actor> childList) {
+		this.childList = childList;
 	}
 }

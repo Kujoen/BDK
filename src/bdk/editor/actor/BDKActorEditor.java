@@ -78,6 +78,7 @@ public class BDKActorEditor extends JPanel {
 				
 				try {
 					ActorCollection newCollection = (ActorCollection) BDKFileManager.loadSerializedObject(file.getPath());
+					newCollection.refreshListenerList();
 					
 					setCurrentActorCollection(newCollection);
 					setCurrentActor(null);

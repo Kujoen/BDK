@@ -14,6 +14,9 @@ import bdk.editor.main.BDKEditorWindow;
  *
  */
 public class ActorCollection implements Serializable {
+	private static final long serialVersionUID = 1L;
+	private static final String CHANGE_COLLECTION_NAME = "CHANGE_COLLECTION_NAME";
+	private static final String CHANGE_COLLECTION_LIST = "CHANGE_COLLECTION_LIST";
 
 	// --------------------------------------------------------------------------|
 	// Used for file IO
@@ -95,7 +98,7 @@ public class ActorCollection implements Serializable {
 	public void setActorList(ArrayList<Actor> actorList) {
 		List<Actor> oldValue = (List<Actor>) this.actorList;
 		this.actorList = actorList;
-		firePropertyChange("setActorList", oldValue, actorList);
+		firePropertyChange(CHANGE_COLLECTION_LIST, oldValue, actorList);
 	}
 
 	public String getCollectionName() {
@@ -105,7 +108,7 @@ public class ActorCollection implements Serializable {
 	public void setCollectionName(String collectionName) {
 		String oldValue = this.collectionName;
 		this.collectionName = collectionName;
-		firePropertyChange("setCollectionName", oldValue, actorList);
+		firePropertyChange(CHANGE_COLLECTION_NAME, oldValue, actorList);
 	}
 
 	public static String getCollectionPath() {

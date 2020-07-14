@@ -176,13 +176,13 @@ public class S2GeneralPropertiesPanel extends BDKActorEditorPanel {
 			}
 			// No actor to display information on
 			else {
-				nameTextField.setText("-");
-				nameTextField.setEnabled(false);
-
-				typeComboBox.setEnabled(false);
-
-				imageNameLabel.setName("-");
-				imageNameLabel.setEnabled(false);
+//				nameTextField.setText("-");
+//				nameTextField.setEnabled(false);
+//
+//				typeComboBox.setEnabled(false);
+//
+//				imageNameLabel.setName("-");
+//				imageNameLabel.setEnabled(false);
 			}
 		}
 	}

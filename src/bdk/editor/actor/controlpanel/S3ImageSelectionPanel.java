@@ -68,7 +68,9 @@ public class S3ImageSelectionPanel extends BDKActorEditorPanel {
 		}
 
 		if (event.getPropertyName().equals(BDKActorEditor.CHANGE_ACTOR)) {
-			setSpriteSourceForType(((Actor) event.getNewValue()).getActorType());
+			if(event.getNewValue() != null) {
+				setSpriteSourceForType(((Actor) event.getNewValue()).getActorType());	
+			}
 		}
 	}
 }

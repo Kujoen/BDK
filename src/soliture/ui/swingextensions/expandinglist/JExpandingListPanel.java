@@ -127,6 +127,22 @@ public class JExpandingListPanel extends JPanel implements ComponentListener {
 
 		refreshListPanel();
 	}
+	
+	/**
+	 * Calculates how many rows currently need to be displayed
+	 * 
+	 * @return
+	 */
+	private int calculateRowsToDisplay() {
+		rowsToDisplay = 0;
+
+		int i = 0;
+		while (i < rowList.size()) {
+			countRow(rowList.get(i));
+			i++;
+		}
+		return rowsToDisplay;
+	}
 
 	/**
 	 * Resizes the panel if we need to show more rows
@@ -180,10 +196,8 @@ public class JExpandingListPanel extends JPanel implements ComponentListener {
 		ArrayList<JExpandableRow> currentRowChildList = (ArrayList<JExpandableRow>) rowToAdd.getRowList();
 
 		if (!currentRowChildList.isEmpty() && rowToAdd.isExpanded()) {
-
-			currentRowOffset += 1;
-
 			for (JExpandableRow row : currentRowChildList) {
+				currentRowOffset += 1;
 				addRowToPanel(row);
 			}
 		}
@@ -197,21 +211,7 @@ public class JExpandingListPanel extends JPanel implements ComponentListener {
 		listPanel.repaint();
 	}
 
-	/**
-	 * Calculates how many rows currently need to be displayed
-	 * 
-	 * @return
-	 */
-	private int calculateRowsToDisplay() {
-		rowsToDisplay = 0;
 
-		int i = 0;
-		while (i < rowList.size()) {
-			countRow(rowList.get(i));
-			i++;
-		}
-		return rowsToDisplay;
-	}
 
 	/**
 	 * Iterative method used to count rows that need to be displayed.

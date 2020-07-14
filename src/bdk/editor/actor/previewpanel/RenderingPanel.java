@@ -180,6 +180,7 @@ public class RenderingPanel extends Canvas implements Runnable {
 		g.setColor(Color.RED);
 		g.drawString("UPS: " + Integer.toString(updatesPerSecond), 10, 20);
 		g.drawString("FPS: " + Integer.toString(framesPerSecond), 10, 40);
+		g.drawString("ActorSprites: " + Integer.toString(bdkActorEditor.getCurrentActor().getSpriteList().size()), 10, 60);
 		// ------------------------|
 		
 		g.dispose();

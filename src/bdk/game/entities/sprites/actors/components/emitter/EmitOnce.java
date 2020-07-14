@@ -19,11 +19,13 @@ import bdk.editor.actor.componentpanel.SelectComponentDialog;
 import bdk.game.entities.sprites.Sprite;
 import bdk.game.entities.sprites.actors.Actor;
 import bdk.game.entities.sprites.actors.ActorSprite;
+import bdk.game.main.Game;
 import bdk.util.BDKFileManager;
 import bdk.util.listeners.BDKDocumentListener;
 import bdk.util.ui.BDKFont;
 import bdk.util.ui.BDKIcons;
 import bdk.util.ui.BDKInputFilter;
+import bdk.util.ui.BDKWarningDialog;
 import soliture.ui.swingextensions.expandinglist.JExpandableRow;
 import soliture.ui.swingextensions.expandinglist.JExpandableRowComponent;
 
@@ -34,26 +36,22 @@ import soliture.ui.swingextensions.expandinglist.JExpandableRowComponent;
 public class EmitOnce extends Emitter {
 
 	private static final long serialVersionUID = 1L;
+	public static final String CHANGE_EMISSION_AMOUNT = "CHANGE_EMISSION_AMOUNT";
+	
 	private int emissionAmount;
 	private transient boolean isFirstEmission = true;
 	
-	
-	public static final String CHANGE_EMISSION_AMOUNT = "CHANGE_EMISSION_AMOUNT";
-	
-	
+
 	public EmitOnce(Actor parentActor) {
 		super(parentActor);
 		this.emissionAmount = 1;
-	}
-	
-	public void reset() {
-		this.isFirstEmission = true;
 	}
 	
 	/**
 	 * Emit Sprites by creating them and calling the parentActor 
 	 * initializers on them.
 	 */
+	@Override
 	public void emit() {
 		if(isFirstEmission) {
 			ArrayList<ActorSprite> newActorSpriteList = new ArrayList<ActorSprite>();
@@ -62,18 +60,34 @@ public class EmitOnce extends Emitter {
 				newSprite.initialize();
 				newActorSpriteList.add(newSprite);
 			}
-			
-			parentActor.getInitializerList().forEach( initializer -> {
-				initializer.initializeActorSprites(newActorSpriteList);
-			});
-			
+
 			parentActor.getSpriteList().addAll(newActorSpriteList);
 			
 			isFirstEmission = false;
-		} else {
-			return;
 		}
+		
+		componentTick++;
 	}
+	
+	@Override
+	public void reset() {
+		isFirstEmission = true;
+		componentTick = 0;
+	}
+	
+	// --------------------------------------------------------------------------------------------------------------------------------------------------------|
+	// Static methods
+	// --------------------------------------------------------------------------------------------------------------------------------------------------------|
+
+	public static boolean rejectForActor(Actor targetActor) {
+		Game.getLogger().log(java.util.logging.Level.SEVERE, "Component subclass did not implement the rejectFor static method", new Exception("Not implemented by subclass"));
+		BDKWarningDialog.showWarning("Component subclass did not implement the rejectFor static method");
+		return true;
+	}
+	
+	// --------------------------------------------------------------------------------------------------------------------------------------------------------|
+	// GUI
+	// --------------------------------------------------------------------------------------------------------------------------------------------------------|
 	
 	@Override
 	public JExpandableRow getComponentRow(BDKActorEditor bdkActorEditor) {
